@@ -1,0 +1,59 @@
+
+.image-map-flow {
+    width: 5%; 
+    height: 8%;
+    text-align: center;
+    padding: 1% 1% 1% 1%;
+    position:absolute;
+    background: rgba(255, 255, 255, 0.5);    
+    z-index: 100;
+     border-radius: 200px 200px 200px 200px;
+}
+
+.flow1 {
+    top: 18%; 
+    left: 19%; 
+}
+
+.flow2 {
+    top: 23%; left: 9%;
+}
+
+.flow3 {
+    top: 36%; left: 9%; 
+}
+
+.flow4 {
+    top: 18%; 
+    left: 79%; 
+}
+
+/* Styles for tablet (iPAD)   4/3       */
+@media all and (max-device-aspect-ratio: 3/2) {
+
+.flow1 {
+    top: 20%; left: 15%; 
+}
+
+.flow2 {
+    top: 25%; left: 3%; 
+}
+
+.flow3 {
+    top: 38%; 
+    left: 6%; 
+}
+    
+.flow4 {
+    top: 38%; 
+    left: 60%; 
+}
+
+
+}
+
+/* Styles asigned for phones  */
+@media all and (max-width: 640px) {
+
+        
+}

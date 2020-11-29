@@ -1,0 +1,199 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+
+    <script>
+        
+        function nametoid(s) {
+            return s.trim().toLowerCase().replace(/[^a-z]/gi, '-');
+        }
+        
+        function drawLines(tabla) {
+            tabla.forEach((element) => {
+                new LeaderLine(document.getElementById(element[0]),document.getElementById(element[1]), {color: 'black', size: 3});
+            });
+        }
+        
+        function starting_index_flow() {
+            cargarMenu();
+            GetSettings();
+            var customcontent = localStorage.getItem("customcontent" + aventura);
+        
+            if (customcontent === null) {
+                DrawLines();
+            } else {
+                
+                                var eventos = [];
+                var flechas = [];
+                    
+                var reg = new RegExp("<tw-passagedata pid=\"([^\"]*)\"[^n]*name=\"([^\"]*)\"[^t]*tags=\"([^\"]*flow[^\"]*)\"[^p]*position=\"([^,]*),([^\"]*)\"[^>]*>", "gi");
+                if (debug == "on") {
+                        var reg2 = new RegExp("(\\[\\[)([^\\]]*)\\]\\]", "gi");
+                    }
+                    else {
+                        // <a href="index.html?param=4">Ganchos de la aventura</a>
+                        
+                        var reg2 = new RegExp(/<a href="(index|encounter).html\?param=[0-9]*">([^<]*)<\/a>/, "gi");
+                    }
+                    
+                customcontent.match(reg).forEach((element, index) => {
+					
+                    eventos.push([element.replace(reg, "$1").trim(), element.replace(reg, "$2").trim(),element.replace(reg, "$3").trim(), element.replace(reg, "$4").trim(),element.replace(reg, "$5").trim()]);
+                    
+                    var search = customcontent.indexOf(element);
+                    var end    = customcontent.indexOf("</tw-passagedata>", search);
+                    var localcontent = customcontent.substring(search, end);
+                    
+                    if (debug == "on") {
+                        search = localcontent.indexOf("CONCLUSION");
+                       
+                    }
+                    else {
+                        search = localcontent.indexOf('CONCLUSION</h2>');
+                        
+                        
+                    }
+                    end = localcontent.length;
+                    if (search > -1)
+                        var conclusion = localcontent.substring(search,end);
+                    else
+                        var conclusion = localcontent;
+
+                   
+                    try {
+                    conclusion.match(reg2).forEach((element2, index) => {
+                            flechas.push([nametoid(element.replace(reg, "$2")),nametoid(element2.replace(reg2, "$2"))]);
+                    });
+                        } catch (e) {
+                            console.log("No hay enlaces en la entrada: " + element)
+                        }
+                    
+                });
+               
+                var text = "";
+                var maxX = 0;
+                var maxY = 0;
+                eventos.forEach((element, index) => {
+                    if (parseInt(element[3]) > maxX)
+                        maxX = parseInt(element[3]);
+                    if (parseInt(element[4]) > maxY)
+                        maxY = parseInt(element[4]);
+                    
+                });
+                
+                eventos.forEach((element, index) => {
+					
+					if (element[2].indexOf("encounter") > -1) {
+                    	text = text + '<a id="'+nametoid(element[1])+'" href="./encounter.html?param='+element[0]+'" class="image-map-flow text strong-tint button" style="left: '+85*parseInt(element[3])/maxX+'%; top: '+85*parseInt(element[4])/maxY+'%;">'+element[1]+'</a>\n';
+					}
+					else {
+                    	text = text + '<a id="'+nametoid(element[1])+'" href="./index.html?param='+element[0]+'" class="image-map-flow text strong-tint button" style="left: '+85*parseInt(element[3])/maxX+'%; top: '+85*parseInt(element[4])/maxY+'%;">'+element[1]+'</a>\n';
+					}
+                });
+                document.getElementById("index-flow-background").innerHTML = text;
+                    newdrawLines(flechas);
+                
+                
+                
+                /*var eventos = [];
+                var flechas = [];
+								
+                var reg = new RegExp("<tw-passagedata pid=\"([^\"]*)\"[^n]*name=\"([^\"]*)\"[^t]*tags=\"([^\"]*flow[^\"]*)\"[^p]*position=\"([^,]*),([^\"]*)\"[^>]*>", "gi");
+				
+                var reg2 = new RegExp("\\[\\[([^\\]]*)\\]\\]", "gi");
+                customcontent.match(reg).forEach((element, index) => {
+					
+                    eventos.push([element.replace(reg, "$1").trim(), element.replace(reg, "$2").trim(),element.replace(reg, "$3").trim(), element.replace(reg, "$4").trim(),element.replace(reg, "$5").trim()]);
+                    
+                    var search = customcontent.indexOf(element);
+                    search = customcontent.indexOf("CONCLUSION",search);
+                    var end = customcontent.indexOf("images {",search);
+                    var conclusion = customcontent.substring(search,end);
+                
+                    conclusion.match(reg2).forEach((element2, index) => {
+                            flechas.push([nametoid(element.replace(reg, "$2")),nametoid(element2.replace(reg2, "$1"))]);
+                    });
+                    
+                });
+               
+                var text = "";
+                var maxX = 0;
+                var maxY = 0;
+                eventos.forEach((element, index) => {
+                    if (parseInt(element[3]) > maxX)
+                        maxX = parseInt(element[3]);
+                    if (parseInt(element[4]) > maxY)
+                        maxY = parseInt(element[4]);
+                    
+                });
+                
+                eventos.forEach((element, index) => {
+					
+					console.log(element)
+					if (element[2].indexOf("encounter") > -1) {
+                    	text = text + '<a id="'+nametoid(element[1])+'" href="./encounter.html?param='+element[0]+'" class="image-map-flow text strong-tint button" style="left: '+85*parseInt(element[3])/maxX+'%; top: '+85*parseInt(element[4])/maxY+'%;">'+element[1]+'</a>\n';
+					}
+					else {
+                    	text = text + '<a id="'+nametoid(element[1])+'" href="./index.html?param='+element[0]+'" class="image-map-flow text strong-tint button" style="left: '+85*parseInt(element[3])/maxX+'%; top: '+85*parseInt(element[4])/maxY+'%;">'+element[1]+'</a>\n';
+					}
+                });
+                document.getElementById("index-flow-background").innerHTML = text;
+                drawLines(flechas);*/
+            
+            
+            
+            }
+        }
+        
+function gettypeid(id, customcontent) {
+	console.log(id);
+}
+    </script>
+
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+    <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none">
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>
+        </ul>
+    </div>
+     <div id="index-flow-background" class="index-flow" style="left: 0px; top: 0px;">
+        <a id="uno" data-arrow-target="#dos" href="./index.html?param=@resumen" class="image-map-flow text strong-tint button" style="left: 5.5%;top: 42%;"><br>Introducción</a>
+        <a id="dos" data-arrow-target="#tres" href="./encounter.html?param=@Planteamiento--El-nervioso-em-ajador" class="image-map-flow text strong-tint button" style="left: 18.5%;top: 42%;">El nervioso embajador</a>
+        <a id="tres" data-arrow-target="#cuatro" href="./encounter.html?param=@Desarrollo--La-em-ajada-maldita" class="image-map-flow text button" style="left: 32%;top: 33%;">La embajada maldita</a>
+        <a id="cuatro" data-arrow-target="#cinco" href="./encounter.html?param=@biblioteca" class="image-map-flow text button" style="left: 44%;top: 47%;">La Biblioteca</a>
+        <a id="cinco" data-arrow-target="#seis" href="./encounter.html?param=@Desenlace--El-o-servatorio-de-los-mundos-muertos" class="image-map-flow text button" style="left: 54%;top: 62%;">El observatorio de los no muertos</a>
+        <a id="seis" href="./index.html?param=@conclusion" class="image-map-flow text button" style="left: 66%;top: 48%;"><br>Conclusión</a>
+    </div>
+
+    <div class="mini-index-left">
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

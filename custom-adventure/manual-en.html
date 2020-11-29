@@ -1,0 +1,1628 @@
+<tw-storydata name="manual-en" startnode="" creator="Twine" creator-version="2.3.5" ifid="3264857A-7EC3-441D-B130-EC622B9E6814" zoom="1" format="Harlowe" format-version="2.1.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style><script role="script" id="twine-user-script" type="text/twine-javascript">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script><tw-passagedata pid="1" name="Introduction" tags="@resumen flow" position="242,165" size="100,100">
+# INTRODUCTION
+This tutorial will guide you through the steps necessary to create your own adventure for the *GameThrough* system of Digital d20 Adventures.  
+
+*GameThrough* uses Twine to create adventures with linked elements and also provides you with interactive maps, music and the SRD5 content library.
+
+To create an adventure you just have to write it with the right format and observe the results, like this:
+
+![large](https://digitald20.com/wp-content/uploads/2020/04/ejemplo-markdown.jpg)
+
+With all this, we will generate an adventure that we can load in Digital d20. 
+&lt;a href=&quot;https://digitald20.com/play/custom-adventure/fan-adventure.html&quot; download&gt;Download the example adventure&lt;/a&gt; and open it with &lt;a href=&quot;https://twinery.org/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;Twine&lt;/a&gt;.
+
+## Twine
+Before you start, you&#39;ll need the free Twine tool. Using Twine is very simple, and does not require any previous knowledge or programming skills. Download Twine &lt;a href=&quot;https://twinery.org/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;here&lt;/a&gt; or use its online version. Twine organizes the scenes in cards called &quot;Passages&quot; that you can edit and reorder.
+Visit the [[Twine]] section for more information. 
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/flow.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/flow.jpg)&lt;/a&gt;  
+
+## Markdown
+Markdown is a coding system that allows you to write rich text using plain text. You don&#39;t have to download anything to write with Markdown, since Markdown is *a way of writing*. It is very simple, we give you all the keys in the *Markdown* section.
+
+
+## GameTrough system
+The *GameTrough* system of the Digital d20 uses Markdown. Based on Markdown and own constructions, the *GameTrough* system can interpret the code for:  
+
+* Generate maps to navigate between different locations.
+* Incorporate the complete SRD5 and hyperlink all the keywords.
+* Show information about spells, magic objects and monsters wherever they appear.
+* Include music.
+* Show a flow chart with the development of the adventure that leads to each encounter.
+
+Creating an adventure using the *GameTrough* system is as simple as creating the scenes in *Twine Passages* and then uploading it to Digital d20. You will find more information about Twine in the section *Twine*.
+
+## Load an adventure
+Once you have the adventure ready, you can load the HTML file created by Twine in the upper area of this page.
+
+Remember that uploading this file will upload the new adventure. To return to the tutorial you must press *Clear*.</tw-passagedata><tw-passagedata pid="2" name="Indice" tags="@index-main" position="75,281" size="100,100">
+ # INDICE
+
+* [[Introduction]]  
+* [[Markdown]]  
+* [[Passages]]  
+ * [[Encounters]]  
+* [[Links]]  
+ * [[Linked SRD5 content]] 
+* [[Media content]]
+* [[Monsters]]  
+* [[Maps]]  
+* [[NPCs]]  
+* [[Flux diagram]]  
+* Tools  
+ * [[Twine]]  
+ * [[Label placer]]  
+ * [[Hosting files online]]  
+ * [[Tools for maps]]  
+ * [[Homebrewery]] 
+ * [[Additional tools]]  </tw-passagedata><tw-passagedata pid="3" name="Passages" tags="" position="375,160" size="100,100">
+# PASSAGES
+A passage is an element in Twine. It&#39;s the way Twine organizes the scenes of a story. The *GameThrough* system uses the passages to create three types of scenes:  
+* **Index scenes:** Which keep the index on the left side, with information only on the right side.
+* *Encounters*: Scenes that incorporate music, images and/or maps and additional information on the left side.
+* **Places:** Navigable maps with pop-up descriptions.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/ejemplo-pasaje.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/ejemplo-pasaje.jpg)&lt;/a&gt;   
+
+The passages are made up of:
+
+| Content | Description |
+|:----:|:-------------|
+| Title | The **Title** is the name of the passage, by which it will be referenced wherever it appears.   |
+| Tags | The **Tags** are located between the title and the text and provide additional functionality, as we&#39;ll see below. |
+| Text | The **Text** is the content of the passage itself.  	 |
+
+
+By pressing the lower button **+Passage** in Twine, a passage is created.  
+
+## Ticket labels
+Once inside a passage, clicking on **+Label** allows us to add different behaviors to each passage, depending on:
+
+| Content | Description |
+|:----:|:-------------|
+| &lt;div class=&quot;codigo&quot;&gt;flow&lt;/div&gt; | Makes the passage visible in the *Flowchart*. This does not affect other behaviors.   |
+| &lt;div class=&quot;codigo&quot;&gt;encounter&lt;/div&gt; | The passage is an encounter, with one or more images, music and maps. It also has a section called &quot;At a Glance&quot; and &quot;Conclusion&quot;. For more details see section *Encounters*. |
+| &lt;div class=&quot;codigo&quot;&gt;@main-map&lt;/div&gt; | Of all the maps (see section [[Maps]]) one of them has to be the initial one, the first one you see when you click on the appropriate section. That passage has to be labeled **@main-map**. |
+| &lt;div class=&quot;codigo&quot;&gt;@monsters&lt;/div&gt; | The stats of the monsters of the adventure will all be in this passage. |
+| &lt;div class=&quot;codigo&quot;&gt;@index-main&lt;/div&gt; | For the adventure index. The rest of the passages will be linked from here. |
+| &lt;div class=&quot;codigo&quot;&gt;@summary&lt;/div&gt; | The first content that shows the adventure will be the summary. This passage usually has no images (it&#39;s not an encounter). |
+| &lt;div class=&quot;codigo&quot;&gt;@npcs&lt;/div&gt; | Passage that picks up the NPCs of the adventure. |
+| &lt;div class=&quot;codigo&quot;&gt;@notes&lt;/div&gt; | The notes on the side of the adventure will all be in this passage. |
+ 
+## Meetings
+The meetings are a special kind of passage that includes a left zone with images, music, maps and additional information. You can learn more about this in the *Encounters* section.</tw-passagedata><tw-passagedata pid="4" name="Links" tags="" position="644,160" size="100,100">
+# LINKS
+## Links to SRD5 released content
+The *GameThrough* system automatically generates links for the desired keywords (and are part of the SRD5).
+
+This way you can generate links for:
+* Spells
+* Monsters
+* Rules
+* Magic objects  
+
+existing in the SRD5, which will be automatically generated to appear in the left information area. 
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/notas-al-margen.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![ancho50](https://digitald20.com/wp-content/uploads/2020/04/notas-al-margen.jpg)&lt;/a&gt;
+
+To do this, you must write the text *between asterisks*. The system will detect the content of the highlighted text, and will create a hyperlink with the corresponding entry to display a *magical object*, *trap*, etc.
+
+Here you can see all the SRD5 material you can link to:  
+[[Linked SRD5 content]].
+
+## Links to own content
+You can also use this system to automatically create hyperlinks to content specific to the adventure. 
+
+In this way, links can be generated to:
+* **Monsters:** They will always be shown in the left zone of a meeting, with a cross to close them once they have been consulted.  
+* **NPC&#39;s:** They have their own section, although they can also be shown in the left section, if an entry is created with their name.  
+* **Passage:** A link to a passage (created by putting the name of the passage between asterisks) will take the user to that passage.  
+* **Margin notes:** Margin notes will always be displayed in a floating window.  
+* Maps:** Within a map the links can be of two types:  
+ * **Links between maps** (green text) navigate between the different maps of the adventure.
+ * **Points of interest** (circles you see) provide additional information of a specific area of a map.
+
+To do this, in addition to writing the text between asterisks, there must be the corresponding entry as a first level title in the passages **@monsters**, **@notes** and **@main-npcs**. The system will detect the content of the highlighted text, and create a hyperlink to the corresponding section.  
+
+The **Monsters** are displayed in the left information area.  
+NPCs have their own section, but can also be displayed in the left information area by creating a link with their name.  
+The **Notes in the margin** are shown in a floating window.  </tw-passagedata><tw-passagedata pid="5" name="Media content" tags="" position="772,161" size="100,100">
+# MEDIA CONTENT
+There are five types of multimedia content that can be added to the adventures. 
+
+* Pictures and audios can be placed anywhere in any type of entry.  
+* Music and maps are only supported in the Gathering type tickets.
+
+## Audio
+The audio files will appear at the beginning of the passage with a mini player. They have to be entered **before** any other content in the passage, with the following format
+
+&lt;div class=&quot;codigo cuadro&quot;&gt;\!\[audio](www.routeoftheaudio.mp3)&lt;/div&gt;
+
+## Pictures in meetings
+**In the passages of type encounter ** the text will be accompanied by between one and four images. These will appear in the left area of the meeting and, when you click on each one of them, you will see it in a floating window, full screen. You have to enter **before** any other content in the passage, with the following format
+
+&lt;div class=&quot;cuadro codigo&quot;&gt;\!\[image](www.routeoftheimage.jpg)&lt;/div&gt;
+
+Any type of file is supported.  
+
+## Embedded images  
+In any type of passage, images can be inserted in any part of the passage. There are three formats to do this, depending on the size you want to display:
+
+&lt;div class=&quot;codigo cuadro&quot;&gt;
+\[small](www.routeoftheimage.jpg)
+&lt;br/&gt;
+\[medium](www.routeoftheimage.jpg)
+&lt;br/&gt;
+\[large](www.routeoftheimage.jpg)
+&lt;/div&gt;   
+
+Jpg and png files are supported.
+
+</tw-passagedata><tw-passagedata pid="6" name="Monsters" tags="" position="523,285" size="100,100">
+# MONSTERS
+The monsters are linked like the rest of the contents, putting the name of the monster between asterisks. If the monster is part of the SRD5, the rule monster will be displayed. If it is a monster created for the adventure, the link is created in the same way, but the monster must be included in the passage @monsters with a specific format. When you click on a monster&#39;s link, it will be displayed in the left information area. 
+
+Here is an example monster. You can click on the image to see it bigger or, if you have doubts, check the code after the image.  
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/ejemplo-monstruo.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/ejemplo-monstruo.jpg)&lt;/a&gt;
+
+In the example adventure &lt;a href=&quot;https://digitald20.com/play/custom-adventure/fan-adventure.html&quot; download&gt;Kidnap at Brookmili&lt;/a&gt; you have example monsters so you can use their format.
+
+Also, in the following file you have all the content of the SRD (including the monsters) in case you want to use one&#39;s format as a basis to create your own:  
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/mardkdown-srd5.txt&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;SRD5 Monster Library&lt;/a&gt;</tw-passagedata><tw-passagedata pid="7" name="Maps" tags="" position="884,166" size="100,100">
+# MAPS
+Both navigation maps and those included in the encounter-type passages are generated in the same way. A map-type passage can be included in either section.  
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/ejemplo-mapa-e1586858334706.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/ejemplo-mapa-e1586858334706.jpg)&lt;/a&gt;
+
+
+## Structure
+The beginning of the passage, the image of the map must be included:  
+
+&lt;div class=&quot;codigo cuadro&quot;&gt;\!\[map](www.rutadelaimagen.jpg)&lt;/div&gt;
+
+This will simply display the map in the corresponding section (remember that the first map must always have the label **@main-map**). In addition, two types of links can be added:
+
+### Link to another map
+To link from one map to another you only need to place a marker on the map, with the following format:  
+
+&lt;div class=&quot;codigo cuadro&quot;&gt;\# @xxxxxx &lt;\!\-\-20,10--&gt;&gt;/div&gt;  
+
+Where @xxxxxx is the name tag of the target map, and the two numbers are the position of the pointer. The label will show the name of the target map.  
+
+### Link to info window
+To display an information window on a map, a bookmark must be placed with the following format:
+
+&lt;div class=&quot;codigo cuadro&quot;&gt;\# Name &lt;\-\-10,10--&gt;
+&lt;br/&gt;
+Text to be displayed in the floating window. A link to a passage can also be included here.&lt;/div&gt;
+
+Where the name is the title to be displayed and the number pair is the position of the label. The text will be displayed after the title.
+
+## Tag Positioner
+The X, Y points that follow the map titles are the relative position in percentage on the background image. You have the following tool at your disposal to easily calculate them:  
+[[Label pleasure]].</tw-passagedata><tw-passagedata pid="8" name="NPCs" tags="" position="763,288" size="100,100">
+# NPC&#39;s
+Non-playing characters must be grouped together in a passage labeled **@main-npcs**. Otherwise, it is not very different from a normal passage. Although they have their own section, NPCs can also be displayed on the left side of a passage.  
+
+Each NPC will consist of:  
+
+* **First level title:** This will be the name of the character, which will be referenced wherever it is written between asterisks.  
+* **Inlaid image (optional)** Using the format indicated in [[Media content]] you can include one or several images, in any size.  
+* Descriptive text:** The text that will go under the title with the name of the character. You can include any reference to rules, other characters, spells, encounters, etc.
+* **Character card (optional)** The character card with the format indicated in the *Monsters* section.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/pnjs.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/pnjs.jpg)&lt;/a&gt;</tw-passagedata><tw-passagedata pid="9" name="Flux diagram" tags="" position="883,288" size="100,100">
+# FLOWCHART
+For the flowchart of an adventure it is not necessary to create specific passages, you only have to add the tag **flow** to each passage you want to be shown in the diagram.  
+
+To link passages in Twine you have to create relationships between them using **\[Passage name]. This way, the relationship arrows will appear in the Twine diagram.  
+
+Moving the passages we will create from Twine the flowchart that will be shown in the adventure, with the same arrangement of elements
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/flow.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/flow.jpg)&lt;/a&gt;</tw-passagedata><tw-passagedata pid="10" name="Markdown" tags="" position="240,402" size="100,100">
+# MARKDOWN
+Markdown is a coding system that allows you to write rich text using plain text. The own codings are very simple:
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/tabla-markdown.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;
+![large](https://digitald20.com/wp-content/uploads/2020/04/tabla-markdown.jpg)&lt;/a&gt;
+
+## Separation between lines
+* The carriage return (ENTER key) by itself has no effect.  
+* Two spaces are used at the end of a line to create a new line. After this, adding a carriage return (ENTER key) will make the space larger.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/lineas.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/lineas.jpg)&lt;/a&gt;</tw-passagedata><tw-passagedata pid="11" name="Encounters" tags="" position="377,288" size="100,100">
+# ENCOUNTERS
+The meetings are a special type of passage that includes a left zone with images, music and two sections: **At a Glance** and **Conclusion**, as shown in the picture:
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/encuentro.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/encuentro.jpg)&lt;/a&gt;
+
+As we can see, the structure of an encounter-type passage has three parts:
+
+## Content
+The general structure of the passage is the same as any other in terms of levels of titles, links and so on.   
+
+ 
+## Multimedia content within meetings
+Within an encounter there is specific multimedia content that is shown in a special way in the encounter-type passages. The introduction codes must be written at the beginning of the passage for encounter images, music, maps and audio, before any other content.
+
+* The music, maps and images located **before** the title of the meeting behave differently from the multimedia content in the rest of the passages: they will appear in the left area of the meeting. Only one music track and up to four images/maps can be included.  
+* The images and audios **after** the first title in the encounters behave the same as in any other type of Passage. Thus, any number of pictures can be included, but only one audio.  
+
+An example of this can be seen in the image at the beginning of this entry.
+
+## Music
+**In the encounter-type passages**, music is included that can set the scene. It has to be introduced **before** any other content in the passage, with the following format
+
+&lt;div class=&quot;codigo cuadro&quot;&gt;\!\[music](www.routetothemusic.mp3)&lt;/div&gt;
+
+The music will appear in the left zone, in an on/off button.
+
+## Maps
+**In the encounter type passages, one or more maps can be included in the same area as the images, which may have relevant information hyperlinked (see [[Maps]]). Clicking on the map will open it in a floating window.  
+
+The code has to be entered **before** any other content in the passage, with the following format
+
+&lt;div class=&quot;codigo cuadro&quot;&gt;\!\[map](@xxxxx)&lt;/div&gt;
+
+Where **@xxxxx** is the name of the tag that has the map we link.  
+
+The maps appear in the left zone, together with the images.
+
+## At a Glance and Conclusion
+This area shows what the characters will see at the meeting. The most common spells and incantations are usually included, such as *Perception*, *Investigation* or *Detect Magic*.  
+&lt;div class=&quot;picture&quot;&gt;
+&lt;div class=&quot;codigo&quot;&gt;AT A GLANCE&lt;br/&gt;
+---&lt;/div&gt;
+Text to be displayed in the **At a Glance** area.
+&lt;/div&gt;
+&lt;br/&gt;
+
+The &quot;Conclusion&quot; section is reserved for notes that indicate the links to the next match or what the players need to have seen or done before moving on to the next one.  
+It is also a short summary so that the DM can &quot;browse&quot; the adventure quickly.
+
+&lt;div class=&quot;table&quot;&gt;
+&lt;div class=&quot;codigo&quot;&gt;CONCLUSION&lt;br/&gt;
+---&lt;/div&gt;
+Text to be displayed in the **Conclusion** area.
+&lt;/div&gt;
+&lt;br/&gt;</tw-passagedata><tw-passagedata pid="12" name="Hosting files online" tags="" position="1002,293" size="100,100">
+# ONLINE FILE HOSTING
+For the inclusion of multimedia files, it is necessary to upload them somewhere online. Here are some options on where to do it:
+
+## Dropbox
+Dropbox is one of the most famous online tools
+
+### Step 1: Create Dropbox account and sign in
+First we went to the Dropbox website and created a new account. Dropbox asks for our first and last names, an email and a password. Once the account is created we will have 2gb of free cloud hosting.
+
+We can link Dropbox with our Smartphone by downloading the application in the AppStore (iPhone) or Play Store (Android), or we can download the PC/MacOsX version. It is not necessary to have our account linked to our phone or computer, but we will improve productivity and can use it more easily.
+
+### Step 2: Upload files to Dropbox
+The process of uploading files to Dropbox to use it as an image server is very easy. If we have Dropbox open in the browser we just have to grab and drag the desired files from our computer to the Dropbox window and drop them. We can also click on the icon of the sheet of paper with a plus to be able to add one or more files.
+
+If we have installed Dropbox on our PC or MacOSx it will have created a folder called Dropbox on the desktop or in My Documents where we can drag the files to upload them.
+
+We can create folders to keep our files organized.
+
+### Step 3: How to get the link to the file on the server
+If we go to Dropbox.com, click on the file we want to use and go to Share we&#39;ll see that it offers &quot;create a link&quot;. That URL will take us to the file we&#39;ve uploaded but not to the URL of the server folder where it&#39;s hosted. If we use this first URL in an HTML file as the source (source or src in HTML) for an image tag we won&#39;t be able to see the file as we need to have the address of the server folder where it&#39;s hosted.
+
+Dropbox doesn&#39;t give us that URL, it just gives us a URL that takes us to the gallery and opens that image:
+
+https://www.dropbox.com/s/oo4yazg7rwiug3x/dropbox-image.jpg.
+
+The URL takes us to the image, but if we use it as src of an image it won&#39;t work for us. Why? Because using Dropbox as an image host gives us the URL to a gallery, not to the native image file.
+
+There is a way to modify the URL and be able to point directly to the file hosted in the server. To do this, we only have to change https://www.dropbox.com/ to https://dl.dropboxusercontent.com/.
+
+Our new URL would be: https://dl.dropboxusercontent.com/s/oo4yazg7rwiug3x/dropbox-image.jpg.
+
+This URL points directly to the image, with no more HTML code, so we can use it in our email signatures or websites without fear of them expiring and being deleted.
+</tw-passagedata><tw-passagedata pid="13" name="Twine" tags="" position="997,168" size="100,100">
+# TWINE
+Twine is a digital tool that makes it very easy to generate networks of interrelated texts. Through a very simple system of links, anyone can write an interactive story, placing in its text options that lead to different parts of the story. You can download Twine for free from &lt;a href=&quot;https://twinery.org/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;here&lt;/a&gt; or use its online version.
+
+Once you install it, create a story and go to *Passages*. </tw-passagedata><tw-passagedata pid="14" name="Tools for maps" tags="" position="1117,167" size="100,100">
+# MAPPING TOOLS
+
+## Inkarnate
+Inkarnate is a tool that allows us to create fantastic maps without the need to install any program, it can be used for free or you can pay an annual fee of $25 to add enough resources to it.  
+
+This is an excellent option for all those who do not use design tools or are looking for alternatives to those already on the market.  
+
+You can start using Inkarnate &lt;a href=&quot;https://inkarnate.com/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;here&lt;/a&gt;.
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/EKmEmU8wfNA&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+## Random Dungeon Generator
+Random Dungeon Generator is a highly configurable random dungeon generator that has been around since 1999 and gives very good results. If you are short of time, Random Dungeon Generator is your ally with dungeons. You can leave it free or set some parameters and let it work its magic.
+
+You can start using Random Dungeon Generator here.
+
+## Random Dungeon Map Creator
+In the same spirit as the previous one, Random Dungeon Map Creator creates random maps with a default setting, except that it doesn&#39;t create the content of the dungeons, that will have to be done by the DM.
+
+You can start using Random Dungeon Map Creator &lt;a href=&quot;http://www.gozzys.com/dungeon-maps&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;here&lt;/a&gt;.</tw-passagedata><tw-passagedata pid="15" name="Additional tools" tags="" position="1121,293" size="100,100">
+# EDITING TOOLS
+Here is information on some free editing tools that can be useful in creating designs and maps.
+
+## GIMP
+GIMP is an open source image editing application that, unlike its major competitor, is also available for Linux as well as Windows or MacOS. All the files required for installation can be found on the official project page. This open source photo editor is extended by means of extensions, which, added to the advantages that free software brings in terms of collaborative development, has generated, over the years, a constantly growing range of functions.  
+
+Download GIMP &lt;a href=&quot;http://www.gimp.org.es/modules/mydownloads/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;here&lt;/a&gt;.
+
+## Paint.NET
+Paint.NET, the freeware developed by students, once open source, is now sponsored by Microsoft, which determines its incompatibility with Linux and macOS and the need for a Windows operating system at least in the seventh version to use it.  
+
+Download Paint.NET &lt;a href=&quot;https://www.getpaint.net/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;here&lt;/a&gt;.
+
+## Pixlr
+Pixlr facilitates image transformation with a very complete editor. Whether you&#39;re applying a quick fix to your photos or adding effects, overlays or borders, Pixlr has everything you need to do it. Plus, Pixlr is easy and free.  
+
+Download Pixlr &lt;a href=&quot;https://pixlr.com/x/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;here&lt;/a&gt;.
+
+## Photoscape
+Another digital image editing and management tool is Photoscape, along with GIMP one of the most widespread free alternatives to Photoshop and very popular especially among amateur photographers. Because of its ease of use and its robust and extensive functionality for both the private and semi-professional user, this is a very satisfying software. Photoscape offers a lot of basic retouching functions as cutting, applying effects, adding objects or correcting clarity, contrast and colour, but it is also possible to work on several photos at once in order to, for example, cut, name and correct them.  
+
+Download Photoscape &lt;a href=&quot;http://www.photoscape.org/ps/main/index.php&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;here&lt;/a&gt;.</tw-passagedata><tw-passagedata pid="16" name="Linked SRD5 content" tags="" position="641,288" size="100,100">
+# SRD5 CONTENT LINKABLE
+The following words will become a link to the entry in the SRD5 manual when they are written between asterisks (click on the word each to see the entry)
+
+## Spells
+*Acid Arrow*  
+*Acid Splash*  
+*Aid*  
+*Alarm*  
+*Alter Self*  
+*Animal Friendship*  
+*Animal Messenger*  
+*Animal Shapes*  
+*Animate Dead*  
+*Animate Objects*  
+*Antilife Shell*  
+*Antimagic Field*  
+*Antipathy/Sympathy*  
+*Arcane Eye*  
+*Arcane Hand*  
+*Arcane Lock*  
+*Arcane Sword*  
+*Arcanist&amp;#39;s Magic Aura*  
+*Astral Projection*  
+*Augury*  
+*Awaken*  
+*Bane*  
+*Banishment*  
+*Barkskin*  
+*Beacon of Hope*  
+*Bestow Curse*  
+*Black Tentacles*  
+*Blade Barrier*  
+*Bless*  
+*Blight*  
+*Blindness/Deafness*  
+*Blink*  
+*Blur*  
+*Branding Smite*  
+*Burning Hands*  
+*Call Lightning*  
+*Calm Emotions*  
+*Chain Lightning*  
+*Charm Person*  
+*Chill Touch*  
+*Circle of Death*  
+*Clairvoyance*  
+*Clone*  
+*Cloudkill*  
+*Color Spray*  
+*Command*  
+*Commune*  
+*Commune with Nature*  
+*Comprehend Languages*  
+*Compulsion*  
+*Cone of Cold*  
+*Confusion*  
+*Conjure Animals*  
+*Conjure Celestial*  
+*Conjure Elemental*  
+*Conjure Fey*  
+*Conjure Minor Elementals*  
+*Conjure Woodland Beings*  
+*Contact Other Plane*  
+*Contagion*  
+*Contingency*  
+*Continual Flame*  
+*Control Water*  
+*Control Weather*  
+*Counterspell*  
+*Create Food and Water*  
+*Create Undead*  
+*Create or Destroy Water*  
+*Creation*  
+*Cure Wounds*  
+*Dancing Lights*  
+*Darkness*  
+*Darkvision*  
+*Daylight*  
+*Death Ward*  
+*Delayed Blast Fireball*  
+*Demiplane*  
+*Detect Evil and Good*  
+*Detect Magic*  
+*Detect Poison and Disease*  
+*Detect Thoughts*  
+*Dimension Door*  
+*Disguise Self*  
+*Disintegrate*  
+*Dispel Evil and Good*  
+*Dispel Magic*  
+*Divination*  
+*Divine Favor*  
+*Divine Word*  
+*Dominate Beast*  
+*Dominate Monster*  
+*Dominate Person*  
+*Dream*  
+*Druidcraft*  
+*Earthquake*  
+*Eldritch Blast*  
+*Enhance Ability*  
+*Enlarge/Reduce*  
+*Entangle*  
+*Enthrall*  
+*Etherealness*  
+*Expeditious Retreat*  
+*Eyebite*  
+*Fabricate*  
+*Faerie Fire*  
+*Faithful Hound*  
+*False Life*  
+*Fear*  
+*Feather Fall*  
+*Feeblemind*  
+*Find Familiar*  
+*Find Steed*  
+*Find Traps*  
+*Find the Path*  
+*Finger of Death*  
+*Fire Bolt*  
+*Fire Shield*  
+*Fire Storm*  
+*Fireball*  
+*Flame Blade*  
+*Flame Strike*  
+*Flaming Sphere*  
+*Flesh to Stone*  
+*Floating Disk*  
+*Fly*  
+*Fog Cloud*  
+*Forbiddance*  
+*Forcecage*  
+*Foresight*  
+*Freedom of Movement*  
+*Freezing Sphere*  
+*Gaseous Form*  
+*Gate*  
+*Geas*  
+*Gentle Repose*  
+*Giant Insect*  
+*Glibness*  
+*Globe of Invulnerability*  
+*Glyph of Warding*  
+*Goodberry*  
+*goodberries*  
+*Grease*  
+*Greater Invisibility*  
+*Greater Restoration*  
+*Guardian of Faith*  
+*Guards and Wards*  
+*Guidance*  
+*Guiding Bolt*  
+*Gust of Wind*  
+*Hallow*  
+*Hallucinatory Terrain*  
+*Harm*  
+*Haste*  
+*Heal*  
+*Healing Word*  
+*Heat Metal*  
+*Hellish Rebuke*  
+*Heroes&amp;#39; Feast*  
+*Heroism*  
+*Hideous Laughter*  
+*Hold Monster*  
+*Hold Person*  
+*Holy Aura*  
+*Hunter&amp;#39;s Mark*  
+*Hypnotic Pattern*  
+*Ice Storm*  
+*Identify*  
+*Illusory Script*  
+*Imprisonment*  
+*Incendiary Cloud*  
+*Inflict Wounds*  
+*Insect Plague*  
+*Instant Summons*  
+*Invisibility*  
+*Irresistible Dance*  
+*Jump*  
+*Knock*  
+*Legend Lore*  
+*Lesser Restoration*  
+*Levitate*  
+*Light*  
+*Lightning Bolt*  
+*Locate Animals or Plants*  
+*Locate Creature*  
+*Locate Object*  
+*Longstrider*  
+*Mage Armor*  
+*Mage Hand*  
+*Magic Circle*  
+*Magic Jar*  
+*Magic Missile*  
+*Magic Mouth*  
+*Magic Weapon*  
+*Magnificent Mansion*  
+*Major Image*  
+*Mass Cure Wounds*  
+*Mass Heal*  
+*Mass Healing Word*  
+*Mass Suggestion*  
+*Maze*  
+*Meld into Stone*  
+*Mending*  
+*Message*  
+*Meteor Swarm*  
+*Mind Blank*  
+*Minor Illusion*  
+*Mirage Arcane*  
+*Mirror Image*  
+*Mislead*  
+*Misty Step*  
+*Modify Memory*  
+*Moonbeam*  
+*Move Earth*  
+*Nondetection*  
+*Pass without Trace*  
+*Passwall*  
+*Phantasmal Killer*  
+*Phantom Steed*  
+*Planar Ally*  
+*Planar Binding*  
+*Plane Shift*  
+*Plant Growth*  
+*Poison Spray*  
+*Polymorph*  
+*Power Word Kill*  
+*Power Word Stun*  
+*Prayer of Healing*  
+*Prestidigitation*  
+*Prismatic Spray*  
+*Prismatic Wall*  
+*Private Sanctum*  
+*Produce Flame*  
+*Programmed Illusion*  
+*Project Image*  
+*Protection from Energy*  
+*Protection from Evil and Good*  
+*Protection from Poison*  
+*Purify Food and Drink*  
+*Raise Dead*  
+*Ray of Enfeeblement*  
+*Ray of Frost*  
+*Regenerate*  
+*Reincarnate*  
+*Remove Curse*  
+*Resilient Sphere*  
+*Resistance*  
+*Resurrection*  
+*Reverse Gravity*  
+*Revivify*  
+*Rope Trick*  
+*Sacred Flame*  
+*Sanctuary*  
+*Scorching Ray*  
+*Scrying*  
+*Secret Chest*  
+*See Invisibility*  
+*Seeming*  
+*Sending*  
+*Sequester*  
+*Shapechange*  
+*Shatter*  
+*Shield*  
+*Shield of Faith*  
+*Shillelagh*  
+*Shocking Grasp*  
+*Silence*  
+*Silent Image*  
+*Simulacrum*  
+*Sleep*  
+*Sleet Storm*  
+*Slow*  
+*Spare the Dying*  
+*Speak with Animals*  
+*Speak with Dead*  
+*Speak with Plants*  
+*Spider Climb*  
+*Spike Growth*  
+*Spirit Guardians*  
+*Spiritual Weapon*  
+*Stinking Cloud*  
+*Stone Shape*  
+*Stoneskin*  
+*Storm of Vengeance*  
+*Suggestion*  
+*Sunbeam*  
+*Sunburst*  
+*Symbol*  
+*Telekinesis*  
+*Telepathic Bond*  
+*Teleport*  
+*Teleportation Circle*  
+*Thaumaturgy*  
+*Thunderwave*  
+*Time Stop*  
+*Tiny Hut*  
+*Tongues*  
+*Transport via Plants*  
+*Tree Stride*  
+*True Polymorph*  
+*True Resurrection*  
+*True Seeing*  
+*True Strike*  
+*Unseen Servant*  
+*Vampiric Touch*  
+*Vicious Mockery*  
+*Wall of Fire*  
+*Wall of Force*  
+*Wall of Ice*  
+*Wall of Stone*  
+*Wall of Thorns*  
+*Warding Bond*  
+*Water Breathing*  
+*Water Walk*  
+*Web*  
+*Weird*  
+*Wind Walk*  
+*Wind Wall*  
+*Wish*  
+*Word of Recall*  
+*Zone of Truth*  
+
+## Monsters
+*Aboleth*  
+*Acolyte*  
+*Adult Black Dragon*  
+*Adult Blue Dragon*  
+*Adult Brass Dragon*  
+*Adult Bronze Dragon*  
+*Adult Copper Dragon*  
+*Adult Gold Dragon*  
+*Adult Green Dragon*  
+*Adult Red Dragon*  
+*Adult Silver Dragon*  
+*Adult White Dragon*  
+*Air Elemental*  
+*Ancient Black Dragon*  
+*Ancient Blue Dragon*  
+*Ancient Brass Dragon*  
+*Ancient Bronze Dragon*  
+*Ancient Copper Dragon*  
+*Ancient Gold Dragon*  
+*Ancient Green Dragon*  
+*Ancient Red Dragon*  
+*Ancient Silver Dragon*  
+*Ancient White Dragon*  
+*Androsphinx*  
+*Animated Armor*  
+*Ankheg*  
+*Ape*  
+*Archmage*  
+*Assassin*  
+*Awakened Shrub*  
+*Awakened Tree*  
+*Axe Beak*  
+*Azer*  
+*Baboon*  
+*Badger*  
+*Balor*  
+*Bandit*  
+*bandits*  
+*Bandit Captain*  
+*Barbed Devil*  
+*Basilisk*  
+*Bat*  
+*Bearded Devil*  
+*Behir*  
+*Berserker*  
+*Black Dragon Wyrmling*  
+*Black Pudding*  
+*Black bear*  
+*Blink Dog*  
+*Blood Hawk*  
+*Blue Dragon Wyrmling*  
+*Boar*  
+*Bone Devil*  
+*Brass Dragon Wyrmling*  
+*Bronze Dragon Wyrmling*  
+*Brown Bear*  
+*Bugbear*  
+*Bulette*  
+*Camel*  
+*Cat*  
+*Centaur*  
+*Chain Devil*  
+*Chimera*  
+*Chuul*  
+*Clay Golem*  
+*Cloaker*  
+*Cloud Giant*  
+*Cockatrice*  
+*Commoner*  
+*commoners*  
+*Constrictor Snake*  
+*Copper Dragon Wyrmling*  
+*Couatl*  
+*Crab*  
+*Crocodile*  
+*Cult Fanatic*  
+*Cultist*  
+*Darkmantle*  
+*Death Dog*  
+*Deer*  
+*Deva*  
+*Dire Wolf*  
+*Djinni*  
+*Doppelganger*  
+*Draft Horse*  
+*Dragon Turtle*  
+*Dretch*  
+*Drider*  
+*Druid*  
+*Dryad*  
+*Duergar*  
+*Dust Mephit*  
+*Eagle*  
+*Earth Elemental*  
+*Efreeti*  
+*Elephant*  
+*Elf, Drow*  
+*Elk*  
+*Erinyes*  
+*Ettercap*  
+*Ettin*  
+*Fire Elemental*  
+*Fire Giant*  
+*Flesh Golem*  
+*Flying Snake*  
+*Flying Sword*  
+*Frog*  
+*Frost Giant*  
+*Gargoyle*  
+*Gelatinous Cube*  
+*Ghast*  
+*Ghost*  
+*Ghoul*  
+*Giant Ape*  
+*Giant Badger*  
+*Giant Bat*  
+*Giant Boar*  
+*Giant Centipede*  
+*Giant Constrictor Snake*  
+*Giant Crab*  
+*Giant Crocodile*  
+*Giant Eagle*  
+*Giant Elk*  
+*Giant Fire Beetle*  
+*Giant Frog*  
+*Giant Goat*  
+*Giant Hyena*  
+*Giant Lizard*  
+*Giant Octopus*  
+*Giant Owl*  
+*Giant Poisonous Snake*  
+*Giant Rat*  
+*Giant Scorpion*  
+*Giant Sea Horse*  
+*Giant Shark*  
+*Giant Spider*  
+*Giant Toad*  
+*Giant Vulture*  
+*Giant Wasp*  
+*Giant Weasel*  
+*Giant Wolf Spider*  
+*Gibbering Mouther*  
+*Glabrezu*  
+*Gladiator*  
+*Gnoll*  
+*Gnome, Deep (Svirfneblin)*  
+*Goat*  
+*Goblin*  
+*Gold Dragon Wyrmling*  
+*Gorgon*  
+*Gray Ooze*  
+*Green Dragon Wyrmling*  
+*Green Hag*  
+*Grick*  
+*Griffon*  
+*Grimlock*  
+*Guard*  
+*Guardian Naga*  
+*Gynosphinx*  
+*Half-Red Dragon Veteran*  
+*Harpy*  
+*Hawk*  
+*Hell Hound*  
+*Hezrou*  
+*Hill Giant*  
+*Hippogriff*  
+*Hobgoblin*  
+*Homunculus*  
+*Horned Devil*  
+*Hunter Shark*  
+*Hydra*  
+*Hyena*  
+*Ice Devil*  
+*Ice Mephit*  
+*Imp*  
+*Invisible Stalker*  
+*Iron Golem*  
+*Jackal*  
+*Killer Whale*  
+*Knight*  
+*Kobold*  
+*Kraken*  
+*Lamia*  
+*Lemure*  
+*Lich*  
+*Lion*  
+*Lizard*  
+*Lizardfolk*  
+*Mage*  
+*Magma Mephit*  
+*Magmin*  
+*Mammoth*  
+*Manticore*  
+*Marilith*  
+*Mastiff*  
+*Medusa*  
+*Merfolk*  
+*Merrow*  
+*Merrows*  
+*Mimic*  
+*Minotaur*  
+*Minotaur Skeleton*  
+*Mule*  
+*Mummy*  
+*Mummy Lord*  
+*Nalfeshnee*  
+*Night Hag*  
+*Nightmare*  
+*Noble*  
+*Ochre Jelly*  
+*Octopus*  
+*Ogre*  
+*Ogre Zombie*  
+*Oni*  
+*Orc*  
+*orcs*  
+*Otyugh*  
+*Owl*  
+*Owlbear*  
+*Panther*  
+*Pegasus*  
+*Phase Spider*  
+*Pit Fiend*  
+*Planetar*  
+*Plesiosaurus*  
+*Poisonous Snake*  
+*Polar Bear*  
+*Pony*  
+*Priest*  
+*Pseudodragon*  
+*Purple Worm*  
+*Quasit*  
+*Quipper*  
+*Rakshasa*  
+*Rat*  
+*Raven*  
+*Red Dragon Wyrmling*  
+*Reef Shark*  
+*Remorhaz*  
+*Rhinoceros*  
+*Riding Horse*  
+*Roc*  
+*Roper*  
+*Rug of Smothering*  
+*Rust Monster*  
+*Saber-Toothed Tiger*  
+*Sahuagin*  
+*Salamander*  
+*Satyr*  
+*Scorpion*  
+*Scout*  
+*Sea Hag*  
+*sea hags*  
+*Sea Horse*  
+*Shadow*  
+*Shambling Mound*  
+*Shield Guardian*  
+*Shrieker*  
+*Silver Dragon Wyrmling*  
+*Skeleton*  
+*Solar*  
+*Specter*  
+*Spider*  
+*Spirit Naga*  
+*Sprite*  
+*Sprites*  
+*Spy*  
+*Steam Mephit*  
+*Stirge*  
+*Stone Giant*  
+*Stone Golem*  
+*Storm Giant*  
+*Succubus/Incubus*  
+*Swarm of Bats*  
+*Swarm of Insects*  
+*Swarm of Poisonous Snakes*  
+*Swarm of Quippers*  
+*Swarm of Rats*  
+*Swarm of Ravens*  
+*Tarrasque*  
+*Thug*  
+*Tiger*  
+*Treant*  
+*Tribal Warrior*  
+*Triceratops*  
+*Troll*  
+*Tyrannosaurus Rex*  
+*Unicorn*  
+*Vampire*  
+*Vampire Spawn*  
+*Veteran*  
+*Violet Fungus*  
+*Vrock*  
+*Vulture*  
+*Warhorse*  
+*Warhorse Skeleton*  
+*Water Elemental*  
+*Weasel*  
+*Werebear*  
+*Wereboar*  
+*Wererat*  
+*Weretiger*  
+*Werewolf*  
+*White Dragon Wyrmling*  
+*Wight*  
+*Will-o&amp;#39;-Wisp*  
+*Winter Wolf*  
+*Wolf*  
+*Wolves*  
+*Worg*  
+*Wraith*  
+*Wyvern*  
+*Xorn*  
+*Young Black Dragon*  
+*Young Blue Dragon*  
+*Young Brass Dragon*  
+*Young Bronze Dragon*  
+*Young Copper Dragon*  
+*Young Gold Dragon*  
+*Young Green Dragon*  
+*Young Red Dragon*  
+*Young Silver Dragon*  
+*Young White Dragon*  
+*Zombie*  
+
+## Magic Items
+*Adamantine Armor*  
+*Ammunition, +1, +2 or +3*  
+*Amulet of Health*  
+*Amulet of Proof against Detection and Location*  
+*Amulet of the Planes*  
+*Animated Shield*  
+*Apparatus of the Crab*  
+*Armor of Invulnerability*  
+*Armor of Resistance*  
+*Armor of Vulnerability*  
+*Armor, +1, +2, or +3*  
+*Arrow of Slaying*  
+*Arrow-Catching Shield*  
+*Bag of Beans*  
+*Bag of Devouring*  
+*Bag of Holding*  
+*Bag of Tricks*  
+*Bead of Force*  
+*Belt of Dwarvenkind*  
+*Belt of Giant Strength*  
+*Berserker Axe*  
+*Boots of Elvenkind*  
+*Boots of Levitation*  
+*Boots of Speed*  
+*Boots of Striding and Springing*  
+*Boots of the Winterlands*  
+*Bowl of Command Water Elementals*  
+*Bracers of Archery*  
+*Bracers of Defense*  
+*Brazier of Commanding Fire Elementals*  
+*Brooch of Shielding*  
+*Broom of Flying*  
+*Candle of Invocation*  
+*Cape of the Mountebank*  
+*Carpet of Flying*  
+*Censer of Controlling Air Elementals*  
+*Chime of Opening*  
+*Circlet of Blasting*  
+*Cloak of Arachnida*  
+*Cloak of Displacement*  
+*Cloak of Elvenkind*  
+*Cloak of Protection*  
+*Cloak of the Bat*  
+*Cloak of the Manta Ray*  
+*Crystal Ball*  
+*Cube of Force*  
+*Cubic Gate*  
+*Dagger of Venom*  
+*Dancing Sword*  
+*Decanter of Endless Water*  
+*Deck of Illusions*  
+*Deck of Many Things*  
+*Defender*  
+*Demon Armor*  
+*Dimensional Shackles*  
+*Dragon Scale Mail*  
+*Dragon Slayer*  
+*Dust of Disappearance*  
+*Dust of Dryness*  
+*Dust of Sneezing and Choking*  
+*Dwarven Plate*  
+*Dwarven Thrower*  
+*Efficient Quiver*  
+*Efreeti Bottle*  
+*Elemental Gem*  
+*Elven Chain*  
+*Eversmoking Bottle*  
+*Eyes of Charming*  
+*Eyes of Minute Seeing*  
+*Eyes of the Eagle*  
+*Feather Token*  
+*Figurine of Wondrous Power*  
+*Flame Tongue*  
+*Folding Boat*  
+*Frost Brand*  
+*Gauntlets of Ogre Power*  
+*Gem of Brightness*  
+*Gem of Seeing*  
+*Giant Slayer*  
+*Glamoured Studded Leather*  
+*Gloves of Missile Snaring*  
+*Gloves of Swimming and Climbing*  
+*Goggles of Night*  
+*Hammer of Thunderbolts*  
+*Handy Haversack*  
+*Hat of Disguise*  
+*Headband of Intellect*  
+*Helm of Brilliance*  
+*Helm of Comprehending Languages*  
+*Helm of Telepathy*  
+*Helm of Teleportation*  
+*Holy Avenger*  
+*Horn of Blasting*  
+*Horn of Valhalla*  
+*Horseshoes of Speed*  
+*Horseshoes of a Zephyr*  
+*Immovable Rod*  
+*Instant Fortress*  
+*Ioun Stone*  
+*Iron Bands of Binding*  
+*Iron Flask*  
+*Javelin of Lightning*  
+*Lantern of Revealing*  
+*Luck Blade*  
+*Mace of Disruption*  
+*Mace of Smiting*  
+*Mace of Terror*  
+*Mantle of Spell Resistance*  
+*Manual of Bodily Health*  
+*Manual of Gainful Exercise*  
+*Manual of Golems*  
+*Manual of Quickness of Action*  
+*Marvelous Pigments*  
+*Medallion of Thoughts*  
+*Mirror of Life Trapping*  
+*Mithral Armor*  
+*Necklace of Adaption*  
+*Necklace of Fireballs*  
+*Necklace of Prayer Beads*  
+*Nine Lives Stealer*  
+*Oathbow*  
+*Oil of Etherealness*  
+*Oil of Sharpness*  
+*Oil of Slipperiness*  
+*Orb of Dragonkind*  
+*Pearl of Power*  
+*Periapt of Health*  
+*Periapt of Proof against Poison*  
+*Periapt of Wound Closure*  
+*Philter of Love*  
+*Pipes of Haunting*  
+*Pipes of the Sewers*  
+*Plate Armor of Etherealness*  
+*Portable Hole*  
+*Potion of Animal Friendship*  
+*Potion of Clairvoyance*  
+*Potion of Climbing*  
+*Potion of Diminution*  
+*Potion of Flying*  
+*Potion of Gaseous Form*  
+*Potion of Giant Strength*  
+*Potion of Growth*  
+*Potion of Healing*  
+*Potion of Greater Healing*  
+*Potion of Superior Healing*  
+*Potion of Supreme Healing*  
+*Potions of Healing*  
+*Potions of Greater Healing*  
+*Potions of Superior Healing*  
+*Potions of Supreme Healing*  
+*Potion of Heroism*  
+*Potion of Invisibility*  
+*Potion of Mind Reading*  
+*Potion of Poison*  
+*Potion of Resistance*  
+*Potion of Speed*  
+*Potion of Water Breathing*  
+*Restorative Ointment*  
+*Ring of Animal Influence*  
+*Ring of Djinni*  
+*Ring of Elemental Command*  
+*Ring of Evasion*  
+*Ring of Feather Falling*  
+*Ring of Free Action*  
+*Ring of Invisibility*  
+*Ring of Jumping*  
+*Ring of Mind Shielding*  
+*Ring of Protection*  
+*Ring of Regeneration*  
+*Ring of Resistance*  
+*Ring of Shooting Stars*  
+*Ring of Spell Storing*  
+*Ring of Spell Turning*  
+*Ring of Swimming*  
+*Ring of Telekinesis*  
+*Ring of Three Wishes*  
+*Ring of Warmth*  
+*Ring of Water Walking*  
+*Ring of X-ray Vision*  
+*Ring of the Ram*  
+*Robe of Eyes*  
+*Robe of Scintillating Colors*  
+*Robe of Stars*  
+*Robe of Useful Items*  
+*Robe of the Archmagi*  
+*Rod of Absorption*  
+*Rod of Alertness*  
+*Rod of Lordly Might*  
+*Rod of Rulership*  
+*Rod of Security*  
+*Rope of Climbing*  
+*Rope of Entanglement*  
+*Scarab of Protection*  
+*Scimitar of Speed*  
+*Shield of Missile Attraction*  
+*Shield, +1, +2, or +3*  
+*Slippers of Spider Climbing*  
+*Sovereign Glue*  
+*Spell Scroll*  
+*spell scrolls*  
+*Spellguard Shield*  
+*Sphere of Annihilation*  
+*Staff of Charming*  
+*Staff of Fire*  
+*Staff of Frost*  
+*Staff of Healing*  
+*Staff of Power*  
+*Staff of Striking*  
+*Staff of Swarming Insects*  
+*Staff of Thunder and Lightning*  
+*Staff of Withering*  
+*Staff of the Magi*  
+*Staff of the Python*  
+*Staff of the Woodlands*  
+*Stone of Controlling Earth Elementals*  
+*Stone of Good Luck (Luckstone)*  
+*Sun Blade*  
+*Sword of Life Stealing*  
+*Sword of Sharpness*  
+*Sword of Wounding*  
+*Talisman of Pure Good*  
+*Talisman of Ultimate Evil*  
+*Talisman of the Sphere*  
+*Tome of Clear Thought*  
+*Tome of Leadership and Influence*  
+*Tome of Understanding*  
+*Trident of Fish Command*  
+*Universal Solvent*  
+*Vicious Weapon*  
+*Vorpal Sword*  
+*Wand of Binding*  
+*Wand of Enemy Detection*  
+*Wand of Fear*  
+*Wand of Fireballs*  
+*Wand of Lightning Bolts*  
+*Wand of Magic Detection*  
+*Wand of Magic Missiles*  
+*Wand of Paralysis*  
+*Wand of Polymorph*  
+*Wand of Secrets*  
+*Wand of Web*  
+*Wand of Wonder*  
+*Wand of the War Mage, +1, +2, or +3*  
+*Weapon, +1, +2, or +3*  
+*Well of Many Worlds*  
+*Wind Fan*  
+*Winged Boots*  
+*Wings of Flying*  
+*+1 padded armor*  
+*+2 padded armor*  
+*+3 padded armor*  
+*+1 leather armor*  
+*+2 leather armor*  
+*+3 leather armor*  
+*+1 studded leather armor*  
+*+2 studded leather armor*  
+*+3 studded leather armor*  
+*+1 studded leather*  
+*+2 studded leather*  
+*+3 studded leather*  
+*+1 hide armor*  
+*+2 hide armor*  
+*+3 hide armor*  
+*+1 chain shirt*  
+*+2 chain shirt*  
+*+3 chain shirt*  
+*+1 scale mail*  
+*+2 scale mail*  
+*+3 scale mail*  
+*+1 breastplate*  
+*+2 breastplate*  
+*+3 breastplate*  
+*+1 half plate*  
+*+2 half plate*  
+*+3 half plate*  
+*+1 ring mail*  
+*+2 ring mail*  
+*+3 ring mail*  
+*+1 chain mail*  
+*+2 chain mail*  
+*+3 chain mail*  
+*+1 splint armor*  
+*+2 splint armor*  
+*+3 splint armor*  
+*+1 plate armour*  
+*+2 plate armour*  
+*+3 plate armour*  
+*+1 shield*  
+*+2 shield*  
+*+3 shield*  
+*+1 club*  
+*+2 club*  
+*+3 club*  
+*+1 dagger*  
+*+2 dagger*  
+*+3 dagger*  
+*+1 gratclub*  
+*+2 gratclub*  
+*+3 gratclub*  
+*+1 handaxe*  
+*+2 handaxe*  
+*+3 handaxe*  
+*+1 javelin*  
+*+2 javelin*  
+*+3 javelin*  
+*+1 light hammer*  
+*+2 light hammer*  
+*+3 light hammer*  
+*+1 mace*  
+*+2 mace*  
+*+3 mace*  
+*+1 quarterstaff*  
+*+2 quarterstaff*  
+*+3 quarterstaff*  
+*+1 sickle*  
+*+2 sickle*  
+*+3 sickle*  
+*+1 spear*  
+*+2 spear*  
+*+3 spear*  
+*+1 light crossbow*  
+*+2 light crossbow*  
+*+3 light crossbow*  
+*+1 dart*  
+*+2 dart*  
+*+3 dart*  
+*+1 shortbow*  
+*+2 shortbow*  
+*+3 shortbow*  
+*+1 sling*  
+*+2 sling*  
+*+3 sling*  
+*+1 battleaxe*  
+*+2 battleaxe*  
+*+3 battleaxe*  
+*+1 flail*  
+*+2 flail*  
+*+3 flail*  
+*+1 glaive*  
+*+2 glaive*  
+*+3 glaive*  
+*+1 grataxe*  
+*+2 grataxe*  
+*+3 grataxe*  
+*+1 gratsword*  
+*+2 gratsword*  
+*+3 gratsword*  
+*+1 halberd*  
+*+2 halberd*  
+*+3 halberd*  
+*+1 lance*  
+*+2 lance*  
+*+3 lance*  
+*+1 longsword*  
+*+2 longsword*  
+*+3 longsword*  
+*+1 maul*  
+*+2 maul*  
+*+3 maul*  
+*+1 morningstar*  
+*+2 morningstar*  
+*+3 morningstar*  
+*+1 pike*  
+*+2 pike*  
+*+3 pike*  
+*+1 rapier*  
+*+2 rapier*  
+*+3 rapier*  
+*+3 rapier*  
+*+1 scimitar*  
+*+2 scimitar*  
+*+3 scimitar*  
+*+1 shortsword*  
+*+2 shortsword*  
+*+3 shortsword*  
+*+1 trident*  
+*+2 trident*  
+*+3 trident*  
+*+1 war pick*  
+*+2 war pick*  
+*+3 war pick*  
+*+1 warhammer*  
+*+2 warhammer*  
+*+3 warhammer*  
+*+1 whip*  
+*+2 whip*  
+*+3 whip*  
+*+1 blowgun*  
+*+2 blowgun*  
+*+3 blowgun*  
+*+1 hand crossbow*  
+*+2 hand crossbow*  
+*+3 hand crossbow*  
+*+1 heavy crossbow*  
+*+2 heavy crossbow*  
+*+3 heavy crossbow*  
+*+1 longbow*  
+*+2 longbow*  
+*+3 longbow*  
+*+1 net*  
+*+2 net*  
+*+3 net*  </tw-passagedata><tw-passagedata pid="17" name="Homebrewery" tags="" position="1122,408" size="100,100">
+# HOMEBREWERY
+
+&lt;a href=&quot;https://homebrewery.naturalcrit.com/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;Homebrewery&lt;/a&gt; is a tool for formatting adventures. Using markdown, you can import any text and give it the look of an official adventure of the wizards of the coast. It is a Scott Tolksdorf&#39;s project that develops in solitaire by means of which a concrete format is applied to the titles, information boxes, monsters, etc, in the same way that the system *GameThrough* does.  
+
+Therefore, once you have the adventure ready for *GameThrough* you only have to import it in &lt;a href=&quot;https://homebrewery.naturalcrit.com/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;Homebrewery&lt;/a&gt; to obtain a perfectly formatted pdf file.  
+
+In addition, we leave you here a homebrewery manual in Spanish for specific use of the utility.</tw-passagedata><tw-passagedata pid="18" name="pasaje2" tags="" position="540,405" size="100,100">
+*? text in italics ?
+
+**? bold text ?
+
+&gt;Read this aloud to the players. This is a description text like the ones used in the scenes
+
+&gt;* **BOX TITLE**
+&gt;* These types of boxes are used as additional information for the Dungeon Master, which **does not** have to be shared with the players.
+
+
+# FIRST LEVEL TITLE  
+
+
+## Second level title  
+
+
+### Third level title
+  
+---  
+
+* Listing. Item 1
+* Listing. Item 2
+* Listing. Item 3
+ * Nested element 1
+ * Nested element 2
+* Listing. Item 3
+
+
+
+
+
+
+
+
+
+
+
+</tw-passagedata><tw-passagedata pid="19" name="Label placer" tags="" position="1122,528" size="100,100">
+# LABEL PLACER
+To calculate the position of the labels on the maps we have developed a small tool that calculates those X, Y numbers for you. Access it by clicking on &lt;a href=&quot;http://www.digitald20.com/play/map-creator/map_creator.html&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;this link&lt;/a&gt;
+
+## 1: Load the map
+First you must load the map into the top box of the tool. Use any method from the [[Hosting files online]] section or try this one we have loaded ourselves:  
+
+https://digitald20.com/wp-content/uploads/2020/04/region.jpg
+
+## 2: Putting the dots
+Once loaded, by clicking on the image, numbered balls will appear at the points where you want to provide relevant information.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/poner-puntos-1.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![ancho60](https://digitald20.com/wp-content/uploads/2020/04/poner-puntos-1.jpg)&lt;/a&gt;
+
+## 3: Get the position of the points
+The &#39;Show Text&#39; button will show the position of all the points placed, in order, so you can incorporate it into the GameTrough tool in the twine.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/poner-puntos-2.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![ancho60](https://digitald20.com/wp-content/uploads/2020/04/poner-puntos-2.jpg)&lt;/a&gt;</tw-passagedata><tw-passagedata pid="20" name="Pasaje sin título" tags="" position="660,405" size="100,100">Texto con más de una línea en el que la siquiente está justo debajo (acabamos la línea con dos espacios)  
+Como esta. Al finalizar esta línea, además de los dos espacios, añadiremos un retorno de carro (tecla ENTER), por lo que la que venga a continuación estará  
+
+separada de la anterior, como esta. </tw-passagedata><tw-passagedata pid="21" name="Side Notes" tags="lugares @notes" position="540,525" size="100,100"> 
+# Between asterisks
+This is an example of text in a pop-up window like those that can appear when clicking on a text between asterisks.
+
+# magical object
+*Wonderful, rare object. Requires atunement*  
+
+Sample magic object window. The text can be as long as desired and can contain images with the usual syntax.
+
+# trap
+&gt;* **TRAP NAME**
+&gt;* Example of cheating with your text, difficulty, damage, etc. As long as you want. As long as you want. As long as you want. </tw-passagedata><tw-passagedata pid="22" name="Label pleasure" tags="" position="884,408" size="100,100">Double-click this passage to edit it.</tw-passagedata></tw-storydata>

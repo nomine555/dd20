@@ -1,0 +1,914 @@
+@font-face {
+  
+  font-family: "dd20";
+  
+    src: url("../../core/fonts/bookmanold.otf");
+}
+
+body {
+    margin: 0;
+}
+.red {
+  background: red;
+}
+
+.blue {
+  background: blue;
+}
+
+.hide {
+  display: none !important;
+}
+
+textarea {
+  font-size: 150%;
+  text-align: left;
+  width: calc(100% - 2px);
+  border-radius: 10px;
+  padding: 10px;
+  resize: none;
+  overflow: hidden;
+  height: 10em;
+}
+
+
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+div.box {
+  margin-top: 10px;
+}
+
+.over {
+    position: absolute;
+    z-index: 2;
+    background-color: black;
+    
+}
+
+form.charsheet {
+  /*width:  calc(100% - 30px);*/
+  margin: 0;
+  padding: 15px;
+  font-size: 150%;
+  font-family: "dd20";
+   /* background-color: 43B383;*/
+  background-image: url('../img/fondo.jpg');
+  background-size: contain;
+}
+form.charsheet div.textblock {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+  align-items: center;
+}
+form.charsheet div.textblock label {
+  text-align: center;
+  border: 1.5px solid black;
+  border-top: 0;
+  font-size: 100%;
+  width: calc(100% - 20px - 2px);
+  border-radius: 0 0 10px 10px;
+  padding: 4px 0;
+  font-weight: bold;
+}
+form.charsheet div.textblock textarea {
+  border: 1.5px solid black;
+}
+form.charsheet ul {
+  margin: 0;
+  padding: 0;
+}
+form.charsheet ul li {
+  list-style-image: none;
+  display: block;
+}
+
+form.charsheet ::-webkit-input-placeholder {
+  color: #bbb;
+}
+form.charsheet :-ms-input-placeholder {
+  color: #bbb;
+}
+form.charsheet ::-ms-input-placeholder {
+  color: #bbb;
+}
+form.charsheet ::placeholder {
+  color: #bbb;
+}
+form.charsheet label {
+  text-transform: uppercase;
+  font-size: 100%;
+}
+.bold {
+    font-weight: bold;
+    text-align: center;
+}
+
+form.charsheet header {
+  display: flex;
+  align-contents: stretch;
+  align-items: stretch;
+}
+form.charsheet header section.charname {
+  border: 1.5px solid black;
+  border-right: 0;
+  border-radius: 10px 0 0 10px;
+  padding: 5px 0;
+  background-color: #eee;
+  width: 30%;
+  display: flex;
+  flex-direction: column-reverse;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+form.charsheet header section.charname input {
+  padding: 0.5em;
+  margin: 5px;
+  border: 0;
+}
+form.charsheet header section.charname label {
+  padding-left: 1em;
+}
+form.charsheet header section.misc {
+    width: 100%;
+    border: 1.5px solid black;
+    border-radius: 10px;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-top: 0.2em;
+    background-color: rgba(255,255,255,0.7);
+}
+form.charsheet header section.misc ul {
+  padding: 10px 0px 5px 0px;
+  display: flex;
+  flex-wrap: wrap;
+}
+form.charsheet header section.misc ul li {
+  width: 33.33333%;
+  display: flex;
+  flex-direction: column-reverse;
+}
+form.charsheet header section.misc ul li label {
+  margin-bottom: 5px;
+}
+form.charsheet header section.misc ul li input {
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 100%;
+}
+form.charsheet main {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  flex-direction: column;
+}
+form.charsheet main div.label-container {
+  position: relative;
+  width: 100%;
+  height: 38px;
+  margin-top: 0px;
+  border: 1.5px solid black;
+  border-left: 0;
+  text-align: center;
+}
+form.charsheet main div.label-container > label {
+  position: absolute;
+  left: 0;
+  top: 1px;    
+  width: 100%;
+  font-size: 80%;
+}
+form.charsheet main > section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+      justify-content: space-between;
+}
+form.charsheet main > section section.attributes {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+form.charsheet main > section section.attributes div.scores {
+    min-width: 120px;
+    width: 15%;
+    background-color: rgba(85, 85, 85, 0.35);
+    border-radius: 0.15em;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+form.charsheet main > section section.attributes div.scores label {
+  font-size: 100%;
+  font-weight: bold;
+}
+form.charsheet main > section section.attributes div.scores ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+form.charsheet main > section section.attributes div.scores ul li {
+    /*height: 100px;*/
+    height: 60px;
+    width: 100px;
+    background-color: white;
+    border: 1.5px solid black;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.1em;
+    margin-bottom: 25px;
+}
+form.charsheet main > section section.attributes div.scores ul li input {
+  width: 70%;
+  padding: 0;
+  border: 0;
+}
+form.charsheet main > section section.attributes div.scores ul li div.score input {
+    text-align: center;
+    font-size: 125%;
+    margin-top: -7px;
+    padding: 2px 0px 0px 0px;
+    background-color: transparent;
+}
+form.charsheet main > section section.attributes div.scores ul li div.modifier {
+  margin-top: 3px;
+}
+form.charsheet main > section section.attributes div.scores ul li div.modifier input {
+    background: white;
+    width: 50px;
+    height: 30px;
+    border: 1.5px inset black;
+    border-radius: 20px;
+    /*margin: -5px;*/
+
+    margin: -8px;
+    text-align: center;
+    font-size: 100%;
+}
+form.charsheet main > section section.attributes div.attr-applications div.inspiration {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+form.charsheet main > section section.attributes div.attr-applications div.inspiration input {
+    width: 30px;
+    height: 28px;
+    border: 1.5px solid black;
+    text-align: center;
+    border-radius: 10px;    
+}
+form.charsheet main > section section.attributes div.attr-applications div.proficiencybonus {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+form.charsheet main > section section.attributes div.attr-applications div.proficiencybonus input {
+  width: 30px;
+  height: 28px;
+  border: 1.5px solid black;
+  text-align: center;
+  border-radius: 10px;
+}
+form.charsheet main > section section.attributes div.attr-applications div.list-section {
+    border: 1.5px solid black;
+    border-radius: 10px;
+    padding: 8px 8px;
+    width: 33%;
+    background-color: rgba(245, 245, 245, 0.9);
+    margin-bottom: 0.5em;
+}
+form.charsheet main > section section.attributes div.attr-applications div.list-section div.label {
+  margin-top: 10px;
+  margin-bottom: 2.5px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 100%;
+  font-weight: bold;
+}
+form.charsheet main > section section.attributes div.attr-applications div.list-section ul li {
+  display: flex;
+  align-items: center;
+}
+form.charsheet main > section section.attributes div.attr-applications div.list-section ul li > * {
+  margin-left: 5px;
+
+}
+form.charsheet main > section section.attributes div.attr-applications div.list-section ul li label {
+  text-transform: none;
+  font-size: 80%;
+  text-align: left;
+  order: 3;
+}
+form.charsheet main > section section.attributes div.attr-applications div.list-section ul li label span.skill {
+  color: #bbb;
+}
+form.charsheet main > section section.attributes div.attr-applications div.list-section ul li input[type="text"] {
+  width: 3em;
+  font-size: 125%;
+  text-align: center;
+  border: 0;
+  border-bottom: 1px solid black;
+  order: 2;
+}
+
+form.charsheet main > section section.attributes div.attr-applications div.list-section ul li input[type="number"] {
+  width: 3em;
+  font-size: 125%;
+  text-align: center;
+  border: 0;
+  border-bottom: 1px solid black;
+  order: 2;
+}
+form.charsheet main > section section.attributes div.attr-applications div.list-section ul li input[type="checkbox"] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid black;
+  border-radius: 10px;
+  order: 1;
+}
+form.charsheet main > section section.attributes div.attr-applications div.list-section ul li input[type="checkbox"]:checked {
+  background-color: black;
+}
+form.charsheet main > section div.passive-perception {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+form.charsheet main > section div.passive-perception input {
+  width: 30px;
+  height: 28px;
+  text-align: center;
+  border: 1.5px solid black;
+  border-radius: 10px;
+}
+form.charsheet main > section div.otherprofs textarea {
+  height: 23em;
+}
+form.charsheet main section.combat {
+    background-color: rgb(238, 238, 238, 0.7);
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.15em;
+    padding-left: 10px;
+    padding-right: 10px;  
+    margin-left: 10px;
+    overflow: hidden;
+}
+form.charsheet main section.combat > div {
+  overflow: hidden;
+}
+form.charsheet main section.combat > div.armorclass, form.charsheet main section.combat > div.initiative, form.charsheet main section.combat > div.speed {
+  /*flex-basis: 33.333%;*/
+    flex-basis: 16%;
+}
+
+
+form.charsheet main section.combat > div.armorclass > div, form.charsheet main section.combat > div.initiative > div, form.charsheet main section.combat > div.speed > div {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  margin-top: 10px;
+}
+form.charsheet main section.combat > div.armorclass > div label, form.charsheet main section.combat > div.initiative > div label, form.charsheet main section.combat > div.speed > div label {
+  font-size: 60%;
+  width: 80px;
+  border: 1.5px solid black;
+  border-top: 0;
+  background-color: white;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+form.charsheet main section.combat > div.armorclass > div input, form.charsheet main section.combat > div.initiative > div input, form.charsheet main section.combat > div.speed > div input {
+  height: 100px;
+  width: 100px;
+  border-radius: 0.1em;
+  border: 1.5px solid black;
+  text-align: center;
+  font-size: 175%;
+}
+
+#lbl_ac{
+    font-size: 60%;
+    border: none;
+    background: transparent;
+    position: relative;
+    top: -8.5em;
+}
+
+#ac{
+    border-radius: 100% 100% 100% 100% / 30% 30% 100% 100%;;
+    height: 3em;
+}
+
+form.charsheet main section.combat > div.hp {
+    flex-basis: 66%;
+    padding: 0px;
+    margin: 1px;
+    margin-bottom: 0em;
+}
+form.charsheet main section.combat > div.hp > div.regular {
+  background-color: white;
+  border: 1.5px solid black;
+  margin: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px 10px 0 0;
+}
+form.charsheet main section.combat > div.hp > div.regular > div.max {
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+form.charsheet main section.combat > div.hp > div.regular > div.max label {
+  font-size: 100%;
+  text-transform: none;
+  color: #bbb;
+}
+form.charsheet main section.combat > div.hp > div.regular > div.max input {
+    width: 20%;
+    border: 0;
+    font-size: 125%;
+    text-align: center;
+    background-color: transparent;
+}
+form.charsheet main section.combat > div.hp > div.regular > div.current {
+  display: flex;
+  flex-direction: column-reverse;
+}
+div.hp > div.regular > div.current input {
+  border: 0;
+  width: 100%;
+  font-size: 200%;
+  text-align: center;
+}
+div.hp > div.regular > div.current input.variable  {
+  width: 100%;
+}
+div.hp > div.regular > div.current label.variable  {
+  width: 100%;
+}
+div.hp > div.regular > div.current input[type="button"] {
+    width: 4em;
+    height: 3.5em;
+    font-size: 200%;    
+    margin-top: 2px;
+    border-radius: 10px;
+    background-color: rgba(198, 198, 198, 0.69);
+    touch-action: manipulation;
+}
+form.charsheet main section.combat > div.hp > div.temporary input[type="button"] {
+    width: 6em;
+    font-size: 125%;
+    border: 2;
+    text-align: center;
+    height: 3.5em;
+    margin-bottom: 1px;
+    border-radius: 10px;
+    background-color: rgba(198, 198, 198, 0.69);
+    touch-action: manipulation;
+}
+
+form.charsheet main section.combat > div.hp > div.regular > div.current label {
+  font-size: 100%;
+  padding-bottom: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+form.charsheet main section.combat > div.hp > div.temporary {
+  margin: 10px;
+  margin-top: 0;
+  border: 1.5px solid black;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: white;
+}
+form.charsheet main section.combat > div.hp > div.button {
+  margin: 10px;
+  margin-top: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+form.charsheet main section.combat > div.hp > div.button > input {
+  width: 33%;
+  margin: 10px;
+    height: 2em;
+  margin-top: 0;
+}
+form.charsheet main section.combat > div.hp > div.temporary input {
+  padding: 0.2em 0;
+  font-size: 150%;
+  border: 0;
+  text-align: center;
+    width: 70%;
+}
+
+
+form.charsheet main section.combat > div.hp > div.temporary label {
+  font-size: 90%;
+  padding-bottom: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+form.charsheet main section.combat > div.hitdice, form.charsheet main section.combat > div.deathsaves {
+  flex: 1 50%;
+  height: 100px;
+}
+form.charsheet main section.combat > div.hitdice > div, form.charsheet main section.combat > div.deathsaves > div {
+  height: 80px;
+}
+form.charsheet main section.combat > div.hitdice > div {
+  background-color: white;
+  margin: 10px;
+  border: 1.5px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+form.charsheet main section.combat > div.hitdice > div > div.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-around;
+  padding: 5px 0;
+}
+form.charsheet main section.combat > div.hitdice > div > div.total label {
+  font-size: 100%;
+  color: #bbb;
+  margin: 0.25em;
+  text-transform: none;
+}
+form.charsheet main section.combat > div.hitdice > div > div.total input {
+  font-size: 125%;
+  flex-grow: 1;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  width: 50%;
+  margin-right: 0.25em;
+  padding: 0 0.25em;
+  text-align: center;
+}
+form.charsheet main section.combat > div.hitdice > div > div.remaining {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+}
+form.charsheet main section.combat > div.hitdice > div > div.remaining label {
+  text-align: center;
+  padding: 2px;
+  font-size: 100%;
+}
+form.charsheet main section.combat > div.hitdice > div > div.remaining input {
+  text-align: center;
+  border: 0;
+  flex: 1;
+}
+form.charsheet main section.combat > div.deathsaves > div {
+  margin: 10px;
+  background: white;
+  border: 1.5px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+form.charsheet main section.combat > div.deathsaves > div > div.label {
+  text-align: center;
+}
+form.charsheet main section.combat > div.deathsaves > div > div.label label {
+  font-size: 100%;
+}
+form.charsheet main section.combat > div.deathsaves > div > div.marks {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+form.charsheet main section.combat > div.deathsaves > div > div.marks div.deathsuccesses, form.charsheet main section.combat > div.deathsaves > div > div.marks div.deathfails {
+  display: flex;
+  align-items: center;
+}
+form.charsheet main section.combat > div.deathsaves > div > div.marks div.deathsuccesses label, form.charsheet main section.combat > div.deathsaves > div > div.marks div.deathfails label {
+  font-size: 80%;
+  text-align: right;
+  flex: 1 50%;
+}
+form.charsheet main section.combat > div.deathsaves > div div.bubbles {
+  flex: 1 40%;
+  margin-left: 5px;
+}
+form.charsheet main section.combat > div.deathsaves > div div.bubbles input[type="checkbox"] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid black;
+  border-radius: 10px;
+}
+form.charsheet main section.combat > div.deathsaves > div div.bubbles input[type="checkbox"]:checked {
+  background-color: black;
+}
+form.charsheet main section.attacksandspellcasting {
+  border: 1.5px solid black;
+  border-radius: 10px;
+  margin-top: 10px;
+    background-color: rgba(245, 245, 245, 0.9);
+}
+form.charsheet main section.attacksandspellcasting > div {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+form.charsheet main section.attacksandspellcasting > div > label {
+  order: 3;
+  text-align: center;
+    font-weight: bold;
+}
+form.charsheet main section.attacksandspellcasting > div > table {
+  width: 100%;
+}
+form.charsheet main section.attacksandspellcasting > div > table th {
+  font-size: 100%;
+ 
+width: 25%;
+}
+form.charsheet main section.attacksandspellcasting > div > table th.name {
+  font-size: 100%;
+ 
+width: 50%;
+}
+form.charsheet main section.attacksandspellcasting > div > table input {
+  width: calc(100% - 4px);
+  border: 0;
+  background-color: #ffffff;
+  font-size: 150%;
+  padding: 3px;
+}
+form.charsheet main section.attacksandspellcasting > div textarea {
+  border: 0;
+    height: 5em;
+}
+form.charsheet main section.equipment {
+    margin-top: 10px;
+    background-color: rgba(245, 245, 245,0.9);
+    border-width: 1.5px;
+    border-style: solid;
+    border-color: black;
+    border-image: initial;
+    border-radius: 10px;
+}
+form.charsheet main section.equipment > div {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+form.charsheet main section.equipment > div > div.money ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+form.charsheet main section.equipment > div > div.money ul > li {
+    margin: 1px;
+    display: flex;
+    align-items: center;
+}
+form.charsheet main section.equipment > div > div.money ul > li label {
+  border: 1.5px solid black;
+  border-radius: 10px 0 0 10px;
+  border-right: 0;
+  width: 60px;
+  font-size: 80%;
+  text-align: center;
+  padding: 3px 0;
+}
+form.charsheet main section.equipment > div > div.money ul > li input {
+  border: 1.5px solid black;
+  border-radius: 10px;
+  width: 140px;
+  padding: 10px 3px;
+  font-size: 125%;
+  text-align: center;
+}
+form.charsheet main section.equipment > div > label {
+  text-align: center;
+  flex: 100%;
+    font-weight: bold;
+}
+form.charsheet main section.equipment > div > textarea {
+  flex: 1;
+  border: 0;
+    margin-left: 8px;
+}
+form.charsheet main section.flavor {
+  padding: 10px;
+  background: rgb(238, 238, 238, 0.7);
+  margin-top: 10px;
+  border-radius: 0.5em;
+}
+/*
+form.charsheet main section.flavor div {
+  background: white;
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 5px;
+  border: 1.5px solid black;
+}
+*/
+form.charsheet main section.flavor div .label {
+  text-align: center;
+  font-size: 100%;
+  margin-top: 12px;
+}
+form.charsheet main section.flavor div textarea {
+  border: 0;
+  border-radius: 0;
+  height: 4em;
+}
+/*
+form.charsheet main section.flavor div:first-child {
+  border-radius: 10px 10px 0 0;
+}*/
+form.charsheet main section.flavor div:not(:first-child) {
+  margin-top: 10px;
+}
+/*
+form.charsheet main section.flavor div:last-child {
+  border-radius: 0 0 10px 10px;
+}
+form.charsheet main section.features {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: rgba(238, 238, 238,0.7);
+    border-radius: 0.15em;
+}
+form.charsheet main section.features div {
+  padding: 10px;
+  border: 1.5px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column-reverse;
+background-color: rgb(245, 245, 245);    
+}
+form.charsheet main section.features div textarea {
+  border: 0;
+  padding: 5px;
+  height: 43em;
+}
+*/
+form.charsheet main section.features div .label {
+  text-align: center;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.attr-applications {
+    width: 85%;  
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow: auto;
+}
+
+
+
+.maxwidth {
+    width: 100%;
+    margin-top: 10px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+
+.hp2 {
+    flex-basis: 100%;
+    flex-direction: column;
+}
+
+.subarmor {
+    height: 90px;
+    width: 90px;
+    border-radius: 10px;
+    border: 1.5px solid black;
+    text-align: center;
+    font-size: 175%;
+}
+
+.iarmor {
+     font-size: 80%;
+    width: 80px;
+    border: 1.5px solid black;
+    border-top: 0;
+    background-color: white;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 0 0 10px 10px;   
+}
+
+.section {
+    width: 100%;
+}
+
+
+.currenthp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+.center {
+    text-align: center;
+}
+
+.float {
+    position: absolute;
+    left: 1%;
+    top: 1vh;
+    width: 5%;
+    height: 7vh;
+    text-align: right;
+    z-index: 100;
+}
+
+.menu-button {    
+    height: 4.5em;    
+}
+
+#opciones{
+    padding-left: 0 !important;
+}
+
+#opciones li{
+    list-style: none;
+}
+
+.dd20chars {
+    border: 2px solid #363941;
+    background-color: #faf7ea;
+    position: absolute;
+    top:17%;
+    left: 40%;
+    padding: 5px;
+    padding-right: 25px;
+    width: 30%;
+    z-index: 30;
+    display: none;
+    font-size: 150%;
+}
+.ask {
+    font-family: "dd20";
+    position: absolute;
+    top:25%;
+    left: 20%;
+    padding: 15px;
+    padding-right: 25px;
+    width: 60%;
+    z-index: 150;
+    font-size: 150%;
+    line-height: 150%;
+    
+    background-color: #faf7ea;
+    border-style: solid;
+    border-width: 3px;
+    border-image-outset: 4px;
+    box-shadow: 0 0 6px #faf7ea;   
+}
+
+.askbutton {
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+.sectionvertical {
+    display:inline;
+    height:30%;
+    width:1px;
+    border:1px inset;
+    margin:5px;
+    background-color: (254,254,254,0.3);
+}
+
+
+.width100{
+    width: 100%;
+}
+
+.width100 .index-icon-close{
+    left:auto;
+    float:right;
+    right:0%;
+}

@@ -1,0 +1,52 @@
+.leyenda ol {
+    list-style:decimal;
+}
+
+.mainbody {
+    width: 100%;
+    height: 100vh; 
+    background-image: url('../images/background-encounter-16-9.jpg');  
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+     -webkit-user-select: none;
+     -webkit-touch-callout: none;
+}
+
+.mainbody-es {
+    width: 100%;
+    height: 100vh; 
+    background-image: url('../images/background-encounter-16-9.jpg');  
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+     -webkit-user-select: none;
+     -webkit-touch-callout: none;
+}
+
+@media (max-device-aspect-ratio: 3/2) {
+.mainbody-es {
+    background-image: url(../images/background-encounter-4-3-es.jpg);
+}
+.mainbody {
+    background-image: url(../images/background-encounter-4-3-es.jpg);
+}
+}
+
+.megamapgroup {
+    height: 76vh;
+    top:0%;
+    
+}
+
+.map {
+    height: 75%;
+}
+
+.mapgroup {
+    height: 74vh;
+}
+
+.monstergroup {
+    height: 20%;
+}

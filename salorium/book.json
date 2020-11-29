@@ -1,0 +1,23 @@
+{
+    "hpub": 1,
+    "title": "Digital D20 test",
+    "author": ["Fernando Setien"],
+    "creator": ["Fernando Setien, Fernando Garcia"],
+    "date": "2014-11-22",
+    "url": "www.digitald20.com",
+
+    "orientation": "landscape",
+    "zoomable": true,
+
+    "-baker-background": "#000000",
+    "-baker-vertical-bounce": true,
+    "-baker-index-height": 202,
+    "-baker-media-autoplay": true,
+    "-baker-background-image-portrait": "gfx/background-portrait.png",
+    "-baker-background-image-landscape": "gfx/background-landscape.png",
+    "-baker-page-numbers-color": "#000000",
+
+    "contents": [
+        "index-gate.html", "index.html", "encounter.html", "index-npcs.html", "index-map.html", "index-flow.html", "tutorial.html", "tutorial-encounter.html", "config.html"
+	]
+}

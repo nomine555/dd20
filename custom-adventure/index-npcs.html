@@ -1,0 +1,171 @@
+<html>
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+    <script>
+        
+        function LoadPassageNPC(file, id, dest_div) {
+  
+                        
+            var customcontent = localStorage.getItem("customcontent" + aventura);
+if (customcontent === null) {
+            var message = {
+                "file": file,
+                "id": id,
+                "dest_div": dest_div
+            }
+
+            try {
+                window.webkit.messageHandlers.LoadPassageNPC.postMessage(message);
+
+            } catch (error) {
+                console.log("no estamos en iOS")
+
+
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET", file);
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState === 4) {
+                        var text = xmlhttp.responseText;
+                        LoadPassageNPC_back(text, file, id, dest_div);
+                    }
+                }
+                xmlhttp.send(null);
+            }
+} else {
+    LoadPassageNPC_back(customcontent, file, id, dest_div);
+}
+        }
+/*
+        function LoadPassageNPC_back(text, file, id, dest_div) {
+            text = text.replace(/<n>/g, '\n');
+            var element = document.getElementById(dest_div);
+
+            text = RepairLinks(text);
+            passage = getPassage(text, id);
+            text = passage[0];
+            title = passage[1];
+            text = enmarked(text);
+            text = CreateDivs(text);
+
+            element.innerHTML = text;
+            Update_href_first(element);
+            ShowNPC(1);
+        }
+
+        function CreateDivs(text) {
+
+            console.log(text);
+            var newtext = "";
+            var search_out = 0;
+            var search = 0;
+
+            var search_out2 = 0;
+            var search2 = 0;
+            var n = 1;
+
+            //Para lo nuevo
+            var e = document.getElementsByClassName("npcs")[0];
+
+
+            while (search > -1) {
+
+                search = text.indexOf("<h2", search_out);
+                if (search == -1)
+                    break;
+                search2 = text.indexOf('">', search + 1);
+                search_out = text.indexOf("</h2>", search_out + 1);
+                search_out2 = text.indexOf("<h2", search_out + 1);
+                if (search_out2 < 0) search_out2 = text.length;
+
+                var title = text.substring(search2 + 2, search_out);
+                var content = text.substring(search, search_out2);
+                var inside = "<div id='npc" + n + "'>" + content + "</div>";
+
+                if (MaxNpcs < 0) {
+                    Log("Nuevo sistema!")
+                    var s1 = text.indexOf('<img src="', search + 1);
+                    var s2 = text.indexOf('"', s1 + 11);
+                    var imagen = text.substring(s1 + 10, s2);
+                    Log("imagen: " + imagen);
+                    // Habria que generar la capa pnpc y añadirle el título
+                    // Después averiguarl el nombre de la imagen del npc y añadirla. 
+                    // Podría ser la <img> que haya dentro del titulo
+                    // Podemos usar la variable Nnpcs para determinar si usar el nuevo o el viejo algoritmo
+                    var v = document.createElement("div");
+                    var i = document.createElement("img");
+                    var v2 = document.createElement("div");
+                    i.classList.add('npc-portrait');
+                    i.src = imagen;
+                    v2.id = "pnpc" + n;
+                    v2.innerHTML = title;
+                    Log("n: " + n);
+                    v.addEventListener("click", ShowNPC.bind(null, n));
+                    v.classList.add('button');
+                    v.classList.add('npc');
+                    v.appendChild(i);
+                    v.appendChild(v2);
+                    e.appendChild(v);
+                    MaxNpcs = 0 - n;
+                } else {
+                    document.getElementById('pnpc' + n).innerHTML = title;
+                }
+
+
+                newtext = newtext + inside;
+
+                n++;
+            }
+
+            return newtext;
+        }*/
+    </script>
+</head>
+
+<body onpageshow="starting_index_npcs();">
+    <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none">
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>
+        </ul>
+    </div>
+    <div class="index-npcs">
+        <div class="index-left">
+            <div id="main-index" class="text text-npcs">
+                <div class="npcs">
+
+                </div>
+            </div>
+        </div>
+        <div id="layertext" class="index-text text">
+        </div>
+    </div>
+    <div class="mini-index-left">
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body></html>

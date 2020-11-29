@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/encounter-styles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="../core/css/npcs-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+      
+    <!--1-->  
+      <script type="text/javascript" src="../core/js/google_translate.js"></script>     
+      <script type="text/javascript">
+        starting_index('');    
+        console.log("google translate");  
+        function googleTranslateElementInit() 
+          {   new google.translate.TranslateElement({pageLanguage: 'en'}, 'google'); }    
+      </script>     
+    <!--1-->
+      
+</head>
+    
+  <body class="index-main">
+      
+        <img id="hamburguesa" src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+        <div id="menu" class="menu" style="display:none" >
+            <ul id="opciones">
+                <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+                <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+                <li id="spanish" onclick="spanish();">Spanish</li>
+                <li id="english" onclick="english();">English</li>                
+            </ul>
+        </div>
+      
+        <div id='infolayer' class="infolayer-index" style='opacity:0;z-index:1;'>
+            <div id='infolayer-text' class="infolayer_text text"></div>   
+            <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-6.png');left:77%" onclick="CloseLateralInfo();"></div>        
+            <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-5.png');" onclick="Back();"></div>         
+        </div>  
+        <div id='infolayer-map' class="infolayer-map" style='opacity:0;z-index:1;'>
+            <div id='infolayer-text-map' class="infolayer-text-map text"></div>
+            <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-7.png');left:85%" onclick="CloseLateralMap(event);"></div>
+        </div>
+
+        <div class="index-left" >
+
+            <div class="index-image">
+                <div id="main-index" class="text text-index" >            
+                </div>
+            </div>           
+        </div>
+        <div id = "layertext" class="index-text text" >
+        </div>
+        <div class="mini-index-left" >
+            <div class="indexgroup">
+                <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+                <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+                <div class="index-icon button" onclick="location.href='index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+                <div class="index-icon button" onclick="location.href='index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+                <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+                <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+            </div>
+        </div>     
+
+        <!--2-->
+        <div class="icontranslate" onclick="ShowTranslate();"></div>
+        <div id="google"></div>
+        <div id="google_alert" style="display: none" class="text letter">
+            1. Select language on the top left menu <br> 
+            2. Press again on the translate icon to hide the google bar. <br> 
+            3. To disable translation, close the google bar, and hide the icon again. 
+        </div>  
+        <!--2-->
+      <div id="capa-vertical" style="display:none;">
+          <img src="../core/images/icons/turn.png" class="img_turn">
+          <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+      </div>
+
+    </body>
+</html>

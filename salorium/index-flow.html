@@ -1,0 +1,65 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+           <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+        <div id="menu" class="menu" style="display:none">
+            <ul id="opciones">
+                <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+                <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+                <li id="spanish" onclick="spanish();">Spanish</li>
+                <li id="english" onclick="english();">English</li>                
+            </ul>
+        </div>
+    <div id="index-flow-background" class="index-flow" style="left: 0px; top: 0px;">                  
+        <div>            
+            <a id="comienza-aventura" href="./encounter.html?param=@comienza-aventura" class="image-map-flow text strong-tint button" style=" left: 5.5%; top: 18%;">Start the Adventure</a>    
+            <a id="ataque-escuela" href="./encounter.html?param=@ataque-escuela" class="image-map-flow text button" style=" left: 5%; top: 40%;">Attack on the School</a>
+            <a id="torre-vigilancia" href="./encounter.html?param=@torre-vigilancia" class="image-map-flow text button" style=" left: 12.5%; top: 57%;"><br>Watchtower</a>
+            <a id="buscando-culpables" href="./encounter.html?param=@buscando-culpables" class="image-map-flow text button" style=" left: 20%; top: 40%;">Searching for the culprits</a>
+            <a id="glaucom" href="./encounter.html?param=@glaucom" class="image-map-flow text blue-tint button" style="left: 35%; top: 5%;">Glaucom’s Quarters</a>
+            <a id="nizgul" href="./encounter.html?param=@nizgul" class="image-map-flow text green-tint button" style=" left: 35%; top: 35%;">Professor Nizgul</a>
+            <a id="saliendo-exterior" href="./encounter.html?param=@saliendo-exterior" class="image-map-flow text blue-tint button" style=" left: 42.5%; top: 20%;padding-top: 0.7%;"><br>Finding Doris</a>
+            <a id="plaza-pueblo" href="./encounter.html?param=@plaza-pueblo" class="image-map-flow text blue-tint button" style=" left: 50%; top: 5%;padding-top: 0.7%;"><br>Market Square</a>
+            <a id="ballena-blanca" href="./encounter.html?param=@ballena-blanca" class="image-map-flow text blue-tint button" style=" left: 65%; top: 5%;padding-top: 0.7%;"><br>The White Wale</a>
+            <a id="prisionero" href="./encounter.html?param=@prisionero" class="image-map-flow text blue-tint button" style=" left: 80%; top: 5%;">The Prisoner</a>
+            <a id="tesoro" href="./encounter.html?param=@tesoro" class="image-map-flow text green-tint button" style=" left: 42.5%; top: 50%;">Chamber of Treasures</a>
+            <a id="buscando-huesos" href="./encounter.html?param=@buscando-huesos" class="image-map-flow text green-tint button" style=" left: 50%; top: 35%;padding-top: 0.7%;"><br>Finding Bones</a>
+            <a id="cementerio" href="./encounter.html?param=@cementerio" class="image-map-flow text green-tint button" style=" left: 65%; top: 35%;">The Cemetery</a>
+            <a id="conclusion" href="./encounter.html?param=@conclusion" class="image-map-flow text green-tint-strong button" style=" left: 79%; top: 51%;"><br>Conclusion</a>
+            <a id="biblioteca" href="./encounter.html?param=@biblioteca" class="image-map-flow text purple-tint button" style=" left: 42.5%; top: 65%;"><br>The Library</a>
+            <a id="patio-armas" href="./encounter.html?param=@patio-armas" class="image-map-flow text purple-tint button" style="left: 35%; top: 80%;">The South Courtyard</a>
+            <a id="encerrados" href="./encounter.html?param=@encerrados" class="image-map-flow text purple-tint button" style=" left:50%; top: 80%;padding-top: 1.5%;">Students Locked in</a>
+        </div>
+        <div class="lines">
+        </div>
+        
+    </div>
+    <div class="mini-index-left" >
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

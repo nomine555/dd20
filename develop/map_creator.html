@@ -1,0 +1,161 @@
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/encounter-styles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="../core/css/npcs-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+      
+      <script type="text/javascript">
+          
+//       var flowtag = "@index-main";
+//var monstertag = "@monsters";
+var tag = "beginning-the-adventure";
+       
+var nclick = 0;
+var xoff = -1.5;
+var yoff = -2;
+var N = 0;
+var Cx = [0,0,0,0];
+var Cy = [0,0,0,0];
+          
+function loadcustomadventure(e) {
+            
+ var image = document.getElementById("customfilemap").value;
+   
+    document.getElementById("wrapper").innerHTML = '<img id="mainimage" src="'+image+'">';
+    var mapa = document.getElementById("mainimage");
+    //mapa.addEventListener('click', clickOnmap, false);
+    mapa.addEventListener('click', dblclickOnmap, false);
+    console.log(mapa.width + " " + mapa.height);
+    
+    mapa.onload = function(){
+        
+    if (mapa.height > mapa.width) {        
+        mapa.style.height = "90vh";
+        mapa.style.width = "auto";
+        document.getElementById("wrapper").style.height = mapa.height;
+        document.getElementById("wrapper").style.width = mapa.width;
+     } else {        
+        document.getElementById("wrapper").style.height = mapa.height;
+        document.getElementById("wrapper").style.width = mapa.width;       
+    }
+    };
+    
+    
+   
+} 
+
+function dblclickOnmap(event) {
+    var texto = document.getElementById("textoleyenda");
+    
+    var mapa = document.getElementById("mainimage");
+    var X = mapa.clientWidth / 100;
+    var Y = mapa.clientHeight / 100;
+    var X = mapa.width / 100;
+    var Y = mapa.height / 100;
+    
+        nclick = 0;
+  
+    console.log('<!--'+ ((event.clientX/X) + xoff) +','+((event.clientY/Y)+yoff)+'-->');   
+    texto.innerHTML = texto.innerHTML + '&lt!--'+ ((event.clientX/X) + xoff).toFixed(2) +','+((event.clientY/Y)+yoff).toFixed(2)+'--&gt<br>';
+    N++;
+    var element = document.createElement("div");
+        element.classList.add("clickable");
+        element.classList.add("text");
+        element.style.left =  ((event.clientX/X) + xoff) + "%";
+        element.style.top = ((event.clientY/Y)+yoff) + "%";
+    element.innerHTML = N;
+        document.getElementById('wrapper').appendChild(element);
+}
+
+function clickOnmap(event) {
+        
+    
+    Cx[nclick] = (event.clientX/X);
+    Cy[nclick] = (event.clientY/Y);
+    nclick = nclick + 1;
+    
+    if (nclick == 4) {
+        nclick = 0;
+        lleft = min(Cx);
+        ttop  = min(Cy);
+        width = max(Cx) - min(Cx);
+        heigth = max(Cy) - min(Cy);    
+        
+        console.log('<a href="./lugares.html?param='+tag+'&room='+N+'" style="left: '+ lleft +'%; top: '+ ttop +'%; width: "'+width+'"%; height: "'+heigth+'"%;" class="clickable">'+'</a>');   
+        N++;
+        
+        var element = document.createElement("div");
+        element.classList.add("clickable");
+        element.style.left = lleft + "%";
+        element.style.top = ttop + "%";
+        element.style.width = width + "%";
+        element.style.height = heigth + "%";
+        element.style.font = "Courier New";
+        document.getElementById('wrapper').appendChild(element);
+    }
+}          
+function min(numbers) {
+    var aux = numbers[0];
+    for (i = 1 ; i < numbers.length ; i ++) {        
+        if (aux > numbers[i])
+            aux = numbers[i]
+    }
+    return aux;
+}
+function max(numbers) {
+    var aux = numbers[0];
+    for (i = 1 ; i < numbers.length ; i ++) {
+        if (aux < numbers[i])
+            aux = numbers[i]
+    }
+    return aux;
+}
+          
+function showtext() {
+              var texto = document.getElementById("textoleyenda");
+              if (texto.style.display == "none")
+                  texto.style.display = "";
+              else texto.style.display = "none";
+          }
+
+      </script>     
+      
+</head>
+    
+  <body class="index-map">
+
+        <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+        <div id="menu" class="menu" style="display:none">
+            <ul id="opciones">
+                <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+                <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+                <li id="spanish" onclick="spanish();">Spanish</li>
+                <li id="english" onclick="english();">English</li>                
+            </ul>
+        </div>
+      
+    <div class="loadbar">
+   
+      <label id="fileurl">File URL:</label><input id="customfilemap" type="text">
+      <input id="custommapbutton" type="button" value="Load" onclick="loadcustomadventure()" class="button">
+      <input type="button" value="Show Text" onclick="showtext()" class="button">
+   
+      </div>
+    <div id="wrapper">
+        <img id="mainimage" src="">
+      </div>
+      <div id="textoleyenda" class="text" style="display: none">
+      </div>
+      
+  </body>
+</html>

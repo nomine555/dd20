@@ -1,0 +1,307 @@
+.blog::before {
+    content: "\2610";
+    display: inline-block; 
+    margin-right: 0.5em;
+}
+
+.checkedblog::before {
+    content: "\2611";
+    display: inline-block; 
+    margin-right: 0.5em;
+}
+
+
+/* HAMBURGUESA DEL MENU LATERAL 
+.config-button, .config-button-encounter {
+    position: absolute;
+    left: -0.5%;
+    top: -1%;
+    width: 8%;
+    height: 13vh;
+    z-index: 150;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;  
+    border-radius: 0px 0px 30px 0px;
+}
+*/
+
+
+.goog-logo-link {
+    display: none;
+}
+
+.mainbody {
+    width: 100%;
+    height: 100vh; 
+    background-image: url('../images/index/background-encounter-16-9.jpg');  
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+     -webkit-user-select: none;
+     -webkit-touch-callout: none;
+    }
+
+.mainbody-es {
+    width: 100%;
+    height: 100vh; 
+    background-image: url('../images/index/background-encounter-16-9-es.jpg');  
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+     -webkit-user-select: none;
+     -webkit-touch-callout: none;
+    }
+    
+.container {
+    position: relative;
+    float: left;
+    z-index: 15;
+    width: 42%;
+    height: 100vh;
+}
+       
+.text-main {
+    position:relative;
+    float: left;
+    z-index: 25;
+    width: 58%;
+    height: 100vh;
+    padding: 1.5em 1.5em 1.5em 1.5em;    
+    text-align: justify;
+    overflow-y: scroll;    
+}
+    
+.title {
+    z-index: 1;
+    width: 77%;
+    height: 5vh;
+    margin: 5% 0 2% 15%;
+    -webkit-transform: rotate(-2.5deg);
+}
+    
+.megamapgroup {
+    position: relative;
+    width: 80%;
+    left: 14%;
+    top:10%;
+    height: 60vh;    
+    padding: 2% 2% 2% 2%;
+     -webkit-transform: rotate(-2.0deg);
+    background-color: rgba(206, 206, 206, 0.6);
+}
+
+.select-group {
+    z-index: 2;
+    width: 75%;
+    height: 8vh;
+    margin-left: 12%;
+    margin-top: 0%; 
+    position: relative;
+    float: left;    
+}
+
+.mapgroup {
+    position: absolute;
+    padding: 2.5% 5% 5% 5%;
+    width: 100%;
+    height: 58vh;
+    overflow-y: scroll;
+    top: 0%;
+    left: 0%;
+    line-height: 1.44;
+}
+
+.map {
+    top: 4%;
+    width: 100%;
+    height: 65%;       
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;    
+    position: relative;
+    float: left;    
+}
+
+/* Styles for tablet (iPAD)   4/3       */
+@media all and (max-device-aspect-ratio: 3/2) {
+
+    .mainbody {
+        background-image: url('../images/index/background-encounter-4-3.jpg');     
+    }
+    .mainbody-es {
+        background-image: url('../images/index/background-encounter-4-3-es.jpg');     
+    }    
+
+
+    .title {
+        margin: 5% 0 5% 19%;    
+        -webkit-transform: rotate(-2.5deg);    
+    }
+
+    .container {
+        width: 35%;
+    }
+
+    .text-main {
+        width: 65%;
+    }
+
+
+    .select-group {
+        width: 80%;
+        height: 8vh;
+        margin-left: 10%;
+        margin-top: 0%; 
+        padding-top: 0%;
+    }   
+
+     .map {
+        background-size: 200%;
+    }
+
+}
+
+/* Styles asigned for phones  */
+@media all and (max-width: 640px) {
+    
+
+    .mainbody {
+        background-image: url('../images/index/background-encounter-4-3.jpg');     
+    }
+    .mainbody-es {
+        background-image: url('../images/index/background-encounter-4-3-es.jpg');     
+    }    
+
+    .title {
+        height: 5vh;
+        margin: 5% 0 5% 18%;
+    }
+
+    .container {
+        width: 35%;
+    }
+
+    .text-main {
+        width: 65%;
+    }
+
+
+    .select-group {
+        width: 80%;
+        height: 8vh;
+        margin-left: 10%;
+        margin-top: 5%; 
+    } 
+
+}
+
+.button:active {
+    -webkit-filter: brightness(125%);        
+}
+
+.maindivclass {    
+    position:absolute;
+    width: 100%;
+    height: 100vh;    
+   
+    display:flex;
+    flex-direction:column;
+    justify-content: center;       
+}
+
+img {
+    position: relative;
+}
+
+
+
+.select {
+    z-index: 2;
+    width: 33%;
+    height: 8vh;
+    background: url('../images/icons/icon-selection.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    position: relative;
+    float: left;    
+}
+
+.monstergroup {
+    padding: 2% 2% 2% 2%;
+    width: 100%;
+    top: 10%;
+    height: 25%;
+    position: relative;
+    float: left;  
+}
+
+.minimap {
+    width: 16%;
+    height: 100%;    
+    position: relative;
+    float: left;
+    margin: 2%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;    
+}
+
+.minimap-audio {
+    float: right;
+}
+
+
+.superlayer {
+    position:absolute;
+    width: 100%;
+    height: 100vh;   
+}
+
+.image-control {
+    position:absolute;
+    width: 5%;
+    height: auto;
+    left: 45%;
+    bottom: 5%;
+    z-index: 10;
+    /*opacity: 0;*/
+}
+
+
+
+
+
+.icondice {
+    position: absolute;
+    top:1vh;
+    right: 6%;
+    width: 7.5%;
+    height: 7vh;
+    z-index: 15;
+    background-image: url("../../core/images/icons/dice.png");
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+
+
+#google {    
+    position: absolute;
+    width: 87vw;    
+    z-index: 100;
+    display: none;
+}
+
+
+/* iPAD y tablets */
+@media (max-device-aspect-ratio: 3/2) and (min-width: 768px){
+    .config-button, .config-button-encounter {
+        left: -0.5%;
+        top: -0.5%;
+        width: 7%;
+        height: 9vh;
+    }
+}

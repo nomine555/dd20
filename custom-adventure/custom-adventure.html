@@ -1,0 +1,1474 @@
+<tw-storydata name="custom-adventure" startnode="" creator="Twine" creator-version="2.3.5" ifid="B962B290-85FD-43EB-AD2E-F0DEBCBAE8E4" zoom="1" format="Harlowe" format-version="2.1.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style><script role="script" id="twine-user-script" type="text/twine-javascript">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script><tw-passagedata pid="1" name="Introducción" tags="@resumen flow" position="242,165" size="100,100">
+# INTRODUCCIÓN
+Este tutorial te guiará por los pasos necesarios para crear tu propia aventura para el sistema *GameThrough* de Digital d20 Adventures.  
+
+*GameThrough* utiliza Twine para crear aventuras con elementos enlazados y le aporta además mapas interactivos, música y la biblioteca de contenido SRD5.
+
+Para crear una aventura solo tienes que escribirla con el formato adecuado y observar los resultados, así:
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/ejemplo-markdown.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/ejemplo-markdown.jpg)&lt;/a&gt;
+
+Con todo esto, generaremos una aventura que podremos cargar en Digital d20. 
+&lt;a href=&quot;https://digitald20.com/play/custom-adventure/fan-adventure.html&quot; download&gt;Descarga la aventura de ejemplo&lt;/a&gt; y ábrela con Twine.
+
+## Twine
+Antes de empezar, necesitarás la herramienta gratuita Twine. Utilizar Twine es muy sencillo, y no requiere ningún conocimiento previo ni nociones de programación. Descarga Twine &lt;a href=&quot;https://twinery.org/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;aquí&lt;/a&gt; o utiliza su versión online. Twine organiza las escenas en tarjetas llamadas &quot;Pasajes&quot; que puedes editar y reordenar.
+Visita la sección [[Twine]] para más información.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/flow.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/flow.jpg)&lt;/a&gt;  
+
+## Markdown
+Markdown es un sistema de codificación que permite escribir texto enriquecido mediante texto plano. No tienes que descargar nada para escribir con Markdown, puesto que Markdown es *una forma de escribir*. Es muy sencillo, te damos todas las claves en la sección *Markdown*.
+
+
+## Sistema GameTrough
+El sistema *GameTrough* de Digital d20 utiliza Markdown. Apoyándonos en Markdown y en construcciones propias, el sistema *GameTrough* puede interpretar el código para:  
+
+* Generar mapas para navegar entre las diferentes localizaciones.
+* Incorporar el SRD5 completo e hiperenlazar todas las palabras clave.
+* Mostrar información de conjuros, objetos mágicos y monstruos allá donde aparezcan.
+* Incluir música.
+* Mostrar un diagrama de flujo con el desarrollo de la aventura que lleve a cada encuentro.
+
+Crear una aventura utilizando el sistema *GameTrough* es tan sencillo como crear las escenas en *Pasajes* de Twine y luego cargarla en Digital d20. Encontrarás más información sobre Twine en la sección *Twine*.
+
+## Cargar una aventura
+Una vez tengas al aventura lista, puedes cargar el archivo HTML creado por Twine en la zona superior de esta página.
+
+Recuerda que subir este archivo cargará la aventura nueva. Para volver al tutorial deberás pulsar *Clear*.</tw-passagedata><tw-passagedata pid="2" name="Indice" tags="@index-main" position="75,281" size="100,100">
+ # INDICE
+
+* [[Introducción]]  
+* [[Markdown]]  
+* [[Pasajes]]  
+ * [[Encuentros]]  
+* [[Enlaces]]  
+ * [[Contenido SRD5 enlazable]] 
+* [[Contenidos multimedia]]
+* [[Monstruos]]  
+* [[Mapas]]  
+* [[PNJs]]  
+* [[Diagrama de flujo]]  
+* Herramientas adicionales  
+ * [[Twine]]  
+ * [[Posicionador de etiquetas]]  
+ * [[Alojamiento de archivos online]]  
+ * [[Herramientas para mapas]]  
+ * [[Homebrewery]] 
+ * [[Herramientas de edición]]  </tw-passagedata><tw-passagedata pid="3" name="Pasajes" tags="" position="375,160" size="100,100">
+# PASAJES
+Un pasaje es un elemento en Twine. Es la forma en que Twine organiza las escenas de una historia. El sistema *GameThrough* utiliza los pasajes para crear tres tipos de escenas:  
+* **Escenas tipo índice:** Que mantienen el índice en la parte izquierda, con información únicamente en la derecha.
+* *Encuentros*: Escenas que incorporan música, imágenes y/o mapas e información adicional enla zona izquierda.
+* **Lugares:** Mapas navegables con descripciones emergentes.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/ejemplo-pasaje.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/ejemplo-pasaje.jpg)&lt;/a&gt;   
+
+Los pasajes se componen de:
+
+| Contenido | Descripción |
+|:----:|:-------------|
+| Título  | El **Título** es el nombre del pasaje, por el cual será referenciado allá donde aparezca.   |
+| Etiquetas  | Las **Etiquetas** están situadas entre el título y el texto y aportan funcionalidades adicionales, como veremos a continuación. |
+| Texto | El **Texto** es el contenido del pasaje propiamente dicho.  	 |
+
+
+Pulsando en Twine el botón inferior **+Pasaje** se crea un pasaje.  
+
+## Etiquetas para pasajes
+Una vez dentro de un pasaje, pulsar en **+Etiqueta** nos permite añadir distintos comportamientos a cada pasaje, según:
+
+| Contenido | Descripción |
+|:----:|:-------------|
+| &lt;div class=&quot;codigo&quot;&gt;flow&lt;/div&gt;  | Hace que el pasaje sea visible en el *Diagrama de flujo*. Esto no afecta a otros comportamientos.   |
+| &lt;div class=&quot;codigo&quot;&gt;encounter&lt;/div&gt;  | El pasaje es un encuentro, con una o varias imágenes, música y mapas. Además tiene sección **A la vista** y **Conclusión**. Para más detalles ver sección *Encuentros*. |
+| &lt;div class=&quot;codigo&quot;&gt;@main-map&lt;/div&gt; | De todos los mapas (ver sección [[Mapas]]) uno de ellos ha de ser el inicial, el primero que se vea al pulsar en la sección apropiada. Ese pasaje tiene que tener la etiqueta **@main-map**. El resto de mapas tienen que tener la misma forma. **@xxxxxx-map**. |
+| &lt;div class=&quot;codigo&quot;&gt;@monsters&lt;/div&gt; | Las estadísticas de los monstruos de la aventura estarán todas en este pasaje. |
+| &lt;div class=&quot;codigo&quot;&gt;@index-main&lt;/div&gt; | Para el índice de la aventura. El resto de pasajes serán enlazados desde aquí. |
+| &lt;div class=&quot;codigo&quot;&gt;@resumen&lt;/div&gt; | El primer contenido que muestre la aventura será el resumen. Este pasaje no suele tener imágenes (no es encuentro). |
+ 
+## Encuentros
+Los encuentros son un tipo especial de pasaje que incluyen una zona izquierda con imágenes, música, mapas e información adicional. Puedes aprender más sobre esto en la sección *Encuentros*.</tw-passagedata><tw-passagedata pid="4" name="Enlaces" tags="" position="644,160" size="100,100">
+# ENLACES
+## Enlaces a contenido liberado del SRD5
+El sistema *GameThrough* genera automáticamente enlaces para las palabras clave que se desee (y formen parte del SRD5).
+
+De este modo se pueden generar enlaces para:
+* Conjuros
+* Monstruos
+* Reglas
+* Objetos mágicos  
+
+existentes en el SRD5, que se generarán de forma automática para aparecer en la zona de información izquierda. 
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/notas-al-margen.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![ancho50](https://digitald20.com/wp-content/uploads/2020/04/notas-al-margen.jpg)&lt;/a&gt;
+
+Para ello, hay que escribir el texto *entre asteriscos*. El sistema detectará el contenido del texto destacado, y creará un hipervínculo con la entrada correspondiente para mostrar un *objeto mágico*, *trampa*, etc.
+
+Aquí puedes ver todo el material SRD5 que puedes enlazar:  
+[[Contenido SRD5 enlazable]].
+
+## Enlaces a contenido propio
+Se puede utilizar también este sistema para crear hipervínculos automáticamente a contenido propio de la aventura. 
+
+De este modo se pueden generar enlaces para:
+* **Monstruos:** Se mostrarán siempre en la zona izquierda de un encuentro, con una cruz para cerrarlos una vez se hayan consultado.  
+* **PNJ&#39;s:** Tienen una sección propia, aunque también se pueden mostrar en la sección izquierda, si se crea una entrada con su nombre.  
+* **Pasaje:** Un enlace a un pasaje (creado poniendo el nombre del pasaje entre asteriscos) llevará al usuario a dicho pasaje.  
+* **Notas al margen:** Las notas al margen se mostrarán siempre en una ventana flotante.  
+* **Mapas:** Dentro de un mapa los enlaces pueden ser de dos tipos:  
+ * **Enalces entre mapas** (textos en verde) navegan entre los distintos mapas de la aventura.
+ * **Puntos de interés** (círculos veis) proporcionan información adicional de una zona concreta de un mapa.
+
+Para ello, además de escribir el texto \*entre asteriscos\*, debe existir la entrada correspondiente como título de primer nivel en los pasajes **@monsters**, **@notes** y **@main-npcs**. El sistema detectará el contenido del texto destacado, y creará un hipervínculo con la sección correspondiente.  
+
+Los **Monstruos** se muestran en la zona de información izquierda.  
+Los **PNJ&#39;s** tienen una sección propia, aunque también se pueden mostrar en la zona de información izquierda si se crea un enlace con su nombre.  
+Las **Notas al margen** se muestran en una ventana flotante.  </tw-passagedata><tw-passagedata pid="5" name="Contenidos multimedia" tags="" position="772,161" size="100,100">
+# CONTENIDOS MULTIMEDIA
+Hay cinco tipos de contenido multimedia que se pueden añadir a las aventuras. 
+
+* Las imágenes y los audios se pueden poner en cualquier sitio en cualquier tipo de entrada.  
+* La música y los mapas solo se admiten en los pasajes tipo Encuentro.
+
+### Orden de los archivos
+
+## Audio
+Los archivos de audio aparecerán al inicio del pasaje con un minireproductor. Se tienen que introducir **antes** de cualquier otro contenido en el pasaje, con el siguiente formato:
+
+&lt;div class=&quot;cuadro codigo&quot;&gt;\!\[audio](www.rutadelaudio.mp3)&lt;/div&gt;
+
+## Imágenes en encuentros
+**En los pasajes de tipo encuentro** se acompañará el texto con entre una y cuatro imágenes. Estas aparecerán en la zona izquierda del encuentro y, al pulsar sobre cada una de ellas, se verá en una ventana flotante, a pantalla completa. Se tienen que introducir **antes** de cualquier otro contenido en el pasaje, con el siguiente formato:
+
+&lt;div class=&quot;codigo cuadro&quot;&gt;\!\[image](www.rutadelaimagen.jpg)&lt;/div&gt;
+
+Se soporta cualquier tipo de archivo.  
+
+## Imágenes incrustadas  
+En cualquier tipo de pasaje se pueden incluir imágenes intercaladas en cualquier parte del pasaje. Hay tres formatos para hacerlo, dependiendo del tamaño en que se quiera mostrar:
+
+&lt;div class=&quot;cuadro codigo&quot;&gt;
+\!\[small](www.rutadelaimagen.jpg)
+&lt;br/&gt;
+\!\[medium](www.rutadelaimagen.jpg)
+&lt;br/&gt;
+\!\[large](www.rutadelaimagen.jpg)
+&lt;/div&gt;   
+
+Se soportan archivos tipo jpg y png.
+
+</tw-passagedata><tw-passagedata pid="6" name="Monstruos" tags="" position="523,285" size="100,100">
+# MONSTRUOS
+Los monstruos se enlazan igual que el resto de contenidos, poniendo el nombre del monstruo \*entre asteriscos\*. Si el monstruo forma parte del SRD5 se mostrará el monstruo de las reglas. Si es un monstruo creado para la aventura, se crea el enlace de igual modo, pero hay que incluir el monstruo en el pasaje @monsters con un formato específico. Cuando se pulsa sobre el enlace de un monstruo, este se muestra en la zona de información izquierda. 
+
+A continuación tienes un monstruo de ejemplo. Puedes pinchar enla imagen para verla más grande o, si tienes dudas, consulta el código después de la imagen.  
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/ejemplo-monstruo.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/ejemplo-monstruo.jpg)&lt;/a&gt;
+
+En la aventura de ejemplo &lt;a href=&quot;https://digitald20.com/play/custom-adventure/fan-adventure.html&quot; download&gt;Secuestro en Brookmili&lt;/a&gt; tienes monstruos de ejemplo para que puedas utilizar su formato.
+
+Además, en el siguiente archivo tienes todo el contenido del SRD (incluidos los monstruos) por si quieres utilizar el formato de alguno como base para crear los tuyos propios:  
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/mardkdown-srd5.txt&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;Biblioteca de monstruos SRD5&lt;/a&gt;</tw-passagedata><tw-passagedata pid="7" name="Mapas" tags="" position="884,166" size="100,100">
+# MAPAS
+Tanto los mapas de navegación como los que se incluyen en los pasajes de tipo encuentro se generan del mismo modo. Un pasaje de tipo mapa puede ser incluido en cualquiera de las dos secciones.  
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/ejemplo-mapa-e1586858334706.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/ejemplo-mapa-e1586858334706.jpg)&lt;/a&gt;
+
+
+## Estructura
+Ha de incluirse, el inicio del pasaje, la imagen del mapa:  
+
+&lt;div class=&quot;cuadro codigo&quot;&gt;\!\[map](www.rutadelaimagen.jpg)&lt;/div&gt;
+
+Con eso simplemente ya se mostrará el mapa en la sección correspondiente (recordemos que el primer mapa ha de tener siempre la etiqueta **@main-map**). Además, se pueden añadir dos tipos de enlaces:
+
+### Vínculo a otro mapa
+Para enlazar desde un mapa a otro únicamente hay que colocar un señalador en el mapa, con el siguiente formato:  
+
+&lt;div class=&quot;cuadro codigo&quot;&gt;\# @xxxxxx &lt;\!\-\-20,10--&gt;&lt;/div&gt;  
+
+Donde @xxxxxx es la etiqueta del nombre del mapa objetivo, y los dos números son la posición del señalador. En la etiqueta se mostrará el nombre del mapa objetivo.  
+
+### Enlace a ventana de información
+Para mostrar una ventana de información en un mapa hay que colocar un señalador con el siguiente formato:
+
+&lt;div class=&quot;cuadro codigo&quot;&gt;\# Nombre &lt;\!\-\-10,10--&gt;
+&lt;br/&gt;
+Texto a mostrar en la ventana flotante. Aquí puede incluirse también un enlace a un pasaje.&lt;/div&gt;
+
+Donde el nombre es el título a mostrar y la pareja de números es la posición de la etiqueta. El texto se mostrará a continuación del título.
+
+## Posicionador de etiquetas
+Los puntos X, Y que siguen a los títulos de los mapas son la posicion relativa en porcentaje sobre la imagen de fondo. Tienes la siguiente herramienta a tu disposición para calcularlos fácilmente:  
+[[Posicionador de etiquetas]].</tw-passagedata><tw-passagedata pid="8" name="PNJs" tags="" position="763,288" size="100,100">
+# PNJ&#39;s
+Los personajes no jugadores tienen que agruparse todos en un pasaje con la etiqueta **@main-npcs**. Por lo demás, no se distingue mucho de un pasaje normal. Aunque tienen sección propia, los PNJ&#39;s también se pueden mostrar en la zona izquierda de un pasaje.  
+
+Cada PNJ estará formado por:  
+
+* **Título de primer nivel:** Será el nombre del personaje, por el que se le referenciará allá donde se escriba entre asteriscos.  
+* **Imagen incrustada (opcional)** Utilizando el formato indicado en [[Contenidos multimedia]] se pueden incluir una o varias imágenes, en cualquier tamaño.  
+* **Texto descriptivo:** El texto que irá, bajo el título con el nombre del personaje. Se puede incluir cualquier referencia a reglas, otros personajes, conjuros, encuentros, etc.
+* **Ficha de personaje (opcional)** La ficha de personaje con el formato indicado en la sección *Monstruos*.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/pnjs.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/pnjs.jpg)&lt;/a&gt;</tw-passagedata><tw-passagedata pid="9" name="Diagrama de flujo" tags="" position="883,288" size="100,100">
+# DIAGRAMA DE FLUJO
+Para el diagrama de flujo de una aventura no es necesario crear pasajes específicos, únicamente hay que agregar la etiqueta **flow** a cada pasaje que queramos que se muestre en el diagrama.  
+
+Para enlazar pasajes en Twine se han de crear relaciones entre ellos utilizando **\[\[Nombre del pasaje\]\]**. Así, aparecerán en el esquema Twine las flechas de relación.  
+
+Moviendo los pasajes crearemos desde Twine el diagrama de flujo que se mostrará en la aventura, con la misma disposición de elementos
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/flow.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/flow.jpg)&lt;/a&gt;</tw-passagedata><tw-passagedata pid="10" name="Markdown" tags="" position="240,402" size="100,100">
+# MARKDOWN
+Markdown es un sistema de codificación que permite escribir texto enriquecido mediante texto plano. Las codificaciones propias son muy sencillas:
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/tabla-markdown.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;
+![large](https://digitald20.com/wp-content/uploads/2020/04/tabla-markdown.jpg)&lt;/a&gt;
+
+## Separación entre líneas
+* El retorno de carro (tecla ENTER) por sí mismo no produce ningún efecto.  
+* Para crear una nueva línea se utilizan dos espacios al final de una línea. Después de esto, añadir un retorno de carro (tecla ENTER) hará que el espacio sea mayor.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/lineas.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/lineas.jpg)&lt;/a&gt;</tw-passagedata><tw-passagedata pid="11" name="Encuentros" tags="" position="377,288" size="100,100">
+# ENCUENTROS
+Los encuentros son un tipo especial de pasaje que incluyen una zona izquierda con imágenes, música y dos secciones: **A la vista** y **Conclusión**, como se muestra en la imagen:
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/encuentro.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![large](https://digitald20.com/wp-content/uploads/2020/04/encuentro.jpg)&lt;/a&gt;
+
+Como vemos, la estructura de un pasaje tipo encuentro tiene tres partes:
+
+## Contenido
+La estructura general del pasaje es igual que la de cualquier otro en cuanto a niveles de títulos, enlaces y demás.   
+
+ 
+## Contenidos multimedia dentro de encuentros
+Dentro de un encuentro hay contenido multimedia específico que se muestra de una forma especial en los pasajes de tipo encuentro. Los códigos de introducción han de escribirse al inicio del pasaje para imágenes de encuentro, música, mapas y audio, antes de cualquier otro contenido.
+
+* La música, los mapas y las imágenes situadas **antes** del título del encuentro se comportan de forma distinta al contenido multimedia en el resto de pasajes: aparecerán en la zona izquierda del encuentro. Se pueden incluir únicamente una pista de música y hasta cuatro imágenes/mapas.  
+* Las imágenes y los audios **después** del primer titulo en los encuentros se comportan igual que en cualquier otro tipo de Pasaje. De este modo se puede incluir cualquier cantidad de imágenes, pero solo un audio.  
+
+Puede verse un ejemplo de esto en la imagen al inicio de esta entrada.
+
+## Música
+**En los pasajes de tipo encuentro** se incluye una música que pueda ambientar la escena. Se tiene que introducir **antes** de cualquier otro contenido en el pasaje, con el siguiente formato:
+
+&lt;div class=&quot;cuadro codigo&quot;&gt;\!\[music](www.rutadelamusica.mp3)&lt;/div&gt;
+
+La música aparecerá en la zona izquierda, en un botón on/off.
+
+## Mapas
+**En los pasajes de tipo encuentro** se puede incluir, en la misma zona que las imágenes, uno o varios mapas, que pueden tener información relevante hiperenlazada (ver [[Mapas]]). Pulsar sobre el mapa lo abrirá en una ventana flotante.  
+
+El código se tiene que introducir **antes** de cualquier otro contenido en el pasaje, con el siguiente formato:
+
+&lt;div class=&quot;cuadro codigo&quot;&gt;\!\[map](@xxxxx)&lt;/div&gt;
+
+Donde **@xxxxx** es el nombre de la etiqueta que tenga el mapa que enlazamos.  
+
+Los mapas aparecen en la zona izquierda, junto con las imágenes.
+
+## A la vista y Conclusión
+En esta zona se muestra lo que los personajes verán en el encuentro. Suelen incluirse las tiradas y conjuros más comunes como *Percepción*, *Investigación* o *Detectar Magia*.  
+&lt;div class=&quot;cuadro&quot;&gt;
+&lt;div class=&quot;codigo&quot;&gt;AT A GLANCE&lt;br/&gt;
+---&lt;/div&gt;
+Texto a mostrar en la zona **A la vista**.
+&lt;/div&gt;
+&lt;br/&gt;
+
+El apartado &quot;Conclusión&quot; se reserva para los apuntes que indiquen los nexos con el siguiente encuentro o qué es necesario que los jugadores hayan visto o hecho antes de pasar al siguiente.  
+Además también es un pequeño resumen para que el DM pueda &quot;hojear&quot; la aventura rápidamente.
+
+&lt;div class=&quot;cuadro&quot;&gt;
+&lt;div class=&quot;codigo&quot;&gt;CONCLUSION&lt;br/&gt;
+---&lt;/div&gt;
+Texto a mostrar en la zona **Conclusión**.
+&lt;/div&gt;
+&lt;br/&gt;</tw-passagedata><tw-passagedata pid="12" name="Alojamiento de archivos online" tags="" position="1002,287" size="100,100">
+# ALOJAMIENTO DE ARCHIVOS ONLINE
+Para la inclusión de archivos multimedia hace falta subir dichos archivos a algún sitio online. Aquí te ofrecemos algunas opciones sobre dónde hacerlo:
+
+## Dropbox
+Dropbox es una de las más famosas herramientas online
+
+### Paso 1: Crear cuenta de Dropbox e iniciar sesión
+Primero nos dirigimos a la web de Dropbox y creamos una nueva cuenta. Dropbox pide nuestros nombres y apellidos, un correo electrónico y una contraseña. Una vez creada la cuenta tendremos 2gb de alojamiento gratuito en la nube.
+
+Podemos vincular Dropbox con nuestro Smartphone descargando la aplicación en la AppStore (iPhone) o Play Store (Android), o podemos descargar la versión PC/MacOsX. No es necesario tener nuestra cuenta vinculada con nuestro teléfono u ordenador, pero mejoraremos la productividad y la podremos usar más fácilmente.
+
+### Paso 2: Subir archivos a Dropbox
+El proceso de subida de archivos a Dropbox para usarlo como servidor de imágenes es muy fácil. Si tenemos Dropbox abierto en el navegador sólo debemos coger y arrastrar los archivos deseados desde nuestro ordenador hasta la ventana de Dropbox y soltarlos. También podemos clickar en el icono de la hoja de papel con un plus para poder añadir uno o más archivos.
+
+Si hemos instalado Dropbox en nuestro PC o MacOSx habrá creado una carpeta llamada Dropbox en el escritorio o en Mis Documentos al que podemos arrastrar los archivos para subirlos.
+
+Podemos crear carpetas para mantener nuestros archivos organizados.
+
+### Paso 3: Cómo conseguir el link al archivo en el servidor
+Si vamos a Dropbox.com, clickamos sobre el archivo que queremos usar y vamos a Compartir veremos que nos ofrece “crear un enlace”. Esa URL nos llevará al archivo que hemos subido, pero no a la URL de la carpeta del servidor en la que se encuentra alojado. Si usamos esta primera URL en un archivo HTML como fuente (source o src en HTML) de una etiqueta de imagen no podremos ver el archivo, ya que es necesario tener la dirección de la carpeta del servidor en la que se encuentra alojado.
+
+Dropbox no nos facilita esa URL, sólo nos da una URL que nos lleva a la galería y abre esa imagen:
+
+https://www.dropbox.com/s/oo4yazg7rwiug3x/imagen-destacada-dropbox.jpg.
+
+La URL nos lleva a la imagen, pero si la usamos como src de una imagen no nos servirá. ¿Por qué? Porque al usar Dropbox como host de imagenes nos da la URL a una galería, no al archivo de imagen nativo.
+
+Existe una manera de modificar la URL y poder apuntar directamente al archivo alojado en el servidor. Para eso, únicamente debemos cambiar https://www.dropbox.com/ por https://dl.dropboxusercontent.com/.
+
+Nuestra nueva URL sería: https://dl.dropboxusercontent.com/s/oo4yazg7rwiug3x/imagen-destacada-dropbox.jpg.
+
+Esta URL apunta directamente a la imagen, sin más código HTML, por lo que la podemos usar en nuestras firmas de email o webs sin miedo a que caduquen y nos las borren.
+
+## Sube Fotos .com
+Sube Fotos es un *site* gratuito de alojamiento en la nube que permite cargar archivos de imágenes y proporciona enlaces de acceso a los archivos.  
+
+Puedes ir a Sube Fotos desde este enlace:
+https://subefotos.com
+
+### Paso 1
+Elije la foto que quieras subir.
+
+### Paso 2
+Elije el formato de redimensión o &quot;no redimensionar&quot;.
+
+### Paso 3
+Elije si quieres que el archivo sea público o no.
+
+### Paso 4 
+Cuando la imagen se cargue, aparecerán los enlaces de acceso directo al archivo, que son los que podrás utilizar en Twine para cargar la imagen</tw-passagedata><tw-passagedata pid="13" name="Twine" tags="" position="997,168" size="100,100">
+# TWINE
+Twine es una herramienta digital que permite generar con mucha facilidad redes de textos interrelacionados. Por medio de un sistema muy simple de links, cualquier persona puede escribir una historia interactiva, colocando en su texto opciones que llevan a diferentes partes de la historia. Puedes descargar Twine gratuitamente desde &lt;a href=&quot;https://twinery.org/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;aquí&lt;/a&gt; o usar su versión online.
+
+Una vez la instales crea una historia y pasa a *Pasajes*. </tw-passagedata><tw-passagedata pid="14" name="Herramientas para mapas" tags="" position="1117,167" size="100,100">
+# HERRAMIENTAS PARA MAPAS
+
+## Inkarnate
+Inkarnate es una herramienta que nos permite crear mapas fantásticos sin necesidad de instalar ningún programa, se puede usar de manera gratuita o se puede pagar una cuota anual de 25 dolares para agregar bastantes recursos a la misma.  
+
+Esta es una opción excelente para todos aquellos que no usan herramientas de diseño o que están buscando alternativas a las ya existentes en el mercado.  
+
+Puedes empezar a utilizar Inkarnate &lt;a href=&quot;https://inkarnate.com/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;aquí&lt;/a&gt;.
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/EKmEmU8wfNA&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+## Random Dungeon Generator
+Random Dungeon Generator es un generador de mazmorras aleatorio muy configurable que lleva en pie desde 1999 y que da muy buenos resultados. Si tienes falta de tiempo, Random Dungeon Generator es tu aliado con las mazmorras. Puedes dejarle libre albedrío o fijar algunos parámetros y dejar que haga su magia.
+
+Puedes empezar a utilizar Random Dungeon Generator &lt;a href=&quot;https://donjon.bin.sh/d20/dungeon/index.cgi&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;aquí&lt;/a&gt;.
+
+## Random Dungeon Map Creator
+Con el mismo espíritu que el anterior, Random Dungeon Map Creator crea mapas aleatorios con una configuración predeterminada, con la salvedad de que no crea el contenido de las mazmorras, ese tendrá que ir por cuenta del DM.
+
+Puedes empezar a utilizar Random Dungeon Map Creator &lt;a href=&quot;http://www.gozzys.com/dungeon-maps&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;aquí&lt;/a&gt;.</tw-passagedata><tw-passagedata pid="15" name="Herramientas de edición" tags="" position="1121,293" size="100,100">
+# HERRAMIENTAS DE EDICIÓN
+Aquí se proporciona información de algunas herramientas de edición de uso gratuito que pueden ser de utilidad a la hroa de crear diseños y mapas.
+
+## GIMP
+GIMP es una aplicación de código abierto para editar imágenes que, a diferencia de su gran competidor, también está disponible para Linux además de para Windows o macOS. Todos los archivos necesarios para su instalación se encuentran en la página oficial del proyecto. Este editor de fotos open source se amplía mediante extensiones, lo cual, sumado a las ventajas que trae consigo un software libre en cuanto a desarrollo colaborativo, ha generado, con los años, un abanico de funciones en constante crecimiento.  
+
+Descarga GIMP &lt;a href=&quot;http://www.gimp.org.es/modules/mydownloads/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;aquí&lt;/a&gt;.
+
+## Paint.NET
+Paint.NET, el freeware desarrollado en su día por estudiantes, antaño de código abierto, está hoy auspiciado por la casa Microsoft, lo que determina su incompatibilidad con Linux y macOS y la necesidad de contar con un sistema operativo Windows como mínimo en la séptima versión para poder usarlo.  
+
+Descarga Paint.NET &lt;a href=&quot;https://www.getpaint.net/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;aquí&lt;/a&gt;.
+
+## Pixlr
+Pixlr facilita la transformación de imágenes con un editor muy completo. Ya estés aplicando una solución rápida a tus fotos o agregando efectos, superposiciones o bordes, Pixlr tiene todo lo que necesitas para hacerlo. Además, Pixlr es fácil y gratuito.  
+
+Descarga Pixlr &lt;a href=&quot;https://pixlr.com/x/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;aquí&lt;/a&gt;.
+
+## Photoscape
+Otra herramienta de edición y administración de imágenes digitales es Photoscape, junto a GIMP una de las alternativas gratuitas a Photoshop más extendidas y muy popular sobre todo entre los fotógrafos amateurs. Por su fácil utilización y su sólida y amplia funcionalidad tanto para el usuario privado como para el semiprofesional, este es un software muy satisfactorio. Photoscape ofrece un gran número de funciones básicas de retoque como cortar, aplicar efectos, añadir objetos o corregir claridad, contraste y color, pero, además, es posible trabajar en varias fotos a la vez para, por ejemplo, cortarlas, nombrarlas y corregirlas.  
+
+Descarga Photoscape &lt;a href=&quot;http://www.photoscape.org/ps/main/index.php&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;aquí&lt;/a&gt;.</tw-passagedata><tw-passagedata pid="16" name="Contenido SRD5 enlazable" tags="" position="641,288" size="100,100">
+# CONTENIDO SRD5 ENLAZABLE
+Las siguientes palabras se convertirán en un enlace a la entrada en el manual SRD5 cuando sean escritas entre asteriscos (pulsa en la palabra cada una de ellas para ver la entrada)
+
+## Conjuros
+*Abrir cerraduras*  
+*Acelerar*  
+*Adivinación*  
+*Agrandar/reducir*  
+*Alarma*  
+*Aliado de los planos*  
+*Amistad con los animales*  
+*Animal mensajero*  
+*Animar objetos*  
+*Antipatía/simpatía*  
+*Apacible descanso*  
+*Arma espiritual*  
+*Arma mágica*  
+*Armadura de mago*  
+*Asesino fantasmal*  
+*Asolar*  
+*Atravesar muro*  
+*Augurio*  
+*Aura mágica del arcano*  
+*Aura sagrada*  
+*Auxilio*  
+*Baile irresistible*  
+*Barrera antivida*  
+*Barrera de cuchillas*  
+*Bendecir*  
+*Boca mágica*  
+*Bola de fuego*  
+*Bola de fuego de explosión retardada*  
+*Buenas bayas*  
+*Burla cruel*  
+*Caer como una pluma*  
+*Calentar metal*  
+*Calmar emociones*  
+*Cambiar de forma*  
+*Caminar con el viento*  
+*Caminar por el agua*  
+*Campo antimagia*  
+*Cautivar*  
+*Cautiverio*  
+*Ceguera/sordera*  
+*Cerradura arcana*  
+*Clarividencia*  
+*Clonar*  
+*Cofre secreto*  
+*Comprensión idiomática*  
+*Compulsión*  
+*Comunión*  
+*Comunión con la naturaleza*  
+*Confusión*  
+*Conjurar animales*  
+*Conjurar celestial*  
+*Conjurar elemental*  
+*Conjurar elementales menores*  
+*Conjurar fata*  
+*Conjurar seres de los bosques*  
+*Cono de frío*  
+*Conocimiento de leyendas*  
+*Conocimiento druídico*  
+*Contactar con otro plano*  
+*Contacto electrizante*  
+*Contagio*  
+*Contingencia*  
+*Contorno borroso*  
+*Contraconjuro*  
+*Controlar el clima*  
+*Controlar las aguas*  
+*Convocaciones instantáneas*  
+*Corcel fantasma*  
+*Creación*  
+*Crear comida y bebida*  
+*Crear muertos vivientes*  
+*Crear o destruir agua*  
+*Crecimiento de espinas*  
+*Crecimiento vegetal*  
+*Cubículo*  
+*Cuchichear mensaje*  
+*Curar heridas*  
+*Curar heridas en grupo*  
+*Custodia contra la muerte*  
+*Círculo de muerte*  
+*Círculo de teletransporte*  
+*Círculo mágico*  
+*Dañar*  
+*De la carne a la piedra*  
+*Debilidad mental*  
+*Dedo de la muerte*  
+*Deseo*  
+*Desintegrar*  
+*Desplazamiento de plano*  
+*Destierro*  
+*Detectar el mal y el bien*  
+*Detectar el bien y el mal*  
+*Detectar magia*  
+*Detectar pensamientos*  
+*Detectar trampas*  
+*Detectar veneno y enfermedad*  
+*Detener el tiempo*  
+*Disco flotante*  
+*Disfrazarse*  
+*Disipar el mal y el bien*  
+*Disipar la agonía*  
+*Disipar magia*  
+*Doble engañoso*  
+*Dominar bestia*  
+*Dominar monstruo*  
+*Dominar persona*  
+*Don de lenguas*  
+*Dormir*  
+*Dotar de consciencia*  
+*Elaborar*  
+*Encontrar familiar*  
+*Encontrar la senda*  
+*Encontrar montura*  
+*Encontrar trampas*  
+*Enmarañar*  
+*Escalada de araña*  
+*Escritura ilusoria*  
+*Escudo*  
+*Escudo de fuego*  
+*Escudo de la fe*  
+*Escudriñar*  
+*Esfera congelante*  
+*Esfera elástica*  
+*Esfera flamígera*  
+*Espada arcana*  
+*Espejismo arcano*  
+*Espíritus guardianes*  
+*Estallar*  
+*Etereidad*  
+*Explosión sobrenatural*  
+*Explosión solar*  
+*Falsa vida*  
+*Faro de esperanza*  
+*Favor divino*  
+*Festín de los héroes*  
+*Filo flamígero*  
+*Flamear*  
+*Flecha ácida*  
+*Forma gaseosa*  
+*Formas de animal*  
+*Fuego feérico*  
+*Fundirse con la piedra*  
+*Garrote*  
+*Geas*  
+*Glifo custodio*  
+*Globo de invulnerabilidad*  
+*Golpe de llamas*  
+*Golpe de rayo*  
+*Grasa*  
+*Guardas y custodias*  
+*Guardián de la fe*  
+*Hablar con las plantas*  
+*Hablar con los animales*  
+*Hablar con los muertos*  
+*Hechizar persona*  
+*Herida de marca*  
+*Heroísmo*  
+*Identificar*  
+*Ilusión menor*  
+*Ilusión programada*  
+*Imagen mayor*  
+*Imagen reflejada*  
+*Imagen silenciosa*  
+*Impacto verdadero*  
+*Indetectabilidad*  
+*Infligir heridas*  
+*Inmovilizar monstruo*  
+*Inmovilizar persona*  
+*Insecto gigante*  
+*Interdicción*  
+*Intermitencia*  
+*Invertir gravedad*  
+*Invisibilidad*  
+*Invisibilidad mayor*  
+*Jaula de fuerza*  
+*Laberinto*  
+*Labia*  
+*Lanzar maldición*  
+*Levitar*  
+*Libertad de movimiento*  
+*Ligadura de los planos*  
+*Llama continua*  
+*Llama sagrada*  
+*Llamar al relámpago*  
+*Localizar animales o plantas*  
+*Localizar criatura*  
+*Localizar objeto*  
+*Luces danzantes*  
+*Luz*  
+*Luz del día*  
+*Magnífica mansión*  
+*Mano arcana*  
+*Mano del mago*  
+*Manos ardientes*  
+*Marca del cazador*  
+*Mastín fiel*  
+*Mejorar característica*  
+*Mente en blanco*  
+*Terror*  
+*Mirada penetrante*  
+*Modificar recuerdo*  
+*Muro de espinas*  
+*Muro de fuego*  
+*Muro de fuerza*  
+*Muro de hielo*  
+*Muro de piedra*  
+*Muro de viento*  
+*Muro prismático*  
+*Nube aniquiladora*  
+*Nube apestosa*  
+*Nube brumosa*  
+*Nube incendiaria*  
+*Némesis inexorable*  
+*Ojo arcano*  
+*Onda atronadora*  
+*Orden imperiosa*  
+*Orientación divina*  
+*Oscuridad*  
+*Palabra curativa*  
+*Palabra curativa en grupo*  
+*Palabra de poder aturdidor*  
+*Palabra de poder mortal*  
+*Palabra de regreso*  
+*Palabra divina*  
+*Pasar sin dejar rastro*  
+*Paso brumoso*  
+*Pauta hipnótica*  
+*Perdición*  
+*Piel de corteza*  
+*Piel de piedra*  
+*Plaga de insectos*  
+*Plegaria de curación*  
+*Polimorfar*  
+*Polimorfar verdadero*  
+*Presciencia*  
+*Prestidigitación*  
+*Protección contra el mal y el bien*  
+*Protección contra el veneno*  
+*Protección contra la energía*  
+*Proyección astral*  
+*Proyectar imagen*  
+*Proyectil mágico*  
+*Puerta dimensional*  
+*Purificar comida y bebida*  
+*Quitar maldición*  
+*Ralentizar*  
+*Rayo abrasador*  
+*Rayo de debilitamiento*  
+*Rayo de escarcha*  
+*Rayo de fuego*  
+*Rayo de luna*  
+*Rayo guía*  
+*Rayo solar*  
+*Reanimar a los muertos*  
+*Recado*  
+*Recluir*  
+*Reencarnar*  
+*Regenerar*  
+*Relámpago zigzagueante*  
+*Remendar*  
+*Remover tierra*  
+*Represión infernal*  
+*Resistencia*  
+*Respirar agua*  
+*Restablecimiento mayor*  
+*Restablecimiento menor*  
+*Resurrección*  
+*Resurrección verdadera*  
+*Retirada expeditiva*  
+*Revivificar*  
+*Revivir a los muertos*  
+*Rociada de color*  
+*Rociada prismática*  
+*Rociar veneno*  
+*Ráfaga de viento*  
+*Sacralizar*  
+*Salpicadura de ácido*  
+*Salto*  
+*Sanar*  
+*Sanar en grupo*  
+*Sanctasanctórum privado*  
+*Santuario*  
+*Semiplano*  
+*Silencio*  
+*Similitud*  
+*Simulacro*  
+*Sirviente invisible*  
+*Soñar*  
+*Sugestión*  
+*Sugestión en grupo*  
+*Símbolo*  
+*Taumaturgia*  
+*Telaraña*  
+*Telecinesis*  
+*Teleportar*  
+*Tentáculos negros*  
+*Terremoto*  
+*Terreno alucinatorio*  
+*Terribles carcajadas*  
+*Toque helado*  
+*Toque vampírico*  
+*Tormenta de aguanieve*  
+*Tormenta de fuego*  
+*Tormenta de hielo*  
+*Tormenta de venganza*  
+*Transformar piedra*  
+*Transformarse*  
+*Transmigración*  
+*Tromba de meteoritos*  
+*Truco de la cuerda*  
+*Umbral*  
+*Ver lo invisible*  
+*Viajar mediante plantas*  
+*Visión en la oscuridad*  
+*Visión verdadera*  
+*Volar*  
+*Vínculo custodio*  
+*Vínculo telepático*  
+*Zancada arbórea*  
+*Zancada prodigiosa*  
+*Zona de verdad*  
+
+## Monstruos
+*Abolez*  
+*Acechador invisible*  
+*Alfombra de asfixiar*  
+*Androesfinge*  
+*Ankheg*  
+*Armadura animada*  
+*Arpia*  
+*Azer*  
+*Balor*  
+*Basilisco*  
+*Behir*  
+*Bocon barbotante*  
+*Broza movediza*  
+*Bulete*  
+*Can del infierno*  
+*Canes del infierno*  
+*Centauro*  
+*Centauros*  
+*Cieno gris*  
+*Cocatriz*  
+*Cocatrices*  
+*Couatl*  
+*Cubo gelatinoso*  
+*Deva*  
+*Devas*  
+*Diablillo*  
+*Diablillos*  
+*Diablo astado*  
+*Diablo barbado*  
+*Diablo de la cadena*  
+*Diablo de la sima*  
+*Diablo gelido*  
+*Diablo oseo*  
+*Diablo punzante*  
+*Djinni*  
+*Doppelganger*  
+*Draco*  
+*Dragon azul adulto*  
+*Dragon azul antiguo*  
+*Dragon azul joven*  
+*Dragon azul sierpe*  
+*Dragon blanco adulto*  
+*Dragon blanco antiguo*  
+*Dragon blanco joven*  
+*Dragon blanco sierpe*  
+*Dragon de bronce adulto*  
+*Dragon de bronce antiguo*  
+*Dragon de bronce joven*  
+*Dragon de bronce sierpe*  
+*Dragon de cobre adulto*  
+*Dragon de cobre antiguo*  
+*Dragon de cobre sierpe*  
+*Dragon de oropel adulto*  
+*Dragon de oropel antiguo*  
+*Dragon de oropel joven*  
+*Dragon de oropel sierpe*  
+*Dragon de oro adulto*  
+*Dragon de oro antiguo*  
+*Dragon de oro joven*  
+*Dragon de oro sierpe*  
+*Dragon de plata adulto*  
+*Dragon de plata antiguo*  
+*Dragon de plata joven*  
+*Dragon de plata sierpe*  
+*Dragon negro adulto*  
+*Dragon negro antiguo*  
+*Dragon negro joven*  
+*Dragon negro sierpe*  
+*Dragon rojo adulto*  
+*Dragon rojo antiguo*  
+*Dragon rojo joven*  
+*Dragon rojo sierpe*  
+*Dragon tortuga*  
+*Dragon verde adulto*  
+*Dragon verde antiguo*  
+*Dragon verde joven*  
+*Dragon verde sierpe*  
+*Dríade*  
+*Drow*  
+*Duende*  
+*Duergar*  
+*Elemental de agua*  
+*Elementales de agua*  
+*Elemental de aire*  
+*Elementales de aire*  
+*Elemental de fuego*  
+*Elementales de fuego*  
+*Elemental de tierra*  
+*Elementales de tierra*  
+*Engendro vampirico*  
+*Ent*  
+*Erinia*  
+*Espada voladora*  
+*Espadas voladoras*  
+*Espectro*  
+*Espectros*  
+*Esqueleto*  
+*Esqueletos*  
+*Esqueleto de caballo de guerra*  
+*Esqueletos de caballos de guerra*  
+*Esqueleto de minotauro*  
+*Esqueletos de minotauros*  
+*Estirge*  
+*Estirges*  
+*Ettin*  
+*Ettinis*  
+*Fantasma*  
+*Fantasmas*  
+*Fuego fatuo*  
+*Fuegos fatuos*  
+*Gargola*  
+*Gelatina ocre*  
+*Gibado*  
+*Gigante de escarcha*  
+*Gigante de fuego*  
+*Gigante de las colinas*  
+*Gigante de las nubes*  
+*Gigante de la tormenta*  
+*Gigante de piedra*  
+*Ginoesfinge*  
+*Glabrezu*  
+*Gnoll*  
+*Golem de arcilla*  
+*Golem de carne*  
+*Golem de hierro*  
+*Golem de piedra*  
+*Gorgon*  
+*Gran trasgo*  
+*Gric*  
+*Grifo*  
+*Grimorlock*  
+*Guardian escudo*  
+*Gusano purpura*  
+*Hezrou*  
+*Hidra*  
+*Hipogrifo*  
+*Hombre jabali*  
+*Hombre lagarto*  
+*Hombre lobo*  
+*Hombre oso*  
+*Hombre rata*  
+*Hombre tigre*  
+*Homunculo*  
+*Hongo chillon*  
+*Hongo violaceo*  
+*Ifriti*  
+*Incorporeo*  
+*Khuul*  
+*Kobold*  
+*Kraken*  
+*Lamia*  
+*Lemur*  
+*Liche*  
+*Lista*  
+*Magmino*  
+*Mantícora*  
+*Manto*  
+*Mantoscuro*  
+*Marilith*  
+*Medusa*  
+*Mefit de hielo*  
+*Mefit de magma*  
+*Mefit de polvo*  
+*Mefit de vapor*  
+*Mimeto*  
+*Minotauro*  
+*Momia*  
+*Monstruo corrosivo*  
+*Morfolito*  
+*Naga espiritual*  
+*Naga guardiana*  
+*Nalfeshnee*  
+*Necrario*  
+*Necrofago*  
+*Ogro*  
+*Ogro zombi*  
+*Oni*  
+*Orco*  
+*Osgo*  
+*Oso lechuza*  
+*Otyugh*  
+*Pegaso*  
+*Pesadilla*  
+*Planotareo*  
+*Plesiosaurus*  
+*Pseudodragon*  
+*Pudin negro*  
+*Quasit*  
+*Quimera*  
+*Rakshasa*  
+*Remorhaz*  
+*Roc*  
+*Saga cetrina*  
+*Saga marina*  
+*Saga nocturna*  
+*Sajuaguin*  
+*Sajuaguines*  
+*Salamandra*  
+*Salamandras*  
+*Satiro*  
+*Satiros*  
+*Semidragon rojo veterano*  
+*Sirenido*  
+*Sirenio*  
+*Solar*  
+*Sombra*  
+*Sucubo incubo*  
+*Tarasca*  
+*Tracnido*  
+*Trasgo*  
+*Trasgos*  
+*Triceratops*  
+*Troll*  
+*Trolls*  
+*Tumulario*  
+*Tumularios*  
+*Tyrannosaurus rex*  
+*Unicornio*  
+*Unicornios*  
+*Vampiro*  
+*Vampiros*  
+*Vrock*  
+*Vrocks*  
+*Xorn*  
+*Zombi*  
+*Zombis*  
+
+### Animales
+*Alce*  
+*Alce gigante*  
+*Arbusto consciente*  
+*Avispa gigante*  
+*Babuino*  
+*Ballena asesina*  
+*Buho*  
+*Buho gigante*  
+*Buitre*  
+*Buitre gigante*  
+*Caballito de mar*  
+*Caballito de mar gigante*  
+*Caballo de guerra*  
+*Caballo de monta*  
+*Caballo de tiro*  
+*Cabra*  
+*Cabra gigante*  
+*Camello*  
+*Cangrejo*  
+*Cangrejo gigante*  
+*Chacal*  
+*Ciempies gigante*  
+*Ciervo*  
+*Cocodrilo*  
+*Cocodrilo gigante*  
+*Comadreja*  
+*Comadreja gigante*  
+*Cuervo*  
+*Elefante*  
+*Enjambre de cuervos*  
+*Enjambre de insectos*  
+*Enjambre de murcielagos*  
+*Enjambre de piranas*  
+*Enjambre de ratas*  
+*Enjambre de serpientes venenosas*  
+*Escarabajo de fuego gigante*  
+*Escorpion*  
+*Escorpion gigante*  
+*Gato*  
+*Hachapico*  
+*Halcon*  
+*Halcon sangriento*  
+*Hiena*  
+*Hiena gigante*  
+*Huargo*  
+*Jabali*  
+*Jabali gigante*  
+*Lagarto*  
+*Lagarto gigante*  
+*Leon*  
+*Lobo*  
+*Lobo de invierno*  
+*Lobo terrible*  
+*Mamut*  
+*Mastin*  
+*Mula*  
+*Murcielago*  
+*Murcielago gigante*  
+*Oso negro*  
+*Oso pardo*  
+*Oso polar*  
+*Pantera*  
+*Perro de la muerte*  
+*Perro intermitente*  
+*Pirana*  
+*Poni*  
+*Pulpo*  
+*Pulpo gigante*  
+*Rana*  
+*Rana gigante*  
+*Rata*  
+*Rata gigante*  
+*Rinoceronte*  
+*Sapo gigante*  
+*Serpiente constrictora*  
+*Serpiente constrictora gigante*  
+*Serpiente venenosa*  
+*Serpiente venenosa gigante*  
+*Serpiente voladora*  
+*Simio*  
+*Simio gigante*  
+*Tejon*  
+*Tejon gigante*  
+*Tiburon cazador*  
+*Tiburon de arrecife*  
+*Tiburon gigante*  
+*Tigre*  
+*Tigre dientes de sable*  
+    
+
+    
+## Objetos Mágicos
+*Abanico de viento*  
+*Agujero portatil*  
+*Alas de vuelo*  
+*Alfombra voladora*  
+*Aljaba eficiente*  
+*Amuleto contra deteccion y localizacion*  
+*Amuleto de los planos*  
+*Amuleto de salud*  
+*Anillo del ariete*  
+*Anillo de almacenar conjuro*  
+*Anillo de caer como una pluma*  
+*Anillo de calor*  
+*Anillo de caminar sobre las aguas*  
+*Anillo de comandar elementales*  
+*Anillo de convocar djinni*  
+*Anillo de escudo mental*  
+*Anillo de estrellas fugaces*  
+*Anillo de evasion*  
+*Anillo de influencia animal*  
+*Anillo de invisibilidad*  
+*Anillo de libertad de accion*  
+*Anillo de nadar*  
+*Anillo de proteccion*  
+*Anillo de regeneracion*  
+*Anillo de resistencia*  
+*Anillo de retornar conjuros*  
+*Anillo de saltar*  
+*Anillo de telecinesis*  
+*Anillo de tres deseos*  
+*Anillo de vision de rayos x*  
+*Aparato del cangrejo*  
+*Arco juramentado*  
+*Armadura demoniaca*  
+*Armadura de adamantina*  
+*Armadura de invulnerabilidad*  
+*Armadura de mithril*  
+*Armadura de placas de etereidad*  
+*Armadura de placas enana*  
+*Armadura de resistencia*  
+*Armadura de vulnerabilidad*  
+*Armadura encantada de cuero endurecido*  
+*Arma maliciosa*  
+*Babuchas de trepar cual aracnido*  
+*Bandas de hierro de neutralizar*  
+*Baraja de ilusiones*  
+*Baraja de multiples cosas*  
+*Baston de curacion*  
+*Baston de devastacion*  
+*Baston de enjambre de insectos*  
+*Baston de escarcha*  
+*Baston de fuego*  
+*Baston de golpe*  
+*Baston de la piton*  
+*Baston de los bosques*  
+*Baston de los magos*  
+*Baston de poder*  
+*Baston de trueno y rayo*  
+*Baston hechizador*  
+*Bola de cristal*  
+*Bolsa devoradora*  
+*Bolsa de contencion*  
+*Bolsa de habichuelas*  
+*Bolsa de trucos*  
+*Botas aladas*  
+*Botas de las tierras del invierno eterno*  
+*Botas de levitacion*  
+*Botas de velocidad*  
+*Botas de zancadas y brincos*  
+*Botas elficas*  
+*Botella de ifriti*  
+*Botella siemprehumeante*  
+*Bote plegable*  
+*Brasero de comandar elementales de fuego*  
+*Brazales de arqueria*  
+*Brazales de defensa*  
+*Broche de escudo*  
+*Capa aracnida*  
+*Capa de desplazamiento*  
+*Capa de la mantarraya*  
+*Capa de murcielago*  
+*Capa de proteccion*  
+*Capa elfica*  
+*Carillon de apertura*  
+*Ceno refulgente*  
+*Cetro de absorcion*  
+*Cetro de alerta*  
+*Cetro de gobierno*  
+*Cetro de poder senorial*  
+*Cetro de seguridad*  
+*Cetro inamovible*  
+*Cimitarra de velocidad*  
+*Cinturon de fuerza de gigante*  
+*Cinturon de los enanos*  
+*Collar de adaptacion*  
+*Collar de bolas de fuego*  
+*Collar de cuentas de plegaria*  
+*Cota de escamas de dragon*  
+*Cota de mallas elfica*  
+*Cubo de fuerza*  
+*Cuenco de comandar elementales de agua*  
+*Cuenta de fuerza*  
+*Cuerda de enmaranar*  
+*Cuerda de escalada*  
+*Cuerno del valhalla*  
+*Cuerno detonante*  
+*Daga envenenada*  
+*Decantador inagotable de agua*  
+*Defensor*  
+*Diadema de intelecto*  
+*Disolvente universal*  
+*Elixir de amor*  
+*Escarabeo de proteccion*  
+*Escoba voladora*  
+*Escudo animado*  
+*Escudo anticonjuros*  
+*Escudo atraeproyectiles*  
+*Escudo atrapaflechas*  
+*Esfera de aniquilacion*  
+*Espada afilada*  
+*Espada arrebatavidas*  
+*Espada danzante*  
+*Espada hiriente*  
+*Espada vorpalina*  
+*Espejo atrapavidas*  
+*Fetiche de plumas*  
+*Figurita de poder maravilloso*  
+*Flauta del desasosiego*  
+*Flauta de las alcantarillas*  
+*Flecha asesina*  
+*Fortaleza instantanea*  
+*Frasco de hierro*  
+*Gafas de noche*  
+*Gema del resplandor*  
+*Gema elemental*  
+*Grilletes dimensionales*  
+*Guanteletes de fuerza de ogro*  
+*Guantes de atrapar proyectiles*  
+*Guantes de nadar y trepar*  
+*Hacha berserker*  
+*Herraduras del cefiro*  
+*Herraduras de velocidad*  
+*Hierro de escarcha*  
+*Hoja de la suerte*  
+*Hoja solar*  
+*Incensario de control de elementales de aire*  
+*Jabalina del relampago*  
+*Lengua flamigera*  
+*Linterna de revelacion*  
+*Manto del saltimbanqui*  
+*Manual de ejercicio beneficioso*  
+*Manual de golems*  
+*Manual de rapidez de accion*  
+*Manual de salud corporal*  
+*Maravillosos pigmentos*  
+*Martillo arrojadizo de los enanos*  
+*Martillo de los truenos*  
+*Matadragones*  
+*Matagigantes*  
+*Maza del castigo*  
+*Maza del terror*  
+*Maza de perturbacion*  
+*Medallon de los pensamientos*  
+*Mochila practica*  
+*Ojos de aguila*  
+*Ojos de visionminuciosa*  
+*Ojos hechizadores*  
+*Orbe de los dragones*  
+*Pegamento soberano*  
+*Pergamino de conjuro*  
+*Perla de poder*  
+*Piedra de control de elementales de tierra*  
+*Piedra de ioun*  
+*Piedra de la buena suerte*  
+*Pocion de amistad animal*  
+*Pocion de clarividencia*  
+*Pocion de crecimiento*  
+*Pocion de curacion*  
+*Pocion de disminucion*  
+*Pocion de escalada*  
+*Pocion de forma gaseosa*  
+*Pocion de fuerza de gigante*  
+*Pocion de heroismo*  
+*Pocion de invisibilidad*  
+*Pocion de leer la mente*  
+*Pocion de resistencia*  
+*Pocion de respirar en el agua*  
+*Pocion de velocidad*  
+*Pocion de veneno*  
+*Pocion de vuelo*  
+*Polvo de desaparicion*  
+*Polvo de estornudar y atragantarse*  
+*Polvo de sequedad*  
+*Pomada restabilizante*  
+*Pozo de muchos mundos*  
+*Presea cerradora de heridas*  
+*Presea contra venenos*  
+*Presea de salud*  
+*Robadora de nueve vidas*  
+*Sombrero de disfraz*  
+*Talisman de la esfera*  
+*Talisman de malignidad*  
+*Talisman de pureza*  
+*Toga de resistencia a conjuros*  
+*Tomo de claridad de pensamiento*  
+*Tomo de entendimiento*  
+*Tomo de liderazgo e influencia*  
+*Tridente de comandar peces*  
+*Tunica del archimago*  
+*Tunica de colores hipnoticos*  
+*Tunica de las estrellas*  
+*Tunica de los ojos*  
+*Tunica de objetos utiles*  
+*Umbral cubico*  
+*Unguento de cuchillas*  
+*Unguento de etereidad*  
+*Unguento de resbalamiento*  
+*Varita de bolas de fuego*  
+*Varita de detectar enemigos*  
+*Varita de detectar magia*  
+*Varita de golpe de rayo*  
+*Varita de maravillas*  
+*Varita de miedo*  
+*Varita de paralisis*  
+*Varita de polimorfar*  
+*Varita de proyectiles magicos*  
+*Varita de retencion*  
+*Varita de secretos*  
+*Varita de telarana*  
+*Vela de invocacion*  
+*Vengadora sagrada*  
+*Yelmo de comprension idiomatica*  
+*Yelmo de fulgor*  
+*Yelmo de telepatia*  
+*Yelmo de teletransporte*  
+        
+</tw-passagedata><tw-passagedata pid="17" name="Homebrewery" tags="" position="1122,408" size="100,100">
+# HOMEBREWERY
+
+&lt;a href=&quot;https://homebrewery.naturalcrit.com/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;Homebrewery&lt;/a&gt; es una herramienta para dar formato a aventuras. Utilizando markdown, puedes importar cualquier texto y darle el aspecto de una aventura oficial de los magos de la costa. Es un proyecto de Scott Tolksdorf que desarrolla en solitario mediante el cual se aplica un formato concreto a los títulos, cajas de información, monstruos, etc, del mismo modo que lo hace el sistema *GameThrough*.  
+
+Por tanto, una vez tengas la aventura lista para *GameThrough* no tienes más que importarla en &lt;a href=&quot;https://homebrewery.naturalcrit.com/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;Homebrewery&lt;/a&gt; para obtener un archivo pdf perfectamente formateado.  
+
+Además, te dejamos aquí un &lt;a href=&quot;http://www.davidmonedero.com/blog/manual-de-homebrewery/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;manual de homebrewery en español&lt;/a&gt; para uso específico de la utilidad.</tw-passagedata><tw-passagedata pid="18" name="pasaje2" tags="" position="540,405" size="100,100">
+*texto en cursiva*
+
+**texto en negrita**
+
+&gt;Lee esto en voz alta a los jugadores. Este es un texto de descripción como los que se usan en las escenas
+
+&gt;* **TÍTULO DE LA CAJA**
+&gt;* Este tipo de cajas se utilizan como información adicional para el Dungeon Master, que **no** ha de ser compartida con los jugadores.
+
+
+# TÍTULO DE PRIMER NIVEL  
+
+
+## Título de segundo nivel  
+
+
+### Título de tercer nivel
+  
+---  
+
+* Listado. Elemento 1
+* Listado. Elemento 2
+* Listado. Elemento 3
+ * Elemento anidado 1
+ * Elemento anidado 2
+* Listado. Elemento 3
+
+
+
+
+
+
+
+
+
+
+
+</tw-passagedata><tw-passagedata pid="19" name="Posicionador de etiquetas" tags="" position="1122,528" size="100,100">
+# POSICIONADOR DE ETIQUETAS
+Para calcular la posición de las etiquetas en los mapas hemos desarrollado una pequeña herramienta que calcula esos números X, Y por ti. Accede a ella pulsando en &lt;a href=&quot;http://www.digitald20.com/play/map-creator/map_creator.html&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;este enlace&lt;/a&gt;
+
+## 1: Cargar el mapa
+Primero debes cargar el mapa en la caja superior de la herramienta. Utiliza cualquier método de la sección [[Alojamiento de archivos online]] o has pruebas con este que hemos cargado nosotros:  
+
+https://digitald20.com/wp-content/uploads/2020/04/region.jpg
+
+## 2: Situar los puntos
+Una vez cargado, pinchando sobre la imagen aparecerán bolas numeradas en los puntos en que quieras proporcionar información relevante.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/poner-puntos-1.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![ancho60](https://digitald20.com/wp-content/uploads/2020/04/poner-puntos-1.jpg)&lt;/a&gt;
+
+## 3: Obtener la posición de los puntos
+El botón &#39;Show Text&#39; mostrará la posición de todos los puntos colocados, en orden, para que puedas incorporarla a la herramienta GameTrough en el twine.
+
+&lt;a href=&quot;https://digitald20.com/wp-content/uploads/2020/04/poner-puntos-2.jpg&quot; target=&quot;_blank&quot; rel=&quot;noreferrer&quot;&gt;![ancho60](https://digitald20.com/wp-content/uploads/2020/04/poner-puntos-2.jpg)&lt;/a&gt;</tw-passagedata><tw-passagedata pid="20" name="Pasaje sin título" tags="" position="660,405" size="100,100">Texto con más de una línea en el que la siquiente está justo debajo (acabamos la línea con dos espacios)  
+Como esta. Al finalizar esta línea, además de los dos espacios, añadiremos un retorno de carro (tecla ENTER), por lo que la que venga a continuación estará  
+
+separada de la anterior, como esta. </tw-passagedata><tw-passagedata pid="21" name="Notas al margen" tags="lugares @notes" position="540,525" size="100,100"> 
+# entre asteriscos
+Este es un ejemplo de texto en una ventana emergente como las que pueden surgir al pulsar en un texto entre asteriscos.
+
+# objeto mágico
+*Objeto maravilloso, raro. Requiere sintonización*  
+
+Ventana de ejemplo de objeto mágico. El texto puede ser tan largo como se desee y puede contener imágenes con la sintaxis habitual.
+
+# trampa
+&gt;* **NOMBRE DE LA TRAMPA**
+&gt;* Ejemplo de trampa con tu texto, dificultad, daño, etc. Tan largo como se quiera. Tan largo como se quiera. Tan largo como se quiera. </tw-passagedata></tw-storydata>

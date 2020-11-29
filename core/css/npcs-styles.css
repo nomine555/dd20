@@ -1,0 +1,96 @@
+.container-monster {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 95vh;
+  background-image: url('../images/index/background-monster-template.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+.container-monster-left {
+  position: relative;
+  float: left;
+  width: 50%;
+  height: 95vh;
+}
+
+.monster-statics {
+  font-size: 80%;
+  z-index: 5;
+  width: 50%;
+  height: 72vh;
+  margin: 7% 0% 0% 0%;
+  padding: 1% 6% 1% 2%;
+  overflow: scroll; 
+    -webkit-transform: rotate(-4deg);   
+ } 
+
+.monster-picture {
+  z-index: 90;
+  width: 100%;
+  height: 45vh;
+  margin: 0 0 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;       
+}
+
+.monster-bloc {
+  z-index: 100;
+  width: 100%;
+  height: 60vh;
+  margin: -20% 0 0 5%;
+  background-image: url('../images/index/background-monster-template-paper.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;   
+}
+
+.monster-name {
+  position: absolute;
+  float: left;
+  z-index: 100;
+  width: 50%;
+  margin: 7% 0 0 25%;
+    -webkit-transform: rotate(-5deg);
+  font-size: 2em;
+}
+
+.monster-tactics {
+  font-size: 90%;
+  position: absolute;
+  float: left;
+  z-index: 100;
+  width: 55%;
+  height: 43vh;
+  margin: 16% 0% 0% 26%;
+  padding: 0% 0% 0% 0%;
+  background: rgba(220,220,210,0.9);
+   -webkit-transform: rotate(-5deg);
+}
+
+/* Styles for NOT tablet (iPAD)   4/3       */
+@media all and (max-device-aspect-ratio: 3/2) {
+
+.monster-statics {
+  height: 62vh;
+  margin: 14% 0% 0% 0%;
+ }  
+    
+.monster-name {
+  margin: 8% 0 0 20%;  
+}
+    
+.monster-tactics {
+  width: 65%;
+  height: 43vh;
+  margin: 18% 0% 0% 22%;
+  padding: 0% 0% 0% 0%;
+}
+    
+}
+
+
+

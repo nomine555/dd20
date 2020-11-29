@@ -1,0 +1,9 @@
+.codigo{
+    font-family:'Courier New', Courier, monospace;
+}
+.cuadro
+{
+    background-color: #fff;
+    border:1px solid;
+    padding: 1rem;
+}

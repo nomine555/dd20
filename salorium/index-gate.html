@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="./css/standardize.css">
+    <link rel="stylesheet" href="./css/basestyles.css">
+    <link rel="stylesheet" href="./css/index-styles.css">
+    <script type="text/javascript" src="./js/main.js"></script>
+    <audio id='music' autoplay>
+        <source src="./music/heroicdemise.mp3" type="audio/mpeg" />
+    </audio>
+</head>
+
+<body onpageshow="starting_gate();">
+    <div class="intro"><img src="./images/index/logo.jpg" class="logo glow">
+    </div>
+    <div class="index-gate">
+        <picture class="index-gate-image">
+            <source srcset="./images/index/index-gate.webp">
+            <img src="./images/index/index-gate.jpg" alt="title page" style=" height: 100vh;">
+        </picture>
+        <div class="dnd5">
+            <form action="tutorial.html" method="get" class="gate-menu text">
+                <input type="hidden" name="param" value="3">
+                <input id="tutorial" type="hidden" name="tutorial" value="on">
+                <input id="lang" type="hidden" name="lang" value="en">
+                <p><input id="dnd3.5" type="radio" name="version" value="3.5" class="radiobutton">D&amp;D 3.5th / Pathfinder</p>
+                <p><input id="dnd5" type="radio" name="version" value="5" class="radiobutton">D&amp;D 5th</p>
+                <input id="gate-text-start" type="submit" value="Start" class="gate-menu gate-button" style="font-size:90%;">
+            </form>
+        </div>
+        <div id="warning" class="warning text">WARNING: This App is designed to be used on tablets.<br> The experience in phones could be reduced </div>
+    </div>
+</body>
+
+</html>

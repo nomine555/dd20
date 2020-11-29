@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+
+</head>
+
+<body onpageshow="starting_index_npcs();">
+             <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+        <div id="menu" class="menu" style="display:none">
+            <ul id="opciones">
+                <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+                <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+                <li id="spanish" onclick="spanish();">Spanish</li>
+                <li id="english" onclick="english();">English</li>                
+            </ul>
+        </div>
+    <div class="index-npcs">
+        <div class="index-left" >
+            <div id="main-index" class="text text-npcs">
+                <div class="npcs">
+                    <div class="npc button" onclick="ShowNPC(1);">
+                        <img src="./images/thorne.jpg" class="npc-portrait">
+                        <p id="pnpc1"></p>
+                    </div>
+                    <div class="npc button" onclick="ShowNPC(2);">
+                        <img src="./images/elroth.jpg" class="npc-portrait">
+                        <p id="pnpc2"></p>
+                    </div>
+                    <div class="npc button" onclick="ShowNPC(3);">
+                        <img src="./images/haycrisp-dibbles.jpg" class="npc-portrait">
+                        <p id="pnpc3"></p>
+                    </div>
+                    <div class="npc button" onclick="ShowNPC(4);">
+                        <img src="./images/chief-rotnose.jpg" class="npc-portrait">
+                        <p id="pnpc4"></p>
+                    </div>
+                    <div class="npc button" onclick="ShowNPC(5);">
+                        <img src="./images/ragmaw.jpg" class="npc-portrait">
+                        <p id="pnpc5"></p>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div id="layertext" class="index-text text">
+        </div>
+    </div>
+    <div class="mini-index-left" >
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>
+
+</html>

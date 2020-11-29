@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+          <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>      
+  </head>
+  <body onpageshow="starting_index_map();" class="index-map">     
+        <img id="hamburguesa" src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+        <div id="menu" class="menu" style="display:none" >
+            <ul id="opciones">
+                <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+                <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+                <li id="spanish" onclick="spanish();">Spanish</li>
+                <li id="english" onclick="english();">English</li>                
+            </ul>
+        </div>
+      <div id="mapindex" class="mini-maps">
+        
+      </div> 
+
+    <div id='infolayer' class="infolayer" style='opacity:0;z-index:1;'>
+        <div id='infolayer-text' class="infolayer_text text"></div>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-6.png');left:77%" onclick="CloseLateralInfo(event);"></div>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-5.png');" onclick="Back(event);"></div>
+    </div>
+
+        
+    <div id='infolayer-map' class="infolayer-map text-main" style='opacity:0;z-index:1;'>
+    <div id='infolayer-text-map' class="infolayer-text-map text"></div>   
+        <div class="index-icon-close button" 
+                 style="background-image: url('../core/images/icons/icon-index-7.png');left:85%" onclick="CloseLateralMap(event);"></div>                 
+    </div>
+      
+      <div class="mini-index-left" >
+          <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'"
+                 style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'"
+                 style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'"
+                 style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'"
+                 style="background-image: url('../core/images/icons/icon-index-4.png');"></div>        
+            <div class="index-icon-half button" onclick="window.history.back();"  
+                 style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div> 
+            <div class="index-icon-half button" onclick="window.history.forward();"
+                 style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>             
+        </div>              
+        </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+  </body>
+</html>

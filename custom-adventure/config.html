@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+  </head>
+  <body onpageshow="starting_config();" >
+                 <img src="../core/images/icons/menu.svg" class="config-button button" onclick="location.href='./config.html'">
+    <div id='infolayer' class="infolayer" style='opacity:0;z-index:1;'>
+    <div id='infolayer-text' class="infolayer_text text"></div>   
+        <div class="index-icon-close button" 
+                 style="background-image: url('../core/images/icons/icon-index-6.png');left:77%" onclick="CloseLateral();"></div>        
+        <div class="index-icon-close button"
+                 style="background-image: url('../core/images/icons/icon-index-5.png');" onclick="Back();"></div>         
+    </div>     
+    <div class="index-main" onload="hidetranslate()">
+      <div class="index-left" >
+
+               
+        <div class="index-image">
+          <div id="main-index" class="text text-index">            
+          </div>
+        </div>   
+         <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'"
+                 style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'"
+                 style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'"
+                 style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'"
+                 style="background-image: url('../core/images/icons/icon-index-4.png');"></div>        
+            <div class="index-icon-half button" onclick="window.history.back();"
+                 style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div> 
+            <div class="index-icon-half button" onclick="window.history.forward();"
+                 style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>             
+        </div>          
+      </div>
+      <div id = "layertext" class="index-text text" style="display:none;" >
+      </div>
+        <div class="index-text text">        
+            <form class="text">
+                <h2 id="config-text-nav">Navigation</h2>                
+                <p><a id="config-text-gate" href="../index-gate.html">Go to main menu</a></p>
+                <p><a id="config-text-tutorial" href="../salorium/tutorial.html?tutorial=on&from=fragmentos">Go to tutorial</a></p>            
+                <p><a id="config-text-back" onclick="window.history.back();">Go back</a></p>
+                <h2 id="config-text-version">Game version</h2>
+                <input id = "dnd3.5" type="radio" name="version" value="3.5" class="radiobutton-config"
+                       onclick="config('version','3.5'); " style="display:none"> 
+                <input id = "dnd5" type="radio" name="version" value="5" class="radiobutton-config"
+                       onclick="config('version','5'); ">  D&amp;D 5th<br><br>                
+                <h2 id="config-text-language">Language</h2>
+                <input id = "es" type="radio" name="language" value="3.5" class="radiobutton-config"
+                       onclick="config('lang','es'); ">  Español<br>
+                <input id = "en" type="radio" name="language" value="5" class="radiobutton-config"
+                       onclick="config('lang','en'); " style="display:none">
+                <div style="display:none">
+                    <h2 id="config-text-startup">Starting</h2>
+                <input id = "tutorial" type="checkbox" name="tutorial" value="on" checked="checked" class="radiobutton-config"
+                       onclick="config('tutorial');"> <span id="config-text-start">Start with tutorial</span></div>
+                <div style="">
+                    <h2 id="config-text-startup">Game Status tag for players</h2>
+                <p id="player-tag">Loading...</p></div>
+                
+            </form>
+        </div>        
+    </div>
+  </body>
+</html>

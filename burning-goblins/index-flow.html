@@ -1,0 +1,66 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+    <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none">
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>                
+        </ul>
+    </div>
+    <div id="index-flow-background" class="index-flow" style="left: 0px; top: 0px;">
+        <div>
+            <a id="greenfolk" href="encounter.html?param=8" class="image-map-flow text strong-tint button" style="left: 14%;top: 46%;">The village of Greenfolk</a>
+            <a id="greenwood" href="encounter.html?param=14" class="image-map-flow text strong-tint button" style="left: 24%;top: 46%;">The Greenwood</a>
+            <a id="caves" href="encounter.html?param=15" class="image-map-flow text strong-tint button" style="left: 34%;top: 46%;">The Goblin Caves</a>
+            <a id="gate" href="encounter.html?param=20" class="image-map-flow text strong-tint button" style="left: 28%;top: 35%;">The goblin gate</a>
+            <a id="storage" href="encounter.html?param=21" class="image-map-flow text strong-tint button" style="left: 24%;top: 24%;">Storage tunnel</a>
+            <a id="gambling" href="encounter.html?param=22" class="image-map-flow text strong-tint button" style="left: 30%;top: 14%;">Gambling Hall</a>
+            <a id="sleeping" href="encounter.html?param=23" class="image-map-flow text strong-tint button" style=" left: 38%; top: 14%;">Sleeping chamber</a>
+            <a id="misty" href="encounter.html?param=24" class="image-map-flow text strong-tint button" style="left: 44%;top: 24%;">Misty cave</a>
+            <a id="central" href="encounter.html?param=@central-cavern" class="image-map-flow text strong-tint button" style="left: 40%;top: 35%;">Central cavern</a>
+            <a id="continued" href="encounter.html?param=@the-greenwood-continued" class="image-map-flow text strong-tint button" style="left: 44%;top: 46%;">The Greenwood continued</a>
+            <a id="keep" href="encounter.html?param=@the-ruined-keep" class="image-map-flow text strong-tint button" style="left: 54%;top: 46%;">The ruined keep</a>
+            <a id="grounds" href="encounter.html?param=@keep-grounds" class="image-map-flow text strong-tint button" style="left: 60%;top: 10%;">Keep grounds</a>
+            <a id="basement" href="encounter.html?param=@basement" class="image-map-flow text strong-tint button" style="left: 75%;top: 65%;">Basement</a>
+            <a id="kitchen" href="encounter.html?param=@old-kitchen" class="image-map-flow text strong-tint button" style="left: 65%;top: 20%;">Old kitchen</a>
+            <a id="temple" href="encounter.html?param=@ancient-temple" class="image-map-flow text strong-tint button" style="left: 69%;top: 31%;">Ancient temple</a>
+            <a id="chamber" href="encounter.html?param=@resting-chamber" class="image-map-flow text strong-tint button" style="left: 72%;top: 42%;">Resting chamber</a>
+            <a id="research" href="encounter.html?param=@research-room" class="image-map-flow text strong-tint button" style="left: 72%;top: 53%;">Research room</a>
+            <a id="mosaic" href="encounter.html?param=@mosaic-design" class="image-map-flow text strong-tint button" style="left: 69%;top: 65%;">Mosaic design</a>
+            <a id="tower" href="encounter.html?param=@dragons-tower" class="image-map-flow text strong-tint button" style="left: 82%;top: 53%;">The dragon's tower</a>
+            <a id="conclusion" href="index.html?param=@conclusion" class="image-map-flow text strong-tint button" style="left: 92%;top: 53%;">Conclusion</a>
+        </div>
+    </div>
+
+    <div class="mini-index-left" >
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

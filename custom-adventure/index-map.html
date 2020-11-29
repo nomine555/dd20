@@ -1,0 +1,215 @@
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+
+    <script>
+        
+        function starting_index_map() {
+
+            cargarMenu();
+            content_file = getContentFile();
+            var lang = localStorage.getItem("lang");
+            if (lang === null)
+                lang = getlanguage();
+            if (lang != "en" && lang != "es") {
+                Log("starting_index_map: Detectado idioma: " + lang + ". Fijamos idioma a: en");
+                lang = "en";
+            }
+            localStorage.setItem('lang', lang);
+
+
+            var lastmap = localStorage.getItem("lastmap" + aventura);
+            var url = "" + window.location;
+            if (lastmap === null) {
+                lastmap = mainmap;
+                localStorage.setItem("lastmap" + aventura, lastmap);
+            }
+
+            if (url.indexOf("param=") > -1) {
+                url = url.replace("#", "");
+                lastmap = url.substring(url.indexOf("param=") + 6, url.indexOf("&", url.indexOf("param=")));
+                localStorage.setItem("lastmap" + aventura, lastmap);
+            }
+
+            if (url.indexOf("room=") > -1) {
+                url = url.replace("index-map", "lugares").replace("&", "-map&").replace("param=", "param=@");
+                url = "./" + url.substring(url.indexOf("lugares"));
+                Log("url: " + url);
+                setTimeout(function() {
+                    LoadWiki(url)
+                }, 500);
+            }
+
+
+            var customcontent = localStorage.getItem("customcontent" + aventura);
+
+            if (customcontent === null) {
+                LoadMap("./maps/" + lastmap + "-" + lang + ".html", 'mapindex', "", '100', -1);
+            } else {
+                LoadMap("./maps/" + lastmap + ".html", 'mapindex', "", '100', -1);
+            }
+
+
+        }
+
+        function LoadMap(fragment_url, element_id, leyenda, size, show) {
+
+            var customcontent = localStorage.getItem("customcontent" + aventura);
+
+            if (customcontent === null) {
+
+                var showlayer = 0;
+                if (arguments.length > 4) {
+
+                    showlayer = show;
+                    if (maps[show] > 0) {
+                        Show(showlayer);
+                        return;
+                    } else maps[show] = 1;
+                }
+                showlayer = "" + showlayer;
+                leyenda = "" + leyenda;
+                var message = {
+                    "fragment_url": fragment_url,
+                    "element_id": element_id,
+                    "leyenda": leyenda,
+                    "size": size,
+                    "showlayer": showlayer
+                }
+                try {
+                    window.webkit.messageHandlers.LoadMap.postMessage(message);
+
+                } catch (error) {
+                    console.log("no estamos en iOS")
+
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.open("GET", fragment_url);
+                    xmlhttp.onreadystatechange = function() {
+                        if (xmlhttp.readyState === 4) {
+                            var text = xmlhttp.responseText;
+                            LoadMap_back(text, fragment_url, element_id, leyenda, size, showlayer);
+                        }
+                    }
+                    xmlhttp.send(null);
+                }
+            } else {
+                
+                 reg = new RegExp(".\/maps\/(.*)\.html", "gi");
+		
+				if (reg.test(fragment_url)) {
+                var id = "@" + fragment_url.match(reg)[0].replace(reg, "$1");
+				} else var id = fragment_url;                 
+
+				var map = getPassage(customcontent, id);
+                var reg = new RegExp("!\\[map\\]\\(([^\\)]*)\\)", "gi");
+                var urlmap = map[0].match(reg)[0].replace(reg, "$1");
+
+                var text = '<!--BEGIN--><div id="loadedmap" class="maplinks" style="background-image: url(' + urlmap + ');background-repeat: no-repeat;background-size: contain;background-position: top left;"><span  class="nleyenda text">';
+
+                reg = new RegExp("# ([^&]*)&lt;!--([^,]*),([^&]*)--&gt;", "gi");
+                var reg2 = new RegExp("# @([^&]*)&lt;!--([^,]*),([^&]*)--&gt;", "gi");
+        
+                var offset = 0;
+                map[0].match(reg).forEach((element, index) => {
+                    if (element.indexOf("@") > -1) {
+                        
+                        text = text + '<a href="./index-map.html?param=' + element.replace(reg2, "$1").trim() + '&" style="left: ' + element.replace(reg2, "$2") + '%;top: ' + element.replace(reg2, "$3") + '%; width: auto; height: auto;" class="bigclickable">'+toTitleCase(element.replace(reg2, "$1").trim().replace("@","").replace("-"," "))+'</a>'
+                        offset = offset - 1;
+                    } else {
+                        text = text + '<a  href="./lugares.html?param=' + id + '&amp;room=' + (index + 1) + '" style="left: ' + element.replace(reg, "$2") + '%;top: ' + element.replace(reg, "$3") + '%;" class="clickable">'+(index+offset+1)+'</a>';
+                    }
+
+                });
+
+                text = text + '</span></div><!--END-->';               
+                LoadMap_back(text, fragment_url, element_id, leyenda, size, showlayer);
+                
+
+               /* reg = new RegExp(".\/maps\/(.*)\.html", "gi");
+                var id = "@" + fragment_url.match(reg)[0].replace(reg, "$1");
+                console.log(id)
+                var map = getPassage(customcontent, id);
+
+                // ![map](../../core/images/resurgirdragon/mapa-vadania.jpg)
+
+                var reg = new RegExp("!\\[map\\]\\(([^\\)]*)\\)", "gi");
+                var reg2 = new RegExp("# @([^&]*)&lt;!--([^,]*),([^&]*),([^&]*),([^&]*)--&gt;", "gi");
+
+                var urlmap = map[0].match(reg)[0].replace(reg, "$1");
+
+                var text = '<!--BEGIN--><div id="loadedmap" class="maplinks" style="background-image: url(' + urlmap + ');background-repeat: no-repeat;background-size: contain;background-position: top left;"><span  class="nleyenda text">';
+
+                reg = new RegExp("# ([^&]*)&lt;!--([^,]*),([^&]*)--&gt;", "gi");
+                var offset = 0;
+                map[0].match(reg).forEach((element, index) => {
+                    if (element.indexOf("@") > -1) {
+                        text = text + '<a href="./index-map.html?param=' + element.replace(reg2, "$1").trim() + '&" style="left: ' + element.replace(reg2, "$2") + '%;top: ' + element.replace(reg2, "$3") + '%;; width: ' + element.replace(reg2, "$4") + '%; height: ' + element.replace(reg2, "$5") + '%" class="bigclickable"></a>'
+                        offset = offset - 1;
+                    } else {
+                        text = text + '<a  href="./lugares.html?param=' + id + '&amp;room=' + (index + 1) + '" style="left: ' + element.replace(reg, "$2") + '%;top: ' + element.replace(reg, "$3") + '%;" class="clickable"> </a>';
+                    }
+
+                });
+
+                text = text + '</span></div><!--END-->'; 
+				
+                LoadMap_back(text, fragment_url, element_id, leyenda, size, showlayer);*/
+            }
+
+        }
+    </script>
+
+</head>
+
+<body onpageshow="starting_index_map();" class="index-map">
+    <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none">
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>
+        </ul>
+    </div>
+    <div id="mapindex" class="mini-maps">
+
+    </div>
+
+    <div id='infolayer' class="infolayer" style='opacity:0;z-index:1;'>
+        <div id='infolayer-text' class="infolayer_text text"></div>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-6.png');left:77%" onclick="CloseLateralInfo(event);"></div>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-5.png');" onclick="Back(event);"></div>
+    </div>
+
+
+    <div id='infolayer-map' class="infolayer-map text-main" style='opacity:0;z-index:1;'>
+        <div id='infolayer-text-map' class="infolayer-text-map text"></div>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-7.png');left:85%" onclick="CloseLateralMap(event);"></div>
+    </div>
+
+    <div class="mini-index-left">
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body></html>

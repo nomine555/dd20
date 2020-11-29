@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./develop.js"></script>
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../salorium/js/links.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>    
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+</head>
+
+<body onpageshow="">
+    <h1>Herramientas DigitalD20</h1>
+    <p>Para generar las entradas en el mapa, hay que editar el mapa y añadir lo siguiente:</p>
+    <code>
+    onclick="clickOnmap(event);"
+    onpageshow="settag('@research-centre-map')" <br>
+    &lt;script type=&quot;text/javascript&quot; src=&quot;../../develop/develop.js&quot;&gt;&lt;/script&gt;    
+    </code>
+    <p>Además de editar el archivo develop.js y cambiar la variable "maptag"</p>
+    <p></p>
+    <hr>
+    <label>URL al archivo: </label><input id="url" class="develop-input" type="text" value="..\\..\\Twine\\beastmasters-daughter.html" width="700"><br>
+    <label>Tag de la entrada de Twine con monstruos</label><input id="tag" type="text" value="@monsters" class="develop-input"><br><br>    
+    <input type="button" value="Aqui para general el IndexFlow" onclick="Indexflow();"><br><br>
+    <input type="button" value="Aqui para genera las entradas de monstruos para el archivo link.js" onclick="Monsters();"><br><br>
+    <div id ="textout">
+    </div>
+</body>
+
+</html>

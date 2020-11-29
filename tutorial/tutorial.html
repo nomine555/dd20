@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+  <script type="text/javascript" src="../core/js/spells.js"></script>
+      <script type="text/javascript" src="./js/links.js"></script>    
+  </head>
+  <body onpageshow="starting_tutorial();" >
+    <div id='infolayer' class="infolayer" style='opacity:0;z-index:1;'>
+    <div id='infolayer-text' class="infolayer_text text"></div>   
+        <div class="index-icon-close button" 
+                 style="background-image: url('../core/images/icons/icon-index-6.png');left:77%" onclick="CloseLateralInfo(event);"></div>        
+        <div class="index-icon-close button"
+                 style="background-image: url('../core/images/icons/icon-index-5.png');"onclick="Back(event);"></div>         
+    </div>    
+    <div class="index-main" onload="hidetranslate()">
+        <div id = "guitutorial" class="index-tutorial" style="display:none;">            
+            <div id = "hole" class="hole"></div>
+            <div class="text-tutorial text">
+                <div id="guitexttutorial" class="main-tutorial"> 
+                </div>
+                <div class="notutorial">
+                    <input type="checkbox" value="None" id="notutorial" name="check"> <label for="check" id ="noshowtutorial">Never show again</label>
+                </div>
+                <div style="height:5vh;margin-botton:1vh;">
+                <div id="exittutorial" class="tutorial-button button" onclick="ExitTutorial();">Exit</div>
+                <div id="btnback" class="tutorial-button button" style="float:rigth;" onclick="BackTutorial();">Back</div> 
+                <div id="next-tutorial" class="tutorial-button button" style="float:rigth;" onclick="NextTutorial();">Next</div>
+                </div>
+            </div>
+        </div>       
+      <div class="index-left" >
+        <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="location.href='./config.html'">
+                         
+        <div id="parent-index" class="index-image">
+          <div id="main-index" class="text text-index">            
+          </div>
+        </div>   
+
+      </div>
+      <div id = "layertext" class="index-text text" >
+      </div>
+
+    </div>
+    <div class="mini-index-left" >
+         <div id ="indexgroup" class="indexgroup">
+            <div class="index-icon button" onclick="if (!showinginfo) location.href='index.html'"
+                 style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="if (!showinginfo) location.href='index-map.html'"
+                 style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="if (!showinginfo) location.href='./index-npcs.html'"
+                 style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="if (!showinginfo) location.href='./index-flow.html'"
+                 style="background-image: url('../core/images/icons/icon-index-4.png');"></div>        
+            <div class="index-icon-half button" onclick="window.history.back();"
+                 style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div> 
+            <div class="index-icon-half button" onclick="window.history.forward();"
+                 style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>              
+        </div> 
+          <div id ="indexgroup-over" class="indexgroup-over">
+          </div>
+          </div>
+  </body>
+</html>

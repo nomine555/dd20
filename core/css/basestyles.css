@@ -1,0 +1,700 @@
+@font-face {
+    font-family: "title";
+    src: url("../fonts/oldnewspaper.otf");
+}
+
+@font-face {
+    font-family: "dd20";
+    src: url("../fonts/bookmanold.otf");
+}
+
+@font-face {
+    font-family: "rd-title";
+    src: url("../fonts/trajanpro.otf");
+}
+
+@font-face {
+    font-family: "rd";
+    src: url("../fonts/bookmanantigua.otf") ;
+}
+
+
+/* HAMBURGUESA DEL MENU LATERAL */
+.config-button, .config-button-encounter {
+    position: absolute;
+    left: -0.5%;
+    top: -1%;
+    width: 8%;
+    height: 13vh;
+    z-index: 150;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;  
+    border-radius: 0px 0px 30px 0px;
+}
+
+
+
+.text {
+  font-family: "dd20";
+  line-height: 1.38;
+}
+
+.title-text {
+  font-size: 2.6vw;
+  text-align: left;
+  font-family: "title";
+}
+
+.infolayer {
+  position: absolute;
+  background-color: rgba(255, 255, 235, 0.95);
+  width: 42%;
+  height: 100vh;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  padding-top: 0%;
+  padding-right: 1%;
+  padding-bottom: 1%;
+  padding-left: 1%;
+  z-index: 125;
+}
+
+.infolayer-index {
+  position: absolute;
+  background-color: rgba(255, 255, 235, 0.95);
+  width: 42%;
+  height: 100vh;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  padding-top: 0%;
+  padding-right: 1%;
+  padding-bottom: 1%;
+  padding-left: 1%;
+  z-index: 125;
+}
+
+.infolayer_text {
+  width: 100%;
+  height: 97vh;
+  overflow-y: scroll;
+}
+
+/* ESTILOS PROPIOS DE WIKI (TANTO IZQUIERDA COMO ENTRANDO EN EL SRD */
+.infolayer_text h1{
+    margin-top: 2.5em !important;
+    text-align: center !important;
+}
+
+
+.closelayer {
+  position: absolute;
+  width: 100%;
+  height: 8vh;
+  margin-top: 5%;
+  right: 3%;
+  text-align: right;
+}
+
+.closelayer-text {
+  padding-top: 5%;
+  padding-right: 7%;
+  padding-bottom: 5%;
+  padding-left: 7%;
+  background-color: rgba(208, 208, 208, 0.7);
+  vertical-align: middle;
+  border-radius: 300px;
+}
+
+
+.index-image a {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.index-text a {
+  color: #861f1f;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.index-gate a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.infolayer-map a {
+  color: #310f0f;
+  font-weight: normal;
+  font-style: italic;
+  text-decoration: none;
+}
+
+.infolayer_text a {
+  color: #861f1f;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.closelayer a {
+  color: #861f1f;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Ocultamos la barra superior del SRD */
+.navbar{
+    display:none;
+}
+/* Ocultamos la barra izquierda lateral del SRD */
+.bs-sidebar{
+    display:none;
+}
+/* Ocultamos el footer del SRD */
+footer{
+    display:none;
+}
+/* Fijamos el ancho del container (solo el de la wiki) al 100% */
+.infolayer_text .container{
+    width:100%;
+}
+
+h1 a.dndwiki {
+  color: #943434 !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+}
+
+a.dndwiki, .text-main .lugares{
+  font-style: italic;
+  color: #310f0f !important;
+  font-weight: normal !important;
+}
+
+.text-main a {
+  color: #861f1f;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.mapgroup a {
+  color: #861f1f;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.leyenda a {
+  color: #861f1f;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+
+a:hover {
+  color: #45533e;
+  font-weight: bold;
+}
+
+p {
+  margin-bottom: 1.3em;
+}
+
+
+
+h1::before, h2::before, h3::before, h4::before {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+
+.text h1 {
+  color: #943434;
+  font-weight: bold;
+  text-align: left;
+  font-size: 150%;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.text h2 {
+  color: #943434;
+  font-weight: bold;
+  text-align: left;    
+  font-size: 150%;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+  font-weight: bold;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-bottom-width: thin;
+  border-bottom-style: solid;
+  border-bottom-color: #943434;  
+}
+
+.text h3 {
+  color: #943434;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+  font-size: 125%;
+  
+}
+
+.text h4 {
+  color: #943434;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+  font-size: 125%;
+}
+.text h5 {
+  color: #943434;
+  font-weight: bold;
+  text-align: left;
+}
+
+ol {
+}
+
+ol li {
+  margin-top: 0.2em;
+  margin-right: 0.2em;
+  margin-bottom: 0.2em;
+  margin-left: 2em;
+}
+
+ul {
+  margin-bottom: 1em;
+}
+
+ul li {
+  margin-top: 0.2em;
+  margin-right: 0.2em;
+  margin-bottom: 0.2em;
+  margin-left: 2em;
+}
+
+table {
+  text-align: left;
+  display: block;
+  float: none;
+  margin-top: 2vh;
+  margin-right: 1em;
+  margin-bottom: 2vh;
+  margin-left: 1em;
+}
+
+thead {
+  background-color: #e3c2b6;
+  text-align: center;
+  font-weight: 700;
+}
+
+th {
+  padding-top: 0.5vw;
+  padding-right: 0.5vw;
+  padding-bottom: 0.5vw;
+  padding-left: 0.5vw;
+}
+
+td {
+  padding-top: 0.5vw;
+  padding-right: 0.5vw;
+  padding-bottom: 0.5vw;
+  padding-left: 0.5vw;
+}
+
+tr:nth-child(2n) {
+  background-color: rgba(227, 194, 182, 0.7);
+}
+
+td:nth-child(1) {
+  /*text-align: center;*/
+}
+
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+/* TEXTO PARA LOS JUGADORES */
+blockquote p {
+  font-style: italic;
+  font-weight: bold;
+  quotes: "“" "”" "‘" "’";
+  margin-top: 1.5em;
+  margin-right: 1.5em;
+  margin-bottom: 1.5em;
+  margin-left: 1.5em;
+  padding-top: 1em;
+  padding-right: 0.75em;
+  padding-bottom: 0.25em;
+  padding-left: 0.75em;
+  background-color: rgba(216, 216, 216, 0.5);
+  background-image: none;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-position: 0% 0%;
+}
+
+/* INFORMACION PARA EL DM */
+blockquote ul {
+    /* eliminamos estilos de ul y li */
+    list-style-type: none;
+    padding: 0;
+    /* añadimos los estilos de la caja info */
+    z-index: 15;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 1em;
+    padding: 5px 10px;
+    background-color: #e0e5c1;
+    border-style: solid;
+    border-width: 11px;
+    border-image: url(../images/icons/info-lines.png);
+    border-image-slice: 11;
+    border-image-width: 1;
+    border-image-outset: 9px 0;
+    border-image-repeat: stretch;
+    box-shadow: 1px 4px 14px #888;
+}
+
+blockquote ul li {
+    margin: 0 0.2em 0 0.2em;
+}
+/* En caso de anidación de listas */
+blockquote ul li ul {
+    list-style-type: disc;
+    padding: 0 0 0 1em;
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+}
+
+pre {
+  font-weight: bold;
+  margin-top: 0.5em;
+  margin-right: 0px;
+  margin-bottom: 0.5em;
+  margin-left: 0px;
+  padding-top: 0.5em;
+  padding-right: 10px;
+  padding-bottom: 0.5em;
+  padding-left: 10px;
+  background-color: rgba(130, 184, 212, 0.5);
+  background-image: none;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-position: 0% 0%;
+}
+
+.icons-center {
+  padding-top: 0.2em;
+  padding-right: 1em;
+  padding-bottom: 0.52em;
+  padding-left: 0.2em;
+  width: 70%;
+  margin-left: 15%;
+  margin-top: 1em;
+}
+
+.icons-left-small {
+  padding-top: 0.2em;
+  padding-right: 1em;
+  padding-bottom: 0.52em;
+  padding-left: 0.2em;
+  height: 7vh;
+  width: auto;
+  float: left;
+}
+
+/* IMÁGENES */
+img[alt$="medium"] {
+  padding-top: 0.2em;
+  padding-right: 1em;
+  padding-bottom: 0.52em;
+  padding-left: 0.2em;
+  height: 20vh;
+  width: auto;
+  float: left;
+}
+img[alt$="ancho10"] {width: 10%;position:relative;float:left;margin:0 1em 1em 0;}
+img[alt$="ancho20"] {width: 20%;position:relative;float:left;margin:0 1em 1em 0;}
+img[alt$="ancho30"] {width: 30%;position:relative;float:left;margin:0 1em 1em 0;}
+img[alt$="ancho40"] {width: 40%;position:relative;float:left;margin:0 1em 1em 0;}
+img[alt$="ancho50"] {width: 50%;position:relative;float:left;margin:0 1em 1em 0;}
+img[alt$="ancho60"] {width: 60%;position:relative;float:left;margin:0 1em 1em 0;}
+img[alt$="ancho70"] {width: 70%;position:relative;float:left;margin:0 1em 1em 0;}
+img[alt$="ancho80"] {width: 80%;position:relative;float:left;margin:0 1em 1em 0;}
+img[alt$="ancho90"] {width: 90%;position:relative;float:left;margin:0 1em 1em 0;}
+img[alt$="ancho100"] {width: 100%;position:relative;float:left;margin:0 1em 1em 0;}
+
+.icons-left-medium {
+  padding-top: 0.2em;
+  padding-right: 1em;
+  padding-bottom: 0.52em;
+  padding-left: 0.2em;
+  height: 20vh;
+  width: auto;
+  float: left;
+}
+
+.column {
+  width: 100%;
+}
+
+.column-left {
+  width: 50%;
+  float: left;
+  position: relative;
+  padding-top: 5pt;
+  padding-right: 5pt;
+  padding-bottom: 5pt;
+  padding-left: 5pt;
+}
+
+.column-rigth {
+  position: relative;
+  float: left;
+  width: 50%;
+  padding-top: 5pt;
+  padding-right: 5pt;
+  padding-bottom: 5pt;
+  padding-left: 5pt;
+}
+    
+.mw-content-ltr ul {
+  background-color: #f7e7ce;
+  background-image: none;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-position: 0% 0%;
+  padding-top: 0.5em;
+}
+
+#bodyContent {
+  padding-top: 1vh;
+}
+
+.mw-content-ltr li {
+  margin-bottom: 0.1em;
+  list-style-type: none;
+  list-style-position: outside;
+  list-style-image: none;
+}
+
+.mw-content-ltr ul li:last-child {
+  padding-bottom: 0.1em;
+}
+
+h1.firstHeading {
+  color: black;
+}
+
+.toc h2 {
+  font-size: 200%;
+  color: black;
+}
+
+h3 .mw-headline {
+  font-size: 130%;
+  color: black;
+  font-weight: bold;
+}
+
+h5 .mw-headline {
+  font-size: 110%;
+  color: black;
+  font-weight: bold;
+}
+
+.gray-left {
+  position: absolute;
+  left: 0%;
+  width: 42%;
+  height: 100vh;
+  background-color: rgba(24, 24, 24, 0.4);
+  z-index: 150;
+}
+
+.red {
+    color:darkred;
+}
+
+.white {
+    color:white;
+}
+
+iframe {
+    width: 100%;
+    height: 100vh;
+}
+
+.small {
+    font-size: 70%;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+    float: left;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.togglelabel {
+    position: relative;
+    float: left;
+    padding-top: .5em;
+    margin-left: .5em;
+    margin-right: .5em;
+}
+.grayedout {
+    filter: grayscale(75%); 
+}
+
+.last {
+    order:100;
+}
+.develop-input {
+    width: 30em;
+}
+
+hr {    
+    padding: 0;
+    border: none;
+}
+
+hr:before {
+    background-size: cover;
+    display: block;
+    content: '';
+    background-image: url(../images/icons/line.svg);
+    /* background-size: 28px 28px; */
+    height: 1em;
+    width: 100%;
+    fill: #943434;
+}
+
+.inverted {
+	filter: invert(100%);
+}
+
+.disable-dbl-tap-zoom {
+  touch-action: manipulation;
+}
+
+
+/* ESTILOS PARA TAMAÑOS ESPECÍFICOS */
+@media all and (max-device-aspect-ratio: 3/2) {
+  .infolayer { width: 36%; }
+  .infolayer-index { width: 41%; }
+  table { font-size: 85%; }
+  .title-text { font-size: 2.5vw; }
+}
+
+@media all and (max-width: 640px) {
+  .infolayer { width: 36%; }
+  .text { font-size: 2vw; }
+  .title-text { font-size: 2.5vw; }
+  table { font-size: 1.75vw; }
+ ul li {
+      margin-left: 0.4em;      
+  }  
+}
+
+/* 6" phablet */
+@media (min-width: 667px) and (max-width: 925px) {
+  .text { font-size: 80%; }
+  .title-text { font-size: 2.4vw; }
+  table { font-size: 80%; }
+  ul li {
+      margin-left: 0.6em;      
+  }   
+}
+
+/* iPAD y tablets */
+@media (max-device-aspect-ratio: 3/2) and (min-width: 768px){
+    .config-button, .config-button-encounter {
+        left: -0.5%;
+        top: -0.5%;
+        width: 7%;
+        height: 9vh;
+    }
+}
+.center {
+    text-align: center;
+}

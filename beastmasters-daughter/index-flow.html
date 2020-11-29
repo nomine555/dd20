@@ -1,0 +1,58 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+    <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none">
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>                
+        </ul>
+    </div>
+    <div id="index-flow-background" class="index-flow" style="left: 0px; top: 0px;">
+        <div>
+            <a id="n3" href="encounter.html?param=23" class="image-map-flow text strong-tint button" style="left: 4%;top: 46%;">Starting the Adventure</a>
+            <a id="n4" href="encounter.html?param=3" class="image-map-flow text strong-tint button" style="left: 17%;top: 46%;">Capture the Mouther</a>
+            <a id="n5" href="encounter.html?param=12" class="image-map-flow text strong-tint button" style="left: 30%;top: 46%;">The Research Centre</a>
+            <a id="n6" href="encounter.html?param=15" class="image-map-flow text strong-tint button" style="left: 43%;top: 46%;">Holding Room</a>
+            <a id="n7" href="encounter.html?param=16" class="image-map-flow text strong-tint button" style="left: 56%;top: 46%;">Quarantine Room</a>
+            <a id="n8" href="encounter.html?param=17" class="image-map-flow text strong-tint button" style="left: 62%;top: 31%;">Talking Door</a>
+            <a id="n9" href="encounter.html?param=18" class="image-map-flow text strong-tint button" style="left: 68%;top: 14%;">Cupboards of doom</a>
+            <a id="n10" href="encounter.html?param=19" class="image-map-flow text strong-tint button" style=" left: 86%; top: 10%;">Inner Sanctum</a>
+            <a id="n11" href="./encounter.html?param=@specimen" class="image-map-flow text strong-tint button" style="left: 80%;top: 36%;">Specimen Enclosures</a>
+            <a id="n12" href="encounter.html?param=21" class="image-map-flow text strong-tint button" style="left: 90%;top: 46%;">Gorgon Enclosure</a>
+            <a id="n13" href="encounter.html?param=4" class="image-map-flow text strong-tint button" style="left: 60%;top: 80%;">Handler’s Room</a>
+            <a id="n14" href="./encounter.html?param=@Adventure-Conclusion" class="image-map-flow text strong-tint button" style="left: 84%;top: 75%;">Conclusion</a>                    
+        </div>
+    </div>
+
+    <div class="mini-index-left">
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

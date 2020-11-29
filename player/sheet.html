@@ -1,0 +1,470 @@
+﻿<html>
+<head>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="../core/css/encounter-styles.css">
+    <link rel="stylesheet" href="./css/main.css?n=3">
+	<link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="../core/css/dice.css">
+    <link rel="stylesheet" href="../core/css/main-dice.css">
+    
+    <script src="../core/js/main.js?n=555"></script>
+	<script src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script src="./js/main.js?n=3"></script>   
+    <script src="../core/js/dice/three-min.js"></script>
+    <script src="../core/js/dice/cannon-min.js"></script>
+    <script src="../core/js/dice/detector.js"></script>
+    <script src="../core/js/dice/teal.js"></script>
+    <script src="../core/js/dice/dice.js"></script>
+    <script src="../core/js/dice/maindice.js"></script>   
+    <meta name="viewport" content="width=device-width, initial-scale=.75">
+
+    
+</head>
+<body onload="start();" class="disable-dbl-tap-zoom">
+
+    <img id="hamburguesa" src="../core/images/icons/hamburguesa.png" class="config-button button inverted" onclick="hide_show_menu();">
+
+    <div id="layer0" class="maindivclass" tabindex="1" style='opacity:0;z-index:1;'></div>
+    <div id='layer1' class="maindivclass" tabindex="2" style='opacity:0;z-index:1;'></div>
+    <div id='layer2' class="maindivclass" tabindex="3" style='opacity:0;z-index:1;'></div>
+    <div id='layer3' class="maindivclass" tabindex="4" style='opacity:0;z-index:1;'></div>
+    <div id='layer4' class="maindivclass" tabindex="5" style='opacity:0;z-index:1;'></div>
+
+	<div id='infolayer' class="infolayer" style='opacity:0;z-index:1;' tabindex="0">
+        <div id='infolayer-text' class="text infolayer_text"></div>
+        <div id="wiki-close" class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-7.png');" onclick="CloseLateralInfo(event);"></div>
+    </div>
+	
+    <div id="layer5" class="dice-area" style='opacity:0;z-index:1;'>
+    <div id="info_div" style="display: none">
+        <div class="center_field">
+            <span id="label" style="display:none"></span>
+        </div>
+        <div class="center_field">
+            <div class="bottom_field">
+                <span id="labelhelp" class="letter">click to continue or tap and drag again or</span>
+                <button id="exit" onclick="CloseImage();">exit</button>
+            </div>
+        </div>
+    </div>
+    <div id="nowebgl" style="display: none">
+    <div class="center_field">
+        <div id="nowebglinside" class="letter">
+                WebGL not supported, dice cannot be animated!
+        </div>
+        <button onclick="CloseImage();">exit</button>
+    </div>
+    </div>      
+    <div id="selector_div" style="display: none">
+        <div class="center_field">
+            <div id="sethelp" class="letter">
+               Select one or more dice by clicking on it, or use keyboard by clicking on the dice text.<br>tap and drag on free space of screen or hit throw button to roll.
+            </div>
+        </div>    
+        <div class="center_field">
+            <input type="text" id="set" value="4d6"><br/>
+            <button id="clear">clear</button>
+            <button id="throw" style="margin-left: 0.6em" id="throw">throw</button>
+            <button id="exit2" style="margin-left: 0.6em" onclick="CloseImage();">exit</button>
+        </div>
+    </div>
+    <div id="canvas"></div>
+    </div>
+    
+<div class="icondice" onclick="ShowDice();" style="height: 9.33vh">    
+</div>
+    
+<div id="menu" class="menu" style="display:none"></div>
+
+<div id="dd20chars" class="dd20chars" style="display:none">
+    <ul id="opciones">
+        <p>The Attack of Salôrium</p>
+        <hr>   
+        <li onclick="load_pre('erendur')">Erendur</li>
+        <li onclick="load_pre('monak')">Monak</li>
+        <li onclick="load_pre('mrpirs')">Mr. Pirs</li>
+        <li onclick="load_pre('raghar')">Raghar</li>
+        <li onclick="load_pre('wilbur')">Wilbur</li>            
+        <li onclick="load_pre('yonsee')">Yonsee</li>
+        <hr>
+    </ul>
+</div>
+    
+<div id="ask" class="ask" style="display:none"> 
+    <p class="center" id="lbl_create">Create a new character or update the character name?</p>
+    <div><div id="lbl_update" class="askbutton" onclick="actualizar()">UPDATE</div><div id="lbl_new" class="askbutton" onclick="crear()">NEW CHARACTER</div></div>
+</div>
+    
+<div id="ask_del" class="ask" style="display:none">
+    <p class="center" id="lbl_delete">Delete actual character?</p>
+    <div><div id="lbl_yes" class="askbutton" onclick="delete_char()">YES</div><div id="lbl_cancel" class="askbutton" onclick="close_delete()">CANCEL</div></div>
+</div>
+    
+<div class="over">
+<form class="charsheet" >
+  <header>
+    <section class="misc">
+      <ul>
+        <li>
+          <label id="lbl_classlevel" for="classlevel">Class &amp; Level</label><input name="classlevel" placeholder="Paladin 2" />
+        </li>
+        <li>
+          <label id="lbl_background" for="background">Background</label><input name="background" placeholder="Acolyte" />
+        </li>
+        <li>
+          <label id="lbl_charactername" for="playername">Name</label><input name="playername" id="charactername" placeholder="Player McPlayerface">
+        </li>
+        <li>
+          <label id="lbl_race" for="race">Race</label><input name="race" placeholder="Half-elf" />
+        </li>
+        <li>
+          <label id="lbl_alignment" for="alignment">Alignment</label><input name="alignment" placeholder="Lawful Good" />
+        </li>
+        <li>
+          <label id="lbl_experiencepoints" for="experiencepoints">XP</label><input name="experiencepoints" placeholder="3240" />
+        </li>
+      </ul>
+    </section>
+  </header>
+  <main>
+    <section>
+      <section class="attributes">
+        <div class="scores">
+          <ul>
+            <li>
+              <div class="score">
+                <label id="lbl_Strengthscore" for="Strengthscore">STR</label><input name="Strengthscore" placeholder="10" class="stat" type="number" inputmode="numeric" pattern="[0-9]*" min="3" max="20" step="1" size="2"/>
+              </div>
+              <div class="modifier">
+                <input name="Strengthmod" placeholder="+0" class="statmod" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </div>
+            </li>
+            <li>
+              <div class="score">
+                <label id="lbl_Dexterityscore" for="Dexterityscore">DEX</label><input name="Dexterityscore" placeholder="10" class="stat" type="number" inputmode="numeric" pattern="[0-9]*" min="3" max="20" step="1" size="2" />
+              </div>
+              <div class="modifier">
+                <input name="Dexteritymod" placeholder="+0" class=statmod type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </div>
+            </li>
+            <li>
+              <div class="score">
+                <label id="lbl_Constitutionscore" for="Constitutionscore">CON</label><input name="Constitutionscore" placeholder="10" class="stat" type="number" inputmode="numeric" pattern="[0-9]*" min="3" max="20" step="1" size="2" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </div>
+              <div class="modifier">
+                <input name="Constitutionmod" placeholder="+0" class="statmod" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </div>
+            </li>
+            <li>
+              <div class="score">
+                <label id="lbl_Intelligencescore" for="Intelligencescore">INT</label><input name="Intelligencescore" placeholder="10" class="stat" type="number" inputmode="numeric" pattern="[0-9]*" min="3" max="20" step="1" size="2"/>
+              </div>
+              <div class="modifier">
+                <input name="Intelligencemod" placeholder="+0" class="statmod" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </div>
+            </li>
+            <li>
+              <div class="score">
+                <label id="lbl_Wisdomscore" for="Wisdomscore">WIS</label><input name="Wisdomscore" placeholder="10" class="stat" type="number" inputmode="numeric" pattern="[0-9]*" min="3" max="20" step="1" size="2"/>
+              </div>
+              <div class="modifier">
+                <input name="Wisdommod" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </div>
+            </li>
+            <li>
+              <div class="score">
+                <label id="lbl_Charismascore" for="Charismascore">CHA</label><input name="Charismascore" placeholder="10" class="stat" type="number" inputmode="numeric" pattern="[0-9]*" min="3" max="20" step="1" size="2"/>
+              </div>
+              <div class="modifier">
+                <input name="Charismamod" placeholder="+0" class="statmod" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="attr-applications">
+          <section class="combat">          
+        <div class="armorclass">
+          <div>
+            <label id="lbl_ac" for="ac" style="font-size: 60%">AC</label><input id="ac" name="ac" placeholder="10" type="number" inputmode="numeric" pattern="[0-9]*" min = "10" max = "50" class="ac"/>
+          </div>
+        </div>
+        <div class="initiative">
+          <div>
+            <label id="lbl_initiative" for="initiative" style="font-size: 60%">Initiat.</label><input name="initiative" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" min = "-5" max = "15" />
+          </div>
+        </div>
+        <div class="speed">
+          <div>
+            <label id="lbl_speed" for="speed" style="font-size: 60%">Speed</label><input name="speed" placeholder="30" type="number" inputmode="numeric" pattern="[0-9]*" min = "5" max = "50" step="5"/>
+          </div>
+        </div>
+        <div class="sectionvertical"></div>   
+        
+
+        <div class="speed">
+          <div>
+            <label id="lbl_pwisndowm" for="pwisndowm" style="font-size: 60%">Passive Percep.</label><input name="pwisndowm" placeholder="0" type="number" inputmode="numeric" pattern="[0-9]*" />
+          </div>
+        </div>
+        <div class="speed">
+          <div>
+            <label id="lbl_profbonus" for="profbonus" style="font-size: 60%">Prof. Bonus</label><input name="profbonus" placeholder="+2" type="number" inputmode="numeric" pattern="[0-9]*" />
+          </div>
+        </div>
+        <div class="armorclass">
+            <div>
+                <label id="lbl_inspiration" for="inspiration" style="font-size: 60%">Insp.</label><input name="inspiration" placeholder="1" type="number" inputmode="numeric" pattern="[0-9]*" class="inspiration"/>
+            </div>
+        </div>
+                      
+        <div class="section"><hr></div>      
+        
+        <div class="saves list-section box">
+            <div class="label" id="lbl_savingthrows">
+                Saving Throws
+            </div>
+            <ul>
+                <li>
+                    <label id="lbl_Strength-save" for="Strength-save">Strength</label><input name="Strength-save" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Strength-save-prof" type="checkbox" />
+                </li>
+                <li>
+                    <label id="lbl_Dexterity-save" for="Dexterity-save">Dexterity</label><input name="Dexterity-save" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Dexterity-save-prof" type="checkbox" />
+                </li>
+                <li>
+                    <label id="lbl_Constitution-save" for="Constitution-save">Constitution</label><input name="Constitution-save" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Constitution-save-prof" type="checkbox" />
+                </li>
+                <li>
+                    <label id="lbl_Intelligence-save" for="Intelligence-save">Intelligence</label><input name="Intelligence-save" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Intelligence-save-prof" type="checkbox" />
+                </li>
+                <li>
+                    <label id="lbl_Wisdom-save" for="Wisdom-save">Wisdom</label><input name="Wisdom-save" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Wisdom-save-prof" type="checkbox" />
+                </li>
+                <li>
+                    <label id="lbl_Charisma-save" for="Charisma-save">Charisma</label><input name="Charisma-save" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Charisma-save-prof" type="checkbox" />
+                </li>
+            </ul>
+          </div>                
+        <div class="hp">
+            <div class="regular">
+                <div class="max">
+                    <label id="lbl_maxhp" for="maxhp">Max. Hit Points</label><input name="maxhp" placeholder="10" type="number" inputmode="numeric" pattern="[0-9]*" min = "1" max = "250" />
+                </div>
+                <div class="current">              
+                    <div class="currenthp">
+                        <input type="button" value="-" name="menos" onclick="resta('hp');"/>
+                        <div class="center">
+                            <input name="currenthp" id="hp" type="number" inputmode="numeric" pattern="[0-9]*" class="variable"/>
+                            <label id="lbl_currenthp" for="currenthp" class="variable">Current HPs</label>                 
+                        </div>
+                        <input type="button" value="+" name="mas" onclick="suma('hp');"/>
+                    </div>
+                </div>
+            </div>
+            <div class="temporary">
+                <div class="currenthp">
+                    <input type="button" value="-" name="menos" onclick="resta('hp2');"/>
+                    <div class="center">
+                        <input name="temphp" type="number" inputmode="numeric" pattern="[0-9]*" id="hp2" />
+                        <label id="lbl_temphp" for="temphp">Temporary HPS</label>
+                    </div>
+                    <input type="button" value="+" name="mas" onclick="suma('hp2');"/>
+                </div>            
+            </div>           
+        </div>              
+            
+      </section>
+        </div>
+      </section>
+    </section>
+    <section>
+      <section class="attacksandspellcasting">
+        <div>
+          <label id="lbl_attacks">Attacks</label>
+          <table>
+            <thead>
+              <tr>
+                <th id="lbl_nameatk" colspan="2" class="name">
+                  Name
+                </th>
+                <th id="lbl_atkbonus">
+                  Atk Bonus
+                </th>
+                <th id="lbl_dmgtype">
+                  Damage/Type
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="2">
+                  <input name="atkname1" type="text" placeholder="Short Sword" />
+                </td>
+                <td>
+                  <input name="atkbonus1" type="number" inputmode="numeric" pattern="[0-9]*" placeholder="+1"/>
+                </td>
+                <td>
+                  <input name="atkdamage1" type="text" placeholder="1d6+1 / P"/>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <input name="atkname2" type="text"  />
+                </td>
+                <td>
+                  <input name="atkbonus2" type="number" inputmode="numeric" pattern="[0-9]*" />
+                </td>
+                <td>
+                  <input name="atkdamage2" type="text" />
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <input name="atkname3" type="text"  />
+                </td>
+                <td>
+                  <input name="atkbonus3" type="number" inputmode="numeric" pattern="[0-9]*" />
+                </td>
+                <td>
+                  <input name="atkdamage3" type="text" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+     
+    </section>
+    <section>
+      <section class="attributes">
+        <div class="attr-applications maxwidth">         
+          <div class="skills list-section box">
+            <div class="label">
+              Skills
+            </div>
+            <ul>
+              <li>
+                <label id="lbl_Acrobatics" for="Acrobatics">Acrobatics <span class="skill">(Dex)</span></label><input name="Acrobatics" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Acrobatics-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Animal_Handling" for="Animal_Handling">Animal Handling <span class="skill">(Wis)</span></label><input name="Animal_Handling" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*"/><input name="Animal_Handling-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Arcana" for="Arcana">Arcana <span class="skill">(Int)</span></label><input name="Arcana" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Arcana-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Athletics" for="Athletics">Athletics <span class="skill">(Str)</span></label><input name="Athletics" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Athletics-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Deception" for="Deception">Deception <span class="skill">(Cha)</span></label><input name="Deception" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Deception-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_History" for="History">History <span class="skill">(Int)</span></label><input name="History" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="History-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Insight" for="Insight">Insight <span class="skill">(Wis)</span></label><input name="Insight" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Insight-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Intimidation" for="Intimidation">Intimidation <span class="skill">(Cha)</span></label><input name="Intimidation" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Intimidation-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Investigation" for="Investigation">Investigation <span class="skill">(Int)</span></label><input name="Investigation" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Investigation-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Medicine" for="Medicine">Medicine <span class="skill">(Wis)</span></label><input name="Medicine" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Medicine-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Nature" for="Nature">Nature <span class="skill">(Int)</span></label><input name="Nature" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Nature-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Perception" for="Perception">Perception <span class="skill">(Wis)</span></label><input name="Perception" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Perception-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Performance" for="Performance">Performance <span class="skill">(Cha)</span></label><input name="Performance" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Performance-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Persuasion" for="Persuasion">Persuasion <span class="skill">(Cha)</span></label><input name="Persuasion" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*"/><input name="Persuasion-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Religion" for="Religion">Religion <span class="skill">(Int)</span></label><input name="Religion" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Religion-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Sleight_of_Hand" for="Sleight_of_Hand">Sleight of Hand <span class="skill">(Dex)</span></label><input name="Sleight of Hand" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Sleight_of_Hand-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Stealth" for="Stealth">Stealth <span class="skill">(Dex)</span></label><input name="Stealth" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Stealth-prof" type="checkbox" />
+              </li>
+              <li>
+                <label id="lbl_Survival" for="Survival">Survival <span class="skill">(Wis)</span></label><input name="Survival" placeholder="+0" type="number" inputmode="numeric" pattern="[0-9]*" /><input name="Survival-prof" type="checkbox" />
+              </li>
+            </ul>
+
+          </div>
+          <div style="width: 66%;margin-left: 8px;" class="contenteditable otherprofs box list-section" onclick="document.getElementById('otherprofs').focus();">
+              <div id="lbl_featTraits" class="label">Features &amp; Traits</div>
+              <div contenteditable="true" id="otherprofs" name="otherprofs" class="textarea" onfocusout="updateRules('otherprofs');"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="equipment">
+        <div>
+          <label id="lbl_equipment">Equipment</label>
+          <div class="money">
+            <ul>
+              <li>
+                <label id="lbl_cp" for="cp">cp</label><input name="cp" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </li>
+              <li>
+                <label id="lbl_sp" for="sp">sp</label><input name="sp" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </li>
+              <li>
+                <label id="lbl_ep" for="ep">ep</label><input name="ep" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </li>
+              <li>
+                <label id="lbl_gp" for="gp">gp</label><input name="gp" type="number" inputmode="numeric" pattern="[0-9]*"/>
+              </li>
+              <li>
+                <label id="lbl_pp" for="pp">pp</label><input name="pp" type="number" inputmode="numeric" pattern="[0-9]*" />
+              </li>
+            </ul>
+          </div>
+          <div style="width: calc(100% - 9.2em);margin-left:0.5em;" class="contenteditable equipment box list-section crece" onclick="document.getElementById('equipment').focus();">
+              
+              <div contenteditable="true" id="equipment" name="equipment" class="textarea"></div>
+          </div>            
+        </div>
+      </section>
+    <section>
+      <section class="flavor">
+          <div style="width: 98%;margin: 8px;min-height:6em;" class="contenteditable personality box list-section" onclick="document.getElementById('personality').focus();">
+              <div id="lbl_personality" class="label">PERSONALITY</div>
+              <div contenteditable="true" id="personality" name="personality" class="textarea"></div>
+          </div>
+          <div style="width: 98%;margin: 8px;min-height:6em;" class="contenteditable ideals box list-section" onclick="document.getElementById('ideals').focus();">
+              <div id="lbl_ideals" class="label">IDEALS</div>
+              <div contenteditable="true" id="ideals" name="ideals" class="textarea"></div>
+          </div>
+          <div style="width: 98%;margin: 8px;min-height:6em;" class="contenteditable bonds box list-section" onclick="document.getElementById('bonds').focus();">
+              <div id="lbl_bonds" class="label">BONDS</div>
+              <div contenteditable="true" id="bonds" name="bonds" class="textarea"></div>
+          </div>
+          <div style="width: 98%;margin: 8px;min-height:6em;" class="contenteditable flaws box list-section" onclick="document.getElementById('flaws').focus();">
+              <div id="lbl_flaws" class="label">FLAWS</div>
+              <div contenteditable="true" id="flaws" name="flaws" class="textarea"></div>
+          </div>
+      </section>
+      <section class="features">
+          <div style="width: 100%;margin-left: 0px;min-height:10em;border-radius: 0.5em;" class="contenteditable features box list-section" onclick="document.getElementById('features').focus();">
+              <div id="lbl_features" class="label">OTHER FEATURES AND SPELLS</div>
+              <div contenteditable="true" id="features" name="features" class="textarea"></div>
+          </div>
+      </section>
+    </section>
+  </main>
+</form>
+
+    </div>
+</body>
+</html>

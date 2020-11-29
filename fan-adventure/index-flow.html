@@ -1,0 +1,58 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+    <img id="hamburguesa" src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none" >
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>                
+        </ul>
+    </div>
+    <div id="index-flow-background" class="index-flow" style="left: 0px; top: 0px;">
+        <div>
+            <a id='the-village-of-corbin' href='./encounter.html?param=@the-village-of-corbin' class='image-map-flow text strong-tint button' style=' left: 12%; top: 10%;'>The Village of Corbin</a>
+            <a id='attack-on-corbin-village' href='./encounter.html?param=@attack-on-corbin-village' class='image-map-flow text strong-tint button' style=' left: 12%; top: 25%;'>Attack on Corbin Village</a>
+            <a id='tracking-the-bandits' href='./encounter.html?param=@tracking-the-bandits' class='image-map-flow text strong-tint button' style=' left: 23%; top: 36%;'>Tracking the Bandits</a>
+            <a id='young-assassin-vine' href='./encounter.html?param=@young-assassin-vine' class='image-map-flow text strong-tint button' style=' left: 32%; top: 36%;'>Young Assassin Vine</a>
+            <a id='swamp-gas' href='./encounter.html?param=@swamp-gas' class='image-map-flow text strong-tint button' style=' left: 41%; top: 36%;'>Swamp Gas</a>
+            <a id='lizardfolk-patrol' href='./encounter.html?param=@lizardfolk-patrol' class='image-map-flow text strong-tint button' style=' left: 50%; top: 36%;'>Lizardfolk Patrol</a>
+            <a id='saving-malvin-dickerson' href='./encounter.html?param=@saving-malvin-dickerson' class='image-map-flow text strong-tint button' style=' left: 60%; top: 36%;'>Saving Malvin Dickerson</a>
+            <a id='giant-grass-spider' href='./encounter.html?param=@giant-grass-spider' class='image-map-flow text strong-tint button' style=' left: 69%; top: 36%;'>Giant Grass Spider</a>
+            <a id='the-bandits-cave' href='./encounter.html?param=@the-cave' class='image-map-flow text strong-tint button' style=' left: 75%; top: 49%;'>The Bandit&#39;s Cave</a>
+            <a id='cave-guards' href='./encounter.html?param=@cave-guards' class='image-map-flow text strong-tint button' style=' left: 75%; top: 63%;'>Cave Guards</a>
+            <a id='gorocs-chamber' href='./encounter.html?param=@gorocs-chamber' class='image-map-flow text strong-tint button' style=' left: 84%; top: 63%;'>Gorocs Chamber</a>
+            <a id='concluding-the-adventure' href='./index.html?param=@concluding-the-adventure' class='image-map-flow text strong-tint button' style=' right: 1%; top: 63%;'>Concluding the Adventure</a>
+        </div>
+    </div>
+
+    <div class="mini-index-left" >
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

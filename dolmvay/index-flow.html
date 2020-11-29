@@ -1,0 +1,82 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+    <img id="hamburguesa" src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none" >
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>                
+        </ul>
+    </div>
+    <div id="index-flow-background" class="index-flow" style="left: 0px; top: 0px;">
+        <div>
+            <a id='guide-ook-to-the-city-of-dolmvay' href='./index.html?param=@resumen' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 3%; top: 10%; box-shadow:inset 0 0 0 100px rgba(0,0,0,0.01);'>Guidebook to the City of Dolmvay</a>
+            <a id='adventuring-in-dolmvay' href='./index.html?param=@adventuring-in-dolmvay' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 3%; top: 25%; box-shadow:inset 0 0 0 100px rgba(0,0,0,0.01);'>Adventuring in Dolmvay</a>
+            <a id='ancient-history' href='./index.html?param=@ancient-history' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 3%; top: 40%; box-shadow:inset 0 0 0 100px rgba(0,0,0,0.01);'>Ancient History</a>
+            <a id='calendar' href='./index.html?param=@calendar' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 3%; top: 55%; box-shadow:inset 0 0 0 100px rgba(0,0,0,0.01);'>Calendar</a>
+            <a id='citizens-of-dolmvay' href='./index.html?param=@citizens-of-dolmvay' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 3%; top: 70%; box-shadow:inset 0 0 0 100px rgba(0,0,0,0.01);'>Citizens of Dolmvay</a>
+            <a id='city-of-dolmvay' href='./index.html?param=@city-of-dolmvay' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 22%; top: 1%; box-shadow:inset 0 0 0 100px rgba(0,0,0,0.01);'>City of Dolmvay</a>
+            <a id='city-layout' href='./encounter.html?param=@city-layout' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 39%; top: 1%;'>City Layout</a>
+            <a id='north-ward' href='./encounter.html?param=@north-ward' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 20%; top: 16%;'>North Ward</a>
+            <a id='palatial-district' href='./encounter.html?param=@palatial-district' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 14%; top: 31%;'>Palatial District</a>
+            <a id='city-center-district' href='./encounter.html?param=@city-center-district' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 20%; top: 45%;'>City Center District</a>
+            <a id='district-of-no-les' href='./encounter.html?param=@district-of-nobles' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 28%; top: 29%;'>District of Nobles</a>
+            <a id='south-ward' href='./encounter.html?param=@south-ward' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 41%; top: 16%;'>South Ward</a>
+            <a id='baytown' href='./encounter.html?param=@baytown' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 23%; top: 60%;'>Baytown</a>
+            <a id='warf-district' href='./encounter.html?param=@warf-district' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 26%; top: 75%;'>Warf District</a>
+            <a id='guild-district' href='./encounter.html?param=@guild-district' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 34%; top: 63%;'>Guild District</a>
+            <a id='oldcastle-district' href='./encounter.html?param=@oldcastle-district' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 37%; top: 80%;'>Oldcastle District</a>
+            <a id='market-district' href='./encounter.html?param=@market-district' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 42%; top: 58%;'>Market District</a>
+            <a id='district-of-commons' href='./encounter.html?param=@district-of-commons' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 45%; top: 71%;'>District of Commons</a>
+            <a id='river-district' href='./encounter.html?param=@river-district' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 48%; top: 84%;'>River District</a>
+            <a id='district-of-scholars' href='./encounter.html?param=@district-of-scholars' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 55%; top: 72%;'>District of Scholars</a>
+            <a id='isle-of-heroes' href='./encounter.html?param=@isle-of-heroes' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 63%; top: 8%;'>Isle of Heroes</a>
+            <a id='inner-courtyard' href='./encounter.html?param=@inner-courtyard' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 53%; top: 18%;'>Inner Courtyard</a>
+            <a id='level-one' href='./encounter.html?param=@level-one' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 63%; top: 22%;'>Level One</a>
+            <a id='level-two' href='./encounter.html?param=@level-two' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 63%; top: 35%;'>Level Two</a>
+            <a id='level-three' href='./encounter.html?param=@level-three' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 63%; top: 48%;'>Level Three</a>
+            <a id='dungeon-level' href='./encounter.html?param=@dungeon-level' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 63%; top: 62%;'>Dungeon Level</a>
+            <a id='roof-level' href='./encounter.html?param=@roof-level' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 72%; top: 17%;'>Roof Level</a>
+            <a id='the-valenon' href='./encounter.html?param=@the-valenon' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 84%; top: 16%;'>The Valenon</a>
+            <a id='other-features' href='./encounter.html?param=@other-features' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 79%; top: 54%; box-shadow:inset 0 0 0 100px rgba(192, 128, 255, 0.2);'>Other Features</a>
+            <a id='common-shops-and-businesses' href='./encounter.html?param=@common-shops-and-businesses' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 85%; top: 69%; box-shadow:inset 0 0 0 100px rgba(192, 128, 255, 0.2);'>Shops and Businesses</a>
+            <a id='taverns-and-inns' href='./encounter.html?param=@taverns-and-inns' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 100%; top: 30%; box-shadow:inset 0 0 0 100px rgba(192, 128, 255, 0.2);'>Taverns and Inns</a>
+            <a id='random-ta-le--city-encounters' href='./encounter.html?param=@city-encounters' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 73%; top: 69%; box-shadow:inset 0 0 0 100px rgba(192, 128, 255, 0.2);'>City Encounters</a>
+            <a id='new-flora-and-fauna' href='./encounter.html?param=@new-flora-and-fauna' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 68%; top: 84%; box-shadow:inset 0 0 0 100px rgba(192, 128, 255, 0.2);'>New Flora and Fauna</a>
+            <a id='appendix--npc-generation' href='./encounter.html?param=@npc-generation' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 79%; top: 84%; box-shadow:inset 0 0 0 100px rgba(192, 128, 255, 0.2);'>Appendix: NPC Generation</a>
+            <a id='appendix--treasures' href='./index.html?param=@treasures' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 90%; top: 84%; box-shadow:inset 0 0 0 100px rgba(192, 128, 255, 0.2);'>Appendix: Treasures</a>
+            <a id='sewers-of-dolmvay' href='./encounter.html?param=@sewers-of-dolmvay' class='image-map-flow text strong-tint button' style='width:6em;height:6em; left: 90%; top: 4%;'>Sewers of Dolmvay</a>
+        </div>
+    </div>
+
+    <div class="mini-index-left" >
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

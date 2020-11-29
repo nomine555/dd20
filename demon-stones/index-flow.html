@@ -1,0 +1,76 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+    <img id="hamburguesa" src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none" >
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>                
+        </ul>
+    </div>
+    <div id="index-flow-background" class="index-flow" style="left: 0px; top: 0px;">
+        <div>
+            <a id='beginning-the-adventure' href='./encounter.html?param=@beginning-the-adventure' class='image-map-flow text strong-tint button' style=' left: 2%; top: 10%;'>Beginning the adventure</a>
+            <a id='wolf-attack' href='./index.html?param=@wolf-attack' class='image-map-flow text strong-tint button' style=' left: 11%; top: 10%;'>Wolf attack</a>
+            <a id='gravencross' href='./encounter.html?param=@gravencross' class='image-map-flow text strong-tint button' style=' left: 20%; top: 10%;'><br/>Gravencross</a>
+            <a id='questioning-the-villagers' href='./encounter.html?param=@questioning-the-villagers' class='image-map-flow text strong-tint button' style=' left: 20%; top: 26%;'>Questioning the Villagers</a>
+            <a id='the-felled-oak' href='./encounter.html?param=@the-felled-oak' class='image-map-flow text strong-tint button' style=' left: 11%; top: 23%;'>The Felled Oak</a>
+            <a id='the-church' href='./encounter.html?param=@the-church' class='image-map-flow text strong-tint button' style=' left: 14%; top: 37%;'>The Church</a>
+            <a id='sheriff-yakkermere' href='./encounter.html?param=@sheriff-yakkermere' class='image-map-flow text strong-tint button' style=' left: 20%; top: 46%;'>Sheriff Yakkermere</a>
+            <a id='skerril-greyhope' href='./encounter.html?param=@skerril-greyhope' class='image-map-flow text strong-tint button' style=' left: 26%; top: 37%;'>Skerril Greyhope</a>
+            <a id='the-farms' href='./encounter.html?param=@the-farms' class='image-map-flow text strong-tint button' style=' left: 29%; top: 23%;'><br/>The farms</a>
+            <a id='hoarwych-valley' href='./encounter.html?param=@hoarwych-valley' class='image-map-flow text strong-tint button' style=' left: 40%; top: 40%;'>Hoarwych Valley</a>
+            <a id='dead-tree-hill' href='./encounter.html?param=@dead-tree-hill' class='image-map-flow text strong-tint button' style=' left: 30%; top: 53%;'>Dead Tree Hill</a>
+            <a id='attack-by-the-black-company' href='./encounter.html?param=@attack-by-the-black-company' class='image-map-flow text strong-tint button' style=' left: 32%; top: 67%;'>Attack by the Black Company</a>
+            <a id='redmidge-marsh' href='./encounter.html?param=@redmidge-marsh' class='image-map-flow text strong-tint button' style=' left: 40%; top: 78%;'>Redmidge Marsh</a>
+            <a id='myrken-lake' href='./encounter.html?param=@myrken-lake' class='image-map-flow text strong-tint button' style=' left: 47%; top: 67%;'>Myrken Lake</a>
+            <a id='the-grey-druid' href='./encounter.html?param=@the-grey-druid' class='image-map-flow text strong-tint button' style=' left: 50%; top: 53%;'>The Grey Druid</a>
+            <a id='wardcroft-ruins' href='./encounter.html?param=@wardcroft-ruins' class='image-map-flow text strong-tint button' style=' left: 40%; top: 10%;'>Wardcroft Ruins</a>
+            <a id='cellar-level' href='./encounter.html?param=@cellar-level' class='image-map-flow text strong-tint button' style=' left: 50%; top: 10%;'>Cellar Level</a>
+            <a id='the-crypt-level' href='./encounter.html?param=@the-crypt-level' class='image-map-flow text strong-tint button' style=' left: 60%; top: 10%;'>The Crypt Level</a>
+            <a id='southern-corridor' href='./encounter.html?param=@southern-corridor' class='image-map-flow text strong-tint button' style=' left: 55%; top: 24%;'>Southern corridor</a>
+            <a id='lord-vedderen-wardcrofts-crypt' href='./encounter.html?param=@lord-vedderen-wardcrofts-crypt' class='image-map-flow text strong-tint button' style=' left: 65%; top: 24%;'>Lord Vedderen Wardcrofts Crypt</a>
+            <a id='the-deep-level' href='./encounter.html?param=@the-deep-level' class='image-map-flow text strong-tint button' style=' left: 79%; top: 35%;'>The Deep Level</a>
+            <a id='guardroom' href='./encounter.html?param=@guardroom' class='image-map-flow text strong-tint button' style=' left: 65%; top: 39%;'>Guardroom</a>
+            <a id='sanctum-of-the-unhallowed' href='./encounter.html?param=@sanctum-of-the-unhallowed' class='image-map-flow text strong-tint button' style=' left: 67%; top: 53%;'>Sanctum of the Unhallowed</a>
+            <a id='guard-hall' href='./encounter.html?param=@guard-hall' class='image-map-flow text strong-tint button' style=' left: 70%; top: 66%;'>Guard Hall</a>
+            <a id='kitchen' href='./encounter.html?param=@kitchen' class='image-map-flow text strong-tint button' style=' left: 76%; top: 78%;'>Kitchen</a>
+            <a id='elite-guard-room' href='./encounter.html?param=@elite-guard-room' class='image-map-flow text strong-tint button' style=' left: 83%; top: 78%;'>Elite guard room</a>
+            <a id='false-private-chamber' href='./encounter.html?param=@false-private-chamber' class='image-map-flow text strong-tint button' style=' left: 89%; top: 66%;'>False Private Chamber</a>
+            <a id='the-underlords-private-chamber' href='./encounter.html?param=@the-underlords-private-chamber' class='image-map-flow text strong-tint button' style=' left: 91%; top: 53%;'>The Underlords Private Chamber</a>
+            <a id='the-great-chamber' href='./encounter.html?param=@the-great-chamber' class='image-map-flow text strong-tint button' style=' left: 92%; top: 39%;'>The Great Chamber</a>
+            <a id='the-curse-lifted' href='./encounter.html?param=@the-curse-lifted' class='image-map-flow text strong-tint button' style=' left: 90%; top: 10%;'>The Curse Lifted</a>
+        </div>
+    </div>
+
+    <div class="mini-index-left" >
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

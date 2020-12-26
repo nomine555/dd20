@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Digital D20 VTT</title>
+    <link rel="icon" href="https://play.digitald20.com/vtt/img/logodd20.svg" sizes="any" type="image/svg+xml">
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>-->
+    <script src="../js/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+    <script src="../js/dice.js"></script>
+    <script src="../js/diceBox.js"></script>
+    <link rel="stylesheet" href="/css/main.css">       
+    <link rel="stylesheet" href="../css/dndbeyond.css"/>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162806672-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-162806672-1');
+</script>
+
+</head>
+
+<body onload="starting();" onresize="viewportResize()">
+
+    <div id="dice-canvas"></div>
+    <div id="cw" class="bg" oncontextmenu="return false;" ondrop="drop(event, this)" ondragover="dragover(event)">
+        <canvas id="c"></canvas>
+    </div>
+    <div id = "ontop" class="ontop" onclick="hide_menus()" style="display: none;">
+
+    </div>
+    <div class="superbar superbox noselect" onclick="hide_menus();" id="main-menu">
+    <div class="bar">
+        <div class="upbar">
+        <div class="butongroup" id="add-token-bar">
+            <input class="urlinput" type="text" id="token-map" placeholder="... url to your image file ... token or backgroound ...">
+            <button onclick='addToken()' id="circle" class="button">Add Token</button>
+            <div class="roundinput">
+                <div class="inputgroup">
+                <input type="radio" name="gender" value="1" checked="checked" id="s1"> 
+                <label for="male">Medium</label>
+                </div>
+                <div class="inputgroup">
+                    <input type="radio" name="gender" value="2" id="s2">
+                <label for="female">Large</label>
+                </div>
+                <div class="inputgroup">
+                    <input type="radio" name="gender" value="3" id="s3">
+                <label for="other">Huge</label>
+                    </div>
+                    <div class="inputgroup">
+                        <input type="radio" id="free" name="gender" value="-1">
+                    <label for="other">Free</label>
+                        </div>
+                <button id="bedit-token" onclick='editToken();' class="button" style="align-self: flex-end;">Edit Token</button>
+            </div>
+        </div>
+        
+        <div class="butongroup for-admin columgroup" style="display: none" id="setbg">
+            <input class="" type="text" id="bg-map" placeholder="background map url" style="display: none;">
+            <div class="roundinput">
+            <button onclick='setBg()' class="button" id="change">Set Background</button> <img src="https://play.digitald20.com/vtt/img/hamburguesa.png" style="width:2rem" onclick="show_backgrounds()">
+            </div>
+            
+            <button onclick='setTile()' class="button">Set Tile Size</button>
+        </div>
+        <div class="butongroup for-player" id="for-name"> 
+            <input type="text" id="player-name" placeholder="Player Name" onchange="nameChange();" class="player-name center" style="width: 97%;">
+            <div class="roundinput for-admin" style="display: none">
+                <div class="roundinput">
+                    <button onclick='sendLink()' class="button" style="width: 100%;">Add asset</button>
+                    <input type="checkbox" id="assetvisible" checked>
+                    <label for="visible" >Visible</label> 
+                    <img src="https://play.digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;" onclick="show_asset();">
+                    </div>
+
+        </div>
+        </div>
+        <div class="butongroup">
+            <button class="button for-admin" onclick="prompt('Press Ctrl + C, copy to clipboard and send this link to your friends so they can join this virtual tabletop board session',window.location)" style="display: none">Share</button>
+            <button class="button" onclick="show_config_view();">View</button>
+        </div>
+        </div>
+        <div  class="ddowbar" draggable="false">
+            
+            <div id="stokenbar" class="downbar">
+            <img id="t6" src="https://play.digitald20.com/vtt/img/arrow.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
+            <img id="t7" src="https://play.digitald20.com/vtt/img/cross.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
+            <img id="t8" src="https://play.digitald20.com/vtt/img/fire-ball.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
+            <img id="t9" src="https://play.digitald20.com/vtt/img/cone-cold.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
+            <img id="t10" src="https://play.digitald20.com/vtt/img/ray.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"
+            style="object-fit: cover;width:3em;"> 
+            </div>
+        <div id="tokenbar" class="downbar">
+            <img id="t1" src="https://play.digitald20.com/vtt/img/mage.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+            <img id="t2" src="https://play.digitald20.com/vtt/img/fighter.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+            <img id="t3" src="https://play.digitald20.com/vtt/img/ranger.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+            <img id="t4" src="https://play.digitald20.com/vtt/img/thief.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+            <img id="t5" src="https://play.digitald20.com/vtt/img/spectre.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+        </div>
+        </div>
+
+        </div>
+        <div class="fogbar for-admin" id="fog-bar" style="display: none;">
+            <button onclick='startFogbutton();' id="enable-fog" class="button" style="width: 100%">Enable Fog</button>
+            <button onclick='addFogbutton();' id="add-fog" class="button" disabled style="width: 100%">Reveal Area</button>
+            <button onclick='clearFogbutton();' id="clear-fog" class="button" disabled style="width: 100%">Reset Fog</button>
+        </div>
+    </div>
+    <div id="hp" class="hp">
+        <input class="spinner" type="number" id="text-hp"><div class="supizq" style="display:none"></div><div class="infder" style="display:none" ></div>
+    </div>
+        
+    
+    <!-- Barra lateral -->
+    <div class="lateral"> 
+    <div class="left-lateral">
+        <div class="dicebar noselect" onclick="hide_menus();" id="dice-bar">
+    <button onclick='newRoll();' id="new-roll" class="button" style="width: 100%;align-self: center;">Configure New Roll</button>
+        <div class="dice-roll" id="d1" onclick="diceSelect();">1d20</div>
+        <div class="dice-roll" id="d2" onclick="diceSelect();">1d8</div>
+        <div class="dice-roll" id="d3" onclick="diceSelect();">3d6</div>
+        <div style="display: flex">
+        <input type="color" id="fontcolor" name="fontcolor" value="#ff0000" >
+        <input type="color" id="backcolor" name="backcolor" value="#000000" >
+    </div>
+            <button onclick='clearRoll();' id="new-roll" class="button" style="width: 100%;align-self: center;">Clear Dice</button>
+            <button onclick='hiddenRoll();' id="hidden-roll" class="button" style="width: 100%;align-self: center;">Hide Dice</button>
+    </div>  
+         <div id="token-edit" class="tokenbar noselect" style="display: none">
+        <input type="range" min="100" max="500" value="100" class="slider" id="zoomRange" onchange="tokenChange();" style="width: 100%;">
+        Zoom
+        <input type="range" min="0" max="300" value="100" class="slider" id="leftRange" onchange="tokenChange();" style="width: 100%;">
+        Left/Right
+        <input type="range" min="0" max="300" value="100" class="slider" id="upRange" onchange="tokenChange();" style="width: 100%;">
+        Up/Down
+        <input type="range" min="0" max="100" value="100" class="slider" id="bgRange" onchange="tokenChange();" style="display: none">
+        <button onclick='okToken();' class="button" style="display: none">Ok</button>
+        <button onclick='cancelToken();' class="button" style="display: none">Cancel</button>
+    </div>
+        <div id ="player-asset-list" class="player-asset-bar noselect for-player" onclick="chooseplayerasset(event)" style="display: none;"></div>
+    </div>
+        <div class="rigth-lateral">
+            <div id="hide-chat" class="chat-show button" onclick="show_hide_chat();">Show Chat</div>
+            <div id="chat-area" style="display: none;">
+            <div id="chat-log" class="chat-text"></div>
+            <textarea id="chat-text"  class="chat-text-area" onkeypress="checkEnter();"></textarea>
+            <div id="chat-button" class="button" onclick="sendChat();">
+                Send
+            </div>
+            <div id="chat-button-beyond" class="button" onclick="sendChat_beyond();" style="display: none;">
+                Send Beyond
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <div id="background-list" class="background-bar noselect" style="display:none" onclick="choosebackground(event)"> 
+    </div>
+    <div id ="asset-list" class="asset-bar noselect" style="display:none" onclick="chooseasset(event)">
+    </div>
+    
+
+    <div id="dice-select" class="super-dice-select" style="display: none;" onclick="hide_menus()">
+    <div  class="dice-select" >
+        <table>
+            <tr>
+                <th onclick="diceSelect();">1d4</th><th onclick="diceSelect();">2d4</th><th onclick="diceSelect();">3d4</th><th onclick="diceSelect();">4d4</th><th onclick="diceSelect();">5d4</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">1d6</th><th onclick="diceSelect();">2d6</th><th onclick="diceSelect();">3d6</th><th onclick="diceSelect();">4d6</th><th onclick="diceSelect();">5d6</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">1d8</th><th onclick="diceSelect();">2d8</th><th onclick="diceSelect();">3d8</th><th onclick="diceSelect();">4d8</th><th onclick="diceSelect();">5d8</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">1d10</th><th onclick="diceSelect();">2d10</th><th onclick="diceSelect();">3d10</th><th onclick="diceSelect();">4d10</th><th onclick="diceSelect();">5d10</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">1d12</th><th onclick="diceSelect();">2d12</th><th onclick="diceSelect();">3d12</th><th onclick="diceSelect();">4d12</th><th onclick="diceSelect();">5d12</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">1d20</th><th onclick="diceSelect();">2d20</th><th onclick="diceSelect();">3d20</th><th onclick="diceSelect();">4d20</th><th onclick="diceSelect();">5d20</th>
+            </tr>
+        </table>
+        <div class="combine-dice">
+            <button id="bcombine" onclick='startCombinedice();' class="button" >Combine Roll</button>
+            <input id="combine-dice" type="text" id="combine-dice" placeholder="Ej: 1d8 + 1d6" class="grow" onclick="event.stopPropagation();">
+            <button id="combine-dice-ok" onclick='okDicecombine();' class="button" disabled>Ok</button>
+        </div>
+            <div class="combine-dice">
+            <!--<label style="font-size: 75%;background-color:white;">Dice Render Quality</label>-->
+             <button id="bcombine" onclick='startCombinedice();' class="button" >Dice Render Quality</button>   
+            <input type="range" min="40" max="200" value="100" class="slider" id="diceRange" onchange="renderChange();" style="width: 100%;">
+        </div>
+    </div>
+    </div>
+    
+        <div id="view-select" class="super-dice-select" style="display: none;">
+    <div  class="view-select" >
+        <p>Select the menu functions<br> you want to Show or Hide</p>
+        
+                <input type="checkbox" id="view-dice" checked onclick='checkboxClick(this);' name="dice-bar">
+                <label for="view-dice" >Dice bar</label><br>
+        
+                <input type="checkbox" id="view-tracker" checked onclick='checkboxClick(this);' name="track-bar" > 
+                <label for="view-tracker" >Initiative tracker</label> <br>
+        
+        <div class="for-player" style="display: none">
+            <input type="checkbox" id="view-assets" checked onclick='checkboxClick(this);' name="player-asset-list" >
+                <label for="view-assets" >Assets bar</label><br >
+        </div>
+                
+        
+                <input type="checkbox" id="view-tokens" checked onclick='checkboxClick(this);' name='add-token-bar'>
+                <label for="view-tokens" >Add token bar</label><br>
+        
+                <input type="checkbox" id="view-atoken" checked onclick='checkboxClick(this);'name='tokenbar'>
+                <label for="view-atoken" >Tokens bar</label><br>
+        
+                <input type="checkbox" id="view-stokens" checked onclick='checkboxClick(this);'name='stokenbar'>
+                <label for="view-stokens" >Standard tokens bar</label><br>
+        
+        <div class="for-admin" style="display: none"> 
+            <input type="checkbox" id="view-fog" checked onclick='checkboxClick(this);' name='fog-bar'>
+                <label for="view-fog">Fog bar</label><br>
+            <input type="checkbox" id="setbg" checked onclick='checkboxClick(this);' name='setbg'>
+                <label for="setbg">Set Background</label><br>
+        </div>
+        <input type="checkbox" id="view-name" checked onclick='checkboxClick(this);' name='for-name'>
+                <label for="view-name" >Name Box</label><br>
+        <input type="checkbox" id="view-back" checked onclick='checkboxBackground(this);'>
+                <label for="view-back" >Menu Background</label><br>
+        <input type="checkbox" id="view-hp" checked onclick='checkboxClick(this);' name="text-hp">
+                <label for="view-hp" >Hit points on tokens</label><br>
+        <hr>
+            <div class="combine-dice">
+            <!--<label style="font-size: 75%;background-color:white;">Dice Render Quality</label>-->
+             <button id="bcombine" onclick='event.stopPropagation()' class="button" >Dice Render Quality</button>   
+            <input type="range" min="40" max="200" value="100" class="slider" id="diceRange" onchange="renderChange();" style="width: 100%;">
+        </div>
+
+        <hr>
+        <div>
+            <em class="center">One click board URL Setup</em>
+         <textarea id="urltext" rows="4" style="width: 100%;"></textarea>
+    </div>
+
+        <button class="button" onclick="show_config_view();">Ok</button>
+        
+    </div>
+    </div>
+    
+    <div class="track_bar" onclick="hide_menus();" id="track-bar"> 
+        <div id = "track1" class="track_item" draggable="true" style="order:1;display:none"
+             ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+             ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)"> 
+           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        </div>
+        <div id = "track2" class="track_item" draggable="true" style="order:2"
+             ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+             ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
+           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        </div>
+        <div id = "track3" class="track_item" draggable="true" style="order:3"
+             ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+             ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
+           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        </div>
+        <div id = "track4" class="track_item" draggable="true" style="order:4"
+             ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+             ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
+           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        </div>
+        <div id = "track5" class="track_item" draggable="true" style="order:5"
+             ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+             ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
+           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        </div>
+        <div id = "track6" class="track_item" draggable="true" style="order:6"
+             ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+             ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
+           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        </div>
+        <div id = "track7" class="track_item" draggable="true" style="order:7"
+             ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+             ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
+           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        </div>
+        <div id = "track8" class="track_item" draggable="true" style="order:8"
+             ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+             ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
+           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        </div>
+        
+        </div>
+        
+
+    <div id = "message" class="message" style="display: none"> 
+        <img src="https://play.digitald20.com/vtt/img/set-tile.jpg" class="image-medium">
+        Click and drag in order to setup the tile size, then all your tokens will fit perfect on your map. 
+    </div>
+    
+    <div id = "hello" class="hello" onclick="hide_menus();" style="display: none;">  
+        <div class="help-entry">
+        <video autoplay controls class="image-medium"><source src="http://www.digitald20.com/wp-content/vtt/zoom.mp4" type="video/mp4"></video>
+        <img src="https://play.digitald20.com/vtt/img/mouse-wheel.png" class="image-rigth">
+        Use mouse wheel to zoom into the board. 
+        <br><br>
+        </div>
+        <div class="help-entry">
+        <img src="" >
+        
+        <video autoplay controls class="image-medium"><source src="http://www.digitald20.com/wp-content/vtt/mover.mp4" type="video/mp4"></video>
+        <img src="https://play.digitald20.com/vtt/img/mouse-rigth.png" class="image-rigth">
+        Use mouse rigth click and pan to move the board. <br><br>       
+        </div>
+        <div class="help-entry">            
+            <video autoplay controls class="image-medium"><source src="http://www.digitald20.com/wp-content/vtt/dragdrop.mp4" type="video/mp4"></video>
+            Drag and drop tokens into the board / Initiative bar.<br>
+            Drag Hit points from the chat area onto any token. 
+        </div>
+    <div class="lista-botones">
+        <div class="button" style="width: 48%;">Close</div>
+        <div class="button" style="width: 48%;" onclick="notshowagain();">Don't show it again</div>
+    </div>
+    </div>
+    <div id="log" class = "log" style="pointer-events: none;">
+    </div>
+    <video height="1000" width="1000" id="cvideo" style="display: none;" muted="" loop> 
+    </video>
+
+    <script src="//unpkg.com/@feathersjs/client@^4.3.0/dist/feathers.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="/js/main.js?n=1"></script>
+
+</body>
+
+</html>

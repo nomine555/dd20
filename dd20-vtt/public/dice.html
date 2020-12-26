@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dice 3D</title>
+
+    <script src="./js/three.min.js"></script>
+    <script src="./js/cannon.min.js"></script>
+    <script src="./js/dice.js"></script>
+    <script src="./js/diceBox.js"></script>
+
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+
+<div id="bg">
+    <img src="./school-map.jpg" alt="">
+</div>
+
+<div id="canvas"></div>
+
+<script>
+
+    var canvasContainer = document.getElementById('canvas');
+
+    /*
+
+     canvasContainer is a container for canvas, canvas will be created with the same size as canvasContainer
+
+     both canvasContainer and canvas should have "pointer-events: none;" in styles,
+     so your below canvas can respond to mouse events
+
+    */
+
+    var box = new DiceBox(canvasContainer);
+
+    /*
+
+    box.throwDice() accepts two parameters: array with dice and callback function,
+    which will be called when throw is ended.
+
+    Dice object fields:
+    1) type - required
+    2) result - required
+    3) fontColor - optional
+    4) backColor - optional
+
+    */
+
+
+    box.throwDice([
+        {
+            type: 'd4',
+            result: 2,
+            fontColor: '#ff0000',
+            backColor: '#bbbbbb'
+        },
+        {
+            type: 'd6',
+            result: 2,
+            fontColor: '#ff0000',
+            backColor: '#bbbbbb'
+        },
+        {
+            type: 'd8',
+            result: 3
+        },
+        {
+            type: 'd10',
+            result: 3
+        },
+        {
+            type: 'd12',
+            result: 4
+        },
+        {
+            type: 'd20',
+            result: 4
+        }
+    ], function () {
+        console.log('Throw is ended!');
+    });
+
+
+//    Remove dice from the desk
+//    box.clear();
+
+
+</script>
+</body>
+</html>

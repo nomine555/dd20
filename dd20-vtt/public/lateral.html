@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital D20 Virtual Tabletop</title>
+    <link rel="icon" href="/img/logodd20.svg" sizes="any" type="image/svg+xml">
+    <link rel="stylesheet" href="./css/main.css">
+    <script>
+
+function drag_track(event) {
+  event.dataTransfer.setData("Text", event.target.id);
+  event.target.style.opacity = "0.4";
+}
+        
+function drop_track(event) {
+ event.preventDefault();
+ event.target.style.border = "";
+ var data = event.dataTransfer.getData("Text");
+    
+
+ var destiny = document.getElementById(data);
+ var origin  = event.target;
+ if (origin.className == "track_item") {
+        var old = destiny.style.order;
+        destiny.style.order = origin.style.order;
+        origin.style.order = old;
+ }
+    
+}
+        
+        
+function drag_end_track(event) {
+  event.target.style.opacity = "1";
+}
+function drag_enter_track(event) {
+     if ( event.target.className == "track_item" ) {
+  event.target.style.border = "3px dotted red";
+     }
+}
+function drag_leave_track(event) {
+ if ( event.target.className == "track_item" ) {
+  event.target.style.border = "";
+ }
+}
+function drag_over_track(event) {
+  event.preventDefault();
+}
+
+
+</script>
+
+</head>
+
+<body>
+<div class="track_bar">
+<div id = "track1" class="track_item" draggable="true" style="order:1"
+     ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+     ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)">
+   <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2"/>
+</div>
+<div id = "track2" class="track_item" draggable="true" style="order:2"
+     ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+     ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)">
+   <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2"/>
+</div>
+<div id = "track3" class="track_item" draggable="true" style="order:3"
+     ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+     ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)">
+   <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2"/>
+</div>
+<div id = "track4" class="track_item" draggable="true" style="order:4"
+     ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+     ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)">
+   <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2"/>
+</div>
+<div id = "track5" class="track_item" draggable="true" style="order:5"
+     ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+     ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)">
+   <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2"/>
+</div>
+<div id = "track6" class="track_item" draggable="true" style="order:6"
+     ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+     ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)">
+   <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2"/>
+</div>
+<div id = "track7" class="track_item" draggable="true" style="order:7"
+     ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+     ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)">
+   <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2"/>
+</div>
+<div id = "track8" class="track_item" draggable="true" style="order:8"
+     ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+     ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)">
+   <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2"/>
+</div>
+
+</div>
+
+</body>
+
+</html>

@@ -7,7 +7,7 @@ This project has two parts:
  
 ## Digital D20 framework
 
-First point to start is to read the manual, you can access it con play.digitald20.com and going
+First point to start is to read the manual, you can access it con http://play.digitald20.com and going
 inside homebrew adventures. 
 There you will read how to create with http://twinery.org an RPG adventure. 
 

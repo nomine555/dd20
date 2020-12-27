@@ -9,16 +9,18 @@ This project has two parts:
 
 First point to start is to read the manual, you can access it con play.digitald20.com and going
 inside homebrew adventures. 
-There you will read how to create with (http://twinery.org/)[Twine] an RPG adventure. 
+There you will read how to create with http://twinery.org an RPG adventure. 
 
 You can take a look on the directory structure of the free adventures, and have an idea of how to create them. 
 
 ## Mobile version
 
-There is also an Android and iOS App, but these are not yet free software. 
+There is also an Android and iOS App, but these are not yet open software. 
 
 
 ## Virtual Table Top
+
+Look inside the folder dd20-vtt
 
 As a node project, the first thing you need to do is to download all the requiered libraries. 
 You can create your own server in few minutes using a free node.js server like heroku. 

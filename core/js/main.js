@@ -437,9 +437,12 @@ function starting_index(tag) {
         Log("starting_index: Detectado idioma: " + lang + ". Fijamos idioma a: en");
         lang = "en";
     }
+	console.log("Idioma: " + lang)
     localStorage.setItem('lang', lang);
 
     content_file = getContentFile();
+	console.log(content_file)
+	
     if (tag == "player") {
         var passage_id = location.search.split('param=')[1] ? location.search.split('param=')[1] : '@resumen';
         LoadPassageIndex(content_file, passage_id, 'layertext', "", tag);
@@ -653,12 +656,8 @@ function ShowNPC(capa) {
 }
 
 function getContentFile() {
-
-    if (typeof debug_content_file !== "undefined") {
-        return debug_content_file;
-    }
-
-    var lang = localStorage.getItem("lang");
+	
+	var lang = localStorage.getItem("lang");
     if (lang === null)
         lang = getlanguage();
     if (lang != "en" && lang != "es") {
@@ -666,6 +665,14 @@ function getContentFile() {
         lang = "en";
     }
     localStorage.setItem('lang', lang);
+	
+    if (typeof debug_content_file !== "undefined") {		
+			if (aventura == "salorium") 
+				if (lang == "es")
+					return "..\\twine\\salorium-5-es.html";
+			
+        return debug_content_file;
+    }   
 
     var version = localStorage.getItem("version" + aventura);
     if (version === null) {
@@ -4392,7 +4399,7 @@ function resetBuyedItems() {
 //------------------------------------------------------------------------------
 
 //Funciones para fijar idioma
-function spanish() {
+function spanish() {	
     config("lang", "es");
     location.reload();
 }

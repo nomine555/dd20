@@ -7,6 +7,7 @@ var mainmap = "gravencross";
 var debug = "on";
 var debug_content_file = "..\\twine\\demon-stones.html";
 var languages = ['en'];
+var soloen = 1;
 
 function DrawLines() { 
     new LeaderLine(document.getElementById('beginning-the-adventure'),document.getElementById('wolf-attack'), {color: 'black', size: 3, path: 'straight'});

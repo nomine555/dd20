@@ -228,11 +228,15 @@ function starting_index_map() {
     }
 
     if (typeof aversion !== 'undefined') {
-    if (aversion > 1) {
-        LoadMap("./maps/" + lastmap + ".html", 'mapindex', "", '100', -1);        
-        }
-    } else {
-    LoadMap("./maps/" + lastmap + "-" + lang + ".html", 'mapindex', "", '100', -1);
+    	if (aversion > 1) {
+        	LoadMap("./maps/" + lastmap + ".html", 'mapindex', "", '100', -1);        
+        }	
+    } 
+	else if (soloen == 1) {
+    	LoadMap("./maps/" + lastmap + "-en" + ".html", 'mapindex', "", '100', -1);
+    }
+	else {
+    	LoadMap("./maps/" + lastmap + "-" + lang + ".html", 'mapindex', "", '100', -1);
     }
 
 
@@ -1223,7 +1227,6 @@ function LoadMap(fragment_url, element_id, leyenda, size, show) {
 
 function LoadMap_back(text, fragment_url, element_id, leyenda, size, showlayer) {
 
-	
     var customcontent = localStorage.getItem("customcontent" + aventura);
     if (customcontent === null) {
     if (typeof aversion !== 'undefined')

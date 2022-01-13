@@ -7,6 +7,7 @@ var mainmap = "dolmvay";
 var debug = "on";
 var debug_content_file = "..\\twine\\dolmvay.html";
 var languages = ['en'];
+var soloen = 1;
 
 function DrawLines() { 
     new LeaderLine(document.getElementById('guide-ook-to-the-city-of-dolmvay'),document.getElementById('adventuring-in-dolmvay'), {color: 'black', size: 3, path: 'magnet'});

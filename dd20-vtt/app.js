@@ -5,6 +5,16 @@ const level = require("level");
 const db = level("./db", { valueEncoding: "json" });
 var path = require("path");
 
+// Image Kit
+const ImageKit = require("imagekit");
+const fs = require('fs')
+var imagekit = new ImageKit({
+  publicKey : "public_DYilnmhVRFXigmTUrGtuCcGZpok=",
+  privateKey : "private_8TVOnRhhlGeWW4/sSOZXtleIo/Y=",
+  urlEndpoint : "https://ik.imagekit.io/fiade"
+});
+// ---
+
 var bodyParser = require("body-parser");
 // app.use(bodyParser.json()); // support json encoded bodies
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -84,6 +94,12 @@ app.get("/room/:roomId/game", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/game.html"));
 });
 
+// Image Kit
+app.get('/signature', (req, res) => {
+  var authentcationParameters = imagekit.getAuthenticationParameters();
+  res.send(authentcationParameters);
+})
+// ----
 
 //saving data from room
 app.post("/save", function (req, res) {

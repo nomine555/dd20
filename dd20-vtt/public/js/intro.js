@@ -33,7 +33,7 @@ function getRoomid() {
         var id = localStorage.getItem('lastdd20room');
         localStorage.setItem('dd20room', "/room/" + id);
         localStorage.setItem('dd20user', 'dm')
-        localStorage.setItem('lastdd20room',id);
+        //localStorage.setItem('lastdd20room',id);
         window.location.assign("/room/" + id + resturl);    
       } else {
         const id = Date.now() + "" + Math.floor(Math.random() * 1000000000);

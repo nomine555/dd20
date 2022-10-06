@@ -1,0 +1,112 @@
+.roller {
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.mon__ability-scores {
+    text-align: center;
+    width: 16%;
+}
+
+.stats {
+    font-family: convergence,Arial,sans-serif;
+    width: 100%;
+    font-size: .9em;
+    table-layout: fixed;
+    overflow-wrap: break-word;
+	background: #fdf1dc;
+}
+
+.mon__ability-names th {
+    text-align: center;
+    font-weight: 700;
+    color: inherit;
+}
+
+td, th {
+    padding: 1px .3em;
+}
+
+th {
+    text-align: left;
+}
+
+td.divider div {
+    background: #822000;
+    height: 2px;
+    margin: 6px 0;
+}
+
+th.border {
+    background: #e69a28;
+}
+
+.wrp-stats-table th.border {
+    height: 3px;
+}
+
+.roller {
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.stats-name {
+    color: #822000;
+}
+
+.rnd-name {
+    position: relative;
+    font-size: 1.8em;
+    font-family: andada,serif;
+    font-variant: small-caps;
+    font-weight: 500;
+    padding-left: .2em!important;
+}
+
+.sourceMM {
+    color: green!important;
+    border-color: green!important;
+    text-decoration-color: green!important;
+}
+
+.rd__stats-name-page {
+    font-family: convergence,Arial,sans-serif;
+    font-size: 12px;
+    color: #333;
+    font-weight: 100;
+}
+
+.ml-1 {
+    margin-left: .25rem!important;
+}
+
+.mon__sect-header-inner {
+    display: block;
+    margin-top: -.3rem;
+    margin-bottom: -.3rem;
+    font-weight: 100;
+}
+
+.mon__stat-header-underline {
+    font-size: 1.6rem;
+    font-family: andada,serif;
+    font-variant: small-caps;
+    border-bottom: 2px solid #822000;
+    color: #822000;
+    vertical-align: bottom!important;
+    padding-left: .2rem;
+}
+
+.entry-title-inner {
+	font-weight: 700;
+	font-style: italic;
+}
+
+.blue {
+    color: blue;
+    cursor: pointer;
+}
+
+.rd__roller--roll-prof-dice {
+    display: none;
+}

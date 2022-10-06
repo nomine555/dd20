@@ -5,15 +5,24 @@
     <meta charset="UTF-8">
     <title>Digital D20 VTT</title>
     <link rel="icon" href="https://play.digitald20.com/vtt/img/logodd20.svg" sizes="any" type="image/svg+xml">
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script>-->
-    <script src="../js/fabric.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script> --> 
+    <!--<script src="../js/fabric.js"></script>   --> 
+    <script src="https://cdn.jsdelivr.net/npm/fabric@4.6.0/dist/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
     <script src="../js/dice.js"></script>
-    <script src="../js/diceBox.js"></script>
-    <link rel="stylesheet" href="/css/main.css">       
+    <script src="../js/wheel-zoom.js"></script>
+
+    <script src="../js/diceBox.js"></script>    
+    <script type="text/javascript" src="https://unpkg.com/imagekit-javascript/dist/imagekit.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/zipson@latest/dist/zipson.min.js"></script>--> 
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.js"></script>--> 
+    
     <link rel="stylesheet" href="../css/dndbeyond.css"/>
+    <link rel="stylesheet" href="../css/5etools.css"/>
+    <link rel="stylesheet" href="/css/main.css">     
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162806672-1"></script>
@@ -28,19 +37,58 @@
 
 <body onload="starting();" onresize="viewportResize()">
 
+    
+    <div id ="url-iframe" class="iframe" style="display: none;">
+        <base target="_blank">
+        
+        <select id="monster-list" onchange="myMonster()">                        
+        </select>
+        <div id="monsterframe"></div>
+        <textarea id="monster-receive" style="display: none;"></textarea>
+        <textarea id="monster-name" style="display: none;"></textarea>
+        <textarea id="monster-token" style="display: none;"></textarea>
+
+        <textarea id="scenes-receive" style="display: none;"></textarea>
+        <textarea id="names-receive" style="display: none;"></textarea>
+        <textarea id="assets-receive" style="display: none;"></textarea>
+        <textarea id="music-receive" style="display: none;"></textarea>
+        <textarea id="all-receive" style="display: none;"></textarea>
+
+        <button id="button-monster" onclick="monsterReceived();" style="display: none;"></button>
+        <button id="button-monster-dnd" onclick="monsterReceiveddnd();" style="display: none;"></button>
+        <button id="button-asset-dnd" onclick="assetReceiveddnd();" style="display: none;"></button>
+        <button id="dd20everything-receive" onclick="dd20Receive();" style="display: none;"></button>
+    </div>
+
+
     <div id="dice-canvas"></div>
     <div id="cw" class="bg" oncontextmenu="return false;" ondrop="drop(event, this)" ondragover="dragover(event)">
         <canvas id="c"></canvas>
     </div>
-    <div id = "ontop" class="ontop" onclick="hide_menus()" style="display: none;">
-
+    <div id = "ontop" class="ontop" style="display: none;">
+        <div id ="title-player-view" class="title-player-view" style="display: none;">PLAYER'S VIEW</div>
+    <div id = "inside-top" class="inside-top"></div>
+    <video id ="onvideo" controls class="video-ontop" style="width: 100%; height: 100%;" style="display: none">
+        <source src="" type="video/mp4">
+    </video>
     </div>
-    <div class="superbar superbox noselect" onclick="hide_menus();" id="main-menu">
+    <div id = "allassets" class="onassets" style="display: none;" onclick="choose_all_asset(event)"></div>
+    <div id = "allscenes" class="allscenes" style="display: none;" onclick="hide_menus();"></div>
+    <div id = "trash" class="trash" style="display: none;" ondrop="drop_trash(event)" ondragenter="trash_enter(event)" ondragleave="trash_leave(event)" ondragover="trash_over(event)"></div>
+    <div id ="distance-bar" class="distance-bar" style="pointer-events: none;"></div>
+
+    <div id = "superbar" class="superbar superbox noselect" onclick="hide_menus();" id="main-menu">
+        
     <div class="bar">
-        <div class="upbar">
-        <div class="butongroup" id="add-token-bar">
+        <div class="upbar">			
+        <div class="butongroup" id="url-token">
+            
+            <img src="https://play.digitald20.com/vtt/img/upload.png" style="width:1.8rem;float: left;margin-right: 0.2rem;" onclick="show_upload();">
             <input class="urlinput" type="text" id="token-map" placeholder="... url to your image file ... token or backgroound ...">
-            <button onclick='addToken()' id="circle" class="button">Add Token</button>
+            <img src="https://play.digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">
+            
+            
+            
             <div class="roundinput">
                 <div class="inputgroup">
                 <input type="radio" name="gender" value="1" checked="checked" id="s1"> 
@@ -50,52 +98,75 @@
                     <input type="radio" name="gender" value="2" id="s2">
                 <label for="female">Large</label>
                 </div>
-                <div class="inputgroup">
+                <div class="inputgroup"> 
                     <input type="radio" name="gender" value="3" id="s3">
                 <label for="other">Huge</label>
                     </div>
                     <div class="inputgroup">
                         <input type="radio" id="free" name="gender" value="-1">
                     <label for="other">Free</label>
-                        </div>
-                <button id="bedit-token" onclick='editToken();' class="button" style="align-self: flex-end;">Edit Token</button>
+                        </div>                
             </div>
         </div>
+			
+		<div class="butongroup columgroup" id="add-token-bar">
+				<div class="roundinput">
+			<button onclick='addToken()' id="circle" class="button">Add Token</button>
+			
+				</div>
+                <div class="roundinput">
+			<button id="bedit-token" onclick='editToken();' class="button" style="align-self: flex-end;display:none" >Edit Token</button>				
+                <button id="into-track" onclick='toTrack();' class="button">Into  Track</button>				
+            </div>
+			</div>
         
-        <div class="butongroup for-admin columgroup" style="display: none" id="setbg">
+        <div class="butongroup for-admin columgroup" id="setbg" style="display: none;">
             <input class="" type="text" id="bg-map" placeholder="background map url" style="display: none;">
             <div class="roundinput">
             <button onclick='setBg()' class="button" id="change">Set Background</button> <img src="https://play.digitald20.com/vtt/img/hamburguesa.png" style="width:2rem" onclick="show_backgrounds()">
-            </div>
-            
+            </div>            
             <button onclick='setTile()' class="button">Set Tile Size</button>
         </div>
-        <div class="butongroup for-player" id="for-name"> 
-            <input type="text" id="player-name" placeholder="Player Name" onchange="nameChange();" class="player-name center" style="width: 97%;">
-            <div class="roundinput for-admin" style="display: none">
-                <div class="roundinput">
-                    <button onclick='sendLink()' class="button" style="width: 100%;">Add asset</button>
-                    <input type="checkbox" id="assetvisible" checked>
-                    <label for="visible" >Visible</label> 
+        <div class="butongroup for-admin columgroup" id="for-name" style="display: none;">             
+            <div class="roundinput">                
+                    <button onclick='sendLink()' class="button" style="width: 100%;">Add asset</button>                    
                     <img src="https://play.digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;" onclick="show_asset();">
-                    </div>
-
+            </div>
+			<div class="roundinput">
+                Visible
+				<label class="switch">
+                <input type="checkbox" id="assetvisible" checked>           
+                <span class="slider2 round"></span>                
+            </label>
+			</div>
+        </div>
+        <div class="butongroup columgroup for-admin" id="scenebar" style="display: none;">
+            <div class="roundinput">
+            <button onclick='save_url()' class="button">Save Scene</button>
+            </div>
+            <div class="roundinput">       			
+            <button onclick="load_scene()" class="button">Load Scene</button>				
+            </div>
+        </div>
+        <div class="butongroup columgroup">
+			<input type="text" id="player-name" placeholder="Player Name" onchange="nameChange();" class="player-name center" style="width: 97%;">
+			<div class="roundinput" id="bplayername">
+            <button class="button" onclick="prompt('Press Ctrl + C, copy to clipboard and send this link to your friends so they can join this virtual tabletop board session',window.location)">Share</button>
+            <button class="button" onclick="show_config_view();">Options</button>
+			</div>
         </div>
         </div>
-        <div class="butongroup">
-            <button class="button for-admin" onclick="prompt('Press Ctrl + C, copy to clipboard and send this link to your friends so they can join this virtual tabletop board session',window.location)" style="display: none">Share</button>
-            <button class="button" onclick="show_config_view();">View</button>
-        </div>
-        </div>
-        <div  class="ddowbar" draggable="false">
+        <div  id="downbar" class="ddowbar" draggable="false">
             
             <div id="stokenbar" class="downbar">
+            <img id="tA" src="https://play.digitald20.com/vtt/img/text.jpg" class="tokenA" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)">              
             <img id="t6" src="https://play.digitald20.com/vtt/img/arrow.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
             <img id="t7" src="https://play.digitald20.com/vtt/img/cross.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
             <img id="t8" src="https://play.digitald20.com/vtt/img/fire-ball.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
             <img id="t9" src="https://play.digitald20.com/vtt/img/cone-cold.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
             <img id="t10" src="https://play.digitald20.com/vtt/img/ray.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"
             style="object-fit: cover;width:3em;"> 
+            <img id="t11" src="https://play.digitald20.com/vtt/img/luz.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
             </div>
         <div id="tokenbar" class="downbar">
             <img id="t1" src="https://play.digitald20.com/vtt/img/mage.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
@@ -111,24 +182,49 @@
             <button onclick='startFogbutton();' id="enable-fog" class="button" style="width: 100%">Enable Fog</button>
             <button onclick='addFogbutton();' id="add-fog" class="button" disabled style="width: 100%">Reveal Area</button>
             <button onclick='clearFogbutton();' id="clear-fog" class="button" disabled style="width: 100%">Reset Fog</button>
+            <button onclick='addFog("undo");' id="undo-fog" class="button" style="width: 100%;display: none;">Undo Fog</button>
         </div>
+        
+        
     </div>
-    <div id="hp" class="hp">
+    <div id="hp" class="hp" style="top: 0; left:0;display: none;">
         <input class="spinner" type="number" id="text-hp"><div class="supizq" style="display:none"></div><div class="infder" style="display:none" ></div>
     </div>
         
     
     <!-- Barra lateral -->
     <div class="lateral"> 
-    <div class="left-lateral">
+        <div class="for-admin" style="display: none;height: 4rem;" id="musicbar">
+        <div style="margin-right: 1rem;">
+            
+                <div class="over-audio">
+                    <img src="https://play.digitald20.com/vtt/img/hamburguesa.png"  onclick="show_all_audios(event);">
+                    <button id="into-music" onclick='add_music()' class="button" style="font-size: 75%;">Add Song</button> 
+                </div>                    
+            
+            <audio controls style="z-index: 50;" id="audiocontrol" onpause="bpausemusic();" onplay="bplaymusic();">      
+                <source id="audiosrc" src="" type="audio/mpeg">                 
+              Your browser does not support the audio element.
+              </audio>   
+            <div id="music-list" class="music-bar noselect" style="display:none" onclick="choosemusic(event)"></div>      
+                  
+        </div>
+    </div>
+        
+        
+    <div class="left-lateral">        
+        <div id="hide-chat" class="chat-show button" onclick="show_hide_chat();">Show Chat</div>
         <div class="dicebar noselect" onclick="hide_menus();" id="dice-bar">
     <button onclick='newRoll();' id="new-roll" class="button" style="width: 100%;align-self: center;">Configure New Roll</button>
         <div class="dice-roll" id="d1" onclick="diceSelect();">1d20</div>
+        <div class="dice-roll" id="dh1" style="display: none;"></div>
         <div class="dice-roll" id="d2" onclick="diceSelect();">1d8</div>
+        <div class="dice-roll" id="dh2" style="display: none;"></div>
         <div class="dice-roll" id="d3" onclick="diceSelect();">3d6</div>
+        <div class="dice-roll" id="dh3" style="display: none;"></div>
         <div style="display: flex">
-        <input type="color" id="fontcolor" name="fontcolor" value="#ff0000" >
-        <input type="color" id="backcolor" name="backcolor" value="#000000" >
+        <input type="color" id="fontcolor" name="fontcolor" value="#ff0000" onchange="dice_color_change()">
+        <input type="color" id="backcolor" name="backcolor" value="#000000" onchange="dice_color_change()">
     </div>
             <button onclick='clearRoll();' id="new-roll" class="button" style="width: 100%;align-self: center;">Clear Dice</button>
             <button onclick='hiddenRoll();' id="hidden-roll" class="button" style="width: 100%;align-self: center;">Hide Dice</button>
@@ -144,10 +240,21 @@
         <button onclick='okToken();' class="button" style="display: none">Ok</button>
         <button onclick='cancelToken();' class="button" style="display: none">Cancel</button>
     </div>
+    <div class="dicebar noselect" style="margin-top: 0.5rem;">
+    <div class="assetmodebar">
+        Plot View
+        <label class="switch">
+        <input type="checkbox" id="plotmode" onchange="plotView()">           
+        <span class="slider2 round"></span>                			       
+        </label>        
+    </div>
+    <button id="save-scene-player" onclick='save_url()' class="button" style="display: none;">Save Scene</button>
+    <button id="load-scene-player" onclick="load_scene()" class="button" style="display: none;">Load Scene</button>	
+    <img id="plotmodetext" src="https://play.digitald20.com/vtt/img/text.jpg" class="tokentA" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" style="display: none;"> 
+    </div>
         <div id ="player-asset-list" class="player-asset-bar noselect for-player" onclick="chooseplayerasset(event)" style="display: none;"></div>
     </div>
-        <div class="rigth-lateral">
-            <div id="hide-chat" class="chat-show button" onclick="show_hide_chat();">Show Chat</div>
+        <div class="rigth-lateral">            
             <div id="chat-area" style="display: none;">
             <div id="chat-log" class="chat-text"></div>
             <textarea id="chat-text"  class="chat-text-area" onkeypress="checkEnter();"></textarea>
@@ -157,18 +264,19 @@
             <div id="chat-button-beyond" class="button" onclick="sendChat_beyond();" style="display: none;">
                 Send Beyond
             </div>
+            <div id="chat-button-5e" class="button" onclick="sendChat_5e();" style="display: none;">
+                Send Beyond
+            </div>
         </div>
         </div>
     </div>
     
-    <div id="background-list" class="background-bar noselect" style="display:none" onclick="choosebackground(event)"> 
-    </div>
-    <div id ="asset-list" class="asset-bar noselect" style="display:none" onclick="chooseasset(event)">
-    </div>
-    
+    <div id="background-list" class="background-bar noselect" style="display:none" onclick="choosebackground(event)"></div>
+    <div id="asset-list" class="asset-bar noselect" style="display:none" onclick="chooseasset(event)" ondblclick="dblchooseasset(event)"></div>    
 
     <div id="dice-select" class="super-dice-select" style="display: none;" onclick="hide_menus()">
     <div  class="dice-select" >
+        <div style="display: flex;">
         <table>
             <tr>
                 <th onclick="diceSelect();">1d4</th><th onclick="diceSelect();">2d4</th><th onclick="diceSelect();">3d4</th><th onclick="diceSelect();">4d4</th><th onclick="diceSelect();">5d4</th>
@@ -189,75 +297,129 @@
                 <th onclick="diceSelect();">1d20</th><th onclick="diceSelect();">2d20</th><th onclick="diceSelect();">3d20</th><th onclick="diceSelect();">4d20</th><th onclick="diceSelect();">5d20</th>
             </tr>
         </table>
+        <table class="aditional_dice">
+            <tr>
+                <th onclick="diceSelect();">6d4</th><th onclick="diceSelect();">7d4</th><th onclick="diceSelect();">8d4</th><th onclick="diceSelect();">9d4</th><th onclick="diceSelect();">10d4</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">6d6</th><th onclick="diceSelect();">7d6</th><th onclick="diceSelect();">8d6</th><th onclick="diceSelect();">9d6</th><th onclick="diceSelect();">10d6</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">6d8</th><th onclick="diceSelect();">7d8</th><th onclick="diceSelect();">8d8</th><th onclick="diceSelect();">9d8</th><th onclick="diceSelect();">10d8</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">6d10</th><th onclick="diceSelect();">7d10</th><th onclick="diceSelect();">8d10</th><th onclick="diceSelect();">9d10</th><th onclick="diceSelect();">10d10</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">6d12</th><th onclick="diceSelect();">7d12</th><th onclick="diceSelect();">8d12</th><th onclick="diceSelect();">9d12</th><th onclick="diceSelect();">10d12</th>
+            </tr>
+            <tr>
+                <th onclick="diceSelect();">6d20</th><th onclick="diceSelect();">7d20</th><th onclick="diceSelect();">8d20</th><th onclick="diceSelect();">9d20</th><th style="background-color: #e2f1ff" onclick="diceSelect();">1d100</th>
+            </tr>
+        </table>
+    </div>
         <div class="combine-dice">
-            <button id="bcombine" onclick='startCombinedice();' class="button" >Combine Roll</button>
+            <button  onclick='startCombinedice();' class="button" >Combine Roll</button>
             <input id="combine-dice" type="text" id="combine-dice" placeholder="Ej: 1d8 + 1d6" class="grow" onclick="event.stopPropagation();">
-            <button id="combine-dice-ok" onclick='okDicecombine();' class="button" disabled>Ok</button>
+            <button id="combine-dice-ok" onclick='okDicecombine();' class="button">Ok</button>
         </div>
             <div class="combine-dice">
             <!--<label style="font-size: 75%;background-color:white;">Dice Render Quality</label>-->
-             <button id="bcombine" onclick='startCombinedice();' class="button" >Dice Render Quality</button>   
-            <input type="range" min="40" max="200" value="100" class="slider" id="diceRange" onchange="renderChange();" style="width: 100%;">
+             <button  onclick='startCombinedice();' class="button" >Dice Render Quality</button>   
+            <input type="range" min="40" max="200" value="100" class="slider" id="diceRange" onchange="renderChange();" style="width: 50%;">
         </div>
     </div>
     </div>
     
-        <div id="view-select" class="super-dice-select" style="display: none;">
-    <div  class="view-select" >
-        <p>Select the menu functions<br> you want to Show or Hide</p>
-        
+    <div id="view-select" class="super-dice-select" style="display: none;">
+        <div class="view-select" >
+            <p>Select the menu functions<br> you want to Show or Hide</p>
+            <div class="grid">
                 <input type="checkbox" id="view-dice" checked onclick='checkboxClick(this);' name="dice-bar">
-                <label for="view-dice" >Dice bar</label><br>
+                <label for="view-dice" >Dice bar</label>
         
-                <input type="checkbox" id="view-tracker" checked onclick='checkboxClick(this);' name="track-bar" > 
-                <label for="view-tracker" >Initiative tracker</label> <br>
+                <input type="checkbox" id="view-tracker" checked onclick='checkboxClick(this);' name="track_bar" > 
+                <label for="view-tracker" >Initiative tracker</label> 
         
-        <div class="for-player" style="display: none">
-            <input type="checkbox" id="view-assets" checked onclick='checkboxClick(this);' name="player-asset-list" >
-                <label for="view-assets" >Assets bar</label><br >
-        </div>
+                    <input  style="display: none;" class="for-player" type="checkbox" id="view-assets" checked onclick='checkboxClick(this);' name="player-asset-list" >
+                    <label  style="display: none;" class="for-player" for="view-assets" >Assets bar</label>
+                    <input  style="display: none;" class="for-player" type="checkbox" id="view-tokens" checked onclick='checkboxClick(this);' name='add-token-bar'>
+                    <label  style="display: none;" class="for-player" for="view-tokens" >Add token bar</label>
+                    <input  style="display: none;" class="for-player" type="checkbox" id="view-tokens" checked onclick='checkboxClick(this);' name='url-token'>
+                    <label  style="display: none;" class="for-player" for="view-tokens" >URL token bar</label>
+                    <input  style="display: none;" class="for-player" type="checkbox" id="view-atoken" checked onclick='checkboxClick(this);'name='tokenbar'>
+                    <label  style="display: none;" class="for-player" for="view-atoken" >Tokens bar</label>
+                    <input  style="display: none;" class="for-player" type="checkbox" id="view-stokens" checked onclick='checkboxClick(this);'name='stokenbar'>
+                    <label  style="display: none;" class="for-player" for="view-stokens" >Standard tokens bar</label>
                 
-        
-                <input type="checkbox" id="view-tokens" checked onclick='checkboxClick(this);' name='add-token-bar'>
-                <label for="view-tokens" >Add token bar</label><br>
-        
-                <input type="checkbox" id="view-atoken" checked onclick='checkboxClick(this);'name='tokenbar'>
-                <label for="view-atoken" >Tokens bar</label><br>
-        
-                <input type="checkbox" id="view-stokens" checked onclick='checkboxClick(this);'name='stokenbar'>
-                <label for="view-stokens" >Standard tokens bar</label><br>
-        
-        <div class="for-admin" style="display: none"> 
-            <input type="checkbox" id="view-fog" checked onclick='checkboxClick(this);' name='fog-bar'>
-                <label for="view-fog">Fog bar</label><br>
-            <input type="checkbox" id="setbg" checked onclick='checkboxClick(this);' name='setbg'>
-                <label for="setbg">Set Background</label><br>
-        </div>
-        <input type="checkbox" id="view-name" checked onclick='checkboxClick(this);' name='for-name'>
-                <label for="view-name" >Name Box</label><br>
-        <input type="checkbox" id="view-back" checked onclick='checkboxBackground(this);'>
-                <label for="view-back" >Menu Background</label><br>
-        <input type="checkbox" id="view-hp" checked onclick='checkboxClick(this);' name="text-hp">
-                <label for="view-hp" >Hit points on tokens</label><br>
-        <hr>
+                    <input  style="display: none;" class="for-admin" type="checkbox" id="view-fog" checked onclick='checkboxClick(this);' name='fog-bar'>
+                    <label  style="display: none;" class="for-admin" for="view-fog">Fog bar</label>
+                    <input  style="display: none;" class="for-admin" type="checkbox" id="setbg" checked onclick='checkboxClick(this);' name='setbg'>
+                    <label  style="display: none;" class="for-admin" for="setbg">Set Background</label>    
+                    <input  style="display: none;" class="for-admin" type="checkbox" id="view-music" checked onclick='checkboxClick(this);'name='musicbar'>
+                    <label  style="display: none;" class="for-admin" for="view-music" >Music bar</label>       
+                    <input  style="display: none;" class="for-admin" type="checkbox" id="view-scene" checked onclick='checkboxClick(this);'name='scenebar'>
+                    <label  style="display: none;" class="for-admin" for="view-music" >Scene bar</label>              
+                
+                <input type="checkbox" id="view-name" checked onclick='checkboxClick(this);' name='for-name'>
+                <label for="view-name" >Asset Bar</label>
+                <input type="checkbox" id="view-back" checked onclick='checkboxBackground(this);'>
+                <label for="view-back" >Menu Background</label>
+                <input type="checkbox" id="view-hp" checked onclick='checkboxClick(this);' name="text-hp">
+                <label for="view-hp" >Hit points on tokens</label>
+                <input type="checkbox" id="view-distance" checked onclick='checkboxClick(this);' name="distance-bar">
+                <label for="view-distance" >Distance Bar</label>
+                <input type="checkbox" id="view-edit" onclick='checkboxClick(this);' name="bedit-token">
+                <label for="view-edit" >Edit Token</label>
+                <input type="checkbox" id="view-names" onclick='set_namemode();' name="bedit-name">
+                <label for="view-names" >Name Mode</label>
+
+            </div>
+                <hr>
+                <div class="grid">
+                    <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-on"    >
+                    <label  style="display: none;" class="for-admin triple">Player Inmersive mode</label>
+                    <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-track" >
+                    <label  style="display: none;" class="for-admin" >Initiative track</label>  
+                    <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-dice"  >
+                    <label  style="display: none;" class="for-admin" >Dice Rolling</label>  
+                    <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-chat"  >
+                    <label  style="display: none;" class="for-admin" >Chat</label>  
+                    <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-assets"  >
+                    <label  style="display: none;" class="for-admin" >Assets List</label>  
+                </div>
+                <hr>
             <div class="combine-dice">
-            <!--<label style="font-size: 75%;background-color:white;">Dice Render Quality</label>-->
-             <button id="bcombine" onclick='event.stopPropagation()' class="button" >Dice Render Quality</button>   
-            <input type="range" min="40" max="200" value="100" class="slider" id="diceRange" onchange="renderChange();" style="width: 100%;">
+                <input type="checkbox" id="two-finger-pan" checked>
+                <label for="view-name" >Tow finger to pan</label>
+                <input type="checkbox" id="left-click-pan">
+                <label for="view-back" >left click to pan</label>
+            </div>
+            <hr>
+            <div class="combine-dice">
+                <!--<label style="font-size: 75%;background-color:white;">Dice Render Quality</label>-->
+                <button id="bcombine" onclick='event.stopPropagation()' class="button" >Dice Render Quality</button>   
+                <input type="range" min="40" max="200" value="100" class="slider" id="diceRange" onchange="renderChange();" style="width: 100%;">
+            </div>
+            <hr>
+            <div>
+                <em class="center">Scene URL</em>
+                <textarea id="urltext" rows="4" style="width: 100%;"></textarea>
+                <button class="button" onclick="prompt('Press Ctrl + C, copy to clipboard and share it on your blog or whatever!',document.getElementById('urltext').value)">Copy Scene</button>
+            </div><div>               
+                <button class="button" onclick="export_scene_file();">Export File...</button>
+                <input type="file" id="file-selector" onchange="load_scene_file(event);" accept=".txt">  
+            </div>
+            <hr>
+            <div>
+                <button class="button" onclick="reset_app();">Delete all Data</button><span style="font-size: 75%;">(may fix problems)</span>
+            </div>
+            <button class="button" onclick="show_config_view();">Close</button>
         </div>
-
-        <hr>
-        <div>
-            <em class="center">One click board URL Setup</em>
-         <textarea id="urltext" rows="4" style="width: 100%;"></textarea>
-    </div>
-
-        <button class="button" onclick="show_config_view();">Ok</button>
-        
-    </div>
     </div>
     
-    <div class="track_bar" onclick="hide_menus();" id="track-bar"> 
+    
+    <div id="track_bar" class="track_bar" onclick="hide_menus();" id="track-bar"> 
         <div id = "track1" class="track_item" draggable="true" style="order:1;display:none"
              ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
              ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)"> 
@@ -298,6 +460,11 @@
              ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
            <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
         </div>
+        <div id = "track9" class="track_item" draggable="true" style="order:9"
+        ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
+        ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
+      <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+   </div>
         
         </div>
         
@@ -306,7 +473,32 @@
         <img src="https://play.digitald20.com/vtt/img/set-tile.jpg" class="image-medium">
         Click and drag in order to setup the tile size, then all your tokens will fit perfect on your map. 
     </div>
-    
+    <div id = "message2" class="message" style="display: none"> 
+        File is loading... 
+        Please wait!        
+    </div>
+    <div id = "uploadfile" class="pdf_upload" style="display: none;">  
+            <div style="padding: 1rem;">
+            <input type="file" id="file" onchange="checkuploadfile(event)"/>
+            <input type="submit" onclick="uploadfile(event)">
+        </div>
+            <div id ="upload_text" class="upload_text">
+            <p>You can just CTRL + V, to paste from the clipboard on the board. </p>
+            <p>You can also upload a full PDF with many images. </p>
+            </div>
+            <div id="upload_pdf" style="display: none;">
+                <div style="display: inline-flex">
+                <button style="width: 6rem;" class="button" onclick="onPrevPage()">Previous</button>
+                <button style="width: 6rem;" class="button" onclick="onNextPage()">Next</button>                
+                <div style="width: 8rem;"><button onclick="uploadpdfimages();" class="button">Load Images</button><br>Current Page</div>
+                <div style="width: 8rem;"><button onclick="uploadAllpdfimages();" class="button">Load All Images</button><br>May take a while!</div>                
+            </div>                
+                <canvas id="pdf-canvas"></canvas>
+                <div>Page: <span id="page_num"></span> / <span id="page_count"></span></div>                         
+                <canvas id="pdf-subCanvas" style="display: none;"></canvas>
+            </div>
+
+    </div>
     <div id = "hello" class="hello" onclick="hide_menus();" style="display: none;">  
         <div class="help-entry">
         <video autoplay controls class="image-medium"><source src="http://www.digitald20.com/wp-content/vtt/zoom.mp4" type="video/mp4"></video>
@@ -314,24 +506,27 @@
         Use mouse wheel to zoom into the board. 
         <br><br>
         </div>
-        <div class="help-entry">
-        <img src="" >
-        
+        <div class="help-entry">        
         <video autoplay controls class="image-medium"><source src="http://www.digitald20.com/wp-content/vtt/mover.mp4" type="video/mp4"></video>
         <img src="https://play.digitald20.com/vtt/img/mouse-rigth.png" class="image-rigth">
         Use mouse rigth click and pan to move the board. <br><br>       
         </div>
-        <div class="help-entry">            
+        <div class="help-entry" style="font-size: 80%">            
             <video autoplay controls class="image-medium"><source src="http://www.digitald20.com/wp-content/vtt/dragdrop.mp4" type="video/mp4"></video>
-            Drag and drop tokens into the board / Initiative bar.<br>
+            Drag and drop tokens into <br>the board / Initiative bar.<br>
             Drag Hit points from the chat area onto any token. 
+        </div>
+        <div class="help-entry" style="font-size: 80%">       
+            <img src="https://play.digitald20.com/vtt/img/ancient_red_dragon.jpg" class="image-medium">                 
+            Alt + Click to see dndbeyond stats of any monster.<br>
+            While using chrome extension and visiting monster webpage. 
         </div>
     <div class="lista-botones">
         <div class="button" style="width: 48%;">Close</div>
         <div class="button" style="width: 48%;" onclick="notshowagain();">Don't show it again</div>
     </div>
     </div>
-    <div id="log" class = "log" style="pointer-events: none;">
+    <div id="log" class = "log" style="pointer-events: none;display: none;">
     </div>
     <video height="1000" width="1000" id="cvideo" style="display: none;" muted="" loop> 
     </video>

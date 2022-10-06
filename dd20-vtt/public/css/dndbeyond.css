@@ -155,6 +155,11 @@
 	color: #fff
 }
 
+.roll {
+	font-size: 24px;
+	color: #fff
+}
+
 .dice_notification_controls {
 	font-family: Roboto Condensed;
 	font-style: normal;
@@ -284,4 +289,126 @@
 
 .noty_body {
 	width: 100%;
+}
+
+.mon-stat-block {
+   background-color: papayawhip;
+    background-size: 100% auto;
+    background-position: top center;
+    background-repeat: no-repeat,repeat;
+    position: relative;
+    box-shadow: 0 0 5px #979aa4;
+    border: 1px solid #d4d0ce;
+    padding: 15px;
+    margin: 15px 0;
+    font-family: "Scala Sans Offc",Roboto,Helvetica,sans-serif;
+    font-size: 15px;
+}
+
+.mon-stat-block__header {
+    line-height: 1.1;
+}
+
+.mon-stat-block__name {
+    font-weight: bold;
+    font-size: 34px;
+    font-family: MrsEavesSmallCaps,Roboto,Helvetica,sans-serif;
+    color: #822000;
+}
+
+.mon-stat-block__name a {
+    color: #822000;
+	text-decoration: none;
+}
+
+.mon-stat-block__meta {
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.mon-stat-block__separator-img {
+    max-width: 100%;
+    min-height: 10px;
+}
+
+.mon-stat-block__attribute, .mon-stat-block__feature {
+    margin: 5px 0;
+    color: #822000;
+    line-height: 1.2;
+}
+
+.mon-stat-block__attribute-label, .mon-stat-block__feature-label {
+    font-weight: bold;
+}
+
+.mon-stat-block__stat-block .ability-block {
+    color: #822000;
+    margin: 0;
+}
+.ability-block {
+    font-family: "Scala Sans Offc",Roboto,Helvetica,sans-serif;
+    font-size: 14px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 10px 0;
+    color: #4F1300;
+}
+
+.ability-block__stat {
+    width: 30%;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.ability-block__heading {
+    font-weight: bold;
+}
+
+.ability-block__modifier {
+    margin-left: 2px;
+}
+
+.mon-stat-block__separator-img {
+    max-width: 100%;
+    min-height: 10px;
+}
+
+.mon-stat-block__tidbit {
+    margin: 5px 0;
+    color: #822000;
+    line-height: 1.2;
+}
+
+.mon-stat-block__tidbit-label {
+    font-weight: bold;
+}
+
+.mon-stat-block__tidbit-container {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.mon-stat-block__tidbit-spacer {
+    width: 40px;
+    min-width: 10px;
+}
+
+.mon-stat-block__description-blocks {
+    margin-top: 20px;
+}
+
+.mon-stat-block__description-block-heading, .mon-stat-block__description-block h3 {
+    border-bottom: 1px solid #822000;
+    color: #822000;
+    font-size: 24px;
+    font-weight: normal;
+    font-family: "Scala Sans Offc",Roboto,Helvetica,sans-serif;
+    line-height: 1.4;
+    margin-top: 20px;
+    margin-bottom: 15px;
 }

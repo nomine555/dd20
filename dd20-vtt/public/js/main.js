@@ -44,6 +44,7 @@ var canvas =  new fastCanvas("c", {
 canvas.justDeleted = 0;
 canvas.touchenable = false;
 canvas.lastscale = 1;
+var retrycount = 0;
 var fog;
 var square;
 var fogHoles = [];
@@ -62,14 +63,44 @@ var user = "";
 var room = "";
 var connected = false;
 var tileSize = 60;
+var plottileSize = 60;
+var plotBackground = "https://play.digitald20.com/core/images/index/index-map-1920.jpg";
+var mainBackground = ""; 
+let mintileSize = 24;
 var waittime = 500;
 let animationtime = 500;
 var tokenN = 1;
+var fogrunning = false;
 //var tokenS = 0;
 var MaxTokens = 5;
 var videobackground = false;
 var lasthp;
 var generalid = Math.floor(Math.random() * (5000));
+let maxItems = 30;
+let IconVideo = "../img/video.jpg";
+let shadowblur = 15;
+let shadowoff = 0;
+let shadowopacity = 1;
+
+// ImageKit
+var imagekit = new ImageKit({
+  publicKey: "public_DYilnmhVRFXigmTUrGtuCcGZpok=",
+  urlEndpoint: "https://ik.imagekit.io/fiade", 
+  authenticationEndpoint: "http://board.digitald20.com/signature"
+  //authenticationEndpoint: "http://localhost/signature"
+});
+
+// Chrome
+let chromeid = "jodofclnfifmpeopfjppbicljjnjjnmo"
+//let chromeid = "fhmfkllihjefkdbppineegdmgknjahif"
+
+// PDF
+var pdfDoc = null,
+    pageRendering = false,
+    pageNumPending = null,
+    pageNum = 1;
+
+    
 // ----------------------------------------------------------------- //
 
 function setViewDM() {
@@ -77,6 +108,8 @@ function setViewDM() {
     for(var i = 0; i < slides.length; i++)
       {
         slides[i].style.display = "inherit";
+        if (slides[i].classList.contains("over-audio"))
+          slides[i].style.display = "flex";
       }
 
     document.getElementById("player-name").value = "Dungeon Master";
@@ -84,7 +117,7 @@ function setViewDM() {
 }
 
 function setViewPlayer() {
-  document.getElementById("player-name").value = "name_" + user;
+  document.getElementById("player-name").value = user;
   var slides = document.getElementsByClassName("for-player");
 for(var i = 0; i < slides.length; i++)
 {
@@ -93,162 +126,272 @@ for(var i = 0; i < slides.length; i++)
 
 }
 
-function starting() {
-
-  // Start networking
-  main();
-
-  if (localStorage.getItem("dd20room") !== null) {
-    room = localStorage.getItem("dd20room");
-    user = localStorage.getItem("dd20user");
-    if(!checkAdmin()) {
-      user = "u" + getRandomInt(9999);
-    }
+//checking if user is an admin
+const checkAdmin = () => {
+  if ((user === "dm") & (room === window.location.pathname)) {
+    return true;
   } else {
-    user = "u" + getRandomInt(9999);
+    return false;
   }
+  };
 
-  // Salvamos nuestras imágenes
-  if (localStorage.getItem("tokenN")  !== null) {
 
-    tokenN = parseInt(localStorage.getItem("tokenN"));
-    //tokenS = parseInt(localStorage.getItem("tokenS"));
-    //var hasta = tokenN;
-    //if (tokenS > 1)
-    //  hasta = MaxTokens + 1;
+  function starting() {
 
-    for (var i = 1; i < MaxTokens + 1 ; i++) {
-      document.getElementById("t" + i).addEventListener('error',changeSrc);
-      document.getElementById("t" + i).src = localStorage.getItem("tokenurl" + i);
-    }
-  }
-
-  if (checkAdmin()) {
-    connected = true;
-
-    setViewDM();
-    var pboard = new URL(location.href).searchParams.get('b');
-    var ptile = new URL(location.href).searchParams.get('t');
-    var ex = new URL(location.href).searchParams.get('e');
+    // Loaded via <script> tag, create shortcut to access PDF.js exports.
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
     
-    if (localStorage.getItem(room + 'data') !== null && ex == null) {
-      var myboard = JSON.parse(localStorage.getItem(room + 'data'));
-
-      if (pboard !== null) {
-        myboard.backgroundImage = "https://" + pboard;
+    // The workerSrc property shall be specified.
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.worker.min.js';
+    
+    // Start networking
+      main();
+      dice_color_load();
+    
+    // Check room and user name
+      if (localStorage.getItem("dd20room") !== null)
+        room = localStorage.getItem("dd20room");
+    
+      if (localStorage.getItem("dd20user") !== null)
+        user = localStorage.getItem("dd20user");
+      else
+        user = "u" + getRandomInt(9999); 
+    
+      if((user === "dm") & !checkAdmin()) {
+          user = "u" + getRandomInt(9999);
       }
-      if (ptile !== null) {
-        tileSize =  parseInt(ptile);
-      }
-
-      window.setTimeout(function() {
-         
-        tileSize = myboard.tileSize;
-        reDrawAll(myboard);
-        AddURLTokens();
-
-       
-      }, waittime);
-      window.setTimeout(function() {
-        // Miramos la iniciativa y los puntos de vida
-        
-        for (var i = 1 ; i < 9; i++) {
+    
+    // Para poder ocultar las ayudas
+      document.getElementById("ontop").addEventListener('click', hide_menus);
+    
+    // Cargamos las imágenes de los Tokens
+      if (localStorage.getItem("tokenN")  !== null) {
+    
+        tokenN = parseInt(localStorage.getItem("tokenN"));
+        for (var i = 1; i < tokenN + 1 ; i++) {
           try {
-            document.getElementById('track'+i).style.backgroundImage = localStorage.getItem("tracksrc" + i);
-          if(document.getElementById('track'+i).style.backgroundImage !== "") {
-            document.getElementById('track'+i).style.order = localStorage.getItem("trackorder" + i);
-            document.getElementById('track'+i).firstElementChild.value = parseInt(localStorage.getItem("trackhp" + i));
-            document.getElementById('track'+i).firstElementChild.style.display = "";
-          }
-          } catch (e) {
-          }
-       }
-
-       try{
-        var backgroundN = parseInt(localStorage.getItem("backgroundN"));
-        var list = document.getElementById("background-list");
-        for (i = 0; i< backgroundN; i++) {
-          var img = document.createElement("img");
-          img.src = localStorage.getItem("background" + i);
-          img.className="bglist";
-          list.appendChild(img);
+            document.getElementById("t" + i).addEventListener('error',changeSrc);
+            document.getElementById("t" + i).src = localStorage.getItem("tokenurl" + i).replaceAll(" ","%20");
+          } catch (error) {
+            console.log(error)
+          }     
         }
-      } catch (e) {console.log(e)}
-
-      try{
-        var assetN = parseInt(localStorage.getItem("assetN"));
-        var list = document.getElementById("asset-list");
-        for (i = 0; i< assetN; i++) {
+      }
+    
+      if (checkAdmin()) {
+        connected = true;
+    
+        setViewDM();
+        var pboard = new URL(location.href).searchParams.get('b');
+        var ptile = new URL(location.href).searchParams.get('t');
+        var ex = new URL(location.href).searchParams.get('e');
         
-          var img = document.createElement("img");
-          img.src = localStorage.getItem("asset" + i);
-          img.classList.add("bglist");
-          img.classList.add("grayed");
-          list.appendChild(img);
+        // ----------------------------------------------------
+        // Comprobamos que tenemos guardado algo room + data y que no nos pasan "ex"
+        // -----------------------------------------------------
+        if (localStorage.getItem(room + 'data') !== null && ex == null) {
+    
+          var myboard = JSON.parse(localStorage.getItem(room + 'data'));
+        
+          // Cargamos el background o el TileSize por URL
+          if (pboard !== null) {
+            myboard.backgroundImage = "https://" + pboard;
+          }
+          if (ptile !== null) {
+            tileSize =  checkminTile(parseInt(ptile));
+          }
+
+        // Cargamos la Niebla 
+          try {        
+
+            if (localStorage.getItem(room + 'fogenabled') !== null)  {
+              canvas.fogEnabled = true;
+              fogHoles       = JSON.parse(localStorage.getItem(room + 'fogholes')) || [];
+              document.getElementById("add-fog").disabled = false;
+              document.getElementById("clear-fog").disabled = false;
+              document.getElementById("enable-fog").innerHTML = "Disable Fog";
+              document.getElementById("undo-fog").style.display = "";
+            }
+            else  {
+              canvas.fogEnabled = false;
+            }
+
+           } catch (error) {console.log(error)}
+    
+        // Cargamos el Tablero
+          window.setTimeout(function() {
+             
+            tileSize = checkminTile(myboard.tileSize);
+            reDrawAll(myboard,addFog('update'));
+            AddURLTokens();       
+
+          }, waittime);
+    
+        // Cargamos la barra de iniciativa y demás después del Tablero
+          window.setTimeout(function() {
+            
+            for (var i = 1 ; i < 9; i++) {
+              try {
+                console.log(localStorage.getItem("tracksrc" + i))
+                document.getElementById('track'+i).style.backgroundImage = localStorage.getItem("tracksrc" + i);
+              if(document.getElementById('track'+i).style.backgroundImage !== "") {
+                document.getElementById('track'+i).style.order = localStorage.getItem("trackorder" + i);
+                document.getElementById('track'+i).firstElementChild.value = parseInt(localStorage.getItem("trackhp" + i));
+                document.getElementById('track'+i).firstElementChild.style.display = "";
+              }
+              } catch (e) {
+              }
+           }            
+    
+        // Cargamos el chat       
+           try {        
+            if (localStorage.getItem(room + 'chat-log') !== null)  {
+              document.getElementById("chat-log").innerHTML = localStorage.getItem(room + 'chat-log');                              
+            }
+           } catch (error) {console.log(error)}
+    
+        // Cargamos los Backgrounds
+           try {
+            var backgroundN = parseInt(localStorage.getItem("backgroundN"));
+            var list = document.getElementById("background-list");
+            for (i = 0; i< backgroundN; i++) {
+              var img = document.createElement("img");
+              img.src = localStorage.getItem("background" + i).replaceAll(" ","%20");
+              img.className="bglist";
+              img.id = "bckimg" + i;
+              img.loading = "lazy";
+              img.addEventListener('dragstart',  drag_scene_start, true);
+              img.addEventListener('error',brokenlink);
+              list.appendChild(img);
+            }
+          } catch (e) {console.log(e)}
+    
+        // Cargamos los Assets
+          try {
+            var assetN = parseInt(localStorage.getItem("assetN"));
+            var list = document.getElementById("asset-list");
+            for (i = 0; i< assetN; i++) {
+            
+              var img = document.createElement("img");
+              var item = localStorage.getItem("asset" + i).replaceAll(" ","%20");
+              if (IsVideo(item)) {
+                img.src = IconVideo;
+                img.setAttribute('video', item)
+              } else {
+                img.src = item;
+              }
+              
+              img.classList.add("bglist");
+              img.classList.add("grayed");
+              img.loading = "lazy";
+              img.id = "assett" + i;
+              img.addEventListener('dragstart',  drag_scene_start, true);
+              list.appendChild(img);
+            }
+          } catch (e) {console.log(e)}
+        
+          // Cargamos la Música
+          try{
+            
+            var musicN = parseInt(localStorage.getItem("musicN"));
+            var list = document.getElementById("music-list");
+            console.log(musicN)
+            for (i = 0; i < musicN; i++) {          
+              var item = localStorage.getItem("music" + i).replaceAll(" ","%20");
+              console.log("music" + i)
+              console.log(item)          
+              if (item !== "undefined") {
+                var div = document.createElement("div");             
+                div.setAttribute("src", item);  
+                div.innerHTML = crea_nombre(item);
+                div.classList.add("musiclist");            
+                div.id = "music" + i;      
+                div.draggable = true;
+                div.addEventListener('dragstart',  drag_scene_start, true);    
+                list.appendChild(div);          
+              }                              
+            }
+          } catch (e) {console.log(e)}     
+          }, 2*waittime);
+    
         }
-      } catch (e) {console.log(e)}
-     
-      }, 2*waittime);
+        // ---------------------------------------------------------
+        // No hay nada guardado es una sala nueva
+        // ----------------------------------------------------------
+        else {
+    
+          
+          if (ex == null)
+            var myboard = JSON.parse('{"plotBackground":"https://play.digitald20.com/core/images/index/index-map-1920.jpg","backgroundImage":"https://play.digitald20.com/vtt/img/graveyard-map.jpg","background_width":1920,"background_heigth":960,"tileSize":60,"playerid":"dm","tokens":[{"src":"https://play.digitald20.com/vtt/img/thief.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":595,"left":537,"id":"dm50535"},{"src":"https://play.digitald20.com/vtt/img/mage.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":714,"left":240,"id":"dm241239"},{"src":"https://play.digitald20.com/vtt/img/fighter.jpg","dd20size":0.9999999999999999,"scaleX":0.10416666666666666,"scaleY":0.10416666666666666,"angle":0,"uprange":1,"zoomrange":1,"top":477.046439628483,"left":420.953560371517,"id":"dm261770"},{"src":"https://play.digitald20.com/vtt/img/ranger.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":475,"left":606,"id":"dm493210"},{"src":"https://play.digitald20.com/vtt/img/spectre.jpg","dd20size":2,"scaleX":0.20833333333333334,"scaleY":0.20833333333333334,"angle":0,"uprange":1,"zoomrange":1,"top":472,"left":483,"id":"dm281858"},{"src":"https://play.digitald20.com/vtt/img/halfling.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":231.6656346749225,"left":669.4148606811145,"id":"dm297252"},{"src":"https://play.digitald20.com/vtt/img/fire-ball.png","dd20size":-1,"scaleX":0.85,"scaleY":0.85,"angle":0,"leftrange":1,"uprange":1,"zoomrange":1,"top":420.0307406766989,"left":666.8785085506915,"id":"dm124446"}],"request":false,"squares":[],"roll":false}')
+          else      
+            var myboard = JSON.parse('{"plotBackground":"https://play.digitald20.com/core/images/index/index-map-1920.jpg","backgroundImage":"","background_width":1920,"background_heigth":960,"tileSize":60,"playerid":"dm","tokens":[],"request":false,"squares":[],"roll":false}')
+                              
+          // Cargamos por URL
+          if (pboard !== null) {
+            myboard.backgroundImage = "https://" + pboard;
+          }
+          if (ptile !== null) {
+            tileSize =  checkminTile(parseInt(ptile));
+          }    
+          
+          mainBackground = myboard.backgroundImage;
+          canvas.fogEnabled = false;
 
-    }
-    else {
+          // Cargamos el Track de iniciativa por defecto. 
+          if (ex == null ) {
+            var j = 0;
+              for (var i = 1 ; i < 6; i++) {
+                j = i + 1;
+                document.getElementById('track'+j).style.backgroundImage = "url('"+ document.getElementById('t'+i).src + "')";
+                document.getElementById('track'+j).firstElementChild.style.display = "";
+            }
+          }
 
-      if (ex == null)
-        var myboard = JSON.parse('{"backgroundImage":"https://play.digitald20.com/vtt/img/graveyard-map.jpg","background_width":1920,"background_heigth":960,"tileSize":60,"playerid":"dm","tokens":[{"src":"https://play.digitald20.com/vtt/img/thief.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":595,"left":537,"id":"dm50535"},{"src":"https://play.digitald20.com/vtt/img/mage.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":714,"left":240,"id":"dm241239"},{"src":"https://play.digitald20.com/vtt/img/fighter.jpg","dd20size":0.9999999999999999,"scaleX":0.10416666666666666,"scaleY":0.10416666666666666,"angle":0,"uprange":1,"zoomrange":1,"top":477.046439628483,"left":420.953560371517,"id":"dm261770"},{"src":"https://play.digitald20.com/vtt/img/ranger.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":475,"left":606,"id":"dm493210"},{"src":"https://play.digitald20.com/vtt/img/spectre.jpg","dd20size":2,"scaleX":0.20833333333333334,"scaleY":0.20833333333333334,"angle":0,"uprange":1,"zoomrange":1,"top":472,"left":483,"id":"dm281858"},{"src":"https://play.digitald20.com/vtt/img/halfling.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":231.6656346749225,"left":669.4148606811145,"id":"dm297252"},{"src":"https://play.digitald20.com/vtt/img/fire-ball.png","dd20size":-1,"scaleX":0.85,"scaleY":0.85,"angle":0,"leftrange":1,"uprange":1,"zoomrange":1,"top":420.0307406766989,"left":666.8785085506915,"id":"dm124446"}],"request":false,"squares":[],"roll":false}')
-      else      
-        var myboard = JSON.parse('{"backgroundImage":"","background_width":1920,"background_heigth":960,"tileSize":60,"playerid":"dm","tokens":[],"request":false,"squares":[],"roll":false}')
-        
+          // Dibujamos el tablero
+          window.setTimeout(function() {
+            reDrawAll(myboard);
+            AddURLTokens();
+            add_music("https://play.digitald20.com/core/music/just-adventuring.mp3")
+          }, 2*waittime);
+         
+        }
+      }
+      // ------------------------------------------------------------------
+      // No somos dungeon masters
+      // ------------------------------------------------------------------
       
-        if (pboard !== null) {
-        myboard.backgroundImage = "https://" + pboard;
+      else {
+    
+        setViewPlayer();
+        connected = false;
+        window.setTimeout(function() {
+          sendMessage(getrequest());
+        }, 2*waittime);
+    
       }
-      if (ptile !== null) {
-        tileSize =  parseInt(ptile);
-      }
-
-      
-      if (ex == null ) {
-      var j = 0;
-      for (var i = 1 ; i < 6; i++) {
-        j = i + 1;
-      document.getElementById('track'+j).style.backgroundImage = "url('"+ document.getElementById('t'+i).src + "')";
-      document.getElementById('track'+j).firstElementChild.style.display = "";
-      }
-    }
+    
+      // Creamos el canvas
+      var canvasWrapper = document.getElementById('cw');
+      canvasWrapper.tabIndex = 1000;
+      //canvasWrapper.addEventListener("keydown", onKey, false);
+    
+      var canvasContainer = document.getElementById('dice-canvas');
+      //canvaContainer.addEventListener("keydown", onKey, false);
+      box = new DiceBox(canvasContainer);
+    
+      document.addEventListener("keydown", onKey, false);
+      viewportResize(); 
+    
       window.setTimeout(function() {
-        reDrawAll(myboard);
-        AddURLTokens();
-      }, waittime);
-     
+        CleanURL();
+      }, 4*waittime);
+    
+      if (localStorage.getItem("notshowagain") == null) {
+        document.getElementById("hello").style.display = "";
+      }
+    
     }
-  }
-  else {
-    setViewPlayer();
-    connected = false;
-    window.setTimeout(function() {
-      sendMessage(getrequest());
-    }, 3*waittime);
-  }
-
-  var canvasWrapper = document.getElementById('cw');
-  canvasWrapper.tabIndex = 1000;
-  //canvasWrapper.addEventListener("keydown", onKey, false);
-
-  var canvasContainer = document.getElementById('dice-canvas');
-  //canvaContainer.addEventListener("keydown", onKey, false);
-  box = new DiceBox(canvasContainer);
-
-  document.addEventListener("keydown", onKey, false);
-  viewportResize(); 
-
-  window.setTimeout(function() {
-    CleanURL();
-  }, 4*waittime);
-
-  if (localStorage.getItem("notshowagain") == null) {
-    document.getElementById("hello").style.display = "";
-  }
-}
+    
 
 function CleanURL() {
   console.log("cleanurl")
@@ -256,10 +399,31 @@ function CleanURL() {
 }
 
 function AddURLTokens() {
+
+  console.log(location.href)
+
+  var Ntokens = new URL(location.href).searchParams.get('nt');
+  var Nassets = new URL(location.href).searchParams.get('na');
+  var bck     = new URL(location.href).searchParams.get('b');
+
+  console.log(Ntokens +" "+ Nassets + " " + bck)
+
+  if (bck !== null) {
+    if (Ntokens == null)
+    Ntokens = 7
+  if (Nassets == null)
+    Nassets = 7
+  }
+  else {
+    Ntokens = 0;
+    Nassets = 0;
+  }
+    
   
-  for (var j = 1 ; j < 7 ; j++) {
+  for (var j = 1 ; j < Ntokens ; j++) {
 
   var ptoken = new URL(location.href).searchParams.get('t' + j);
+  console.log(j + " " + ptoken)
   if (ptoken !== null) {
     
     var pn = new URL(location.href).searchParams.get('n'+j);
@@ -284,15 +448,23 @@ function AddURLTokens() {
       if (pcoor !== null) {
         var listacoor = pcoor.split(",");
         for (var i = 0; i < listacoor.length; i = i + 2)
-            addToken(listacoor[i],listacoor[i+1],j);
+            {
+              if ( j < 7)
+                addToken(listacoor[i],listacoor[i+1],j);
+              else
+                addToken(listacoor[i],listacoor[i+1]);
+            }
           }
       else            
       for (var i = 0; i < Nt; i++) {
-          addToken(null, null, j)
+          if (j < 7)
+            addToken(null, null, j)
+          else 
+            addToken(null, null)
          }
   }
 }
-for (var j = 1 ; j < 7 ; j++) {
+for (var j = 1 ; j < Nassets ; j++) {
 
   var ptoken = new URL(location.href).searchParams.get('a' + j);
   if (ptoken !== null) {
@@ -303,6 +475,7 @@ for (var j = 1 ; j < 7 ; j++) {
     sendLink();
   }
 }
+
 var narrative = new URL(location.href).searchParams.get('n');
 if (narrative !== null) {
   document.getElementById("dice-bar").style.display = 'none';
@@ -317,6 +490,16 @@ if (narrative !== null) {
   document.getElementById("main-menu").classList.remove("superbox");
 }
 
+setTimeout(() => {
+  get_track();
+
+  setTimeout(() => {
+  if(checkAdmin()) 
+    localStorage.setItem(room + 'data', JSON.stringify(getboard()));    
+  }, 2*waittime);
+
+}, 2*waittime);
+
 }
 
 function tokenChange() {
@@ -328,7 +511,7 @@ function tokenChange() {
   
   var oImg = canvas.getActiveObject();  
   var size = oImg.dd20size;
-  var shadow = {color: 'rgba(0,0,0,1)',  blur: 50, offsetX: 10, offsetY: 10, opacity: 0.6, fillShadow: true,  strokeShadow: true }
+  var shadow = {color: oImg.color,  blur: shadowblur, offsetX: shadowoff, offsetY: shadowoff, opacity: shadowopacity, fillShadow: true,  strokeShadow: true, nonScaling:true }
 
   if (oImg._element.naturalWidth > oImg._element.naturalHeight) {
     var scale = size * tileSize / oImg._element.naturalWidth;
@@ -350,7 +533,8 @@ function tokenChange() {
   
   oImg.clipPath = clipPath;
   oImg.dirty = true;
-  oImg.setShadow(shadow);
+  //oImg.setShadow(shadow);
+  oImg.set('shadow', shadow)
   oImg.scale(scale);
   canvas.requestRenderAll();
   updateBoardQuick();
@@ -390,7 +574,7 @@ function adjustToken(oImg, zoomrange, leftrange, uprange) {
 function editToken() {
   var e = document.getElementById("token-edit");
   if (e.style.display == "none") {
-    e.style.display = "block";
+    e.style.display = "";
     document.getElementById("bedit-token").innerHTML = "Close Edit";
   }
   else {
@@ -414,15 +598,6 @@ function changeSrc(event) {
     document.getElementById(this.id).src = urls[n-1];
 }
 
-//checking if user is an admin
-const checkAdmin = () => {
-  if ((user === "dm") & ((room === window.location.pathname) || (room + "/game" === window.location.pathname ))) {
-    return true;
-  } else {
-    return false;
-  }
-  };
-
 function viewportResize() {
   var viewportWidth = window.innerWidth;
   var viewportHeigth = window.innerHeight;
@@ -432,14 +607,40 @@ function viewportResize() {
   canvas.calcOffset();
 }
 
-function reDrawAll(board) {
-  
+function reDrawAll(board, callback) {
+ 
   canvas.forEachObject(function(o) {
     if(o.fill !== '#c710875')
     canvas.remove(o);
   });
 
-  createBg(board.backgroundImage)
+  mainBackground = board.backgroundImage;
+  plotBackground = board.plotBackground;
+
+  if (document.getElementById("plotmode").checked) {
+    console.log("Plot mode image:" + board.plotBackground)
+    createBg(board.plotBackground)  
+  } else {
+    console.log("Normal mode image:" + board.backgroundImage)
+    createBg(board.backgroundImage)  
+  }
+  
+  var tokens = board.tokens;
+  tokens.forEach((item) => {
+    createToken(item);
+  });  
+          
+  if (callback !== undefined) 
+  callback();
+
+}
+
+function reDrawTokens(board) {
+  
+  canvas.forEachObject(function(o) {
+    if(o.fill !== '#c710875')
+    canvas.remove(o);
+  });
 
   var tokens = board.tokens;
   tokens.forEach((item) => {
@@ -451,27 +652,46 @@ function reDrawAll(board) {
 
 function setBg() {
 
+  var bg = checkurl(document.getElementById("token-map").value);
+
   try {
-    var ibackground_width  = canvas.backgroundImage._element.width;
-    var ibackground_heigth = canvas.backgroundImage._element.height;
     var srcbackground = canvas.backgroundImage._element.src;
+    if ((bg !== "") && (bg !== srcbackground)) {
+      addtoAllAssets(bg)
+    }      
   } catch (e) {console.log(e)}
 
-
-  var bg = checkurl(document.getElementById("token-map").value);
-  if ((bg !== "") && (bg !== srcbackground)) {
- // &&  (!checkSRC(bg.value,document.getElementById("background-list").childNodes))
-  createBg(bg);
-
-  addBackgroundtoList(bg) 
-  canvas.setZoom(getmaxZoom())
   
+  if (document.getElementById("plotmode").checked) {
+    plotBackground = bg;  
+  } else {
+    console.log(mainBackground)
+    mainBackground = bg;
+  }
+
+  createBg(bg);
+  addBackgroundtoList(bg) 
+  
+  setTimeout(() => {
+    clearFogbutton();    
+    setTile();    
+
+    setTimeout(() => {      
+      check_outside_tokens();
+    }, 3*waittime);
+
+  }, waittime);
+
+  //canvas.setZoom(getmaxZoom())
+  /*
   window.setTimeout(function() {
 
+    console.log("-----------------------------------")
+    console.log(oldzoom + "-" + zoom)
     /*
     if (srcbackground !== canvas.backgroundImage._element.src)
       addtokentolist(bg.value);
-    */
+    
 
     if (connected)
       sendMessage(getboard());
@@ -514,25 +734,31 @@ function setBg() {
 
       clearFogbutton();
   }, waittime);
+  */
 }
-}
+
+
 
 function createNewBg(imgurl) {
   console.log("new background")
 
+  /*
   try {
     var ibackground_width  = canvas.backgroundImage._element.width;
     var ibackground_heigth = canvas.backgroundImage._element.height;
   } catch (e) {console.log(e)}
+*/
 
- 
   createBg(imgurl);
 
   window.setTimeout(function() {
 
     if(checkAdmin()) 
       localStorage.setItem(room + 'data', JSON.stringify(getboard()));
+      check_outside_tokens();
 
+    }, 3*waittime);
+/*
       try {
         var nbackground_width  = canvas.backgroundImage._element.width;
         var nbackground_heigth = canvas.backgroundImage._element.height;
@@ -552,26 +778,22 @@ function createNewBg(imgurl) {
                   o.set('left', newx).set('top', newy);
             });
 
-            canvas.forEachObject(function(o) {
-              o.selectable = true;
-              o.setCoords();
-            });
 
-            canvas.viewportTransform[4] = 0;
-            canvas.viewportTransform[5] = 0;
-            canvas.setZoom(getmaxZoom())
-            canvas.requestRenderAll();
-          }
+           
+
+       //   }
 
       } catch (e) {console.log(e)}
-
-  }, waittime);
+*/
+  
   
 }
 
 function createBg(imgurl) {
+  
+  imgurl = checkurl(imgurl);
 
-  if ((imgurl.indexOf(".webm") > 0) || (imgurl.indexOf(".m4v") > 0)) {
+  if ((imgurl.indexOf(".webm") > 0) || (imgurl.indexOf(".m4v") > 0 || (imgurl.indexOf(".mp4") > 0))) {
     
     var cvideo = document.getElementById('cvideo');
     if (cvideo.firstChild.src == imgurl)
@@ -596,29 +818,98 @@ function createBg(imgurl) {
           cvideo.height = cvideo.videoHeight;
           var video1 = new fabric.Image(cvideo, { left: 0,  top: 0,  angle: 0, originX: 'left', originY: 'top',
         objectCaching: false,
-        });
-        
+        });        
         canvas.setBackgroundImage(video1, canvas.renderAll.bind(canvas), {
           backgroundImageStretch: false,
-        });
-        
+        });        
         video1.getElement().play();
-
-        startvideo();
-       
+        startvideo();       
        });
        
       } 
-    }else {
+      // No es video
+    } else {
       stopvideo();
       canvas.setBackgroundImage(imgurl, canvas.renderAll.bind(canvas), {
         backgroundImageStretch: false,
     });
     }
     setTimeout(() => {
-      canvas.setZoom(getmaxhZoom())  
-  }, waittime);
-    
+      try {
+        setmaxHzoom()
+      } catch (e) {
+        setTimeout(() => {
+          setmaxHzoom()
+        }, 3*waittime);
+      }      
+  }, 3*waittime);
+
+ 
+}
+
+function setmaxHzoom() {  
+  canvas.setZoom(canvas.getWidth() / canvas.backgroundImage._element.width);
+}
+
+function check_outside_tokens() {
+
+  console.log("Check outside!!!!")
+
+  try {
+    var width  = canvas.backgroundImage._element.width;
+    var height = canvas.backgroundImage._element.height;
+    var cambios = false;
+
+    canvas.forEachObject(function(o) {
+
+      if(o.fill !== '#c710875') {
+  
+        var x = getRandomInt(((canvas.getWidth() / canvas.getZoom()) / 4)) - canvas.viewportTransform[4] / canvas.getZoom() + (canvas.getWidth() / canvas.getZoom()) / 10;
+        var y = (getRandomInt(((canvas.getHeight() / canvas.getZoom()) / 4)) + ((canvas.getHeight() / canvas.getZoom()) / 8)) - canvas.viewportTransform[5] / canvas.getZoom();
+       
+        if ((o.left > width) || (o.top > height)) {
+          //console.log( o.top + "," + o.left)
+          //console.log(x + "," + y);
+          o.set('left', x);
+          o.set('top', y);
+          cambios = true;
+        }
+        o.selectable = true;
+        o.setCoords();
+  
+      }
+      canvas.viewportTransform[4] = 0;
+            canvas.viewportTransform[5] = 0;
+            canvas.setZoom(getmaxZoom())
+            canvas.requestRenderAll();
+  
+    });
+  
+
+    } catch (error) {
+      console.log(error)
+    }
+    if (cambios) {
+      console.log("Objetos movidos por el cambio de fondo!")
+      updateBoardQuick();
+    }
+
+  /*
+  if (typeof old !== 'undefined') {
+  
+    var news = canvas.backgroundImage._element.width;
+  if (old !== news)
+  canvas.forEachObject(function(o) {
+    if(o.fill !== '#c710875') {
+      var newx = o.left * news / old;
+      var newy = o.top * news / old;
+      o.set('left', newx).set('top', newy);
+    }
+  });
+  
+}
+*/
+
 }
 
 function setUrl(free) {
@@ -660,11 +951,54 @@ function addtokentolist(src,n) {
 }
 }
 
+function toTrack() {
+  var tokenimg = checkurl(document.getElementById("token-map").value);  
+  document.getElementById("s1").checked = true;
+  if (tokenimg !== "") {
+  addtrackwhentoken(tokenimg);
+  }
+}
+
+function addText() {
+
+  var XX = getRandomInt(((canvas.getWidth() / canvas.getZoom()) / 4)) - canvas.viewportTransform[4] / canvas.getZoom() + (canvas.getWidth() / canvas.getZoom()) / 10;
+  var YY = (getRandomInt(((canvas.getHeight() / canvas.getZoom()) / 4)) + ((canvas.getHeight() / canvas.getZoom()) / 8)) - canvas.viewportTransform[5] / canvas.getZoom();
+
+  var text = new fabric.Textbox('Lorem ipsum dolor sit amet',
+  {
+      width: 300,
+      backgroundColor: "white",
+      //padding: 20,
+      left: XX,
+      top: YY
+  });
+  
+  var shadow = {color: 'rgba(0, 0, 0, 1)',blur: shadowblur, offsetX: shadowoff, offsetY: shadowoff, opacity: shadowopacity, fillShadow: true,  strokeShadow: true, nonScaling:true }  
+  text.dd20size = -1;
+  text.id = user + getRandomInt(999999);
+  text.set('shadow', shadow)
+  text.plot = document.getElementById("plotmode").checked;
+  text.newtoken = true;
+      setTimeout(() => {
+          text.newtoken = false;
+      }, 5*waittime);
+
+  // Render the Textbox on Canvas
+  canvas.add(text);
+
+  setTimeout(() => {
+    updateBoardQuick();
+  }, waittime);
 
 
+}
 
 // Functions to add token
 const addToken = (x,y,n) => {
+
+  var tileS = tileSize;
+  if (document.getElementById("plotmode").checked) 
+    tileS = plottileSize;
 
   if (x !== undefined) {
     var XX = parseInt(x);
@@ -674,9 +1008,10 @@ const addToken = (x,y,n) => {
     var YY = (getRandomInt(((canvas.getHeight() / canvas.getZoom()) / 4)) + ((canvas.getHeight() / canvas.getZoom()) / 8)) - canvas.viewportTransform[5] / canvas.getZoom();
   }
 
-  var tokenimg = checkurl(document.getElementById("token-map").value) //.replaceAll(" ","%20");
+  var tokenimg = checkurl(document.getElementById("token-map").value);
 
 if (tokenimg !== "") {
+  addtoAllAssets(tokenimg)
   canvas.justCreated = true;
   var tokensize = parseInt(document.querySelector('input[name="gender"]:checked').value)
 
@@ -695,9 +1030,9 @@ if (tokenimg !== "") {
       addtrackwhentoken(oImg._element.src,n);
 
     if (oImg._element.naturalWidth > oImg._element.naturalHeight)
-      var scale = tokensize * tileSize / oImg._element.naturalWidth;
+      var scale = tokensize * tileS / oImg._element.naturalWidth;
     else 
-      var scale = tokensize * tileSize / oImg._element.naturalHeight;
+      var scale = tokensize * tileS / oImg._element.naturalHeight;
 
     /*
     oImg.set({
@@ -706,7 +1041,7 @@ if (tokenimg !== "") {
       },
     })
 */
-var shadow = {color: 'rgba(0,0,0,1)',blur: 50,offsetX: 10, offsetY: 10, opacity: 0.6, fillShadow: true, strokeShadow: true }
+var shadow = {color: 'rgba(0, 0, 0, 1)',blur: shadowblur, offsetX: shadowoff, offsetY: shadowoff, opacity: shadowopacity, fillShadow: true,  strokeShadow: true, nonScaling:true }
 
 if (oImg._element.naturalWidth > oImg._element.naturalHeight)
     var clipPath = new fabric.Circle({ radius: oImg._element.naturalWidth/2, top: -oImg._element.naturalWidth/2, left: -oImg._element.naturalWidth/2 });
@@ -729,7 +1064,8 @@ else
       console.log(scale)
     } else {
       oImg.clipPath = clipPath;
-      oImg.setShadow(shadow);
+      //oImg.setShadow(shadow);
+      oImg.set('shadow', shadow)
       oImg.scale(scale);
     }
 
@@ -738,6 +1074,8 @@ else
     oImg.leftrange = 1;
     oImg.uprange = 1;
     oImg.hp = 0;
+    oImg.plot = document.getElementById("plotmode").checked;
+    oImg.color = "rgba(200, 100, 100, 0.5)";  
     oImg.newtoken = true;
     setTimeout(() => {
         oImg.newtoken = false;
@@ -753,12 +1091,51 @@ else
 }
 };
 
+function plotvisible(item) {
+  
+  if (document.getElementById("plotmode").checked) {
+    return item;
+  }else {
+    return !item;
+  }
+}
+
+function createText(item) {
+
+  var text = new fabric.Textbox(item.text,
+  {
+      width: 300,
+      backgroundColor: "white",
+      //padding: 20
+  });
+  
+  var shadow = {color: 'rgba(0, 0, 0, 1)',blur: shadowblur, offsetX: shadowoff, offsetY: shadowoff, opacity: shadowopacity, fillShadow: true,  strokeShadow: true, nonScaling:true }  
+  text.dd20size = item.dd20size;
+  text.id = item.id;
+  text.left = item.left,
+  text.top = item.top,
+  text.set('shadow', shadow)
+  text.plot = item.plot;
+  text.set({hasControls: true, scaleX:item.scaleX,scaleY:item.scaleY,angle:item.angle }); 
+  
+  text.visible = plotvisible(item.plot);
+  canvas.add(text);
+}
+
 //createToken
 const createToken = (item) => {
   // Check if Token is in list of images
   // Add to the list of images
 
-  addtokentolist(item.src);
+  if (item.src == undefined)
+    return(createText(item));
+
+  var tileS = tileSize;
+  if (document.getElementById("plotmode").checked) 
+    tileS = plottileSize;
+  
+    addtokentolist(item.src);
+  addtoAllAssets(item.src);
   
   fabric.Image.fromURL(item.src, function (oImg) {
     oImg.set({
@@ -766,18 +1143,25 @@ const createToken = (item) => {
       left: item.left,
       top: item.top,
       hasControls: false,
+      visible: plotvisible(item.plot)
     });
 
   if (oImg._element.naturalWidth > oImg._element.naturalHeight) {
-    var scale = item.dd20size * tileSize / oImg._element.naturalWidth;
+    var scale = item.dd20size * tileS / oImg._element.naturalWidth;
     var clipPath = new fabric.Circle({ radius: oImg._element.naturalWidth/2, top: -oImg._element.naturalWidth*item.uprange/2, left: -oImg._element.naturalWidth*item.leftrange/2 });
   }
   else {
-    var scale = item.dd20size * tileSize / oImg._element.naturalHeight;
+    var scale = item.dd20size * tileS / oImg._element.naturalHeight;
     var clipPath = new fabric.Circle({ radius: oImg._element.naturalHeight/(2), top: -oImg._element.naturalHeight*item.uprange/(2), left: -oImg._element.naturalHeight*item.leftrange/2 });
   }
 
-    var shadow = {color: 'rgba(0,0,0,1)', blur: 50, offsetX: 10, offsetY: 10, opacity: 0.6, fillShadow: true, strokeShadow: true }
+  if (item.color == undefined)
+    item.color = "rgba(0, 0, 0, 1)";
+    if (item.plot == undefined)
+      item.plot = false;    
+  
+
+    var shadow = {color: item.color,  blur: shadowblur, offsetX: shadowoff, offsetY: shadowoff, opacity: shadowopacity, fillShadow: true,  strokeShadow: true, nonScaling:true }
 
     oImg.set({
       width: oImg._element.naturalWidth * item.zoomrange,
@@ -790,13 +1174,16 @@ const createToken = (item) => {
     } else {
       oImg.scale(scale);
       oImg.clipPath = clipPath;
-      oImg.setShadow(shadow);
+      oImg.set('shadow', shadow)
+      //oImg.setShadow(shadow);
     }
     oImg.dd20size = item.dd20size;
     oImg.zoomrange = item.zoomrange;
     oImg.leftrange = item.leftrange;
     oImg.uprange = item.uprange;
     oImg.hp = item.hp;
+    oImg.plot = item.plot;
+    oImg.color = item.color;  
     canvas.add(oImg);
   });
 };
@@ -810,13 +1197,16 @@ function newRoll() {
 
 function diceSelect() {
   event.stopPropagation();
-  var dice = event.srcElement.innerHTML;
+  var dice = event.srcElement.innerHTML;   
   
   if (event.srcElement.id == "") {
-    document.getElementById("d" + rollN).innerHTML = dice;
+    document.getElementById("d" + rollN).innerHTML = dice;    
     rollN ++;
     if (rollN > 3)
       rollN = 1;
+  } else {
+    var text = document.getElementById(("" + event.srcElement.id).replace("d","dh")).innerHTML;
+    document.getElementById(("" + event.srcElement.id).replace("d","dh")).innerHTML = "";
   }
 
   if (combineDice) {
@@ -826,10 +1216,10 @@ function diceSelect() {
     if (document.getElementById("hidden-roll").className == "button-pressed")
      {
       console.log("local")
-      printdice(localDices(dice))
+      printdice(localDices(dice.replace("1d100", "1d100 + 1d10"), text))
     }
     else    
-    sendDices(dice);
+    sendDices(dice.replace("1d100", "1d100 + 1d10"), text);
   }
 }
 
@@ -848,11 +1238,16 @@ function okDicecombine() {
   dice = document.getElementById("combine-dice").value;
   dice = dice.substring(0,3).replaceAll("+","") + dice.substring(3);
   
+  dice = dice.replaceAll("-","+ -");
+  dice = dice.replaceAll(" +","+");
+  dice = dice.replaceAll("+"," +");
+
   ds = dice.split('+')
   if (ds.length == 2) {
     if (parseInt(ds[0].split('d')[1]) == parseInt(ds[1].split('d')[1]))
       dice = (parseInt(ds[0].split('d')[0]) + parseInt(ds[1].split('d')[0])) + "d" + ds[1].split('d')[1];
   }
+
   document.getElementById("combine-dice").value = "";
   document.getElementById("dice-select").style.display = "none";
   document.getElementById("d" + rollN).innerHTML = dice;
@@ -871,9 +1266,46 @@ function okDicecombine() {
   
 }
 
+function addtoAllAssets(asset) {
 
+  var lista = [];  
+  lista = JSON.parse(localStorage.getItem('allassets')) || [];
+
+  if (!checklistvalue(asset,lista)) {
+    lista.push(asset);
+    localStorage.setItem('allassets', JSON.stringify(lista));
+    savetoplugin() 
+  }
+  
+}
+
+function show_all_assets(event) {
+  event.stopPropagation();
+  var lista = [];
+  lista = JSON.parse(localStorage.getItem('allassets')) || [];
+  var tabla = document.getElementById("allassets");
+  tabla.innerHTML = "" 
+  for (var i = 0; i < lista.length; i++) {
+    try{
+    var img = document.createElement("img");
+    img.classList.add("bglist");
+    img.src = lista[i].replaceAll(" ","%20");
+    img.id = "all" + i;
+    img.addEventListener('error',deleteItem);
+    img.addEventListener('dragstart',  drag_scene_start, true);
+    img.draggable = true;    
+    tabla.appendChild(img);
+    } catch {console.log("error with token list")}
+  
+  }
+
+  document.getElementById("allassets").style.display = "";
+  document.getElementById("trash").style.display = "";
+
+}
 
 function getLink() {
+
   var link = document.getElementById("token-map").value;
 
   var obj = new Object();
@@ -885,12 +1317,19 @@ function getLink() {
   obj.assets = [];
 
   var alist = document.getElementById("asset-list").getElementsByTagName("img");
-  for (i = 0; i < alist.length; i++){
-    localStorage.setItem("asset" + i, alist[i].src)
+  for (i = 0; i < alist.length; i++) {
+
+    var item = ""
+    if (alist[i].getAttribute('src') == IconVideo)
+      item = alist[i].getAttribute('video')
+    else 
+      item = alist[i].getAttribute('src')
+
+    localStorage.setItem("asset" + i, item)
     if (!alist[i].classList.contains("grayed"))
     {
       var dobj = new Object();
-      dobj.src = alist[i].src;
+      dobj.src = item;
       obj.assets.push(dobj);  
     }
   }
@@ -899,15 +1338,33 @@ function getLink() {
 
   return(obj);
 
-}
+} 
 
-function sendDices(dice) {
+function getForcedLink(link) {
+
+  var obj = new Object();
+  obj.roll = false;
+  obj.link = true;
+  obj.playerid          = user; 
+  obj.request           = false;
+  obj.links = link;
+  obj.forced = true;
+
+  return(obj);
+
+} 
+
+function sendDices(dice, text) {
+
+  if (text == undefined)
+   text = "";
 
   var obj = new Object();
   obj.roll = true;
   obj.playerid          = user; 
   obj.request           = false;
-  obj.dices = getdices(dice);;
+  obj.text = text;
+  obj.dices = getdices(dice);
   sendMessage(obj);
 
 }
@@ -919,7 +1376,8 @@ function localDices(dice) {
   obj.roll = true;
   obj.playerid          = user; 
   obj.request           = false;
-  obj.dices = getdices(dice);;
+  obj.text = "hidden: ";
+  obj.dices = getdices(dice);
   return obj;
 
 }
@@ -934,9 +1392,17 @@ function getdices(dice) {
   obj.request           = false;*/
   var fontColor = document.getElementById("fontcolor").value;
   var backColor = document.getElementById("backcolor").value;
-  var last20 = false;
+  var last20 = 0;
+  var last10 = 0;
 
+  
+  dice = dice.replaceAll("-","+ -");
+  
+  //const re = /[\+-]/
   var g = dice.split("+");
+  //var g = dice.split(re);
+
+console.log(g)
   for(i = 0; i < g.length; i++) {
     var d = g[i].trim().split("d");
       var n = parseInt(d[0])
@@ -952,16 +1418,23 @@ function getdices(dice) {
       } else {  
       for (j = 0; j < n; j++) {
         
-        if (last20 && parseInt(d[1]) == 20) // Ha habido algún dado de 20 y este es de 20. 
+        if (last20 > 0 && last20 < 5 && parseInt(d[1]) == 20) // Ha habido algún dado de 20 y este es de 20. 
+          backColor = lighten(backColor,0.15);
+
+        if (last10 == 1 && parseInt(d[1]) == 10 && n == 2) // Ha habido algún dado de 10 y este es de 10. 
           backColor = lighten(backColor,0.25);
+
         if(parseInt(d[1]) == 20)
-          last20 = true;
+          last20 = last20 + 1;
+
+        if(parseInt(d[1]) == 10)
+          last10 = last10 + 1;
 
         var dobj = new Object();
         dobj.sides = parseInt(d[1])
         dobj.type = "d" + d[1];
         dobj.fontColor = fontColor;
-        dobj.backColor = backColor;
+        dobj.backColor = backColor;        
         dobj.result = rollDie(parseInt(d[1]));
         obj.dices.push(dobj);  
       }
@@ -1011,13 +1484,14 @@ for(var k = 0; k < dice.dices.length; k++) {
   for (var h = 0; h < dice.dices[k].dices.length;h++)
     dados.push(dice.dices[k].dices[h])
 }
+console.log(dados)
 diceroll(dados);
 
 for(var k = 0; k < dice.dices.length; k++) {
 
   let dados = dice.dices[k].dices;
   let bonus = dice.dices[k].bonus;
-  var text = dice.playerid + " rolled: ";
+  //var text = dice.playerid + " rolled: ";
   var text = "";
   var total = 0;
   var N;
@@ -1026,7 +1500,10 @@ for(var k = 0; k < dice.dices.length; k++) {
   console.log(dados)
   if(dados.length == 1) {
     let item = dados[0];
-    text = text + "1d" + item.sides + " (" + item.result + ")    ";
+    if (item.sides == 100)
+      text = text + "1d" + item.sides + " (" + item.result*10 + ")    ";
+    else 
+      text = text + "1d" + item.sides + " (" + item.result + ")    ";
     total = total + item.result;
   } else {
     Ndice = dados[0].sides;
@@ -1041,24 +1518,38 @@ for(var k = 0; k < dice.dices.length; k++) {
           text = text + N + "d" + Ndice + subtext.substring(0,subtext.length-1) + ") ";
           N = 1;
           Ndice = item.sides;
-          subtext = "(" + item.result + ",";
+          if (item.sides == 100)
+            subtext = "(" + item.result*10 + ",";
+          else
+            subtext = "(" + item.result + ",";
         } 
         text = text + N + "d" + Ndice + subtext.substring(0,subtext.length-1) + ") ";
         N = 1;
         Ndice = item.sides;
-        subtext = "(" + item.result + ",";
+        if (item.sides == 100)
+            subtext = "(" + item.result*10 + ",";
+          else
+            subtext = "(" + item.result + ",";
         total = total + item.result;
       } 
       else if (i == (dados.length - 1)) {   // Ultimo dado
         N++;    
-        total = total + item.result;
-        subtext = subtext + item.result + ",";
+        if (item.sides == 100) {
+          total = total + item.result * 10;
+          subtext = subtext + item.result * 10 + ",";}
+        else {
+          total = total + item.result ;
+          subtext = subtext + item.result + ",";}
         text = text + N + "d" + Ndice + subtext.substring(0,subtext.length-1) + ") ";
       
       } else {
         N++;    // Otro dado igual
-        total = total + item.result;
-        subtext = subtext + item.result + ",";
+        if (item.sides == 100) {
+          total = total + item.result * 10;
+          subtext = subtext + item.result * 10 + ",";}
+        else {
+          total = total + item.result ;
+          subtext = subtext + item.result + ",";}
       }    
   }
 }
@@ -1076,8 +1567,9 @@ for(var k = 0; k < dice.dices.length; k++) {
           }
   document.getElementById("log").innerHTML = text + document.getElementById("log").innerHTML;
   obj2 = new Object();
-  obj2.text = text.replaceAll(dice.playerid,"");
+  obj2.text = text;//.replaceAll(dice.playerid,"");
   obj2.playerid = dice.playerid;
+  obj2.pretext = dice.text;
   printchat(obj2)
 }
 
@@ -1153,12 +1645,25 @@ function clearRoll() {
   box.clear( function () {
       box.simulationRunning = false;
   });
-  
+
+  var myboard = getboard();
+  canvas.forEachObject(function(o) {
+    if(o.fill !== '#c710875')
+    canvas.remove(o);
+  });
+
+  var tokens = myboard.tokens;
+  tokens.forEach((item) => {
+    createToken(item);
+  }); 
+
 }
 
 function rollDie(sides)
 {
   if(!sides) sides = 6;
+  if(sides == 100)
+    with(Math) return 1 + floor(random() * 10);
   with(Math) return 1 + floor(random() * sides);
 }
 
@@ -1172,7 +1677,7 @@ function rollDice(number, sides)
 // Name
 function nameChange() {
   user = document.getElementById("player-name").value;
-  localStorage.setItem(room + "dd20user", user);
+  localStorage.setItem("dd20user", user);
 }
 
 // ------------------------------------------------------------- //
@@ -1183,21 +1688,25 @@ function startFogbutton() {
 
   if(canvas.fogEnabled) {
     canvas.fogEnabled = false;
+    localStorage.setItem('fogenabled', false);
 
     document.getElementById("add-fog").disabled = true;
     document.getElementById("clear-fog").disabled = true;
     document.getElementById("enable-fog").innerHTML = "Enable Fog";
     document.getElementById("add-fog").innerHTML = "Reveal Area";
     document.getElementById("add-fog").className = "button";
+    document.getElementById("undo-fog").style.display = "none";
     
     canvas.remove(fog);
     canvas.renderAll();
   }
   else {
   canvas.fogEnabled = true;
+  localStorage.setItem('fogenabled', true);
   document.getElementById("add-fog").disabled = false;
   document.getElementById("clear-fog").disabled = false;
   document.getElementById("enable-fog").innerHTML = "Disable Fog";
+  document.getElementById("undo-fog").style.display = "";
     
   addFog();
 }
@@ -1247,15 +1756,20 @@ function DrawFog(data) {
     canvas.remove(fog);
   }
 }
-function addFog(left,top,width,height) {
-  console.log("addfog")
 
+function addFog(left,top,width,height) {
+
+try {
   if (left == "update")
     var broadcast = false;
   else
     var broadcast = true;
 
-    if (canvas.fogEnabled) {
+  if (left == "undo")
+      fogHoles.pop();
+    
+  if (canvas.fogEnabled && !document.getElementById("plotmode").checked) {
+
   if (top !== undefined) {
     fogHoles.push({top,left,width,height});
   }
@@ -1265,6 +1779,9 @@ function addFog(left,top,width,height) {
 fogHoles.forEach((item,index) => {
   clipPath[index] = new fabric.Rect({ top: item.top, left: item.left ,width: item.width, height: item.height });
 });
+
+localStorage.setItem(room + 'fogholes', JSON.stringify(fogHoles));
+localStorage.setItem(room + 'fogenabled', true);
 
 var g = new fabric.Group(clipPath);
 g.inverted = true;
@@ -1285,19 +1802,29 @@ fog = new fabric.Rect({
   lockMovementY: true,
   selectable: false,
   clipPath: g,
-  fill: '#c710875'
+  fill: '#c710875',
+  evented: false,
+  id: "fog"
 });
 
 canvas.preserveObjectStacking = true;
 canvas.add(fog); 
 canvas.remove(square);
-canvas.sendToBack(fog);
+if (checkAdmin())
+  canvas.sendToBack(fog);
 canvas.renderAll();
 
 if(checkAdmin() && broadcast) {
   sendMessage(getboard());
   localStorage.setItem(room + 'data', JSON.stringify(getboard()));
 }
+  } else {
+    canvas.remove(fog);
+  }
+
+  fogrunning = false;
+} catch (error) {
+  setTimeout(function(){ addFog('update'); }, waittime);
 }
 }
 
@@ -1313,11 +1840,18 @@ function setTile() {
 
 function onKey(e) {
    
+  event.stopPropagation();
   if (46 === e.keyCode) {
     deleteObj();
     // 46 is Delete key
     // do stuff to delete selected elements
 }
+if (8 === e.keyCode) {
+  deleteObj();
+  // 46 is Delete key
+  // do stuff to delete selected elements
+}
+
 }
 
 // Supporting fucntions
@@ -1330,39 +1864,37 @@ function getmaxZoom() {
    return(zoomy);
 }
 
-function getmaxhZoom() {
-  console.log("get max hzoom")
-  var zoomx = canvas.getWidth() / canvas.backgroundImage._element.width;
-   return(zoomx);
-  }
+
 
 
 function checkBorders() 
 {
-  console.log("checkborders!")
+
     let borde = 100;
     var vpt = canvas.viewportTransform;
     var zoom = canvas.getZoom();
+    console.log(zoom)
+    console.log(vpt[5])
     console.log(" " + (canvas.backgroundImage._element.height*zoom + vpt[5]) + " " + canvas.backgroundImage._element.height*zoom + " " + canvas.getHeight() )
-    if (vpt[4] > borde) {
+    
+    if (vpt[4] > borde || isNaN(vpt[4])) {
       canvas.viewportTransform[4] = borde;
       canvas.requestRenderAll();
     } else if ((canvas.getWidth()-vpt[4]) > (canvas.backgroundImage._element.width*zoom + borde)  ) {
       canvas.viewportTransform[4] = canvas.getWidth() - (canvas.backgroundImage._element.width*zoom) - borde;
       canvas.requestRenderAll();
     }
-    if (vpt[5] > borde) {
+
+    if (vpt[5] > borde  || isNaN(vpt[4]) ) {
       canvas.viewportTransform[5] = borde;
       canvas.requestRenderAll();
     }     
-    else if (( canvas.getHeight() > (canvas.backgroundImage._element.height*zoom + vpt[5]) ) && (canvas.backgroundImage._element.height*zoom > canvas.getHeight()) ) {
-      console.log("te pasas " + " " + vpt[5]+(canvas.backgroundImage._element.height*zoom + vpt[5]) + " " + canvas.backgroundImage._element.height*zoom + " " + canvas.getHeight() )
+    else if (( canvas.getHeight() > (canvas.backgroundImage._element.height*zoom + vpt[5]) ) && (canvas.backgroundImage._element.height*zoom > canvas.getHeight()) ) {     
       canvas.viewportTransform[5] = canvas.getHeight() - canvas.backgroundImage._element.height*zoom - borde;
       //canvas.viewportTransform[5] = canvas.backgroundImage._element.height*zoom - canvas.getHeight();
       //canvas.viewportTransform[5] = borde;
       canvas.requestRenderAll();
     }
-
 
 canvas.forEachObject(function(o) {
   o.selectable = true;
@@ -1371,47 +1903,74 @@ canvas.forEachObject(function(o) {
 
 }
 
-function updateBoard(oldtilesize) {
-console.log("updateboard")
+// Colocamos cada objeto en su sitio
+function canvas_move() 
+{
+  /*
+  var doomedObj = canvas.getActiveObject();
+
+  if (doomedObj !== null)
+    if ( doomedObj.get('type')== "textbox") {
+    canvas.requestRenderAll();
+    canvas.forEachObject(function(o) {
+    o.selectable = true;
+    o.setCoords();
+  });
+  setTimeout(function(){ addFog('update'); }, waittime);
+}
+*/
+}
+
+function updateBoard() {
+ 
 savetilesizeonlist();
 
-  if (connected)
-        window.setTimeout(function() {
-          sendMessage(getboard(oldtilesize));
-          reDrawAll(getboard(oldtilesize));
-        }, waittime);
-      if(checkAdmin()) {
-        console.log(getboard())
-        localStorage.setItem(room + 'data', JSON.stringify(getboard()));
-      }
-      if (canvas.fogEnabled)
-      window.setTimeout(function() {
-        addFog('update');
-      }, 2*waittime);
+if (connected)
+  window.setTimeout(function() {
+    sendMessage(getboard());
+    reDrawAll(getboard());
+  }, waittime);
 
+if(checkAdmin()) {
+  localStorage.setItem(room + 'data', JSON.stringify(getboard()));
+}
+
+if (canvas.fogEnabled)
+  if (!fogrunning)
+    window.setTimeout(function() {  addFog('update'); }, 2*waittime);
       
 }
 
-function updateBoardQuick() {
+function updateBoardQuick(redraw) {
+
+  console.log("update board quick!")
+  var redraw = redraw || false;
 
   if (connected) {
-    sendMessage(getboard());
-}
+    sendMessage(getboard(), redraw);
+  }  
 
   if(checkAdmin()){
     // Put the object into storage
     localStorage.setItem(room + 'data', JSON.stringify(getboard()));
   }
+
 }
+
+
 
 // Functions for touch screens
 // Touch-enabled
 function touchpan (ev) {
+
+  if (document.getElementById("two-finger-pan").checked) {
   if ((ev.deltaX*ev.deltaX + ev.deltaY*ev.deltaY) > 20) {
     canvas.viewportTransform[4] = canvas.lastPosX +ev.deltaX;
     canvas.viewportTransform[5] = canvas.lastPosY +ev.deltaY;
     canvas.requestRenderAll();
   }
+}
+checkBorders();
 }
 
 mc.on("pinchend", function(ev) {
@@ -1473,7 +2032,6 @@ mc.on("pinchout", function(ev) {
 } else touchpan(ev);
 });
 
-
 //zoom canvas
 canvas.on("mouse:wheel", function (opt) {
 
@@ -1498,30 +2056,44 @@ canvas.on("mouse:wheel", function (opt) {
   
   });
 
+  function over_target(opt) {
+
+    if (opt.target == null) 
+      return false;
+    else if (opt.target.id == "fog")
+      return false;
+    else 
+      return true;
+  }
+
 //Mouse down, can be many things
 canvas.on("mouse:down", function (opt) {
+  
   hide_menus()
-  //console.log("mouse down:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
-  this.lastPosX = opt.e.clientX;
-  this.lastPosY = opt.e.clientY;
-  var e = opt.e;
+  console.log("mouse down:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
+  this.lastPosX = opt.pointer.x;
+  this.lastPosY = opt.pointer.y;
+  var hoverTarget = canvas.findTarget(event, false);       
+  
     // Drawing a poligon
   if(this.isDrawing || this.isDrawingfog) {
     document.getElementById('message').style.display = "none";
 
     // Drawing a poligon with two clicks, last click
-    if(this.with2clicks) {
-      console.log("ultimo click")
-      var oldtilesize = tileSize;
-      
+    if(this.with2clicks) {      
       this.isDrawing = false;
       this.Started = false;
       this.with2clicks =  false;
       canvas.remove(square);
 
       if(!this.isDrawingfog) {
-        tileSize = Math.abs(this.squarewidth);
-        updateBoard(oldtilesize)
+        if (document.getElementById("plotmode").checked) {
+          plottileSize = checkminTile(Math.abs(this.squarewidth));
+        } else {
+          tileSize = checkminTile(Math.abs(this.squarewidth));
+        }
+        
+        updateBoard()
         
       } else {
         addFog(square.left - canvas.backgroundImage._element.width/2, square.top - canvas.backgroundImage._element.height/2, square.width, square.height);
@@ -1532,15 +2104,15 @@ canvas.on("mouse:down", function (opt) {
 
     }
     else {
-
+      if (!over_target(opt)) {
     this.Started = true;
     var zoom = canvas.getZoom();
 
     square = new fabric.Rect({ 
         width: 0, 
         height: 0, 
-        left:  (e.clientX - this.viewportTransform[4])/zoom, 
-        top:   (e.clientY - this.viewportTransform[5])/zoom, 
+        left:  (opt.pointer.x - this.viewportTransform[4])/zoom, 
+        top:   (opt.pointer.y - this.viewportTransform[5])/zoom, 
         opacity: 0.5,
         fill: '#c710875'
     });
@@ -1548,38 +2120,96 @@ canvas.on("mouse:down", function (opt) {
     canvas.add(square); 
     canvas.renderAll();
     canvas.setActiveObject(square); 
+  }
     }
     // Rigth mouse to pan background
-  } else if(event.button == 2) {
-    this.isDragging = true;
-    this.selection = false;
+  } else if(event.button == 2 || document.getElementById("left-click-pan").checked) {
+      if (!over_target(opt)) {
+      this.isDragging = true;
+      this.selection = false;
+    }
   } 
+});
+
+
+canvas.on('mouse:dblclick', function (opt) {
+
+  var hoverTarget = canvas.findTarget(event, false);  
+  if (hoverTarget !== undefined && hoverTarget.dd20size !== -1) {
+
+      var hp = document.getElementById("hp");      
+
+      console.log(hp.style.backgroundColor)      
+
+      if ( hp.style.backgroundColor == "rgba(200, 100, 100, 0.5)") {
+        hp.style.backgroundColor = "rgba(0, 255, 255, 0.5)";
+        hoverTarget.color = "rgba(0, 255, 255, 1)";
+      }
+      else if (hp.style.backgroundColor == "rgba(0, 255, 255, 0.5)") {
+        hp.style.backgroundColor = "rgba(255, 0, 255, 0.5)";
+        hoverTarget.color = "rgba(255, 0, 255, 1)";    
+      }
+      else if (hp.style.backgroundColor == "rgba(255, 0, 255, 0.5)") {
+        hp.style.backgroundColor = "rgba(0, 255, 0, 0.5)";
+        hoverTarget.color = "rgba(0, 255, 0, 1)";            
+      } 
+      else {
+        hp.style.backgroundColor = "rgba(200, 100, 100, 0.5)";
+        hoverTarget.color = "rgba(0, 0, 0, 1)";  
+      }    
+      var shadow = {color: hoverTarget.color,  blur: shadowblur, offsetX: shadowoff, offsetY: shadowoff, opacity: shadowopacity, fillShadow: true,  strokeShadow: true, nonScaling:true }
+      hoverTarget.set('shadow', shadow)
+      canvas.renderAll();
+
+      updateBoardQuick(true);
+      //reDrawTokens(getboard());
+      
+  }
 
 });
 
+
 canvas.on("mouse:move", function (opt) {
-  
+
+  if (this.Started === undefined) {
+    this.Started = false;
+    this.isDrawing = false;
+  }
+ 
   var zoom = canvas.getZoom();
-  var e = opt.e;
+
   if((this.isDrawing || this.isDrawingfog) && this.Started) {
     //var square = canvas.getActiveObject(); 
     this.squarewidth = square.width;
     this.squareheigth = square.height;
-    square.set('width', (e.clientX - this.lastPosX)/zoom).set('height', (e.clientY - this.lastPosY)/zoom);
+    square.set('width', (opt.pointer.x - this.lastPosX)/zoom).set('height', (opt.pointer.y - this.lastPosY)/zoom);
     canvas.renderAll(); 
   } else if (canvas.isDragging) {
-    this.viewportTransform[4] += e.clientX - this.lastPosX;
-    this.viewportTransform[5] += e.clientY - this.lastPosY;
+    this.viewportTransform[4] += opt.pointer.x - this.lastPosX;
+    this.viewportTransform[5] += opt.pointer.y- this.lastPosY;
     this.requestRenderAll();
-    this.lastPosX = e.clientX;
-    this.lastPosY = e.clientY;
+    this.lastPosX = opt.pointer.x;
+    this.lastPosY = opt.pointer.y;
   } else {
       // Estamos encima de un token
-       var hoverTarget = canvas.findTarget(event, false);
+       var hoverTarget = canvas.findTarget(event, false);       
        var hp = document.getElementById("hp");
        if (hoverTarget !== undefined && hoverTarget !== lasthp && hoverTarget.dd20size !== -1) {         
          lasthp = hoverTarget;         
          hp.style.display="";
+         
+         /*
+         if (hoverTarget.color !== undefined) {           
+          hp.style.backgroundColor = hoverTarget.color.replace("rgba(0, 0, 0, 1)","rgba(200, 100, 100, 0.5)").replace(", 1)",", 0.5)");
+         } else {
+          hp.style.backgroundColor="rgba(200, 100, 100, 0.5)";
+         }          
+        */
+         if (hoverTarget.color == undefined)
+          hoverTarget.color =  hoverTarget.color = "rgba(0, 0, 0, 1)";  
+
+        hp.style.backgroundColor = hoverTarget.color.replace("rgba(0, 0, 0, 1)","rgba(200, 100, 100, 0.5)").replace(", 1)",", 0.5)");
+
          hp.childNodes[1].value = hoverTarget.hp;         
          hp.style.left = (hoverTarget.left*zoom + this.viewportTransform[4])  + "px";
          hp.style.top  = (hoverTarget.top*zoom + this.viewportTransform[5])  + "px";
@@ -1605,31 +2235,66 @@ canvas.on("mouse:move", function (opt) {
           }          
           lasthp = undefined;
        } else  {
-
+        
        }
+  }
+  if(opt.e.which == 1) {
 
+    var x = Math.abs(5 * Math.trunc((opt.pointer.x - this.lastPosX)/(zoom*tileSize)));
+    var y = Math.abs(5 * Math.trunc((opt.pointer.y - this.lastPosY)/(zoom*tileSize)));   
+    try {
+      if (lastdx !== x || lastdy !== y )
+      document.getElementById("distance-bar").innerHTML = x + "ft<br>" + y + "ft";
+    
+    } catch(error) {}
+       
+    lastdx = x;
+    lastdy = y;
+  
   }
 
 });
 
 canvas.on("mouse:up", function (opt) {
-  console.log("mouse up:");
 
+  if (opt.e.altKey) {
+    
+    var hoverTarget = canvas.findTarget(event, false);       
+    
+    if (hoverTarget !== undefined  && hoverTarget.dd20size !== -1) {  
+      console.log(hoverTarget)
+      if (hoverTarget.monster !== undefined) {
+        document.getElementById("monsterframe").innerHTML =  monsters_list.get(hoverTarget.monster);    
+        setOption(document.getElementById('monster-list'), hoverTarget.monster);
+      }
+      lastmonstertoken = hoverTarget;
+      document.getElementById("url-iframe").style.display = "";
+      
+  }
+}
+
+  console.log("mouse up:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
   this.isDragging = false;
   if(!this.touchenable)
     this.selection = true;
           
   if((this.isDrawing || canvas.isDrawingfog) && !this.with2clicks) {
+    try{ 
     //var square = canvas.getActiveObject(); 
     if (square.width !== 0) {
-        var oldtilesize = tileSize;
+
         canvas.remove(square);
         this.isDrawing = false;
         this.Started = false;
 
         if (!canvas.isDrawingfog) {
-          tileSize = Math.abs(square.width);
-          updateBoard(oldtilesize)
+          if (document.getElementById("plotmode").checked) {
+            plottileSize = checkminTile(Math.abs(square.width));
+          } else {
+            tileSize = checkminTile(Math.abs(square.width));
+          }
+          
+          updateBoard()
         } else {
           addFog(square.left - canvas.backgroundImage._element.width/2, square.top - canvas.backgroundImage._element.height/2, square.width, square.height);
           //this.isDrawingfog = false;
@@ -1643,22 +2308,36 @@ canvas.on("mouse:up", function (opt) {
       this.with2clicks = true;
       this.square = square;
     }
+  } catch (error) {
+    console.log(error)
+  }
   } else {
-      checkBorders();
-      setTimeout(function(){ addFog('update'); }, waittime);
+      //checkBorders();
+      canvas_move();      
  }
 
 });
 
 canvas.on('object:modified', function(options) {
+  
   var doomedObj = canvas.getActiveObject();
-  if ((doomedObj.left < (-tileSize/2)) || (doomedObj.top < (-tileSize/2)) )  {
-    deleteObj();
-  }
-  else {
-    updateBoardQuick();
-    setTimeout(function(){ addFog('update'); }, 4*waittime);
-  }
+  console.log("modfied!!!")
+  if (doomedObj !== null)
+    if ( doomedObj.get('type') !== "textbox") {
+    if ((doomedObj.left < (-tileSize/2)) || (doomedObj.top < (-tileSize/2)) )  
+      deleteObj();
+    else {
+      updateBoardQuick();
+      console.log(canvas.fogEnabled);
+      console.log(!fogrunning)
+      if (canvas.fogEnabled)
+        if (!fogrunning) {
+          fogrunning = true;
+          window.setTimeout(function() {  addFog('update'); }, 2*waittime);
+        }
+      }        
+}
+
 });
 
 canvas.on('object:added', function(options) { 
@@ -1675,8 +2354,23 @@ canvas.on('object:removed', function(options) {
 }
 });
 
+canvas.on('selection:cleared',function(ev) {
+
+  console.log(ev)
+if(ev.deselected !== undefined)
+  if(ev.deselected[0].get("type") == "textbox") {
+    updateBoardQuick(true);
+  }
+
+});
+
+
 canvas.on('selection:created',function(ev) {
-console.log("selection created: " + ev.target)
+
+if (ev.target.get("type") !== "textbox")
+setTimeout(() => {
+  canvas.discardActiveObject().renderAll();
+}, 5000);
 
 /*
 if ("#<fabric.Rect>" == ev.target + "") {
@@ -1696,6 +2390,7 @@ else {*/
       lockScalingY: false,
       lockRotation: false
   });
+  canvas.sendToBack(f);
   }
   else {
     try{
@@ -1736,11 +2431,15 @@ else {*/
 //function for recreating tokens
 const DrawItems = (data) => {
 
-  console.log("redibujamos mensaje")
+  var req_render = false;
+
+  console.log("redibujamos mensaje: ")
   // First time we receive a packet
   if(!connected) {
     console.log("First paquet!")
     createBg(data.item.backgroundImage)
+    mainBackground = data.item.backgroundImage;
+    plotBackground = data.item.plotBackground;
     connected = true;
     setTimeout(function(){ DrawItems(data) }, waittime); 
     if(data.item.playerid == "dm")
@@ -1748,20 +2447,42 @@ const DrawItems = (data) => {
     return;
   }
 
+  if (data.item.redraw == true) {
+
+    tileSize = checkminTile(data.item.tileSize);
+    plottileSize = checkminTile(data.item.plottileSize);
+    reDrawAll(data.item);
+    return;
+  }
+
   try {
     // Get background and TileSize
-    var myboard = getboard();
-    if (myboard.backgroundImage !== data.item.backgroundImage) {
-      console.log("new background!")
-      createNewBg(data.item.backgroundImage)
+    var myboard = getboard();    
+    if (myboard.backgroundImage !== data.item.backgroundImage) {            
+      reDrawAll(data.item);
+      retrycount = 0;
       return;
     }
-  } catch (e) {console.log(e)}
+  } catch (e) {    
+      console.log("Error getting background!:" + e)    
+      if (retrycount > 10) {
+        reDrawAll(data.item);
+        retrycount = 0;
+      }
+        
+      else {
+        setTimeout(function(){ DrawItems(data) }, 2*waittime); 
+        retrycount = retrycount + 1;
+      }
+      
+    return;
+  }
 
     // If it is just a move, we just make a move
     var ok = true;
     var selected = "";
     var lista;
+    // Check if a group is selected
     try {
       selected = canvas.getActiveObject().id;
     } catch (e) {
@@ -1771,11 +2492,12 @@ const DrawItems = (data) => {
     } catch (e) {
     }
 
-    if ((canvas._objects.length == data.item.tokens.length) && (tileSize == data.item.tileSize) ) {
-      console.log("just move!");
+    // Just move
+    if ((canvas._objects.length == data.item.tokens.length) && (tileSize == data.item.tileSize) && (plottileSize == data.item.plottileSize) ) {
+    // If possible, just sequentially
         var i = 0;
-        canvas.forEachObject(function(o) {
-          console.log(o.id + " " + data.item.tokens[i].id)
+        canvas.getObjects().every(function(o) {   
+
           if (o.id  == data.item.tokens[i].id ) { //&& o.id
             if(o.id !== selected && !checklista(o.id,lista)) {
             
@@ -1783,21 +2505,30 @@ const DrawItems = (data) => {
             if (o.dd20size < 0) {
               o.set({hasControls: true, scaleX:data.item.tokens[i].scaleX,scaleY:data.item.tokens[i].scaleY, angle:data.item.tokens[i].angle });
             } 
+            if (o.text !== undefined) {
+              o.text = data.item.tokens[i].text;
+              req_render = true;
+            }
             o.hp = data.item.tokens[i].hp;
+            o.color = data.item.tokens[i].color;
             if (o.left !== data.item.tokens[i].left || o.top !== data.item.tokens[i].top )
             o.animate({left: data.item.tokens[i].left, top: data.item.tokens[i].top }, {
               duration: animationtime,
-              onChange: canvas.renderAll.bind(canvas),
-           });
-            } else
-            console.log("no movemos el seleccionado")
+              onChange: canvas.renderAll.bind(canvas),});
+
           }
-          else {
-            ok = false;
-            console.log("hay algun error")
-          }    
           i++;
+          return true;
+        } else {
+            console.log("No esta en secuencia!")
+            ok = false;         
+            return false;
+          }
+
         });
+
+        if (req_render)
+          canvas.renderAll();
   } else 
     ok = false;
 
@@ -1811,10 +2542,10 @@ Recorremos todos los objetos mensaje:
  No dejar a los jugadores selección de grupo
 */
   if (!ok) {
-    if (tileSize !== data.item.tileSize) {
-      console.log("tile size change!")
-      tileSize = data.item.tileSize;
-        reDrawAll(data.item);
+    if ((tileSize !== data.item.tileSize) || (plottileSize !== data.item.plottileSize) ) {
+      plottileSize = checkminTile(data.item.plottileSize);
+      tileSize = checkminTile(data.item.tileSize);
+      reDrawAll(data.item);
     }
     else {
     console.log("More than move, let's see in detail! " +  data.item.tileSize);
@@ -1823,17 +2554,27 @@ Recorremos todos los objetos mensaje:
     canvas.forEachObject(function(o) {
       if(o.fill !== '#c710875') {
         let t = getTokenInlist(o.id,tokens);
+
         if (t > -1) {
           if(o.id !== selected && !checklista(o.id,lista)) {
-         adjustToken(o, tokens[t].zoomrange, tokens[t].leftrange, tokens[t].uprange)
-         if (tokens[t].dd20size < 0) 
-                o.set({hasControls: true, scaleX:tokens[t].scaleX,scaleY:tokens[t].scaleY, angle:tokens[t].angle });
-          if (o.left !== tokens[t].left || o.top !== tokens[t].top )
-          o.animate({left: tokens[t].left, top: tokens[t].top }, {
-            duration: animationtime,
-            onChange: canvas.renderAll.bind(canvas),
-         });
-         o.hp = tokens[t].hp;
+
+            adjustToken(o, tokens[t].zoomrange, tokens[t].leftrange, tokens[t].uprange)
+
+            if (tokens[t].dd20size < 0) 
+              o.set({hasControls: true, scaleX:tokens[t].scaleX,scaleY:tokens[t].scaleY, angle:tokens[t].angle });
+        
+            if (o.text !== undefined) {
+              o.text = tokens[t].text;
+              req_render = true; }
+
+            if (o.left !== tokens[t].left || o.top !== tokens[t].top )
+              o.animate({left: tokens[t].left, top: tokens[t].top }, {
+              duration: animationtime,
+              onChange: canvas.renderAll.bind(canvas),});
+
+            o.hp = tokens[t].hp;
+            o.color = tokens[t].color;
+
         }
         }
         else {
@@ -1849,12 +2590,12 @@ Recorremos todos los objetos mensaje:
         createToken(item);
       }
     });
-    
 
-  } }
-  
-  //canvas.requestRenderAll();
-  
+    if (req_render)
+          canvas.requestRenderAll();
+  } 
+}
+   
   // Save the board into local storage
   if(checkAdmin()) {
     localStorage.setItem(room + 'data', JSON.stringify(data.item));
@@ -1866,6 +2607,15 @@ function checklista(id, lista) {
   if (lista !== undefined) {
   for (var i = 0; i < lista.length; i++) {
     if(lista[i].id == id) return true;
+  }
+  return false;
+} else return false;
+}
+
+function checklistvalue(id, lista) {
+  if (lista !== undefined) {
+  for (var i = 0; i < lista.length; i++) {
+    if(lista[i] == id) return true;
   }
   return false;
 } else return false;
@@ -1907,31 +2657,47 @@ fogHoles.forEach((item,index) => {
 return obj;
 }
 
-function getboard(tiles) {
-
-  tiles = tiles || tileSize;
-
+function getboard() {
+  
   var bg = canvas.backgroundImage._element.src;
   if (bg == "")
     bg = canvas.backgroundImage._element.firstChild.src;
 
   var obj = new Object();
-  obj.backgroundImage   = bg;
+  if (document.getElementById("plotmode").checked) {
+    console.log("plot mode checked - getboard: " + mainBackground)
+    obj.backgroundImage   = mainBackground;  
+  } else {
+    obj.backgroundImage   = bg;  
+  }
+  obj.plotBackground    = plotBackground;
   obj.background_width  = canvas.backgroundImage._element.width;
   obj.background_heigth = canvas.backgroundImage._element.height;
   obj.tileSize          = tileSize;
+  obj.plottileSize      = plottileSize;
   obj.playerid          = user;
   obj.tokens            = [];
   obj.request           = false;
   obj.fog               = canvas.fogEnabled;
   obj.squares   = [];
   obj.roll = false;
+  
+  if (checkAdmin()) {
+    obj.inmersive = document.getElementById("inmersive-on").checked;
+
+      obj.inmersive_track = document.getElementById("inmersive-track").checked;
+      obj.inmersive_dice = document.getElementById("inmersive-dice").checked;
+      obj.inmersive_chat = document.getElementById("inmersive-chat").checked;
+      obj.inmersive_assets = document.getElementById("inmersive-assets").checked;
+    
+    
+  }
 
   canvas.forEachObject(function(o) {
-    if (o._element !== undefined) {
+    
+    if (o._element !== undefined) {      
       var token = new Object();
-      token.src  = o._element.src;
-      //token.dd20size = o.scaleX * o._element.naturalWidth / (tiles);
+      token.src  = o._element.src;      
       token.dd20size = o.dd20size;
       token.scaleX = o.scaleX;
       token.scaleY = o.scaleY;
@@ -1940,6 +2706,8 @@ function getboard(tiles) {
       token.uprange = o.uprange;
       token.zoomrange = o.zoomrange;
       token.hp = o.hp;
+      token.plot = o.plot;
+      token.color = o.color;
       if (o.group !== undefined) {
         token.top  = o.top + o.group.top + o.group.height/2;
         token.left = o.left + o.group.left + o.group.width/2;  
@@ -1950,6 +2718,25 @@ function getboard(tiles) {
         token.id = o.id;
       }
     obj.tokens.push(token);
+  } else if(o.text !== undefined) {
+    var token = new Object();
+      token.text = o.text;
+      token.dd20size = o.dd20size;
+      token.plot = o.plot;
+      token.scaleX = o.scaleX;
+      console.log(o);
+      token.scaleY = o.scaleY;
+      token.angle = o.angle;
+      if (o.group !== undefined) {
+        token.top  = o.top + o.group.top + o.group.height/2;
+        token.left = o.left + o.group.left + o.group.width/2;  
+        token.id = o.id;
+      } else {
+        token.top  = o.top;
+        token.left = o.left;
+        token.id = o.id;
+      }
+    obj.tokens.push(token);   
   }
   });
   
@@ -1965,8 +2752,11 @@ function getboard(tiles) {
   return(obj);
 }
 
-  function deleteObj(){
+  function deleteObj() {
     var doomedObj = canvas.getActiveObject();
+    if ( (doomedObj.get('type') !== "textbox") || !doomedObj.isEditing) {
+
+    if (doomedObj !== undefined)
       if (doomedObj.type === 'activeSelection') {
           doomedObj.canvas = canvas;
           doomedObj.forEachObject(function(obj) {
@@ -1975,7 +2765,7 @@ function getboard(tiles) {
           });
           updateBoardQuick()
      }
-      else{
+      else {
       var activeObject = canvas.getActiveObject();
         if(activeObject !== null ) {
           canvas.justDeleted++;
@@ -1984,15 +2774,19 @@ function getboard(tiles) {
         }
       }
     }
+  }
 
 
 // ---------------------------------------------------------- //
 // Communication to server 
-async function sendMessage(token) {
-  console.log(token)
-  var messageToSend = { item: token };
+async function sendMessage(token, redraw) {
+
+  var redraw = redraw || false;
+  token.redraw = redraw;
+  var messageToSend = { item: token};
   await app.service(channel).create(messageToSend);
   messageToSend = {};
+
 }
 
 function sendChat() {
@@ -2007,6 +2801,24 @@ function sendChat() {
   obj.chat = true;
   obj.text = text;
   sendMessage(obj);
+}
+
+
+
+function sendChat_5e() {
+
+  console.log("from beyond")
+
+  var text = document.getElementById("chat-text").value;
+  document.getElementById("chat-text").value = "";
+  var obj = new Object();
+  obj.playerid          = user;
+  obj.request           = false;
+  obj.roll = false;
+  obj.chat = true;
+  obj.text = text;
+  sendMessage(obj);
+
 }
 
 function sendChat_beyond() {
@@ -2032,7 +2844,7 @@ function checkEnter() {
   if (key === 13) {
       sendChat();
       return false;
-  }
+  } 
   else {
       return true;
   }
@@ -2041,16 +2853,22 @@ function checkEnter() {
 function printchat(item) {
   var text = urlify(item.text)
   var log = document.getElementById("chat-log");
-  log.innerHTML = log.innerHTML +"<br><span class='playerid'>" + item.playerid + ":</span><div draggable='true' ondragstart='drag_roll_start(event)' ondragend='drag_roll_end(event)' class='dice_result' id='g"+generalid+++"'>" + text + "</div>";
+  if (item.pretext !== undefined && item.pretext !== "") {
+    log.innerHTML = log.innerHTML +"<br><span class='playerid'>" + item.pretext + ":</span><div draggable='true' ondragstart='drag_roll_start(event)' ondragend='drag_roll_end(event)' class='dice_result' id='g"+generalid+++"'>" + text + "</div>";  
+  }
+  else {
+    log.innerHTML = log.innerHTML +"<br><span class='playerid'>" + item.playerid + ":</span><div draggable='true' ondragstart='drag_roll_start(event)' ondragend='drag_roll_end(event)' class='dice_result' id='g"+generalid+++"'>" + text + "</div>";  
+  }
+  
+  localStorage.setItem(room + 'chat-log', log.innerHTML);
+  document.getElementById("chat-log").scrollTop = document.getElementById("g"+(generalid-1)).offsetTop;  
+ 
 }
 
 
 // Receive data from server from async function
 function addMessage(item) {
 
-  console.log("message received!")
-
-  
   if(item.item.roll) 
     printdice(item.item)
 
@@ -2060,16 +2878,25 @@ function addMessage(item) {
     
   if(item.item.chat) 
     printchat(item.item)
+
+  if(item.item.music) 
+    playmusic(item.item)
   
+    console.log(user)
+    console.log(item.item.playerid)
 
 // If it is our message we do nothing
 if (user !== item.item.playerid) {
 
-  if(item.item.track) 
-  print_track(item.item.tracks)
+  set_inmersivemode(item.item.inmersive, item.item.inmersive_track, item.item.inmersive_dice, item.item.inmersive_chat, item.item.inmersive_assets);
+
+  if(item.item.track) {
+    print_track(item.item.tracks)
+    set_namemode(item.item.names);
+  }
 
   if (item.item.request == false) {
-    if(!item.item.roll && !item.item.link && !item.item.track && !item.item.chat) 
+    if(!item.item.roll && !item.item.link && !item.item.track && !item.item.chat && !item.item.music) 
     /*{
       printdice(item)
     } else 
@@ -2090,10 +2917,8 @@ if (user !== item.item.playerid) {
       }, 2*waittime);
       setTimeout(() => {
         sendMessage(getLink());        
-      }, 4*waittime);
-      
+      }, 4*waittime);      
     }
-
   }
 }
  
@@ -2120,28 +2945,34 @@ return Math.floor(Math.random() * Math.floor(max));
 // ------------------------------------------------------------------- // 
 
 function addtrackwhentoken(src,n) {
-  if (n == null) {
+console.log(src)
+if (n == null) {
   // Comprobamos que no sea una bola de fuego
   for (var i = 6 ; i < 11; i++) {
     var tr = document.getElementById("t" + i).src;
-    if(tr == src)
-    return;
+    if(tr == src) {     
+      return;
+    }    
   }
-  if (!document.getElementById("free").checked){
-    for (var i = 1 ; i < 9; i++) {
+  if (!document.getElementById("free").checked) {
+    for (var i = 2 ; i < 10; i++) {
       var tr = document.getElementById("track" + i).style.backgroundImage;
+      console.log(tr)
       if (tr == "") {
+        console.log("lo metemos track" + i)
         document.getElementById("track" + i).style.backgroundImage = "url('" + src + "')";
         document.getElementById("track" + i).firstElementChild.style.display = "";
         break;
       }
     }
-}} else {
+}
+} else {
  
     document.getElementById("track" + (n+1)).style.backgroundImage = "url('" + src + "')";
     document.getElementById("track" + (n+1)).firstElementChild.style.display = "";
 }
 }
+
 function delay(wait) {
   setTimeout(function(){ sendMessage(getboard()); }, wait);
   }
@@ -2171,14 +3002,16 @@ function delay(wait) {
         if (o.hp !== undefined)
           hp.innerHTML = o.hp;
 
+        if (o.color !== undefined)
+          hp.style.backgroundColor = o.color.replace("rgba(0, 0, 0, 1)","rgba(200, 100, 100, 0.5)").replace(", 1)",", 0.5)");;
+
         if (o.group !== undefined) {
           top  = o.top + o.group.top + o.group.height/2;
           left = o.left + o.group.left + o.group.width/2;  
         } else {
           top  = o.top;
           left = o.left;
-        }
-        
+        }        
        
         hp.style.left = (o.left*zoom + canvas.viewportTransform[4])  + "px";
         hp.style.top  = (o.top*zoom + canvas.viewportTransform[5])  + "px";
@@ -2210,6 +3043,12 @@ function delay(wait) {
       document.getElementById("token-map").value = destiny.src;
       addToken();
     } 
+    else if (destiny.className == "tokenA") {
+      addText();
+    } 
+    else if (destiny.className == "tokentA") {
+      addText();
+    } 
     else if (destiny.className == "track_item") {
       destiny.style.backgroundImage = "";
       destiny.firstElementChild.style.display = "none";
@@ -2232,7 +3071,6 @@ function delay(wait) {
         var width =  tileSize * zoom * lasthp.dd20size;
         var heigth = tileSize * zoom * lasthp.dd20size;
 
-        //console.log(top + " " + left + " " + heigth + " " + width + "--" + ev.clientY + " " + ev.clientX)
         if (ev.clientX < left + width/3 && ev.clientY < top + heigth/3)
           var total = parseInt(document.getElementById(destiny.id).getElementsByClassName("dice_result__total-result")[0].innerHTML) * 0.5;
         else if (ev.clientX > left + 2*width/3 && ev.clientY > top + 2*heigth/3)
@@ -2258,7 +3096,7 @@ function delay(wait) {
     var hp = document.getElementById("hp");
 
     if (hoverTarget !== undefined && hoverTarget !== lasthp && hoverTarget.dd20size !== -1) {
-      console.log("encima")
+
       lasthp = hoverTarget;
       hp.style.display="";     
       hp.childNodes[1].style.display = "none";
@@ -2284,10 +3122,105 @@ function delay(wait) {
     create_roll_divs();    
     event.dataTransfer.setData("text", event.target.id);
   }  
+  
+  function drag_scene_start(event) {       
+    console.log(event.target)
+    event.dataTransfer.setData("text", event.target.id);
+  }  
+
+  function trash_enter(event) {
+    event.target.style.filter = "hue-rotate(90deg)";
+    event.preventDefault();  
+    event.stopPropagation();
+
+  }
+
+  function trash_leave(event) {
+    event.target.style.filter = "";
+    event.preventDefault();  
+    event.stopPropagation();
+  }
+
+  function trash_over(event) {
+    event.preventDefault();  
+    event.stopPropagation();
+  }
+
   function drag_roll_end(event) {
     document.querySelectorAll('.thp').forEach(e => e.remove());
   } 
           
+  function drop_trash(event) {
+
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    var destiny = document.getElementById(data);
+    var parent = destiny.parentNode.id;
+     
+    if (destiny.nodeName == "DIV") 
+      destiny.parentNode.removeChild(destiny);
+    else if (destiny.nodeName == "A")
+      destiny.parentNode.parentNode.removeChild(destiny.parentNode);
+    else if (destiny.nodeName == "IMG")
+      destiny.parentNode.removeChild(destiny);
+
+    if ((destiny.className.indexOf("centered-text") > -1)) {
+     
+      var lista = [];
+      var lista_names = [];
+      var lista_assets = [];
+      var lista_music = [];
+      lista        = JSON.parse(localStorage.getItem('allscenes')) || [];
+      lista_names  = JSON.parse(localStorage.getItem('allscenesnames')) || [];
+      lista_assets = JSON.parse(localStorage.getItem('allscnassets')) || [];
+      lista_music  = JSON.parse(localStorage.getItem('allmusic')) || [];
+      
+      var pos = parseInt(data.replace("sdiv","").replace("slink",""));
+      lista.splice(pos, 1);  
+      lista_names.splice(pos, 1);
+      lista_assets.splice(pos, 1);
+      lista_music.splice(pos, 1);
+
+      localStorage.setItem('allscenes', JSON.stringify(lista));
+      localStorage.setItem('allscenesnames', JSON.stringify(lista_names));
+      localStorage.setItem('allscnassets', JSON.stringify(lista_assets));
+      localStorage.setItem('allmusic', JSON.stringify(lista_music));
+    }
+    else if (destiny.classList.contains("bglist")) {
+      
+      if (parent.indexOf("background-list") > -1) {
+        savetilesizeonlist()        
+      }        
+      else if (parent.indexOf("asset-list") > -1) {
+        getLink()
+      }
+      else {        
+        var lista = [];
+        lista = JSON.parse(localStorage.getItem('allassets')) || [];
+        var pos = parseInt(data.replace("all",""));
+        lista.splice(pos, 1);  
+        localStorage.setItem('allassets', JSON.stringify(lista));      
+    }
+
+    }
+    else if (destiny.classList.contains("musiclist")) {
+      setTimeout(() => {
+        var list = document.getElementById("music-list");
+        var musicN = list.childElementCount;
+        list = list.children;
+        console.log(musicN)
+        for (i = 0; i < musicN; i++) {
+          console.log(list[i].getAttribute("src"))
+          localStorage.setItem("music" + i, list[i].getAttribute("src"))
+        }
+        localStorage.setItem("musicN", musicN)  
+      }, waittime);
+      
+    }
+    event.target.style.filter = "";
+
+  }
+
   function drop_track(event) {
    event.preventDefault();
    event.target.style.border = "";
@@ -2298,7 +3231,7 @@ function delay(wait) {
    if (destiny.className == "track_item") {
       if (destiny.style.order !== oorigin.style.order) {
         var old = destiny.style.order;
-        destiny.style.order = oorigin.style.order;
+        destiny.style.order = oorigin.style.order
         oorigin.style.order = old;
         update_track();
       }        
@@ -2325,9 +3258,23 @@ function delay(wait) {
    }
   }
   function click_track(event) {
+
+    poner = true;
+    if (event.target.classList.contains("selected"))
+      var poner = false;
+    
+    var lista = document.getElementById("track_bar").children;
+    for (var i = 0; i < lista.length; i++) {
+      lista[i].classList.remove("selected")
+    }
+
+    if (poner)
+    event.target.classList.add("selected");
+
     var s = event.target.style.backgroundImage;
     s = s.substring(5, s.length-2);
     document.getElementById('token-map').value = s;
+    update_track();
   }
 
   function drag_over_track(event) {
@@ -2339,32 +3286,36 @@ function delay(wait) {
   }
 
   function get_track() {
+    
     var obj = new Object();
     obj.tracks = [];
     obj.track = true;
     obj.playerid          = user; 
     obj.request           = false;
+    obj.names             = document.getElementById("view-names").checked;
 
     for (var i = 1 ; i < 9; i++) {
         var t = new Object();
         t.order = document.getElementById("track" + i).style.order;
         t.hp    = document.getElementById("track" + i).firstElementChild.value;
         t.src   = document.getElementById("track" + i).style.backgroundImage;
+        t.class = document.getElementById("track" + i).className;
         localStorage.setItem("trackorder" + i, t.order);
         localStorage.setItem("trackhp" + i, t.hp);
         localStorage.setItem("tracksrc" + i, t.src);
-        console.log(t.src);
+        localStorage.setItem("trackclass" + i, t.class);
         obj.tracks.push(t);
     }
     return(obj);
   }
 
   function print_track(tracks) {
-    console.log(tracks);
+ 
     for( i = 0 ; i < tracks.length; i++) {
       document.getElementById("track" + (i+1)).style.order = tracks[i].order;
       document.getElementById("track" + (i+1)).firstElementChild.value = tracks[i].hp;
       document.getElementById("track" + (i+1)).style.backgroundImage = tracks[i].src;
+      document.getElementById("track" + (i+1)).className = tracks[i].class;
       if (tracks[i].src !== "") 
         document.getElementById("track" + (i+1)).firstElementChild.style.display = "";
         else 
@@ -2373,108 +3324,296 @@ function delay(wait) {
     
   }
   
-  function sendLink() {
+  function sendLink(link) {
 
-    var link = checkurl(document.getElementById("token-map").value);
+    if (link !== undefined) {
 
+    }
+    else {
+      link = checkurl(document.getElementById("token-map").value);
+    }
+          
     if ((link !== "") && (!checkSRC(link,document.getElementById("asset-list").childNodes))) {
+     
+      var img = document.createElement("img");
+      img.classList.add("bglist");
+      img.id = "assett" + document.getElementById("asset-list").childElementCount + 1;
+      img.addEventListener('dragstart',  drag_scene_start, true);
+      if (!document.getElementById("assetvisible").checked) 
+        img.classList.add("grayed");
 
-    var img = document.createElement("img");
-    img.src = link;
-    img.classList.add("bglist");
+      if (link.indexOf('.webm')>0 || link.indexOf('.m4v')>0 || link.indexOf('.mp4')>0) {   
+        img.src = IconVideo;        
+        img.setAttribute('video', link)
+      } 
+      else {
+        img.src = link;
+      }
+        
+      var list = document.getElementById("asset-list");
+        list.appendChild(img);
 
-    if (!document.getElementById("assetvisible").checked) 
-      img.classList.add("grayed");
+      if (list.childElementCount > maxItems)
+        list.removeChild(list.childNodes[0])
 
-    var list = document.getElementById("asset-list");
-    list.appendChild(img);
-
-    if (list.childElementCount > 6)
-      list.removeChild(list.childNodes[0])
-
-
-    if (document.getElementById("assetvisible").checked) 
-      sendMessage(getLink());
-
-  }
+      if (document.getElementById("assetvisible").checked) 
+        sendMessage(getLink());
+      
+      addtoAllAssets(link)
+      }
 
   }
 
   function update_assets(link) {
 
+    if (!link.forced) {
+
     var list = document.getElementById("player-asset-list");
     list.innerHTML = "";
-
-    console.log("update Assets!!!!!!!")
+    
     if(link.assets.length > 0) {
-      for ( var i = 0; i < link.assets.length; i++) {
-        var img = document.createElement("img");
-        img.src = link.assets[i].src;
-        img.classList.add("bglist");
-        img.id = "a"+i;
-        img.addEventListener("dragstart",drag, true);
-        list.appendChild(img);
-        console.log(link.assets[i].src)
+      for ( var i = 0 ; i < link.assets.length ; i++) {      
+      var asset = link.assets[i].src;
+        if (IsVideo(asset)) {                  
+          var img = document.createElement("img");
+          img.src   = IconVideo;
+          img.setAttribute('video', link.assets[i].src.replaceAll(" ","%20"));
+          img.classList.add("bglist");
+          img.id = "a"+i;          
+          list.appendChild(img);
+        }
+        else {          
+          var img = document.createElement("img");
+          img.src = link.assets[i].src.replaceAll(" ","%20");
+          img.classList.add("bglist");
+          img.id = "a"+i;
+          img.addEventListener("dragstart",drag, true);
+          list.appendChild(img);      
+        
       }
     }
-
+    }
+  } else {
+        
+    if (link.links == ""){
+      document.getElementById("ontop").addEventListener('click', hide_menus);
+      document.getElementById("ontop").style.display = "none";
+    }
+    else {
+      setplayerasset(link.links)
+      if(!checkAdmin()) {
+        console.log("forcedlink")
+        document.getElementById("ontop").removeEventListener('click', hide_menus);
+      }    
+    }
   }
+}
 
   function checkSRC(id, lista) {
+
+    var item = "";
     if (lista !== undefined) {
     for (var i = 0; i < lista.length; i++) {
-      if(lista[i].src == id) return true;
+     
+      if (lista[i].getAttribute('src') == IconVideo) 
+        item = lista[i].getAttribute('video');
+      else 
+        item = lista[i].getAttribute('src');
+      if(item == id) return true;
     }
     return false;
   } else return false;
   }
 
+  function checkSRCmp3(id, lista) {
+
+    var item = "";
+    if (lista !== undefined) {
+    for (var i = 0; i < lista.length; i++) {     
+      item = lista[i].getAttribute("src");     
+      if(item == id) return true;
+    }
+    return false;
+  } else return false;
+  }
+
+  function IsVideo(asset) {
+    if (asset.indexOf('.webm')>0 || asset.indexOf('.m4v')>0 || asset.indexOf('.mp4')>0)
+      return true
+    else 
+      return false
+  }
+
   function chooseasset(event) {
+    if (event.target.id == "asset-list") {
+      hide_menus();
+    } else {
     if (event.target.classList.contains("grayed"))
-    event.target.classList.remove("grayed")
+      event.target.classList.remove("grayed")
     else event.target.classList.add("grayed")
-    sendMessage(getLink());
+      sendMessage(getLink());
+    }
+  }
+
+  function dblchooseasset(event) {
+    var src = event.target.getAttribute('src');
+    if (src == IconVideo)
+      src = event.target.getAttribute('video');
+    setplayerasset(src)    
+    sendMessage(getForcedLink(src));
+    document.getElementById("title-player-view").style.display = "";
+    document.getElementById("ontop").style.width = "15vw";
+    document.getElementById("ontop").style.height = "15vh";
+    document.getElementById("ontop").style.left = "auto";
+    document.getElementById("ontop").style.top = "auto";
+    document.getElementById("ontop").style.bottom = "5vh";
+    document.getElementById("ontop").style.right = "5vw";
+    document.getElementById("asset-list").style.display = "none";
+    document.getElementById("trash").style.display = "none";
+
+  }
+
+  function choose_all_asset(event) {
+    console.log(event);
+    document.getElementById("token-map").value = event.target.src;
+    hide_menus();
   }
 
   function chooseplayerasset(event) {
-    var src = event.target.src;
-    document.getElementById("ontop").style.backgroundImage = 'url(' + src + ')';
-    document.getElementById("ontop").style.display = "";
+    var src = event.target.getAttribute('src');
+    if (src == IconVideo)
+      src = event.target.getAttribute('video');   
+    setplayerasset(src)
   }
+
+  function setplayerasset(src) {
+
+    src = src.replaceAll(" ","%20")
+
+    if (IsVideo(src)) {
+      var onvideo = document.getElementById('onvideo');
+      if (!(onvideo.firstChild.src == src))        
+       {
+          onvideo.innerHTML = "";
+          var source = document.createElement('source');
+          source.src = src;
+          onvideo.appendChild(source);
+          onvideo.autoplay = true;
+      }
+      
+      document.getElementById("onvideo").style.display = "";
+      document.getElementById("inside-top").style.display = "none";
+
+    } else {
+        document.getElementById("onvideo").style.display = "none";
+        document.getElementById("inside-top").style.display = "";
+        document.getElementById("inside-top").style.backgroundImage = 'url(' + src + ')';        
+    }
+    document.getElementById("ontop").style.display = "";
+  
+    WZoom.create('#inside-top');
+    console.log("wzoom")
+  }
+
 
 function addBackgroundtoList(bg) {
 
   var img = document.createElement("img");
   img.src = bg;
   img.className="bglist";
+  img.id = "bckimg" + document.getElementById("background-list").childElementCount + 1;
   img.addEventListener('error',brokenlink);
+  img.addEventListener('dragstart',  drag_scene_start, true);
 
   var list = document.getElementById("background-list");
   list.appendChild(img);
     
-  if (list.childElementCount > 6)
+  if (list.childElementCount > maxItems)
     list.removeChild(list.childNodes[0])
 
 }
+
 function brokenlink(event) {
   console.log("broken!!" + event.srcElement)
   event.srcElement.removeEventListener('error',brokenlink);
   //event.srcElement.style.display = "none";
-  if (event.srcElement.src.indexOf('.webm')>0 || event.srcElement.src.indexOf('.m4v')>0) {
+  
+  if (event.srcElement.src.indexOf('.webm')>0 || event.srcElement.src.indexOf('.m4v')>0 || event.srcElement.src.indexOf('.mp4')>0) {
     event.srcElement.style.backgroundImage = "url('https://play.digitald20.com/vtt/img/video.jpg')";
     event.srcElement.style.backColor = "black";
+
+    /*
+    var video = document.createElement('video');
+    video.width = 40;
+    video.height = 25;
+    video.crossOrigin = 'Anonymous';
+    video.setAttribute('src', event.srcElement.src);	
+    console.log(event.srcElement.src)						
+    
+    // Create thumbnail after video data loaded
+    video.addEventListener('loadeddata', function() {
+        this.play()
+        setTimeout(() => {
+          this.pause();
+          var canvas = document.createElement("canvas");
+          canvas.width = 40;
+          canvas.height = 25;
+          canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+          
+          event.srcElement.style.backgroundImage = "url('"+ canvas.toDataURL() + "')";
+          event.srcElement.style.backColor = "black";
+          console.log(canvas.toDataURL())  
+        }, 200);    
+        
+      }, false);
+     */
   }
-  
+
+}
+
+function deleteItem(event) {
+
+  var id = event.srcElement.id;
+  event.srcElement.removeEventListener('error',deleteItem);
+  event.srcElement.parentNode.removeChild(event.srcElement);
+
+  var lista = [];
+  lista = JSON.parse(localStorage.getItem('allassets')) || [];
+  var pos = parseInt(id.replace("all",""));
+  lista.splice(pos, 1);  
+  localStorage.setItem('allassets', JSON.stringify(lista));
+ 
 }
 
   function choosebackground(event) {
-    var oldtilesize = tileSize;
-    tileSize =  event.target.getAttribute("tile")
+
+    if (event.target.id == "background-list") {
+      hide_menus();
+    } else {
+      if (document.getElementById("plotmode").checked) {
+          plottileSize =  checkminTile(event.target.getAttribute("tile"));
+      } else {
+          tileSize =  checkminTile(event.target.getAttribute("tile"));
+      }    
+
+    if (document.getElementById("plotmode").checked) {
+      plotBackground = event.target.src;  
+    } else {
+      mainBackground = event.target.src;
+    }
+
     createBg(event.target.src)
+
     setTimeout(() => {
-      updateBoard(oldtilesize)
+      updateBoard();
+      setTimeout(() => {
+        check_outside_tokens();
+      }, 3*waittime);
     }, waittime);
-   
+
+    document.getElementById("background-list").style.display = "none";
+    document.getElementById("trash").style.display = "none";
+  }
   }
 
   function savetilesizeonlist() {
@@ -2496,28 +3635,66 @@ function brokenlink(event) {
 
     document.getElementById("asset-list").style.display = "none";
 
-    if (document.getElementById("background-list").style.display == "flex")
+    if (document.getElementById("background-list").style.display == "flex") {
       document.getElementById("background-list").style.display = "none";
-    else
+      document.getElementById("trash").style.display = "none";
+    }
+    else {
       document.getElementById("background-list").style.display = "flex";
+      document.getElementById("trash").style.display = "";
+    }
   }
   function show_asset() {
     event.stopPropagation();
     document.getElementById("background-list").style.display = "none";
      
-    if ( document.getElementById("asset-list").style.display == "flex")
+    if ( document.getElementById("asset-list").style.display == "flex") {
     document.getElementById("asset-list").style.display = "none";
-    else 
+    document.getElementById("trash").style.display = "none";
+  }
+    else {
     document.getElementById("asset-list").style.display = "flex";
+    document.getElementById("trash").style.display = "";
+  }
   }
 
-  function hide_menus() {
-    document.getElementById("hello").style.display = "none";  
-    document.getElementById("background-list").style.display = "none";
-    document.getElementById("asset-list").style.display = "none";
-    document.getElementById("ontop").style.display = "none";
-    document.getElementById("dice-select").style.display = "none";
+  function hide_menus(event) {
 
+    console.log("esconde")
+
+    if(checkAdmin() && (document.getElementById("ontop").style.display == "")) {
+      document.getElementById("hello").style.display = "none";  
+      document.getElementById("uploadfile").style.display = "none";  
+      document.getElementById("background-list").style.display = "none";
+      document.getElementById("music-list").style.display = "none";
+      document.getElementById("asset-list").style.display = "none";      
+      document.getElementById("dice-select").style.display = "none";
+      document.getElementById("allassets").style.display = "none";
+      document.getElementById("allscenes").style.display = "none";
+      document.getElementById("trash").style.display = "none";
+      document.getElementById("url-iframe").style.display = "none";
+      document.getElementById("message2").style.display="none"
+      try {
+        if(event.srcElement.id == "ontop" || event.srcElement.id == "title-player-view" || event.srcElement.id == "inside-top")
+          document.getElementById("ontop").style.display = "none";      
+          sendMessage(getForcedLink(""));      
+        } catch (e) {}
+    
+    } else {
+      document.getElementById("hello").style.display = "none";  
+      document.getElementById("uploadfile").style.display = "none";        
+      document.getElementById("background-list").style.display = "none";
+      document.getElementById("music-list").style.display = "none";
+      document.getElementById("asset-list").style.display = "none";
+      document.getElementById("ontop").style.display = "none";
+      document.getElementById("dice-select").style.display = "none";
+      document.getElementById("allassets").style.display = "none";
+      document.getElementById("allscenes").style.display = "none";
+      document.getElementById("trash").style.display = "none";
+      document.getElementById("url-iframe").style.display = "none";
+      document.getElementById("message2").style.display="none"
+    }
+    
   }
 
   function show_config_view() {
@@ -2534,18 +3711,21 @@ function brokenlink(event) {
     if (document.getElementById("chat-area").style.display == "") {
       document.getElementById("chat-area").style.display = "none";
       document.getElementById("hide-chat").innerHTML = "Show Chat";
-      document.getElementById("log").style.display = "";
+      //document.getElementById("log").style.display = "";
     }
       
     else {
       document.getElementById("chat-area").style.display = "";
       document.getElementById("hide-chat").innerHTML = "Hide Chat";
-      document.getElementById("log").style.display = "none";
+      var elements = document.getElementById("chat-log").getElementsByClassName('dice_result')
+          console.log( elements[elements.length - 1].offsetTop)
+          document.getElementById("chat-log").scrollTop = elements[elements.length - 1].offsetTop;  
+      //document.getElementById("log").style.display = "none";
     }
   }
 
   function checkboxClick(event) {
-    if (event.checked)
+    if (event.checked) 
      document.getElementById(event.name).style.display = "";
     else 
      document.getElementById(event.name).style.display = "none";
@@ -2553,11 +3733,11 @@ function brokenlink(event) {
 
   function checkboxBackground(event) {
     if (event.checked) {
-      document.getElementById("main-menu").classList.add("superbox");
+      document.getElementById("superbar").classList.add("superbox");
     }
   
     else {
-      document.getElementById("main-menu").classList.remove("superbox");
+      document.getElementById("superbar").classList.remove("superbox");
     }
   
   }
@@ -2576,6 +3756,14 @@ function brokenlink(event) {
     fabric.util.requestAnimFrame(render);
     });
 
+function IsInArray(e, lista) {
+  for(var i = 0; i < lista.length; i++) {
+   
+    if(e.src == lista[i])
+      return i;
+  }
+  return -1;
+}
     
     function getURLforboard() {
 
@@ -2583,45 +3771,35 @@ function brokenlink(event) {
       if (bg == "")
         bg = canvas.backgroundImage._element.firstChild.src;
     
-      
+       
      //tileSize;
      
-     var i = 0;
-     var j;
-     var src = ["","",""];
-     var n = [0,0,0,0,0,0];
-     var s = [0,0,0,0,0,0];
-     var x = [[],[],[],[],[],[] ];
-     var y = [ [],[],[],[],[],[] ];
-
-     
+     var src = [ ];
+     var n = [  ];
+     var s = [  ];
+     var x = [ [],[] ];
+     var y = [ [],[] ];
+        
+     var i = 0, j = 0;
       canvas.forEachObject(function(o) {
+
         if (o._element !== undefined) {
-          if (o._element.src !== src[0] && o._element.src !== src[1] && o._element.src !== src[2] && o._element.src !== src[3] && o._element.src !== src[4] 
-            && o._element.src !== src[5] && i < 6) {
-            src[i] = o._element.src;
-            s[i] = Math.round(o.dd20size);
-            i++;
-          }
-          j = -1;
-          if (o._element.src == src[0])
-            j = 0;
-          else if (o._element.src == src[1])
-            j = 1;
-          else if (o._element.src == src[2])
-            j = 2;
-            else if (o._element.src == src[3])
-            j = 3;
-            else if (o._element.src == src[4])
-            j = 4;
-            else if (o._element.src == src[5])
-            j = 5;
-          
-            if (j > -1) {
+          j = IsInArray(o._element, src)
+
+          if (j > -1) {
             n[j]++;
             y[j].push(o.top);
             x[j].push(o.left); 
-            }
+          } else if (j == -1) {                        
+            src[i] = o._element.src;
+            s[i] = Math.round(o.dd20size);
+            n[i] = 1;            
+            y[i] = [];
+            x[i] = [];            
+            y[i].push(o.top);
+            x[i].push(o.left);
+            i++;
+          }          
       }
       });  
       
@@ -2629,9 +3807,14 @@ function brokenlink(event) {
       var url = "board.digitald20.com/index.html?"
       url = url + "b=" + bg;
       url = url + "&t=" + Math.round(tileSize); 
+      
+      url = url + "&nt=" + (src.length + 1); 
+      var Nassets = document.getElementById("asset-list").children.length;  
+      if (Nassets > -1)
+        url = url + "&na=" + Nassets;
+      
+      for (var i = 0; i < src.length; i++) {
 
-      for (var i = 0; i < 6;i++) {
-        if (n[i]> 0) {
           url = url + "&t"+(i+1)+"=" + src[i]
           url = url + "&s"+(i+1)+"=" + Math.round(s[i])
           url = url + "&n"+(i+1)+"=" + Math.round(n[i])
@@ -2640,7 +3823,7 @@ function brokenlink(event) {
             url = url + Math.round(x[i][j]) + "," + Math.round(y[i][j]) + ",";
           }
           url = url.substr(0, url.length-1);
-        }
+        
       }
 
       var list = document.getElementById("asset-list").children;
@@ -2701,19 +3884,1180 @@ function notshowagain() {
 }
 
 function hiddenRoll() {
-  c = document.getElementById("hidden-roll").className;
-  if (document.getElementById("hidden-roll").className == "button")
-    document.getElementById("hidden-roll").className = "button-pressed"
-  else 
-    document.getElementById("hidden-roll").className = "button"
 
-  console.log(document.getElementById("hidden-roll").className)
+  if (document.getElementById("hidden-roll").className == "button")
+    document.getElementById("hidden-roll").className = "button-pressed";
+  else 
+    document.getElementById("hidden-roll").className = "button";
+
 }
 
 function checkurl(url) {
-  console.log(url)
+  url = url.replaceAll(" ","%20");
   if (url.indexOf("www.dropbox.com") > 0) {
-    return url.replace("?dl=0", "?dl=1");
+    return url.replace("?dl=0", "?raw=1");
   }
   else return url;
+}
+
+function save_url() {
+  
+  var name = prompt("Please enter the scene name", "ignotus");
+  if (name == null) 
+    name = "ignotus";
+
+  var lista = [];
+  var lista_names = [];
+  
+  lista        = JSON.parse(localStorage.getItem('allscenes')) || [];
+  lista_names  = JSON.parse(localStorage.getItem('allscenesnames')) || [];
+  lista_assets = JSON.parse(localStorage.getItem('allscnassets')) || [];
+  lista_music  = JSON.parse(localStorage.getItem('allmusic')) || [];
+  
+  lista_assets.push(get_assets())
+  lista_music.push(get_music_assets())
+
+  var board = getboard();
+  if (!checklistvalue(board,lista)) {
+    lista.push(board);
+    lista_names.push(name);
+  }
+
+  localStorage.setItem('allscenes', JSON.stringify(lista));
+  localStorage.setItem('allscenesnames', JSON.stringify(lista_names));
+  localStorage.setItem('allscnassets', JSON.stringify(lista_assets));
+  localStorage.setItem('allmusic', JSON.stringify(lista_music));
+
+  savetoplugin()
+  
+}
+
+function get_assets() {
+
+  var obj = new Object();
+  var assetN = parseInt(localStorage.getItem("assetN"));
+  obj.assets = []
+
+  for (i = 0; i< assetN; i++) {                  
+    var item = localStorage.getItem("asset" + i).replaceAll(" ","%20");
+    obj.assets.push(item+"");          
+    }
+
+  return obj;
+}
+
+function get_music_assets() {
+
+  var obj = new Object();
+  var musicN = parseInt(localStorage.getItem("musicN"));
+  obj.music = []
+
+  for (i = 0; i< musicN; i++) {                  
+    var item = localStorage.getItem("music" + i).replaceAll(" ","%20");
+    obj.music.push(item+"");          
+    }
+
+  return obj;
+}
+
+// Mostramos las escenas
+function load_scene() {
+
+  event.stopPropagation();
+  var scenes = document.getElementById("allscenes"); 
+  var lista = [];
+  var lista_names = [];
+  lista        = JSON.parse(localStorage.getItem('allscenes')) || [];
+  lista_names  = JSON.parse(localStorage.getItem('allscenesnames')) || [];  
+  scenes.innerHTML = "";
+ 
+  for (var i = 0; i < lista.length; i++) {
+     var div = document.createElement("div");  
+     var a = document.createElement("p");
+    
+     a.className = "centered-text";
+     div.className = "div-centered-text";
+     a.innerHTML = lista_names[i];    
+     //a.href = "#";
+     a.id = "slink" + i;
+     div.id = "sdiv" + i;
+     //div.style.backgroundImage = "url('" + getbackgroundfromurl(lista[i]) + "')";
+     div.style.backgroundImage = "url('" + lista[i].backgroundImage + "')";
+     div.addEventListener('dragstart',  drag_scene_start, true);
+     div.addEventListener('click',  load_scene_start, true);
+     div.draggable = true;
+     div.appendChild(a);                    
+     scenes.appendChild(div);    
+  }
+ 
+ scenes.style.display = "";
+ document.getElementById("trash").style.display = "";
+ }
+
+ // Cargamos una escena
+ function load_scene_start(ev) {
+
+  var id = ("" + ev.srcElement.id).replace("sdiv","").replace("slink","");
+  lista        = JSON.parse(localStorage.getItem('allscenes'))    || [];
+  lista_assets = JSON.parse(localStorage.getItem('allscnassets')) || [];
+  lista_music  = JSON.parse(localStorage.getItem('allmusic'))     || [];
+
+  board      = lista[id]
+  mainBackground = board.backgroundImage;
+  plotBackground = board.plotBackground;
+  
+  if (checkAdmin()) {
+
+    canvas.forEachObject(function(o) {
+      if(o.fill !== '#c710875')
+      canvas.remove(o);
+    });
+
+    createBg(mainBackground)      
+    
+    var tokens = board.tokens;
+    tokens.forEach((item) => {
+      createToken(item);
+    });
+    
+    try {
+      assetslist = lista_assets[id].assets;
+      for (i = 0; i < assetslist.length; i++) {
+        sendLink(assetslist[i])
+        }  
+      } catch (e) {}
+      
+      try {
+      musiclist  = lista_music[id].music;
+      for (i = 0; i < musiclist.length; i++) {
+        add_music(musiclist[i])
+        }  
+      } catch (e) {}
+    
+  } else {
+
+    document.getElementById("plotmode").checked = true;
+    canvas.forEachObject(function(o) {
+      if(o.fill !== '#c710875')
+        if (o.plot)
+          canvas.remove(o);
+        else
+          o.visible = false;
+    });
+
+    createBg(board.plotBackground)  
+    var tokens = board.tokens;
+    tokens.forEach((item) => {
+      if(item.plot)
+      createToken(item);
+    });
+
+  }
+    
+  if (connected) {
+    setTimeout(() => {
+      sendMessage(getboard(), true);  
+    }, 2*waittime);    
+  }  
+
+  } 
+
+
+ /*
+function load_scene() {
+ var scenes = document.getElementById("allscenes"); 
+ var lista = [];
+ var lista_names = [];
+ lista       = JSON.parse(localStorage.getItem('allscenes')) || [];
+ lista_names = JSON.parse(localStorage.getItem('allscenesnames')) || [];
+ scenes.innerHTML = "";
+
+ for (var i = 0; i < lista.length; i++) {
+    var div = document.createElement("div");  
+    var a = document.createElement("a");
+   
+    a.className = "centered-text";
+    div.className = "div-centered-text";
+    a.innerHTML = lista_names[i];    
+    a.href = lista[i];
+    a.id = "slink" + i;
+    div.id = "sdiv" + i;
+    div.style.backgroundImage = "url('" + getbackgroundfromurl(lista[i]) + "')";
+    div.addEventListener('dragstart',  drag_scene_start, true);
+    div.draggable = true;
+    div.appendChild(a);                    
+    scenes.appendChild(div);    
+ }
+
+scenes.style.display = "";
+document.getElementById("trash").style.display = "";
+}
+*/
+
+function getbackgroundfromurl(url) {
+  return "https://" + new URL(url).searchParams.get('b');
+}
+
+// Comunicate with plugin
+// ------------------------------------
+function savetoplugin() {
+
+  //var every = LZString.compress(JSON.stringify(geteverything()));
+  //console.log(every)
+  //console.log(new Blob([every]).size)
+  //let every = geteverything();
+
+  try {
+    chrome.runtime.sendMessage(chromeid, {data: geteverything()}, function(response) {
+      if (!response.success)
+        console.log("Error con los mensajes con plugin");
+    });
+    } catch(error) {
+      console.log("No plugin loaded");
+    }
+  }
+
+function dd20Receive() {
+  let scenes = document.getElementById("scenes-receive").value		
+  //console.log(JSON.parse(scenes));  
+  load_all_data(JSON.parse(scenes).data)
+}
+
+function geteverything() {
+
+  var lista = [];
+  var lista_names = [];
+  var lista_assets = [];
+  var lista_music = [];
+  var lista_all = [];
+  
+  lista        = JSON.parse(localStorage.getItem('allscenes')) || [];
+  lista_names  = JSON.parse(localStorage.getItem('allscenesnames')) || [];
+  lista_all    = JSON.parse(localStorage.getItem('allassets')) || [];
+  
+  lista_assets =  [];
+  lista_music  =  [];
+  lista_assets.push(get_assets())
+  lista_music.push(get_music_assets())
+  
+  var obj = new Object();
+  obj.scenes  = lista; 
+  obj.names   = lista_names; 
+  obj.assets  = lista_assets;
+  obj.music   = lista_music;  
+  obj.all     = lista_all;    
+
+  console.log(obj)
+  return obj;
+}
+
+function export_scene_file() {  
+
+  var content = JSON.stringify(geteverything());
+  var filename = "dd20-scenes.txt";
+  download(filename, content);
+
+}
+
+function load_scene_file(event) {
+  let file = event.target.files[0];
+  const reader = new FileReader();
+  console.log("Reading file.....")
+
+  reader.addEventListener('load', (event) => {
+    const result = event.target.result;
+    load_all_data(JSON.parse(result))
+
+  });
+  reader.readAsText(file);
+
+}
+
+function load_all_data(obj) {
+
+  console.log(obj)
+
+  var scenes = obj.scenes;
+  var names = obj.names;
+  var assets = obj.assets;
+  var music = obj.music;
+  var all   = obj.all;
+
+  lista        = JSON.parse(localStorage.getItem('allscenes')) || [];
+  lista_names  = JSON.parse(localStorage.getItem('allscenesnames')) || [];
+  lista_all    = JSON.parse(localStorage.getItem('allassets')) || [];
+  
+  for (var i = 0; i < names.length; i++) {      
+    if (!checklistvalue(names[i],lista_names)) {
+      lista.push(scenes[i]);
+      lista_names.push(names[i]);
+    }
+  }
+  
+  for (var i = 0; i < all.length; i++) {          
+    if (!checklistvalue(all[i],lista_all))
+      lista_all.push(all[i]);    
+  }
+
+  localStorage.setItem('allscenes', JSON.stringify(lista));
+  localStorage.setItem('allscenesnames', JSON.stringify(lista_names));
+  localStorage.setItem('allassets', JSON.stringify(lista_all));
+
+  if(checkAdmin()) {
+    for (i = 0; i < assets[0].assets.length; i++) {    
+      sendLink(assets[0].assets[i])
+      }
+  
+    for (i = 0; i < music[0].music.length; i++) {
+      add_music(music[0].music[i])
+      }  
+  }
+
+}
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+function dice_color_change() {
+  
+  var doomedObj = canvas.getActiveObject(); 
+  
+  if (doomedObj !== null)
+    if ( doomedObj.get('type')== "textbox") {
+    console.log();
+    doomedObj.setColor(document.getElementById("fontcolor").value);
+  } else {
+
+
+  var fontColor = document.getElementById("fontcolor").value;
+  var backColor = document.getElementById("backcolor").value;
+  localStorage.setItem("dd20_fontcolor", fontColor);
+  localStorage.setItem("dd20_backcolor", backColor);
+  }
+}
+
+function dice_color_load() {
+  if (localStorage.getItem("dd20_fontcolor") !== null) {
+    var fontColor = localStorage.getItem("dd20_fontcolor");
+    var backColor = localStorage.getItem("dd20_backcolor");
+    document.getElementById("fontcolor").value = fontColor;
+    document.getElementById("backcolor").value = backColor;
+}
+}
+
+function monsterReceived() {
+  let monster = outsidelinks(document.getElementById("monster-receive").value);
+  let monster_name = document.getElementById("monster-name").value.trim();
+  
+  let monster_token = document.getElementById("monster-token").value;
+  console.log(monster_token);
+  
+  addtokentolist(monster_token);  
+
+  if(typeof monsters_list == 'undefined') {
+    monsters_list = new Map();
+    document.getElementById("monsterframe").innerHTML = monster;
+  }
+
+  monsters_list.set(monster_name, monster);  
+  
+  var option = document.createElement("option");
+  option.text = monster_name;
+  document.getElementById("monster-list").add(option);
+  
+  
+  var elements = document.getElementsByClassName("roller");
+       
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('click', tools5edblclick, false);
+  }  
+
+}
+function assetReceiveddnd() {
+  addtoAllAssets(document.getElementById("monster-receive").value);
+}
+
+function monsterReceiveddnd() {
+  let monster = addclasstoroll(outsidelinksdnd(document.getElementById("monster-receive").value));
+  let monster_name = document.getElementById("monster-name").value.trim();
+  let monster_token = document.getElementById("monster-token").value;
+
+  addtokentolist(monster_token);  
+
+  if(typeof monsters_list == 'undefined') {
+    monsters_list = new Map();
+    document.getElementById("monsterframe").innerHTML = monster;
+    setTimeout(() => {
+      var elements = document.getElementsByClassName("blue");
+       
+      for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener('click', dd20dblclick, false);
+      }  
+      
+    }, 2*waittime);
+  }
+
+  monsters_list.set(monster_name, monster);  
+  var option = document.createElement("option");
+  option.text = monster_name;
+  document.getElementById("monster-list").add(option);
+  
+}
+
+function myMonster() {
+
+  document.getElementById("monsterframe").innerHTML =  monsters_list.get(document.getElementById("monster-list").value);
+  lastmonstertoken.monster = document.getElementById("monster-list").value;
+
+  setTimeout(() => {
+    var elements = document.getElementsByClassName("blue");
+     
+    for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('click', dd20dblclick, false);
+    }  
+
+  }, 2*waittime);
+  
+
+}
+
+
+function diceroll5e(text, pre) {
+  var obj = JSON.parse(text);
+  
+  if(obj.subType == "d20") {
+    console.log("d20!!")
+    if(obj.name !== undefined) {	
+      document.getElementById("dh1").innerHTML = pre + " " + obj.name;
+    } else {
+      document.getElementById("dh1").innerHTML = pre + " Dmg";
+    }
+  
+        document.getElementById("d1").innerHTML = obj.toRoll;
+        document.getElementById("d1").click();
+  }
+  
+  if(obj.subType == "damage") {				
+    console.log("daño!!")
+    document.getElementById("dh2").innerHTML = pre;
+          document.getElementById("d2").innerHTML = obj.toRoll;
+          document.getElementById("d2").click();
+  }
+}
+
+// 5e.tools
+var PROF_DICE_MODE = 1 
+var PROF_MODE_DICE = 1
+var Renderer = {
+ 
+  dice: {
+    pRollerClickUseData: function pRollerClickUseData(event) {
+      diceroll5e(event.path[0].getAttribute("data-packed-dice"), document.getElementsByClassName("stats-name")[0].innerHTML);
+    },
+    
+    pRollerClick: function pRollerClick(event) {
+      diceroll5e(event.path[0].getAttribute("data-packed-dice"), document.getElementsByClassName("stats-name")[0].innerHTML);      
+    }
+    
+  },
+
+  hover: {
+    handlePredefinedMouseOver: function handlePredefinedMouseOver(event) {
+
+    },
+    handlePredefinedMouseMove: function handlePredefinedMouseMove(event) {
+
+    },
+    handlePredefinedMouseLeave: function handlePredefinedMouseLeave(event) {
+
+    }, 
+    handleTouchStart: function handleTouchStart(event) {
+
+    },
+    pHandleLinkMouseOver: function pHandleLinkMouseOver(event){
+
+    }, 
+    handleLinkMouseLeave: function handleLinkMouseLeave(event){
+
+    }, 
+    handleLinkMouseMove: function handleLinkMouseMove(event) {
+
+    }, 
+    handleTouchStart: function handleTouchStart(event) {
+
+    }
+    
+  }
+
+}; 
+
+function outsidelinks(text) {
+
+text = text.replaceAll('href="', 'href="https://5e.tools/');
+return text;              
+
+}
+
+function outsidelinksdnd(text) {
+
+  text = text.replaceAll('href="', 'href="https://www.dndbeyond.com/');
+  return text;              
+  
+}
+
+function addclasstoroll(text) {
+
+  //var reg = new RegExp("(\\+.*)to hit", "gi");         
+  //text = text.replace(reg, "<span class='blue'>$1 to hit</span>");   
+  
+  var reg = new RegExp("(<span) (data-dicenotation)", "gi");   
+  text = text.replace(reg, "$1 class='blue' $2");   
+
+  //var reg = new RegExp("(\\(\\dd[^\\)]*\\))", "gi");   
+  //text = text.replace(reg, "<span class='blue'>$1</span>");   
+
+  return text;
+}
+
+function setOption(selectElement, value) {
+    var options = selectElement.options;
+    for (var i = 0, optionsLength = options.length; i < optionsLength; i++) {
+        if (options[i].value == value) {
+            selectElement.selectedIndex = i;
+            return true;
+        }
+    }
+    return false;
+}
+
+function tools5edblclick(ev) {
+  var monster = document.getElementById("monsterframe").getElementsByClassName('stats-name')[0].innerHTML;	
+  var text =  ev.path[0].innerHTML;
+  console.log("Event fired!!!!!" + text + "   " + monster)
+
+  if(text.indexOf("+") == 0) {
+    document.getElementById("dh1").innerHTML = monster;
+    document.getElementById("d1").innerHTML = "1d20" + text;
+    document.getElementById("d1").click();  
+  }
+  else {
+    document.getElementById("dh2").innerHTML = monster;
+    document.getElementById("d2").innerHTML = text;
+    document.getElementById("d2").click();  
+  }
+
+} 
+
+function dd20dblclick(ev) {
+	
+  // Esto no va a funcionar bien, hay que arreglarlo. 
+
+  
+	var monster = document.getElementById("monsterframe").getElementsByClassName('mon-stat-block__name-link')[0].innerHTML;	
+    
+    var text =  ev.path[0].innerHTML;
+    console.log("Event fired!!!!!" + text)
+    if (text !== undefined) {
+		
+    var reg = new RegExp("<strong>(.*)</strong>", "gi"); 
+		if (reg.test(text))
+			var arma = text.match(reg)[0];		
+    else var arma = "";
+
+    var reg = new RegExp("\\+[0-9]+", "gi");         
+        if (reg.test(text)) {
+            var lista = text.match(reg);
+            for ( var i = 0; i < lista.length ; i++) {    
+ 			        document.getElementById("dh" + 1).innerHTML = monster + " " + arma;
+              document.getElementById("d" + 1).innerHTML = "1d20" + lista[i];
+              document.getElementById("d" + 1).click();                
+            }    
+        }
+        
+        var reg = new RegExp("\\(\\d[^\\)]*\\)", "gi"); 
+        
+        if (reg.test(text)) {
+            var lista = text.match(reg);
+            for ( var i = 0; i < lista.length ; i++) {
+              var [roll,n] = fixroll(lista[i]);            
+			        document.getElementById("dh" + n).innerHTML = monster + " " + arma;
+              document.getElementById("d" + n).innerHTML = roll;
+              document.getElementById("d" + n).click();                               
+            }    
+        }
+     
+    }
+} 
+
+function fixroll(str) {
+  if (str.indexOf("to hit") > -1)
+      return [str.replace("to hit","").replace("+","1d20 + "), 1];
+  else 
+      return [str.replace("(","").replace(")",""), 2];
+}
+
+// ImageKit
+function uploadfile(e) {
+  e.preventDefault();
+ 
+  var file = document.getElementById("file");
+  
+  document.getElementById("message2").style.display="";
+  imagekit.upload({
+      file: file.files[0],
+      fileName: file.files[0].name,
+      tags: ["d20"], // Comma seperated value of tags
+      responseFields: "tags" // Comma seperated values of fields you want in response e.g. tags, isPrivateFile etc
+  }, function (err, result) {
+      if (err) {         
+          console.log(err);
+          hide_menus()
+      } else {
+        document.getElementById("token-map").value = result.url;
+        addtoAllAssets(result.url)
+        hide_menus();
+        console.log(result);
+      }
+  })
+}
+
+function checkuploadfile(event) {
+  var file = document.getElementById("file");
+  
+  if(file.files[0].type == "application/pdf") {
+    document.getElementById("upload_text").style.display = "none";
+    document.getElementById("upload_pdf").style.display = "";
+
+    pdfjsLib.getDocument(URL.createObjectURL(file.files[0])).promise.then(function(pdfDoc_) {
+    pdfDoc = pdfDoc_;
+    document.getElementById('page_count').textContent = pdfDoc.numPages;
+    pageNum = 1;
+    renderPage(pageNum);
+  });
+  
+  } else {
+    document.getElementById("upload_text").style.display = "";
+    document.getElementById("upload_pdf").style.display = "none";
+  }
+
+}
+
+function uploadpdffile(file, name) {
+  
+  document.getElementById("message2").style.display=""
+  imagekit.upload({
+      file: file,
+      fileName: name,
+      tags: ["d20"], // Comma seperated value of tags
+      responseFields: "tags" // Comma seperated values of fields you want in response e.g. tags, isPrivateFile etc
+  }, function (err, result) {
+      if (err) {         
+          console.log(err);
+          hide_menus();
+      } else {
+        document.getElementById("token-map").value = result.url;
+        addtoAllAssets(result.url)
+        hide_menus();
+        console.log(result);
+      }
+  })
+}
+
+function renderPage(num) {
+  pageRendering = true;
+  // Using promise to fetch the page
+  pdfDoc.getPage(num).then(function(page) {
+    
+    var c = document.getElementById("pdf-canvas");
+    var ctx = c.getContext("2d");
+    var viewport = page.getViewport({scale:0.8});
+    
+    c.height = viewport.height;
+    c.width = viewport.width;
+
+    // Render PDF page into canvas context
+    var renderContext = {
+      canvasContext: ctx,
+      viewport: viewport
+    };
+    var renderTask = page.render(renderContext);
+    // Wait for rendering to finish
+    renderTask.promise.then(function() {
+      pageRendering = false;
+      if (pageNumPending !== null) {
+        // New page rendering is pending
+        renderPage(pageNumPending);
+        pageNumPending = null;
+      }
+    }); 
+  });
+
+  // Update page counters
+  document.getElementById('page_num').textContent = num;
+}
+
+function uploadpdfimages() {
+
+  var c = document.getElementById("pdf-subCanvas");
+  var ctx = c.getContext("2d");
+      
+    pdfDoc.getPage(pageNum).then(function(page) {                  
+            
+      for (let imagen of Object.values(page.objs._objs)) {
+        
+        if (imagen.data.height > 100 && imagen.data.width > 100) {
+          var img = new ImageData(toRGBA(imagen.data.data), imagen.data.width, imagen.data.height);
+          c.height = imagen.data.height;
+          c.width = imagen.data.width;
+          ctx.putImageData(img, 0, 0);
+          console.log(img);
+        uploadpdffile(c.toDataURL("image/jpeg"), "frompdf");
+      }
+    }
+
+    });
+}
+
+function uploadAllpdfimages() {
+  pageNum = 1;
+  renderAllPage();
+}
+
+function renderAllPage() {
+
+  pdfDoc.getPage(pageNum).then(function(page) {
+
+    var c = document.getElementById("pdf-canvas");
+    var cc = document.getElementById("pdf-subCanvas");
+    var ctx = c.getContext("2d");
+    var ctxx = cc.getContext("2d");
+    var viewport = page.getViewport({scale: 0.8});
+    c.height = viewport.height;
+    c.width = viewport.width;
+
+    // Render PDF page into canvas context
+    var renderContext = {
+      canvasContext: ctx,
+      viewport: viewport
+    };
+    var renderTask = page.render(renderContext);
+
+    // Wait for rendering to finish
+    renderTask.promise.then(function() {
+
+      for (let imagen of Object.values(page.objs._objs)) {
+        
+        if (imagen.data.height > 100 && imagen.data.width > 100) {
+        var img = new ImageData(toRGBA(imagen.data.data), imagen.data.width, imagen.data.height);
+        cc.height = imagen.data.height;
+        cc.width = imagen.data.width;
+        ctxx.putImageData(img, 0, 0);
+        uploadpdffile(cc.toDataURL("image/jpeg"), "frompdf");
+      }
+    }
+
+      if (pageNum < pdfDoc.numPages) {
+        pageNum++;
+        renderAllPage();
+      }
+    });  
+  });
+}
+
+function toRGBA(rgb) {
+  
+  var rgba = new Uint8ClampedArray((rgb.length / 3) * 4);
+  for (let index = 0; index < rgba.length; index++) {
+    // Set alpha channel to full
+    if (index % 4 === 3) {
+      rgba[index] = 255;
+    }
+    // Copy RGB channel components from the RGB array
+    else {
+      rgba[index] = rgb[~~(index / 4) * 3 + (index % 4)];
+    }
+  }
+  return rgba;
+
+}
+
+/**
+ * Displays previous page.
+ */
+ function onPrevPage() {
+  if (pageNum <= 1) {
+    return;
+  }
+  pageNum--;
+  queueRenderPage(pageNum);
+}
+
+
+/**
+ * Displays next page.
+ */
+function onNextPage() {
+  if (pageNum >= pdfDoc.numPages) {
+    return;
+  }
+  pageNum++;
+  queueRenderPage(pageNum);
+}
+
+function queueRenderPage(num) {
+  if (pageRendering) {
+    pageNumPending = num;
+  } else {
+    renderPage(num);
+  }
+}
+
+function show_upload() {
+  event.stopPropagation();
+  if ( document.getElementById("uploadfile").style.display == "none") {
+    document.getElementById("uploadfile").style.display = ""; }
+  else {
+    document.getElementById("uploadfile").style.display = "none";
+}
+}
+
+document.onpaste = function(event){
+  var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+  for (index in items) {
+    var item = items[index];
+    if (item.kind === 'file') {
+      var blob = item.getAsFile();
+      console.log(blob)
+      document.getElementById("message2").style.display=""
+      imagekit.upload({
+        file: blob,
+        fileName: "clipboard",
+        tags: ["d20"], // Comma seperated value of tags
+        responseFields: "tags" // Comma seperated values of fields you want in response e.g. tags, isPrivateFile etc
+    }, function (err, result) {
+        if (err) {         
+            console.log(err);
+            hide_menus();
+        } else {
+          document.getElementById("token-map").value = result.url;
+          document.getElementById("free").checked = true;
+          addToken();
+          hide_menus();
+          console.log(result);
+        }
+    })
+
+
+      /*var reader = new FileReader();
+      reader.onload = function(event){
+        console.log(event.target.result)
+      }; // data url!
+      reader.readAsDataURL(blob);
+      */
+
+    } else if(item.kind == "string") {
+      console.log(item);
+      item.getAsString(function (s){
+        document.getElementById("token-map").value = s;
+      });      
+    } 
+  }
+}
+
+
+function set_inmersivemode(mode, track, dice, chat, assets) {  
+
+  if (mode !== undefined) {
+    if(mode) {
+
+      if(!document.getElementById("inmersive-on").checked) {
+
+        /*
+        document.getElementById("inmersive-on").checked = true;
+        document.getElementById("downbar").style.display = "none";
+        document.getElementById("url-token").style.display = "none";
+        document.getElementById("add-token-bar").style.display = "none";
+        document.getElementById("bplayername").style.display = "none";        
+*/
+        
+        document.getElementById("superbar").style.display = "none";
+        //document.getElementById("chat-log").style.display = "none";
+        document.getElementById("view-distance").checked = false;  
+        document.getElementById("distance-bar").style.display = "none";        
+
+
+      }      
+
+      if (track && !document.getElementById("inmersive-track").checked) {
+        document.getElementById("inmersive-track").checked = true;
+        document.getElementById("track_bar").style.display = "none";
+      } 
+      else if (!track && document.getElementById("inmersive-track").checked) {
+        document.getElementById("inmersive-track").checked = false;
+        document.getElementById("track_bar").style.display = "";
+      }
+      
+      if (dice && !document.getElementById("inmersive-dice").checked) {
+        document.getElementById("inmersive-dice").checked = true;
+        document.getElementById("dice-bar").style.display = "none";
+      }
+      else if (!dice && document.getElementById("inmersive-dice").checked) {
+        document.getElementById("inmersive-dice").checked = false;
+        document.getElementById("dice-bar").style.display = "";
+      }
+      
+      if (chat && !document.getElementById("inmersive-chat").checked) {
+        document.getElementById("inmersive-chat").checked = true;
+        document.getElementById("hide-chat").style.display = "none";
+      }
+      else if (!chat && document.getElementById("inmersive-chat").checked) {
+        document.getElementById("inmersive-chat").checked = false;
+        document.getElementById("hide-chat").style.display = "";
+      }
+      
+      if (assets && !document.getElementById("inmersive-assets").checked) {
+        document.getElementById("inmersive-assets").checked = true;
+        document.getElementById("player-asset-list").style.display = "none";
+      }
+      else if (!assets && document.getElementById("inmersive-assets").checked) {
+        document.getElementById("inmersive-assets").checked = false;
+        document.getElementById("player-asset-list").style.display = "";
+      }              
+    }
+    else if (!document.getElementById("inmersive-on").checked) {
+/*
+      document.getElementById("downbar").style.display = "";
+      document.getElementById("url-token").style.display = "";
+      document.getElementById("add-token-bar").style.display = "";
+      document.getElementById("bplayername").style.display = "";    */
+
+        document.getElementById("superbar").style.display = "";
+        document.getElementById("hide-chat").style.display = "";
+        document.getElementById("player-asset-list").style.display = "";
+        document.getElementById("track_bar").style.display = "";
+        document.getElementById("dice-bar").style.display = "";
+    }
+  }
+}
+
+
+function set_namemode(mode) {
+
+  if (mode !== undefined) {
+    if(mode && !document.getElementById("view-names").checked) {
+      document.getElementById("view-names").checked = true;
+      lista = document.getElementsByClassName("track_hp");
+      for(var i = 0; i < lista.length; i++)
+      {
+        lista[i].type = "";
+        lista[i].classList.add("track_name");
+      }
+    } else if(!mode && document.getElementById("view-names").checked) {
+      document.getElementById("view-names").checked = false;
+      lista = document.getElementsByClassName("track_hp");
+      for(var i = 0; i < lista.length; i++)
+      {
+        lista[i].type = "number";
+        lista[i].classList.remove("track_name");
+      }
+    }
+  }
+else {
+if(document.getElementById("view-names").checked) {
+  lista = document.getElementsByClassName("track_hp");
+  for(var i = 0; i < lista.length; i++)
+  {
+    lista[i].type = "";
+    lista[i].classList.add("track_name");
+  }
+} else {
+  lista = document.getElementsByClassName("track_hp");
+  for(var i = 0; i < lista.length; i++)
+  {
+    lista[i].type = "number";
+    lista[i].classList.remove("track_name");
+  }
+}
+}
+}
+
+function show_all_audios(event) {  
+  event.stopPropagation();  
+   
+  if ( document.getElementById("music-list").style.display == "flex") {
+    document.getElementById("music-list").style.display = "none";
+    document.getElementById("trash").style.display = "none";
+ }
+  else {
+    document.getElementById("music-list").style.display = "flex";
+    document.getElementById("trash").style.display = "";
+}
+}
+
+function crea_nombre(link) {
+  
+  var reg = new RegExp("([^/]+)/?$", "gi"); 
+  var nombre = link.match(reg)[0]
+  nombre = nombre.split("?")[0]
+
+  nombre = nombre.replace(".mp3","").replace(".orgg","").replace(".m4a","").replace(".ogg","")
+  nombre = nombre.replaceAll("%20"," ").replaceAll("-"," ").replaceAll("_"," ");
+  return nombre;
+}
+
+function add_music(url) {
+   
+  if (url !== undefined) {
+    var link = url;  
+  }
+  else {
+    var link = checkurl(document.getElementById("token-map").value);
+  }  
+
+  if ((link !== "") && (!checkSRCmp3(link,document.getElementById("music-list").childNodes)) && (link.indexOf('.orgg')>0 || link.indexOf('.ogg')>0 || link.indexOf('.mp3')>0 || link.indexOf('.m4a')>0 ) ) {
+    
+    var div = document.createElement("div");
+    div.classList.add("musiclist");
+    div.id = "music" + document.getElementById("music-list").childElementCount;     
+    div.setAttribute("src", link);  
+    var nombre = crea_nombre(link)
+    div.innerHTML = nombre;       
+    var list = document.getElementById("music-list");
+    div.addEventListener('dragstart',  drag_scene_start, true);    
+    div.draggable = true;
+    list.appendChild(div);
+    
+    var n = list.childElementCount
+    localStorage.setItem("musicN", n)
+    localStorage.setItem("music" + (n-1), link)
+    savetoplugin();    
+}
+
+}
+
+function choosemusic() {
+  
+    if (event.target.id == "music-list") {
+      hide_menus();
+    } else {
+    console.log(event.target)     
+    console.log(event.target.getAttribute("src"))
+    document.getElementById("audiosrc").src = event.target.getAttribute("src");
+    document.getElementById("audiocontrol").load();
+    setTimeout(() => {
+    document.getElementById("audiocontrol").play();  
+    }, waittime);
+    
+    sendMusic(event.target.getAttribute("src"));
+  }
+    
+}
+
+function sendMusic(text) {
+
+  var obj = new Object();
+  obj.playerid          = user;
+  obj.request           = false;
+  obj.roll  = false;
+  obj.chat  = false;
+  obj.music = true;
+  obj.musictime = document.getElementById("audiocontrol").currentTime;
+  obj.text  = text;
+  console.log(obj)
+  sendMessage(obj);
+
+}
+
+function playmusic(item) {
+
+  if(!checkAdmin()) {
+    if (item.text == "pause")
+      document.getElementById("audiocontrol").pause();
+    else if (item.text == "play") {
+      document.getElementById("audiocontrol").currentTime = item.musictime;
+      document.getElementById("audiocontrol").play();
+    }
+      
+    else {
+      document.getElementById("audiosrc").src = item.text;
+      document.getElementById("audiocontrol").load();
+      //document.getElementById("audiocontrol").play();
+    }
+    
+  }
+}
+
+function bpausemusic() {
+  if(checkAdmin()) {
+    sendMusic("pause");
+  }
+}
+
+function bplaymusic() {
+  if(checkAdmin()) {
+    sendMusic("play");
+  }
+}
+
+function checkminTile(tile) {
+  if (tile < mintileSize)
+    return mintileSize;
+  else 
+    return tile
+}
+
+function plotView() {
+
+  var myboard = getboard();
+
+    if (document.getElementById("plotmode").checked) {
+      /*
+      console.log("pasamos a modo plot")
+      var bg = canvas.backgroundImage._element.src;
+      if (bg == "")
+        bg = canvas.backgroundImage._element.firstChild.src;
+
+      mainBackground = bg;
+      */
+      if(!checkAdmin()) {
+        document.getElementById("save-scene-player").style.display = "";
+        document.getElementById("load-scene-player").style.display = "";
+        document.getElementById("plotmodetext").style.display = "";
+      }
+      
+    }
+    else {
+      // Corregimos el cambio
+      myboard.backgroundImage = mainBackground;
+      document.getElementById("save-scene-player").style.display = "none";
+      document.getElementById("load-scene-player").style.display = "none";
+      document.getElementById("plotmodetext").style.display = "none";
+    }
+
+    console.log(mainBackground)
+    console.log(plotBackground)
+    console.log(myboard)
+
+  reDrawAll(myboard,addFog);
+
+  /*setTimeout(() => {
+    addFog();
+  }, waittime);*/
+  
+  
+}
+
+function reset_app() {
+  localStorage.clear();
+  window.location = "http://board.digitald20.com"  
 }

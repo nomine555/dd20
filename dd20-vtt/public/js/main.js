@@ -177,6 +177,15 @@ const checkAdmin = () => {
           }     
         }
       }
+
+    
+    // Cargamos los colores de los dados
+    if (localStorage.getItem("dd20_fontcolor")  !== null) {
+      fontColor  =  localStorage.getItem("dd20_fontcolor");
+      backColor  =  localStorage.getItem("dd20_backcolor");
+      document.getElementById("fontcolor").value = fontColor;
+      document.getElementById("backcolor").value = backColor;
+    }
     
       if (checkAdmin()) {
         connected = true;
@@ -1104,9 +1113,9 @@ function createText(item) {
 
   var text = new fabric.Textbox(item.text,
   {
-      width: 300,
-      backgroundColor: "white",
-      //padding: 20
+      width: item.width,
+      backgroundColor: item.backgroundColor,
+      
   });
   
   var shadow = {color: 'rgba(0, 0, 0, 1)',blur: shadowblur, offsetX: shadowoff, offsetY: shadowoff, opacity: shadowopacity, fillShadow: true,  strokeShadow: true, nonScaling:true }  
@@ -2721,6 +2730,8 @@ function getboard() {
   } else if(o.text !== undefined) {
     var token = new Object();
       token.text = o.text;
+      token.width = o.width;
+      token.backgroundColor = o.backgroundColor;
       token.dd20size = o.dd20size;
       token.plot = o.plot;
       token.scaleX = o.scaleX;
@@ -3484,6 +3495,8 @@ function delay(wait) {
     if (src == IconVideo)
       src = event.target.getAttribute('video');   
     setplayerasset(src)
+    document.getElementById("inside-top").style.width  = "";
+    document.getElementById("inside-top").style.height = "";
   }
 
   function setplayerasset(src) {
@@ -3511,10 +3524,29 @@ function delay(wait) {
     }
     document.getElementById("ontop").style.display = "";
   
-    WZoom.create('#inside-top');
-    console.log("wzoom")
+    document.getElementById("inside-top").addEventListener("wheel", wheelAsset);
+
   }
 
+  function wheelAsset() {
+
+    var delta = (1 + event.deltaY/1000);
+    console.log(delta)
+    if (document.getElementById("inside-top").style.width == '') {
+      var size = 100;
+      document.getElementById("inside-top").style.width  = size * delta + "%"
+      document.getElementById("inside-top").style.height = size * delta + "%"
+    }
+    else {
+      var size = parseInt(document.getElementById("inside-top").style.width.replace('%',''))
+      document.getElementById("inside-top").style.width  = size * delta + "%"
+      document.getElementById("inside-top").style.height = size * delta + "%"
+      console.log(size * delta + "%")
+    }
+    
+    
+    //event.stopPropagation;
+  }
 
 function addBackgroundtoList(bg) {
 
@@ -4231,20 +4263,27 @@ function download(filename, text) {
 function dice_color_change() {
   
   var doomedObj = canvas.getActiveObject(); 
-  
-  if (doomedObj !== null)
-    if ( doomedObj.get('type')== "textbox") {
-    console.log();
-    doomedObj.setColor(document.getElementById("fontcolor").value);
-  } else {
+console.log(doomedObj)
+  if (  doomedObj !== null && (typeof doomedObj !== 'undefined') ) { 
+    console.log("hay algo seleccionado")
 
+    if ( doomedObj.get('type')== "textbox") {      
+      doomedObj.backgroundColor = document.getElementById("fontcolor").value;           
+      updateBoard(getboard())
+    }
+
+  } else {
+    console.log("NO hay algo seleccionado")
 
   var fontColor = document.getElementById("fontcolor").value;
   var backColor = document.getElementById("backcolor").value;
   localStorage.setItem("dd20_fontcolor", fontColor);
   localStorage.setItem("dd20_backcolor", backColor);
+
   }
-}
+  }
+
+
 
 function dice_color_load() {
   if (localStorage.getItem("dd20_fontcolor") !== null) {

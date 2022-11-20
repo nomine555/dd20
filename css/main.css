@@ -1,0 +1,81 @@
+@font-face {
+    font-family: "dd20";
+    src: url("../core/fonts/bookmanold.otf");
+}
+
+@font-face {
+    font-family: "title";
+    src: url("../core/fonts/oldnewspaper.otf");
+}
+
+.header {
+    height: 200px;        
+    text-align: center;
+    color: white;
+    background-color: black;
+    padding: 0.25em;
+    font-size: 200%;   
+	font-family: "title";
+}
+
+.logo {
+    height: 15vh;
+    float: left;
+}
+
+
+.section-dragon {
+    background-image: url(../core/images/index/index-gate.jpg);
+    height: 45vh;
+    background-size: cover;
+    background-position-y: center;
+    background-position-x: center;
+    padding-top: 10rem;
+    display: flex;
+    width: 100%;
+	font-family: "dd20";
+}
+.section-text {
+	color: white;
+	width: 60%;
+  	height: 20vh;
+  	font-size: 200%;
+	padding: 2rem;  
+	font-family: "dd20";
+	display: flex;
+}
+
+.dragon-texto {	
+	color: white;
+	padding: 1rem;
+	float: left;
+	font-size: 200%;
+	font-family: "dd20";
+	margin-left: 2rem;	
+}
+
+.columna {
+	width: 30%;
+	padding: 10px;
+	float: left;
+}
+
+.title-dragon {
+	height: 10vh;
+	font-size: 250%;
+	font-family: "dd20";
+}
+
+.button {
+    background-color: #61ce70;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+	text-align: center;
+}
+.dragon-video {
+	height: 25vh;
+}
+
+p {
+	padding: 1rem;
+}

@@ -9,7 +9,7 @@
 }
 
 .header {
-    height: 200px;        
+    height: 15vh;        
     text-align: center;
     color: white;
     background-color: black;
@@ -86,6 +86,35 @@
 p {
 	padding: 1rem;
 }
-.content {
+
+/* 7" tablet */
+@media (max-width: 960px) {
+    .section-dragon {
+        font-size: 85%; 
+		flex-direction: column;
+		height:auto;
+		padding-top:1rem;
+    }
+
+    .section-text {
+     flex-direction: column;		
+		height:auto;
+    }
+	.header{
+		font-size: 125%;   
+		height:auto;
+	}
+	.section-text {
+		height:auto;
+	}
+	.dragon-video {
+			height:auto;
+		margin: 2rem;
+	}
+	
+	.logo {
+		height: 7vh;
+		margin-top: 3.5vh;
+	}
 	
 }

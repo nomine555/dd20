@@ -21,6 +21,9 @@
 .logo {
     height: 15vh;
     float: left;
+	position: absolute;
+	left: 0;
+	top: 0;
 }
 
 
@@ -34,22 +37,26 @@
     display: flex;
     width: 100%;
 	font-family: "dd20";
+	justify-content: center;
 }
 .section-text {
 	color: white;
 	width: 60%;
   	height: 20vh;
-  	font-size: 200%;
+  	font-size: 150%;
 	padding: 2rem;  
 	font-family: "dd20";
 	display: flex;
+	justify-content: center;
+	width: 70%;
+    margin-left: 10%;
 }
 
 .dragon-texto {	
 	color: white;
 	padding: 1rem;
 	float: left;
-	font-size: 200%;
+	font-size: 150%;
 	font-family: "dd20";
 	margin-left: 2rem;	
 }
@@ -62,7 +69,7 @@
 
 .title-dragon {
 	height: 10vh;
-	font-size: 250%;
+	font-size: 200%;
 	font-family: "dd20";
 }
 
@@ -78,4 +85,7 @@
 
 p {
 	padding: 1rem;
+}
+.content {
+	
 }

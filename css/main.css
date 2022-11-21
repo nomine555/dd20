@@ -29,27 +29,29 @@
 
 .section-dragon {
     background-image: url(../core/images/index/index-gate.jpg);
-    height: 45vh;
+    height: 40vh;
     background-size: cover;
     background-position-y: center;
-    background-position-x: center;
-    padding-top: 10rem;
-    display: flex;
+    background-position-x: center;   
     width: 100%;
 	font-family: "dd20";
 	justify-content: center;
+	display: flex;
+	padding-top:5vh;
+	flex-wrap:wrap;
 }
+
 .section-text {
-	color: white;
-	width: 60%;
+	color: white;	
   	height: 20vh;
   	font-size: 150%;
 	padding: 2rem;  
 	font-family: "dd20";
 	display: flex;
 	justify-content: center;
-	width: 70%;
-    margin-left: 10%;
+	width: 60%;
+	margin-top: 5rem;
+	margin-left: 10%;
 }
 
 .dragon-texto {	
@@ -59,12 +61,27 @@
 	font-size: 150%;
 	font-family: "dd20";
 	margin-left: 2rem;	
+	display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+	width: 40%;
+
 }
 
+
+.dragon-video {
+	margin: 1rem;
+	height: 26vh;
+}
+
+
 .columna {
-	width: 30%;
-	padding: 10px;
-	float: left;
+    padding: 1rem;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+	width: 25%;    
 }
 
 .title-dragon {
@@ -78,17 +95,44 @@
     padding: 0.5rem;
     border-radius: 0.25rem;
 	text-align: center;
+	margin: 1rem;
 }
-.dragon-video {
-	height: 25vh;
-}
+
 
 p {
 	padding: 1rem;
+	line-height: 1.38;
 }
 
-/* 7" tablet */
-@media (max-width: 960px) {
+.secciones3 {
+	display: flex;
+	flex-direction: row;
+	flex-wrap:wrap;
+}
+
+
+
+@media (min-width: 960px) and (max-width: 1280px) {
+	 .section-dragon {
+        font-size: 85%; 
+		
+		padding-top:1rem;
+		 height: 50vh;
+    }
+	
+	.header{
+		font-size: 125%;   
+		height:auto;
+	}
+	
+}
+
+@media (min-width: 512px) and (max-width: 960px) {
+	
+	.dragon-texto {	
+		width: 100%;
+	}
+	
     .section-dragon {
         font-size: 85%; 
 		flex-direction: column;
@@ -97,7 +141,7 @@ p {
     }
 
     .section-text {
-     flex-direction: column;		
+     	flex-direction: column;		
 		height:auto;
     }
 	.header{
@@ -108,13 +152,71 @@ p {
 		height:auto;
 	}
 	.dragon-video {
+		height:auto;
+		margin: 2rem;
+		width: 90%;
+	}	
+	
+	.button {
+		font-size: 85%; 
+	}
+	
+}
+
+@media (max-width: 512px) {
+	
+	.dragon-texto {	
+	width: 100%;
+	}
+	
+	
+    .section-dragon {
+        font-size: 75%; 
+		flex-direction: column;
+		height:auto;
+		padding-top:1rem;
+    }
+
+    .section-text {
+     	flex-direction: column;		
+		height:auto;
+    }
+	.header{
+		font-size: 100%;   
+		height:auto;
+	}
+	.section-text {
+		height:auto;
+	}
+	.dragon-video {
 			height:auto;
 		margin: 2rem;
+		width: 90%;
 	}
+		
+	.button {
+		font-size: 85%; 
+	}
+	
+	.columna {
+		width: 37%;
+	}
+}
+
+@media (orientation: portrait) {
 	
 	.logo {
-		height: 7vh;
-		margin-top: 3.5vh;
+		height: 8vh;
+		margin-top: 2vh;
 	}
-	
+}
+
+
+
+
+
+
+.content {
+	display: flex;
+	flex-direction: column;
 }

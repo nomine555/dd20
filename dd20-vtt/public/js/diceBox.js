@@ -148,6 +148,7 @@ DiceBox.prototype._animate = function () {
 
 
 DiceBox.prototype.throwDice = function (dice, callback) {
+
     this.simulationRunning = true;
     this._animate();
 
@@ -215,7 +216,7 @@ DiceBox.prototype.throwDice = function (dice, callback) {
     }
 
     for (var i = this.diceArr.length -1 ; i >= 0 ; i--) {
-            if((this.diceArr[i].time + 10) < Math.floor(Date.now() / 1000)) {
+            if((this.diceArr[i].time + 3) < Math.floor(Date.now() / 1000)) {
                 var die = this.diceArr[i].die;
                 this.scene.remove(die.object);
                 if (die.object.body) {
@@ -223,8 +224,8 @@ DiceBox.prototype.throwDice = function (dice, callback) {
                 }
                 this.diceArr.splice(i,1);
             }
-        }
-    
+        }   
+
     var diceValues = [];
     for (var i = 0; i < this.diceArr.length; i++) {
         if(this.diceArr[i].new) {
@@ -317,3 +318,4 @@ DiceBox.prototype.clear = function (callback) {
 DiceBox.prototype.reInit = function () {
     this._reinit();
 }
+

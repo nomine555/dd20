@@ -64,7 +64,7 @@ var room = "";
 var connected = false;
 var tileSize = 60;
 var plottileSize = 60;
-var plotBackground = "https://play.digitald20.com/core/images/index/index-map-1920.jpg";
+var plotBackground = "https://digitald20.com/core/images/index/index-map-1920.jpg";
 var mainBackground = ""; 
 let mintileSize = 24;
 var waittime = 500;
@@ -331,9 +331,9 @@ const checkAdmin = () => {
     
           
           if (ex == null)
-            var myboard = JSON.parse('{"plotBackground":"https://play.digitald20.com/core/images/index/index-map-1920.jpg","backgroundImage":"https://play.digitald20.com/vtt/img/graveyard-map.jpg","background_width":1920,"background_heigth":960,"tileSize":60,"playerid":"dm","tokens":[{"src":"https://play.digitald20.com/vtt/img/thief.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":595,"left":537,"id":"dm50535"},{"src":"https://play.digitald20.com/vtt/img/mage.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":714,"left":240,"id":"dm241239"},{"src":"https://play.digitald20.com/vtt/img/fighter.jpg","dd20size":0.9999999999999999,"scaleX":0.10416666666666666,"scaleY":0.10416666666666666,"angle":0,"uprange":1,"zoomrange":1,"top":477.046439628483,"left":420.953560371517,"id":"dm261770"},{"src":"https://play.digitald20.com/vtt/img/ranger.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":475,"left":606,"id":"dm493210"},{"src":"https://play.digitald20.com/vtt/img/spectre.jpg","dd20size":2,"scaleX":0.20833333333333334,"scaleY":0.20833333333333334,"angle":0,"uprange":1,"zoomrange":1,"top":472,"left":483,"id":"dm281858"},{"src":"https://play.digitald20.com/vtt/img/halfling.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":231.6656346749225,"left":669.4148606811145,"id":"dm297252"},{"src":"https://play.digitald20.com/vtt/img/fire-ball.png","dd20size":-1,"scaleX":0.85,"scaleY":0.85,"angle":0,"leftrange":1,"uprange":1,"zoomrange":1,"top":420.0307406766989,"left":666.8785085506915,"id":"dm124446"}],"request":false,"squares":[],"roll":false}')
+            var myboard = JSON.parse('{"plotBackground":"https://digitald20.com/core/images/index/index-map-1920.jpg","backgroundImage":"https://digitald20.com/vtt/img/graveyard-map.jpg","background_width":1920,"background_heigth":960,"tileSize":60,"playerid":"dm","tokens":[{"src":"https://digitald20.com/vtt/img/thief.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":595,"left":537,"id":"dm50535"},{"src":"https://digitald20.com/vtt/img/mage.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":714,"left":240,"id":"dm241239"},{"src":"https://digitald20.com/vtt/img/fighter.jpg","dd20size":0.9999999999999999,"scaleX":0.10416666666666666,"scaleY":0.10416666666666666,"angle":0,"uprange":1,"zoomrange":1,"top":477.046439628483,"left":420.953560371517,"id":"dm261770"},{"src":"https://digitald20.com/vtt/img/ranger.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":475,"left":606,"id":"dm493210"},{"src":"https://digitald20.com/vtt/img/spectre.jpg","dd20size":2,"scaleX":0.20833333333333334,"scaleY":0.20833333333333334,"angle":0,"uprange":1,"zoomrange":1,"top":472,"left":483,"id":"dm281858"},{"src":"https://digitald20.com/vtt/img/halfling.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":231.6656346749225,"left":669.4148606811145,"id":"dm297252"},{"src":"https://digitald20.com/vtt/img/fire-ball.png","dd20size":-1,"scaleX":0.85,"scaleY":0.85,"angle":0,"leftrange":1,"uprange":1,"zoomrange":1,"top":420.0307406766989,"left":666.8785085506915,"id":"dm124446"}],"request":false,"squares":[],"roll":false}')
           else      
-            var myboard = JSON.parse('{"plotBackground":"https://play.digitald20.com/core/images/index/index-map-1920.jpg","backgroundImage":"","background_width":1920,"background_heigth":960,"tileSize":60,"playerid":"dm","tokens":[],"request":false,"squares":[],"roll":false}')
+            var myboard = JSON.parse('{"plotBackground":"https://digitald20.com/core/images/index/index-map-1920.jpg","backgroundImage":"","background_width":1920,"background_heigth":960,"tileSize":60,"playerid":"dm","tokens":[],"request":false,"squares":[],"roll":false}')
                               
           // Cargamos por URL
           if (pboard !== null) {
@@ -360,7 +360,7 @@ const checkAdmin = () => {
           window.setTimeout(function() {
             reDrawAll(myboard);
             AddURLTokens();
-            add_music("https://play.digitald20.com/core/music/just-adventuring.mp3")
+            add_music("https://digitald20.com/core/music/just-adventuring.mp3")
           }, 2*waittime);
          
         }
@@ -595,12 +595,12 @@ function editToken() {
 function changeSrc(event) {
   console.log('image not found!')
   var urls = [
-    "https://play.digitald20.com/vtt/img/mage.jpg", 
-    "https://play.digitald20.com/vtt/img/fighter.jpg", 
-    "https://play.digitald20.com/vtt/img/ranger.jpg", 
-    "https://play.digitald20.com/vtt/img/spectre.jpg", 
-    "https://play.digitald20.com/vtt/img/thief.jpg",
-    "https://play.digitald20.com/vtt/img/spectre.jpg"
+    "https://digitald20.com/vtt/img/mage.jpg", 
+    "https://digitald20.com/vtt/img/fighter.jpg", 
+    "https://digitald20.com/vtt/img/ranger.jpg", 
+    "https://digitald20.com/vtt/img/spectre.jpg", 
+    "https://digitald20.com/vtt/img/thief.jpg",
+    "https://digitald20.com/vtt/img/spectre.jpg"
   ];
   var n = parseInt(this.id.replace('t',''));
     document.getElementById(this.id).removeEventListener('error',changeSrc);
@@ -1463,8 +1463,8 @@ function renderChange() {
 
 var tiradas = [];
 function diceroll(dices) {
-  if (box.simulationRunning == false) {
-    box.throwDice(dices, diceroll_back);
+  if (box.simulationRunning == false) {    
+      box.throwDice(dices, diceroll_back);
   } else {
     tiradas.push(dices);
   }
@@ -1478,8 +1478,8 @@ function diceroll_back() {
         let dados = tiradas.pop();
         for (i = 0; i < dados.length;i++)
           nuevosdados.push(dados[i]);
-      }
-    box.throwDice(nuevosdados,diceroll_back)
+      }    
+      box.throwDice(nuevosdados,diceroll_back)
   }
   else {
     box.simulationRunning = false;
@@ -3571,7 +3571,7 @@ function brokenlink(event) {
   //event.srcElement.style.display = "none";
   
   if (event.srcElement.src.indexOf('.webm')>0 || event.srcElement.src.indexOf('.m4v')>0 || event.srcElement.src.indexOf('.mp4')>0) {
-    event.srcElement.style.backgroundImage = "url('https://play.digitald20.com/vtt/img/video.jpg')";
+    event.srcElement.style.backgroundImage = "url('https://digitald20.com/vtt/img/video.jpg')";
     event.srcElement.style.backColor = "black";
 
     /*

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Digital D20 VTT</title>
-    <link rel="icon" href="https://play.digitald20.com/vtt/img/logodd20.svg" sizes="any" type="image/svg+xml">
+    <link rel="icon" href="https://digitald20.com/vtt/img/logodd20.svg" sizes="any" type="image/svg+xml">
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.3/fabric.min.js"></script> --> 
     <!--<script src="../js/fabric.js"></script>   --> 
     <script src="https://cdn.jsdelivr.net/npm/fabric@4.6.0/dist/fabric.min.js"></script>
@@ -81,9 +81,9 @@
         <div class="upbar">			
         <div class="butongroup" id="url-token">
             
-            <img src="https://play.digitald20.com/vtt/img/upload.png" style="width:1.8rem;float: left;margin-right: 0.2rem;" onclick="show_upload();">
+            <img src="https://digitald20.com/vtt/img/upload.png" style="width:1.8rem;float: left;margin-right: 0.2rem;" onclick="show_upload();">
             <input class="urlinput" type="text" id="token-map" placeholder="... url to your image file ... token or backgroound ...">
-            <img src="https://play.digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">
+            <img src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">
             
             
             
@@ -121,14 +121,14 @@
         <div class="butongroup for-admin columgroup" id="setbg" style="display: none;">
             <input class="" type="text" id="bg-map" placeholder="background map url" style="display: none;">
             <div class="roundinput">
-            <button onclick='setBg()' class="button" id="change">Set Background</button> <img src="https://play.digitald20.com/vtt/img/hamburguesa.png" style="width:2rem" onclick="show_backgrounds()">
+            <button onclick='setBg()' class="button" id="change">Set Background</button> <img src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem" onclick="show_backgrounds()">
             </div>            
             <button onclick='setTile()' class="button">Set Tile Size</button>
         </div>
         <div class="butongroup for-admin columgroup" id="for-name" style="display: none;">             
             <div class="roundinput">                
                     <button onclick='sendLink()' class="button" style="width: 100%;">Add asset</button>                    
-                    <img src="https://play.digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;" onclick="show_asset();">
+                    <img src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;" onclick="show_asset();">
             </div>
 			<div class="roundinput">
                 Visible
@@ -157,21 +157,21 @@
         <div  id="downbar" class="ddowbar" draggable="false">
             
             <div id="stokenbar" class="downbar">
-            <img id="tA" src="https://play.digitald20.com/vtt/img/text.jpg" class="tokenA" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)">              
-            <img id="t6" src="https://play.digitald20.com/vtt/img/arrow.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
-            <img id="t7" src="https://play.digitald20.com/vtt/img/cross.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
-            <img id="t8" src="https://play.digitald20.com/vtt/img/fire-ball.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
-            <img id="t9" src="https://play.digitald20.com/vtt/img/cone-cold.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
-            <img id="t10" src="https://play.digitald20.com/vtt/img/ray.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"
+            <img id="tA" src="https://digitald20.com/vtt/img/text.jpg" class="tokenA" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)">              
+            <img id="t6" src="https://digitald20.com/vtt/img/arrow.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
+            <img id="t7" src="https://digitald20.com/vtt/img/cross.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
+            <img id="t8" src="https://digitald20.com/vtt/img/fire-ball.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
+            <img id="t9" src="https://digitald20.com/vtt/img/cone-cold.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
+            <img id="t10" src="https://digitald20.com/vtt/img/ray.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"
             style="object-fit: cover;width:3em;"> 
-            <img id="t11" src="https://play.digitald20.com/vtt/img/luz.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
+            <img id="t11" src="https://digitald20.com/vtt/img/luz.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
             </div>
         <div id="tokenbar" class="downbar">
-            <img id="t1" src="https://play.digitald20.com/vtt/img/mage.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
-            <img id="t2" src="https://play.digitald20.com/vtt/img/fighter.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
-            <img id="t3" src="https://play.digitald20.com/vtt/img/ranger.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
-            <img id="t4" src="https://play.digitald20.com/vtt/img/thief.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
-            <img id="t5" src="https://play.digitald20.com/vtt/img/spectre.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+            <img id="t1" src="https://digitald20.com/vtt/img/mage.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+            <img id="t2" src="https://digitald20.com/vtt/img/fighter.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+            <img id="t3" src="https://digitald20.com/vtt/img/ranger.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+            <img id="t4" src="https://digitald20.com/vtt/img/thief.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
+            <img id="t5" src="https://digitald20.com/vtt/img/spectre.jpg" class="token" onclick="setUrl()" draggable="true" ondragstart="drag(event)"> 
         </div>
         </div>
 
@@ -196,7 +196,7 @@
         <div style="margin-right: 1rem;">
             
                 <div class="over-audio">
-                    <img src="https://play.digitald20.com/vtt/img/hamburguesa.png"  onclick="show_all_audios(event);">
+                    <img src="https://digitald20.com/vtt/img/hamburguesa.png"  onclick="show_all_audios(event);">
                     <button id="into-music" onclick='add_music()' class="button" style="font-size: 75%;">Add Song</button> 
                 </div>                    
             
@@ -248,7 +248,7 @@
     </div>
     <button id="save-scene-player" onclick='save_url()' class="button" style="display: none;">Save Scene</button>
     <button id="load-scene-player" onclick="load_scene()" class="button" style="display: none;">Load Scene</button>	
-    <img id="plotmodetext" src="https://play.digitald20.com/vtt/img/text.jpg" class="tokentA" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" style="display: none;"> 
+    <img id="plotmodetext" src="https://digitald20.com/vtt/img/text.jpg" class="tokentA" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" style="display: none;"> 
     </div>
         <div id ="player-asset-list" class="player-asset-bar noselect for-player" onclick="chooseplayerasset(event)" style="display: none;"></div>
     </div>
@@ -468,7 +468,7 @@
         
 
     <div id = "message" class="message" style="display: none"> 
-        <img src="https://play.digitald20.com/vtt/img/set-tile.jpg" class="image-medium">
+        <img src="https://digitald20.com/vtt/img/set-tile.jpg" class="image-medium">
         Click and drag in order to setup the tile size, then all your tokens will fit perfect on your map. 
     </div>
     <div id = "message2" class="message" style="display: none"> 
@@ -499,23 +499,23 @@
     </div>
     <div id = "hello" class="hello" onclick="hide_menus();" style="display: none;">  
         <div class="help-entry">
-        <video autoplay controls class="image-medium"><source src="https://www.digitald20.com/wp-content/vtt/zoom.mp4" type="video/mp4"></video>
-        <img src="https://play.digitald20.com/vtt/img/mouse-wheel.png" class="image-rigth">
+        <video autoplay controls class="image-medium"><source src="https://digitald20.com/vtt/img/zoom.mp4" type="video/mp4"></video>
+        <img src="https://digitald20.com/vtt/img/mouse-wheel.png" class="image-rigth">
         Use mouse wheel to zoom into the board. 
         <br><br>
         </div>
         <div class="help-entry">        
-        <video autoplay controls class="image-medium"><source src="https://www.digitald20.com/wp-content/vtt/mover.mp4" type="video/mp4"></video>
-        <img src="https://play.digitald20.com/vtt/img/mouse-rigth.png" class="image-rigth">
+        <video autoplay controls class="image-medium"><source src="https://digitald20.com/vtt/img/mover.mp4" type="video/mp4"></video>
+        <img src="https://digitald20.com/vtt/img/mouse-rigth.png" class="image-rigth">
         Use mouse rigth click and pan to move the board. <br><br>       
         </div>
         <div class="help-entry" style="font-size: 80%">            
-            <video autoplay controls class="image-medium"><source src="https://www.digitald20.com/wp-content/vtt/dragdrop.mp4" type="video/mp4"></video>
+            <video autoplay controls class="image-medium"><source src="https://digitald20.com/vtt/img/dragdrop.mp4" type="video/mp4"></video>
             Drag and drop tokens into <br>the board / Initiative bar.<br>
             Drag Hit points from the chat area onto any token. 
         </div>
         <div class="help-entry" style="font-size: 80%">       
-            <img src="https://play.digitald20.com/vtt/img/ancient_red_dragon.jpg" class="image-medium">                 
+            <img src="https://digitald20.com/vtt/img/ancient_red_dragon.jpg" class="image-medium">                 
             Alt + Click to see dndbeyond stats of any monster.<br>
             While using chrome extension and visiting monster webpage. 
         </div>

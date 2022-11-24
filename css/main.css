@@ -110,6 +110,20 @@ p {
 	flex-wrap:wrap;
 }
 
+.privacy-text {
+    color: white;
+    /* height: 20vh; */
+    font-size: 150%;
+    padding: 2rem;
+    font-family: "dd20";
+    /* display: flex; */
+    /* justify-content: center; */
+    /* width: 60%; */
+    margin-top: 5rem;
+    margin-left: 10%;
+}
+
+
 @media (min-width: 1280px) and (max-width: 1600px) {
 .section-dragon {
         font-size: 92%; 

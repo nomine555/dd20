@@ -104,7 +104,8 @@ var pdfDoc = null,
 // ----------------------------------------------------------------- //
 
 function setViewDM() {
-        var slides = document.getElementsByClassName("for-admin");
+
+    var slides = document.getElementsByClassName("for-admin");
     for(var i = 0; i < slides.length; i++)
       {
         slides[i].style.display = "inherit";
@@ -3756,6 +3757,14 @@ function deleteItem(event) {
     }
   }
 
+  function see_player_asset(event) {
+    if (event.checked) 
+      document.getElementById("player-asset-list").style.display = 'flex';
+    else 
+      document.getElementById("player-asset-list").style.display = 'none';
+    console.log("player asset")
+  }
+
   function checkboxClick(event) {
     if (event.checked) 
      document.getElementById(event.name).style.display = "";
@@ -4790,7 +4799,10 @@ document.onpaste = function(event){
         } else {
           document.getElementById("token-map").value = result.url;
           document.getElementById("free").checked = true;
-          addToken();
+          if (document.getElementById("asset-by-default").checked)
+            sendLink()
+          else
+            addToken();
           hide_menus();
           console.log(result);
         }

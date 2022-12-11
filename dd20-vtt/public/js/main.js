@@ -86,7 +86,7 @@ let shadowopacity = 1;
 var imagekit = new ImageKit({
   publicKey: "public_DYilnmhVRFXigmTUrGtuCcGZpok=",
   urlEndpoint: "https://ik.imagekit.io/fiade", 
-  authenticationEndpoint: "http://board.digitald20.com/signature"
+  authenticationEndpoint: "https://board.digitald20.com/signature"
   //authenticationEndpoint: "http://localhost/signature"
 });
 

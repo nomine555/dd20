@@ -2699,7 +2699,8 @@ function getboard() {
       obj.inmersive_dice = document.getElementById("inmersive-dice").checked;
       obj.inmersive_chat = document.getElementById("inmersive-chat").checked;
       obj.inmersive_assets = document.getElementById("inmersive-assets").checked;
-    
+      obj.inmersive_plot = document.getElementById("inmersive-plot").checked;
+      obj.inmersive_background = document.getElementById("inmersive-background").checked;
     
   }
 
@@ -2900,7 +2901,7 @@ function addMessage(item) {
 // If it is our message we do nothing
 if (user !== item.item.playerid) {
 
-  set_inmersivemode(item.item.inmersive, item.item.inmersive_track, item.item.inmersive_dice, item.item.inmersive_chat, item.item.inmersive_assets);
+  set_inmersivemode(item.item.inmersive, item.item.inmersive_track, item.item.inmersive_dice, item.item.inmersive_chat, item.item.inmersive_assets,item.item.inmersive_plot,item.item.inmersive_background);
 
   if(item.item.track) {
     print_track(item.item.tracks)
@@ -4826,7 +4827,7 @@ document.onpaste = function(event){
 }
 
 
-function set_inmersivemode(mode, track, dice, chat, assets) {  
+function set_inmersivemode(mode, track, dice, chat, assets,plot, background) {  
 
   if (mode !== undefined) {
     if(mode) {
@@ -4848,6 +4849,14 @@ function set_inmersivemode(mode, track, dice, chat, assets) {
 
 
       }      
+
+      if (plot) {
+          document.getElementById("click-plot-view").style.display = "none";
+      }
+
+      if (background) {
+        canvas.backgroundColor = "black";
+    }
 
       if (track && !document.getElementById("inmersive-track").checked) {
         document.getElementById("inmersive-track").checked = true;

@@ -183,6 +183,23 @@ DiceBox.prototype.throwDice = function (dice, callback) {
                 backColor: dice[i].backColor ? dice[i].backColor : this.diceBackColor
             });
         }
+
+        if (dice[i].type == 'd11') {
+            die = new DiceD11({
+                size: 1.5,
+                fontColor: dice[i].fontColor ? dice[i].fontColor : this.diceFontColor,
+                backColor: dice[i].backColor ? dice[i].backColor : this.diceBackColor
+            });
+        }
+
+        if (dice[i].type == 'd13') {
+            die = new DiceD13({
+                size: 0.5,
+                fontColor: dice[i].fontColor ? dice[i].fontColor : this.diceFontColor,
+                backColor: dice[i].backColor ? dice[i].backColor : this.diceBackColor
+            });
+        }
+
         if (dice[i].type == 'd100') {
             die = new DiceD100({
                 size: 1.5,

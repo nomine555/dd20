@@ -119,17 +119,22 @@ function setViewDM() {
 
 function setViewPlayer() {
   document.getElementById("player-name").value = user;
+
   var slides = document.getElementsByClassName("for-player");
-for(var i = 0; i < slides.length; i++)
-{
-  slides[i].style.display = "inherit";
-}
+  for(var i = 0; i < slides.length; i++)  
+    slides[i].style.display = "inherit";
+  
+  var slides = document.getElementsByClassName("only-admin");
+  for(var i = 0; i < slides.length; i++)  
+    slides[i].style.display = "none";
 
 }
 
 //checking if user is an admin
 const checkAdmin = () => {
-  if ((user === "dm") & (room === window.location.pathname)) {
+  console.log(room)
+  console.log(window.location.pathname)
+  if ((user === "dm") & (room === window.location.pathname.replaceAll('new',''))) {
     return true;
   } else {
     return false;
@@ -212,9 +217,9 @@ const checkAdmin = () => {
           }
 
         // Cargamos la Niebla 
-          try {        
-
-            if (localStorage.getItem(room + 'fogenabled') !== null)  {
+          try {                    
+            if (localStorage.getItem(room + 'fogenabled') == 'true')  {
+              console.log("activamos la niebla")
               canvas.fogEnabled = true;
               fogHoles       = JSON.parse(localStorage.getItem(room + 'fogholes')) || [];
               document.getElementById("add-fog").disabled = false;
@@ -223,6 +228,7 @@ const checkAdmin = () => {
               document.getElementById("undo-fog").style.display = "";
             }
             else  {
+              console.log("desaactivamos la niebla")
               canvas.fogEnabled = false;
             }
 
@@ -348,6 +354,8 @@ const checkAdmin = () => {
           canvas.fogEnabled = false;
 
           // Cargamos el Track de iniciativa por defecto. 
+          // new-game
+          /*
           if (ex == null ) {
             var j = 0;
               for (var i = 1 ; i < 6; i++) {
@@ -356,6 +364,7 @@ const checkAdmin = () => {
                 document.getElementById('track'+j).firstElementChild.style.display = "";
             }
           }
+          */
 
           // Dibujamos el tablero
           window.setTimeout(function() {
@@ -662,7 +671,9 @@ function reDrawTokens(board) {
 
 function setBg() {
 
-  var bg = checkurl(document.getElementById("token-map").value);
+  var bg = checkurl(document.getElementById("map-url").value);
+  if (bg == "")
+    var bg = checkurl(document.getElementById("token-map").value);
 
   try {
     var srcbackground = canvas.backgroundImage._element.src;
@@ -927,13 +938,12 @@ function setUrl(free) {
     document.getElementById("free").checked = true;
   }
  var texto = document.getElementById(event.srcElement.id).src;
- document.getElementById("bg-map").value = texto;
  document.getElementById("token-map").value = texto;
 }
 
 
 function addtokentolist(src,n) {
- 
+ /*
   if (n == null) {
   // Es diferente
   var repetido = false;
@@ -959,14 +969,17 @@ function addtokentolist(src,n) {
   localStorage.setItem("tokenurl" + n, src);
   
 }
+*/
 }
 
 function toTrack() {
   var tokenimg = checkurl(document.getElementById("token-map").value);  
   document.getElementById("s1").checked = true;
+  document.getElementById("free").checked = false;
   if (tokenimg !== "") {
-  addtrackwhentoken(tokenimg);
+    addtrackwhentoken(tokenimg);
   }
+  hide_menus();
 }
 
 function addText() {
@@ -1037,7 +1050,8 @@ if (tokenimg !== "") {
     //oImg.setCrossOrigin("anonymous");
     if (oImg._element !== null) {
       addtokentolist(oImg._element.src,n);
-      addtrackwhentoken(oImg._element.src,n);
+      if (!document.getElementById("free").checked) 
+        addtrackwhentoken(oImg._element.src,n);
 
     if (oImg._element.naturalWidth > oImg._element.naturalHeight)
       var scale = tokensize * tileS / oImg._element.naturalWidth;
@@ -1099,6 +1113,7 @@ else
     updateBoardQuick();
   }, waittime);
 }
+hide_menus();
 };
 
 function plotvisible(item) {
@@ -1698,7 +1713,7 @@ function startFogbutton() {
 
   if(canvas.fogEnabled) {
     canvas.fogEnabled = false;
-    localStorage.setItem('fogenabled', false);
+    localStorage.setItem(room + 'fogenabled', false);
 
     document.getElementById("add-fog").disabled = true;
     document.getElementById("clear-fog").disabled = true;
@@ -1712,7 +1727,7 @@ function startFogbutton() {
   }
   else {
   canvas.fogEnabled = true;
-  localStorage.setItem('fogenabled', true);
+  localStorage.setItem(room + 'fogenabled', true);
   document.getElementById("add-fog").disabled = false;
   document.getElementById("clear-fog").disabled = false;
   document.getElementById("enable-fog").innerHTML = "Disable Fog";
@@ -2957,8 +2972,8 @@ return Math.floor(Math.random() * Math.floor(max));
 
 // ------------------------------------------------------------------- // 
 
-function addtrackwhentoken(src,n) {
-console.log(src)
+function addtrackwhentoken(src, n) {  
+
 if (n == null) {
   // Comprobamos que no sea una bola de fuego
   for (var i = 6 ; i < 11; i++) {
@@ -2967,7 +2982,7 @@ if (n == null) {
       return;
     }    
   }
-  if (!document.getElementById("free").checked) {
+  
     for (var i = 2 ; i < 10; i++) {
       var tr = document.getElementById("track" + i).style.backgroundImage;
       console.log(tr)
@@ -2977,7 +2992,7 @@ if (n == null) {
         document.getElementById("track" + i).firstElementChild.style.display = "";
         break;
       }
-    }
+    
 }
 } else {
  
@@ -3342,9 +3357,12 @@ function delay(wait) {
     if (link !== undefined) {
 
     }
-    else {
-      link = checkurl(document.getElementById("token-map").value);
+    else {      
+      link = checkurl(document.getElementById("asset-url").value);      
     }
+    
+    if (link == "")
+      link = checkurl(document.getElementById("token-map").value);
           
     if ((link !== "") && (!checkSRC(link,document.getElementById("asset-list").childNodes))) {
      
@@ -3489,7 +3507,9 @@ function delay(wait) {
   function choose_all_asset(event) {
     console.log(event);
     document.getElementById("token-map").value = event.target.src;
-    hide_menus();
+    document.getElementById("asset-url").value = event.target.src;
+    document.getElementById("map-url").value = event.target.src;
+    selfclose('allassets')
   }
 
   function chooseplayerasset(event) {
@@ -3697,6 +3717,19 @@ function deleteItem(event) {
     console.log("esconde")
 
     if(checkAdmin() && (document.getElementById("ontop").style.display == "")) {
+
+      document.getElementById("barra-derecha").style.width = "";
+      document.getElementById("barra-derecha").style.color = "";
+
+      document.getElementById("TokenBar").style.display = "none";  
+      document.getElementById("AssetBar").style.display = "none";        
+      document.getElementById("FogBar").style.display = "none";        
+      document.getElementById("MapsBar").style.display = "none";        
+      document.getElementById("chat-area").style.display = "none";        
+      document.getElementById("DiceBar").style.display = "none";  
+      document.getElementById("MusicBar").style.display = "none";  
+      document.getElementById("OptionsBar").style.display = "none";  
+      
       document.getElementById("hello").style.display = "none";  
       document.getElementById("uploadfile").style.display = "none";  
       document.getElementById("background-list").style.display = "none";
@@ -3715,6 +3748,20 @@ function deleteItem(event) {
         } catch (e) {}
     
     } else {
+
+      document.getElementById("TokenBar").style.display = "none";  
+      document.getElementById("AssetBar").style.display = "none";        
+      document.getElementById("MapsBar").style.display = "none";     
+      document.getElementById("FogBar").style.display = "none";    
+      document.getElementById("chat-area").style.display = "none";        
+      document.getElementById("DiceBar").style.display = "none";  
+      document.getElementById("MusicBar").style.display = "none";  
+      document.getElementById("OptionsBar").style.display = "none";  
+      document.getElementById("PlayerAssetBar").style.display = "none";  
+
+      document.getElementById("barra-derecha").style.width = "";
+      document.getElementById("barra-derecha").style.color = "";
+
       document.getElementById("hello").style.display = "none";  
       document.getElementById("uploadfile").style.display = "none";        
       document.getElementById("background-list").style.display = "none";
@@ -3729,6 +3776,10 @@ function deleteItem(event) {
       document.getElementById("message2").style.display="none"
     }
     
+  }
+
+  function selfclose(close) {
+    document.getElementById(close).style.display="none";
   }
 
   function show_config_view() {
@@ -3751,9 +3802,8 @@ function deleteItem(event) {
     else {
       document.getElementById("chat-area").style.display = "";
       document.getElementById("hide-chat").innerHTML = "Hide Chat";
-      var elements = document.getElementById("chat-log").getElementsByClassName('dice_result')
-          console.log( elements[elements.length - 1].offsetTop)
-          document.getElementById("chat-log").scrollTop = elements[elements.length - 1].offsetTop;  
+      var elements = document.getElementById("chat-log").getElementsByClassName('dice_result')          
+      document.getElementById("chat-log").scrollTop = elements[elements.length - 1].offsetTop;  
       //document.getElementById("log").style.display = "none";
     }
   }
@@ -4573,6 +4623,9 @@ function uploadfile(e) {
           hide_menus()
       } else {
         document.getElementById("token-map").value = result.url;
+        document.getElementById("asset-url").value = result.url;
+        document.getElementById("map-url").value = result.url;
+        
         addtoAllAssets(result.url)
         hide_menus();
         console.log(result);
@@ -4981,7 +5034,9 @@ function add_music(url) {
     var link = url;  
   }
   else {
-    var link = checkurl(document.getElementById("token-map").value);
+    var link = checkurl(document.getElementById("music-url").value);
+    if (link == "")
+      var link = checkurl(document.getElementById("token-map").value);
   }  
 
   if ((link !== "") && (!checkSRCmp3(link,document.getElementById("music-list").childNodes)) && (link.indexOf('.orgg')>0 || link.indexOf('.ogg')>0 || link.indexOf('.mp3')>0 || link.indexOf('.m4a')>0 ) ) {
@@ -5120,4 +5175,33 @@ function plotView() {
 function reset_app() {
   localStorage.clear();
   window.location = "http://board.digitald20.com"  
+}
+
+function showTokenMenu(menu)
+{
+  document.getElementById("TokenBar").style.display = "none";  
+  document.getElementById("AssetBar").style.display = "none";        
+  document.getElementById("MapsBar").style.display = "none";  
+  document.getElementById("FogBar").style.display = "none";  
+  document.getElementById("PlayerAssetBar").style.display = "none"; 
+  document.getElementById("chat-area").style.display = "none";  
+  document.getElementById("DiceBar").style.display = "none";  
+  document.getElementById("MusicBar").style.display = "none";  
+  document.getElementById("OptionsBar").style.display = "none";  
+
+  if ((menu == "AssetBar") && !checkAdmin() ) 
+    menu = "PlayerAssetBar"
+  
+  if (menu == "AssetBar")
+    show_asset();
+
+  if (document.getElementById(menu).style.display == "none") {
+    document.getElementById(menu).style.display = "";
+    document.getElementById("barra-derecha").style.width = "inherit";
+    document.getElementById("barra-derecha").style.color = "white";    
+  }
+  else {
+    document.getElementById(menu).style.display = "none";
+  }
+  
 }

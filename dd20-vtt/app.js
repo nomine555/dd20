@@ -5,6 +5,9 @@ const level = require("level");
 const db = level("./db", { valueEncoding: "json" });
 var path = require("path");
 
+var serveIndex = require('serve-index');
+
+    
 // Image Kit
 const ImageKit = require("imagekit");
 const fs = require('fs')
@@ -74,6 +77,13 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 
+//express route
+app.get("/new", function (req, res) {
+  res.sendFile(path.join(__dirname + "/public/new-index.html"));
+});
+
+app.use('/img', serveIndex('public/img',  {icons: true, view: 'details'}) );
+
 /*
 app.get("/game", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/game.html"));
@@ -87,11 +97,22 @@ app.get("/room/:roomId", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/game.html"));
 });
 
-
 app.get("/room/:roomId/game", function (req, res) {
   app.use(`/room/${req.params.roomId}/game`, new MessageService());
   //sending file
   res.sendFile(path.join(__dirname + "/public/game.html"));
+});
+
+app.get("/newroom/:roomId", function (req, res) {
+  app.use(`/newroom/${req.params.roomId}`, new MessageService());
+  //sending file
+  res.sendFile(path.join(__dirname + "/public/new-game.html"));
+});
+
+app.get("/newroom/:roomId/game", function (req, res) {
+  app.use(`/newroom/${req.params.roomId}/game`, new MessageService());
+  //sending file
+  res.sendFile(path.join(__dirname + "/public/new-game.html"));
 });
 
 // Image Kit

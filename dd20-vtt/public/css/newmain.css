@@ -651,7 +651,7 @@ margin-top: .3rem;
     left: 5vw;
     width: 90vw;
     height: 90vh;
-    z-index: 1000;
+    z-index: 1001;
     background: #c1c1c1;
     border: 1px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);

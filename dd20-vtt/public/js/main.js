@@ -190,8 +190,12 @@ const checkAdmin = () => {
       fontColor  =  localStorage.getItem("dd20_fontcolor");
       backColor  =  localStorage.getItem("dd20_backcolor");
       document.getElementById("fontcolor").value = fontColor;
-      document.getElementById("backcolor").value = backColor;
+      document.getElementById("backcolor").value = backColor;      
     }
+
+    namedmode  =  localStorage.getItem("named_mode");   
+    if (namedmode == "true")   
+      set_namemode(true);
     
       if (checkAdmin()) {
         connected = true;
@@ -2708,14 +2712,13 @@ function getboard() {
   obj.roll = false;
   
   if (checkAdmin()) {
-    obj.inmersive = document.getElementById("inmersive-on").checked;
-
+      obj.inmersive = document.getElementById("inmersive-on").checked;
       obj.inmersive_track = document.getElementById("inmersive-track").checked;
       obj.inmersive_dice = document.getElementById("inmersive-dice").checked;
       obj.inmersive_chat = document.getElementById("inmersive-chat").checked;
       obj.inmersive_assets = document.getElementById("inmersive-assets").checked;
       obj.inmersive_plot = document.getElementById("inmersive-plot").checked;
-      obj.inmersive_background = document.getElementById("inmersive-background").checked;
+      obj.inmersive_background = document.getElementById("inmersive-background").checked;   
     
   }
 
@@ -2986,10 +2989,10 @@ if (n == null) {
     for (var i = 2 ; i < 10; i++) {
       var tr = document.getElementById("track" + i).style.backgroundImage;
       console.log(tr)
-      if (tr == "") {
-        console.log("lo metemos track" + i)
+      if (tr == "") {        
         document.getElementById("track" + i).style.backgroundImage = "url('" + src + "')";
         document.getElementById("track" + i).firstElementChild.style.display = "";
+        update_track();
         break;
       }
     
@@ -3823,6 +3826,13 @@ function deleteItem(event) {
      document.getElementById(event.name).style.display = "none";
   }
 
+  function checkboxClick2(event) {
+    if (!event.checked) 
+     document.getElementById(event.name).style.display = "";
+    else 
+     document.getElementById(event.name).style.display = "none";
+  }
+
   function checkboxBackground(event) {
     if (event.checked) {
       document.getElementById("superbar").classList.add("superbox");
@@ -3830,6 +3840,13 @@ function deleteItem(event) {
   
     else {
       document.getElementById("superbar").classList.remove("superbox");
+    }
+  
+  }
+
+  function checkboxBackground2(event) {
+    if (event.checked) {
+      canvas.backgroundColor = "black";
     }
   
   }
@@ -4880,27 +4897,25 @@ document.onpaste = function(event){
 }
 
 
-function set_inmersivemode(mode, track, dice, chat, assets,plot, background) {  
+function set_inmersivemode(mode, track, dice, chat, assets, plot, background) {  
+
+  console.log(mode)
+  console.log(track)
+  console.log(dice)
+  console.log(chat)
+  console.log(assets)
+  console.log(plot)
+  console.log(background)
+
+  
 
   if (mode !== undefined) {
     if(mode) {
 
-      if(!document.getElementById("inmersive-on").checked) {
-
-        /*
-        document.getElementById("inmersive-on").checked = true;
-        document.getElementById("downbar").style.display = "none";
-        document.getElementById("url-token").style.display = "none";
-        document.getElementById("add-token-bar").style.display = "none";
-        document.getElementById("bplayername").style.display = "none";        
-*/
-        
-        document.getElementById("superbar").style.display = "none";
-        //document.getElementById("chat-log").style.display = "none";
+      if(!document.getElementById("inmersive-on").checked) {        
+        document.getElementById("superbar").style.display = "none";    
         document.getElementById("view-distance").checked = false;  
         document.getElementById("distance-bar").style.display = "none";        
-
-
       }      
 
       if (plot) {
@@ -4961,6 +4976,13 @@ function set_inmersivemode(mode, track, dice, chat, assets,plot, background) {
         document.getElementById("dice-bar").style.display = "";
     }
   }
+
+  if (track)
+    document.getElementById("track_bar").style.display = "none";
+  
+  if (background)
+    canvas.backgroundColor = "black";
+    
 }
 
 
@@ -4969,6 +4991,7 @@ function set_namemode(mode) {
   if (mode !== undefined) {
     if(mode && !document.getElementById("view-names").checked) {
       document.getElementById("view-names").checked = true;
+      localStorage.setItem("named_mode","true");
       lista = document.getElementsByClassName("track_hp");
       for(var i = 0; i < lista.length; i++)
       {
@@ -4977,6 +5000,7 @@ function set_namemode(mode) {
       }
     } else if(!mode && document.getElementById("view-names").checked) {
       document.getElementById("view-names").checked = false;
+      localStorage.setItem("named_mode","false");
       lista = document.getElementsByClassName("track_hp");
       for(var i = 0; i < lista.length; i++)
       {
@@ -4987,6 +5011,7 @@ function set_namemode(mode) {
   }
 else {
 if(document.getElementById("view-names").checked) {
+  localStorage.setItem("named_mode","true");
   lista = document.getElementsByClassName("track_hp");
   for(var i = 0; i < lista.length; i++)
   {
@@ -4994,6 +5019,7 @@ if(document.getElementById("view-names").checked) {
     lista[i].classList.add("track_name");
   }
 } else {
+  localStorage.setItem("named_mode","false");
   lista = document.getElementsByClassName("track_hp");
   for(var i = 0; i < lista.length; i++)
   {
@@ -5188,6 +5214,7 @@ function showTokenMenu(menu)
   document.getElementById("DiceBar").style.display = "none";  
   document.getElementById("MusicBar").style.display = "none";  
   document.getElementById("OptionsBar").style.display = "none";  
+  document.getElementById("asset-list").style.display = "none";  
 
   if ((menu == "AssetBar") && !checkAdmin() ) 
     menu = "PlayerAssetBar"

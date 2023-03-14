@@ -89,7 +89,7 @@
     <!--Nueva barra botones vertical-->
     <div id ="barra-derecha" class="barra-derecha texto-menu-derecha ">
         <p class="texto-menu-derecha"            onclick="showTokenMenu('TokenBar')">Tokens</p>         
-        <p class="texto-menu-derecha only-admin"  onclick="showTokenMenu('AssetBar')">Assets</p>    
+        <p class="texto-menu-derecha"  onclick="showTokenMenu('AssetBar')">Assets</p>    
         <p class="texto-menu-derecha only-admin"  onclick="showTokenMenu('MapsBar')">Maps</p>
         <p class="texto-menu-derecha only-admin"  onclick="showTokenMenu('FogBar')">Fog</p>        
         <p class="texto-menu-derecha"            onclick="show_hide_chat()">Chat</p>
@@ -176,12 +176,14 @@
             <button onclick='setBg()' class="button" id="change">Set Background Image</button>             
             <button onclick='setTile()' class="button">Set Tile Size</button>        
         </div>
-        <hr>
+        <br>
+        <hr width="100%">
         <p class="url-text menu-text">You can load any previously used background</p>
         <div class="buttons-line">
             <button onclick="show_backgrounds()" class="button">Select used background</button>            
         </div>        
-        <hr>
+        <br>
+        <hr width="100%">
         <p class="url-text menu-text">Scenes contain background and also all the tokens</p>
         <div class="buttons-line">
             <button onclick='save_url()' class="button">Save Scene</button>               			
@@ -216,9 +218,11 @@
     </div>
     <!-- Opciones-->
     <div id = "OptionsBar" class="superbar noselect"  style="display: none;">
-        
+            <p class="url-text menu-text">Character's Name</p>
 			<input type="text" id="player-name" placeholder="Player Name" onchange="nameChange();" class="player-name center" style="width: 97%;">
 			<div class="buttons-line" id="bplayername">
+                <br>
+                <hr style="width: 100%;">
             <button class="button" onclick="prompt('Press Ctrl + C, copy to clipboard and send this link to your friends so they can join this virtual tabletop board session',window.location)">Share</button>
             <button class="button" onclick="show_config_view();">Options</button>
 			</div>
@@ -370,15 +374,17 @@
                 <label for="view-name" >Asset Bar</label>
                 <input type="checkbox" id="view-back" checked onclick='checkboxBackground(this);'>
                 <label for="view-back" >Menu Background</label>
-               
-
+                <input  type="checkbox" id="view-hp" checked onclick='checkboxClick(this);' name="text-hp">
+                <label  for="view-hp" >Hit points on tokens</label>            
+                <input  type="checkbox" id="view-distance" checked onclick='checkboxClick(this);' name="distance-bar">
+                <label  for="view-distance" >Distance Bar</label>
+                
             </div>
-                <hr>
+                <hr class="only-admin">
                 <div class="grid">
                     <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-on"    >
                     <label  style="display: none;" class="for-admin triple">Player Inmersive mode</label>
-                    <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-track" >
-                    <label  style="display: none;" class="for-admin" >Initiative track</label>  
+                    
                     <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-dice"  >
                     <label  style="display: none;" class="for-admin" >Dice Rolling</label>  
                     <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-chat"  >
@@ -387,30 +393,35 @@
                     <label  style="display: none;" class="for-admin" >Assets List</label>  
                     <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-plot"  >
                     <label  style="display: none;" class="for-admin" >Plot View</label>  
-                    <input  style="display: none;" class="for-admin" type="checkbox" id="inmersive-background"  >
-                    <label  style="display: none;" class="for-admin" >Black Background</label>  
+                    
                 </div>
-                <hr>
+                <hr class="only-admin">
             </div>
 
-            <label  style="display: none;" class="for-admin triple">Hide tools</label>
-            <input type="checkbox" id="view-hp" checked onclick='checkboxClick(this);' name="text-hp">
-            <label for="view-hp" >Hit points on tokens</label>            
-            <input type="checkbox" id="view-distance" checked onclick='checkboxClick(this);' name="distance-bar">
-            <label for="view-distance" >Distance Bar</label>
+        <div class="only-admin">            
+            <label class="triple">Hide tools</label>
             <br>
-            <input type="checkbox" id="view-names" onclick='set_namemode();' name="bedit-name">
-            <label for="view-names" >Write names on Initiative Tracker</label>
-<hr>
-                <label  style="display: none;" class="for-admin triple">Assets's options</label>
-                <div class="grid">
-                    
+            <div class="grid">
+            <input type="checkbox" id="inmersive-on"  onclick='checkboxClick2(this);' name="distance-bar">
+            <label>Distance Tool</label>  
+            <input type="checkbox" id="inmersive-track" onclick='checkboxClick2(this);' name='track_bar'>
+            <label>Initiative track</label>            
+            <input  type="checkbox" id="inmersive-background" onclick='checkboxBackground2(this);'>
+            <label>Black Background</label>  
+            <input  type="checkbox" id="view-names" onclick='set_namemode();' name="bedit-name">
+            <label  for="view-names" >Write names on Initiative Tracker</label>
+        </div>                       
+            <hr>
+            <label  style="display: none;" class="for-admin triple">Assets's options</label>
+                <div class="grid">                    
                     <input  style="display: none;" class="for-admin" type="checkbox" id="asset-by-default"  >
                     <label  style="display: none;" class="for-admin" >Paste Asset by default</label>  
                     <input  style="display: none;" class="for-admin" type="checkbox" id="see-player-asset" onclick='see_player_asset(this);'>
                     <label  style="display: none;" class="for-admin" >See player's Assets</label>                      
                 </div>
-                <hr>
+            <hr>
+        </div>
+                
             <div class="combine-dice">
                 <input type="checkbox" id="two-finger-pan" checked>
                 <label for="view-name" >Tow finger to pan</label>

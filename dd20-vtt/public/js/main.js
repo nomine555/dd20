@@ -3795,20 +3795,23 @@ function deleteItem(event) {
   }
 
   function show_hide_chat() {
-    hide_menus();
-    if (document.getElementById("chat-area").style.display == "") {
+    
+    //console.log("show hide chat")
+    if (document.getElementById("chat-area").style.display == "none") {
+      //console.log("muestro!!!!!!!!!!!!!!!!!!!!")
+      document.getElementById("chat-area").style.display = "";
+      document.getElementById("hide-chat").innerHTML = "Hide Chat";
+      //var elements = document.getElementById("chat-log").getElementsByClassName('dice_result')          
+      //  document.getElementById("chat-log").scrollTop = elements[elements.length - 1].offsetTop;  
+      //document.getElementById("log").style.display = "none";
+
+    } else {
+      //console.log("escondo!!!!!!!!!!!!!!!!!!!!")
       document.getElementById("chat-area").style.display = "none";
       document.getElementById("hide-chat").innerHTML = "Show Chat";
       //document.getElementById("log").style.display = "";
     }
-      
-    else {
-      document.getElementById("chat-area").style.display = "";
-      document.getElementById("hide-chat").innerHTML = "Hide Chat";
-      var elements = document.getElementById("chat-log").getElementsByClassName('dice_result')          
-      document.getElementById("chat-log").scrollTop = elements[elements.length - 1].offsetTop;  
-      //document.getElementById("log").style.display = "none";
-    }
+    //hide_menus();
   }
 
   function see_player_asset(event) {
@@ -5232,3 +5235,12 @@ function showTokenMenu(menu)
   }
   
 }
+
+function SwitchInterface() {
+  url = window.location.href
+  if(url.indexOf("newroom")> 0)
+    url = url.replaceAll("newroom","room")
+  else  
+    url = url.replaceAll("room","newroom")
+  window.location.href = url;
+  }

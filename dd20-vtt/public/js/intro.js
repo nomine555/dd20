@@ -1,25 +1,25 @@
 // ------------------------------------------------------------------- // 
 // This function is call form login page
 
-function ContinueRoom(){
+function ContinueRoom(text) {
   if (localStorage.getItem('lastdd20room') !== null) {
     var id = localStorage.getItem('lastdd20room');
     localStorage.setItem('dd20room', "/room/" + id);
     localStorage.setItem('dd20user', 'dm')
     localStorage.setItem('lastdd20room',id);
-    window.location.assign("/room/" + id);
+    window.location.assign("/"+text+"room/" + id);
   }
   else getRoomid();
   
 }
 
-function getRoomid() {
+function getRoomid(text) {
 
     const id = Date.now() + "" + Math.floor(Math.random() * 1000000000);
         localStorage.setItem('dd20room', "/room/" + id);
         localStorage.setItem('dd20user', 'dm')
         localStorage.setItem('lastdd20room',id);
-        window.location.assign("/room/" + id);
+        window.location.assign("/"+text+"room/" + id);
        
   }
 
@@ -34,13 +34,13 @@ function getRoomid() {
         localStorage.setItem('dd20room', "/room/" + id);
         localStorage.setItem('dd20user', 'dm')
         //localStorage.setItem('lastdd20room',id);
-        window.location.assign("/room/" + id + resturl);    
+        window.location.assign("/newroom/" + id + resturl);    
       } else {
         const id = Date.now() + "" + Math.floor(Math.random() * 1000000000);
         localStorage.setItem('dd20room', "/room/" + id);
         localStorage.setItem('dd20user', 'dm')
         localStorage.setItem('lastdd20room',id);
-        window.location.assign("/room/" + id + resturl);
+        window.location.assign("/newroom/" + id + resturl);
       }
 
     }

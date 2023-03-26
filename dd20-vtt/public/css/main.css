@@ -21,9 +21,11 @@
     flex-wrap: wrap;
 }
 .start-box .button {
-    margin-left: 1em; ;
+    margin-left: 1rem; ;
 }
-
+.start-box .button-gray {
+    margin-left: 1rem;
+}
 .header {
     font-family: "Bookman", serif;
     text-align: center;
@@ -143,8 +145,7 @@ display: flex;
 margin-top: 0.5em;
 }
 .section ul {
-    margin-top: 1.5em;
-
+    margin-top: 0.1em;
 }
 .urlinput {
     min-width: 25em;
@@ -664,13 +665,29 @@ text-align: right;
     border-radius: 6px;
     margin-bottom: 0.2em;
     margin-top: 0.2em;
-    background-color: #d1d2ff;
     background-color: #d1ecff;
     text-align: center;
     padding: 0.25em;
     margin: 0.2em;
     flex-grow: 1;
+}
 
+.button-gray {
+    /* width: 25%; */
+    font-size: 50%;
+    border: 1px solid #000000;
+    box-shadow: -1px 1px 2px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 6px;
+    /* margin-bottom: 0.2em; */
+    /* margin-top: 0.2em; */
+    /* background-color: #d1d2ff; */
+    background-color: #ededed;
+    /* text-align: center; */
+    padding: 0.25em;
+    margin: 0.2em;
+    /* flex-grow: 1.1; */
+    height: 1rem;
+    /* margin-left: 2em; */
 }
 
 .button-pressed {
@@ -684,7 +701,9 @@ text-align: right;
     padding: 0.25em;
     margin: 0.2em;
 }
-
+.button-gray:hover {
+    background-color: #e9f7ff;
+}
 .button:hover { 
     background-color: #9cd4f5;
 }

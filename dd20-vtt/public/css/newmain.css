@@ -1253,9 +1253,11 @@ padding: 0.5rem;
     position: absolute;
     right: 4rem;
     top: 8rem;
-    width: 10rem;
+    width: 11rem;
     height: 46rem;
     padding: 0.5rem;
+    background-color: #ffffff21;
+    overflow-y: scroll;
 }
 
 .menu-text {

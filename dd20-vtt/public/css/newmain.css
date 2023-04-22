@@ -482,21 +482,20 @@ text-align: right;
 
 
 .background-bar {
-
-    position: absolute;
-    top: 5vh;
-    left: 5vw;
-    width: 90vw;
-    height: 90vh;
-    z-index: 1000;
-    background: #c1c1c1;
-    border: 1px solid #DFDCDC;
-    box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 6px;
-    display: flex;
-    flex-wrap: wrap;
-    place-content: flex-start;
-    overflow-y: auto;
+position: absolute;
+top: 35vh;
+left: 5vw;
+width: 90vw;
+height: 60vh;
+z-index: 1000;
+background: #c1c1c1;
+border: 1px solid #DFDCDC;
+box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
+border-radius: 6px;
+display: flex;
+flex-wrap: wrap;
+place-content: flex-start;
+overflow-y: auto;
 }
 
 .asset-bar {
@@ -1258,6 +1257,12 @@ padding: 0.5rem;
     padding: 0.5rem;
     background-color: #ffffff21;
     overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none; 
+}
+
+#PlayerAssetBar::-webkit-scrollbar {
+    display: none;
 }
 
 .menu-text {

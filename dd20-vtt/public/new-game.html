@@ -177,11 +177,13 @@
             <button onclick='setTile()' class="button">Set Tile Size</button>        
         </div>
         <br>
+        <!--
         <hr width="100%">
         <p class="url-text menu-text">You can load any previously used background</p>
         <div class="buttons-line">
             <button onclick="show_backgrounds()" class="button">Select used background</button>            
         </div>        
+        -->
         <br>
         <hr width="100%">
         <p class="url-text menu-text">Scenes contain background and also all the tokens</p>
@@ -242,7 +244,7 @@
     <!-- Music-->
     <div id = "MusicBar" class="supercol noselect"  style="display: none;">
         <p class="url-text menu-text only-admin">Paste URL to your music file (dropbox included)</p>
-        <div class="only-admin">
+        <div >
         <input class="urlinput" type="text" id="music-url" placeholder="... url to your mp3 file ..."> 
         <button id="into-music" onclick='add_music()' class="button" style="font-size: 75%;">Add Song</button> 
     </div>                                
@@ -251,7 +253,7 @@
                         <source id="audiosrc" src="" type="audio/mpeg">                 
                       Your browser does not support the audio element.
                       </audio>  
-                    <img src="https://digitald20.com/vtt/img/hamburguesa.png"  onclick="show_all_audios(event);" style="width: 3rem;padding: .25rem;" class="only-admin">                     
+                    <img src="https://digitald20.com/vtt/img/hamburguesa.png"  onclick="show_all_audios(event);" style="width: 3rem;padding: .25rem;" >                     
                 </div>                                                                                                     
         <div id="music-list" class="music-bar noselect" style="display:none" onclick="choosemusic(event)"></div>     
     </div>

@@ -695,8 +695,9 @@ function setBg() {
   }
 
   createBg(bg);
-  addBackgroundtoList(bg) 
-  
+  addBackgroundtoList(bg)   
+  clearFogbutton();
+
   setTimeout(() => {
     clearFogbutton();    
     setTile();    
@@ -1410,6 +1411,59 @@ function localDices(dice) {
   return obj;
 
 }
+
+function getdicesfrombeyond(dice, results) {
+
+  var lista = [];
+  var obj = new Object();
+  obj.dices = [];
+  var fontColor = document.getElementById("fontcolor").value;
+  var backColor = document.getElementById("backcolor").value;
+  var last20 = 0;
+  var last10 = 0;
+
+  dice = dice.replaceAll("-","+ -");
+  
+  //const re = /[\+-]/
+  var g = dice.split("+");
+  var r = results.split("+")
+  var c = 0
+  //var g = dice.split(re);
+
+console.log(g)
+  for(i = 0; i < g.length; i++) {
+    var d = g[i].trim().split("d");
+      var n = parseInt(d[0])
+      if (d[1]===undefined) {
+        obj.bonus = n;
+        lista.push(obj);
+       
+        obj = new Object();
+        obj.dices = [];
+        obj.roll = true;
+        obj.playerid          = user; 
+        obj.request           = false;
+
+      } else {  
+      for (j = 0; j < n; j++) {
+        
+        var dobj = new Object();
+        dobj.sides = parseInt(d[1])
+        dobj.type = "d" + d[1];
+        dobj.fontColor = fontColor;
+        dobj.backColor = backColor;        
+        dobj.result = parseInt(r[c]);
+        c = c + 1
+        obj.dices.push(dobj);  
+      }
+    }
+  }
+  if (obj.dices.length > 0)
+    lista.push(obj)
+  return lista;
+}
+
+
 
 function getdices(dice) {
 
@@ -2838,7 +2892,7 @@ function sendChat() {
 
 function sendChat_5e() {
 
-  console.log("from beyond")
+  console.log("from 5etools")
 
   var text = document.getElementById("chat-text").value;
   document.getElementById("chat-text").value = "";
@@ -2850,6 +2904,8 @@ function sendChat_5e() {
   obj.text = text;
   sendMessage(obj);
 
+ 
+
 }
 
 function sendChat_beyond() {
@@ -2858,12 +2914,32 @@ function sendChat_beyond() {
 
   var text = document.getElementById("chat-text").value;
   document.getElementById("chat-text").value = "";
+
+  /*
   var obj = new Object();
   obj.playerid          = user;
   obj.request           = false;
   obj.roll = false;
   obj.chat = true;
   obj.text = text;
+  sendMessage(obj);
+*/
+
+  var doc = new DOMParser().parseFromString(text, "text/xml");
+  var resultados = doc.getElementsByClassName("dice_result__info__breakdown")[0].getAttribute('title')
+  var tiradas    = doc.getElementsByClassName("dice_result__info__dicenotation")[0].getAttribute('title')
+  var text2      = user + ' ' + doc.getElementsByClassName("dice_result__info__rolldetail")[0].innerHTML + ' ' + doc.getElementsByClassName("dice_result__rolltype")[0].innerHTML
+
+  console.log(tiradas)
+  console.log(resultados)
+  console.log(text2)
+
+  var obj = new Object();
+  obj.roll = true;
+  obj.playerid          = user; 
+  obj.request           = false;
+  obj.text = text2;
+  obj.dices = getdicesfrombeyond(tiradas, resultados)
   sendMessage(obj);
 
 }
@@ -2910,8 +2986,11 @@ function addMessage(item) {
   if(item.item.chat) 
     printchat(item.item)
 
-  if(item.item.music) 
+  if(item.item.music) {
+    console.log("music!")
     playmusic(item.item)
+  }
+    
   
     console.log(user)
     console.log(item.item.playerid)
@@ -3660,6 +3739,7 @@ function deleteItem(event) {
     }
 
     createBg(event.target.src)
+    clearFogbutton();
 
     setTimeout(() => {
       updateBoard();
@@ -3724,11 +3804,15 @@ function deleteItem(event) {
       document.getElementById("barra-derecha").style.width = "";
       document.getElementById("barra-derecha").style.color = "";
 
-      document.getElementById("TokenBar").style.display = "none";  
-      document.getElementById("AssetBar").style.display = "none";        
+      /*
       document.getElementById("FogBar").style.display = "none";        
-      document.getElementById("MapsBar").style.display = "none";        
       document.getElementById("chat-area").style.display = "none";        
+      document.getElementById("DiceBar").style.display = "none";        
+      */
+
+      document.getElementById("TokenBar").style.display = "none";  
+      document.getElementById("AssetBar").style.display = "none";             
+      document.getElementById("MapsBar").style.display = "none";              
       document.getElementById("DiceBar").style.display = "none";  
       document.getElementById("MusicBar").style.display = "none";  
       document.getElementById("OptionsBar").style.display = "none";  
@@ -3754,13 +3838,16 @@ function deleteItem(event) {
 
       document.getElementById("TokenBar").style.display = "none";  
       document.getElementById("AssetBar").style.display = "none";        
-      document.getElementById("MapsBar").style.display = "none";     
+      document.getElementById("MapsBar").style.display = "none";   
+      /*  
       document.getElementById("FogBar").style.display = "none";    
-      document.getElementById("chat-area").style.display = "none";        
+      document.getElementById("chat-area").style.display = "none";            
       document.getElementById("DiceBar").style.display = "none";  
+      document.getElementById("PlayerAssetBar").style.display = "none";  
+      */
       document.getElementById("MusicBar").style.display = "none";  
       document.getElementById("OptionsBar").style.display = "none";  
-      document.getElementById("PlayerAssetBar").style.display = "none";  
+      
 
       document.getElementById("barra-derecha").style.width = "";
       document.getElementById("barra-derecha").style.color = "";
@@ -4126,7 +4213,8 @@ function load_scene() {
     });
 
     createBg(mainBackground)      
-    
+    clearFogbutton();
+
     var tokens = board.tokens;
     tokens.forEach((item) => {
       createToken(item);
@@ -4232,6 +4320,7 @@ function savetoplugin() {
 function dd20Receive() {
   let scenes = document.getElementById("scenes-receive").value		
   //console.log(JSON.parse(scenes));  
+  console.log(scenes);  
   load_all_data(JSON.parse(scenes).data)
 }
 
@@ -4561,7 +4650,8 @@ function setOption(selectElement, value) {
 
 function tools5edblclick(ev) {
   var monster = document.getElementById("monsterframe").getElementsByClassName('stats-name')[0].innerHTML;	
-  var text =  ev.path[0].innerHTML;
+  //var text =  ev.path[0].innerHTML;
+  var text =  ev.srcElement.innerHTML;
   console.log("Event fired!!!!!" + text + "   " + monster)
 
   if(text.indexOf("+") == 0) {
@@ -4584,7 +4674,9 @@ function dd20dblclick(ev) {
   
 	var monster = document.getElementById("monsterframe").getElementsByClassName('mon-stat-block__name-link')[0].innerHTML;	
     
-    var text =  ev.path[0].innerHTML;
+  console.log(ev)
+    //var text =  ev.path[0].innerHTML;
+    var text =  ev.srcElement.innerHTML;
     console.log("Event fired!!!!!" + text)
     if (text !== undefined) {
 		
@@ -5124,7 +5216,7 @@ function sendMusic(text) {
 
 function playmusic(item) {
 
-  if(!checkAdmin()) {
+  //if(!checkAdmin()) {
     if (item.text == "pause")
       document.getElementById("audiocontrol").pause();
     else if (item.text == "play") {
@@ -5135,10 +5227,10 @@ function playmusic(item) {
     else {
       document.getElementById("audiosrc").src = item.text;
       document.getElementById("audiocontrol").load();
-      //document.getElementById("audiocontrol").play();
+      document.getElementById("audiocontrol").play();
     }
     
-  }
+  //}
 }
 
 function bpausemusic() {
@@ -5218,12 +5310,21 @@ function showTokenMenu(menu)
   document.getElementById("MusicBar").style.display = "none";  
   document.getElementById("OptionsBar").style.display = "none";  
   document.getElementById("asset-list").style.display = "none";  
+  document.getElementById("background-list").style.display = "none";  
+  
+  /*desactivamos Fog*/
+  document.getElementById("add-fog").innerHTML = "Reveal Area";
+  document.getElementById("add-fog").className = "button";
+  canvas.isDrawingfog = false;
+  canvas.selection = true;
 
   if ((menu == "AssetBar") && !checkAdmin() ) 
     menu = "PlayerAssetBar"
   
   if (menu == "AssetBar")
     show_asset();
+  if (menu =="MapsBar")    
+    show_backgrounds();
 
   if (document.getElementById(menu).style.display == "none") {
     document.getElementById(menu).style.display = "";

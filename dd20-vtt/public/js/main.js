@@ -2158,8 +2158,15 @@ canvas.on("mouse:down", function (opt) {
   this.lastPosY = opt.pointer.y;
   var hoverTarget = canvas.findTarget(event, false);       
   
-    // Drawing a poligon
-  if(this.isDrawing || this.isDrawingfog) {
+  // Dragging the map
+  if(event.button == 2) {
+      if (!over_target(opt)) {
+      this.isDragging = true;
+      this.selection = false;
+    }
+  } 
+  // Drawing a poligon
+  else if(this.isDrawing || this.isDrawingfog) {
     document.getElementById('message').style.display = "none";
 
     // Drawing a poligon with two clicks, last click
@@ -2206,14 +2213,13 @@ canvas.on("mouse:down", function (opt) {
   }
     }
     // Rigth mouse to pan background
-  } else if(event.button == 2 || document.getElementById("left-click-pan").checked) {
+  } else if(document.getElementById("left-click-pan").checked) {
       if (!over_target(opt)) {
       this.isDragging = true;
       this.selection = false;
     }
   } 
 });
-
 
 canvas.on('mouse:dblclick', function (opt) {
 
@@ -2492,23 +2498,25 @@ else {*/
     /*
     var f = canvas.getActiveObject();
     console.log(f)
+    console.log(f)
+    
     canvas.sendToBack(fog);
     fog.set({selectable: false});
     canvas.preserveObjectStacking = true;
-    canvas.renderAll();*/
-  
-  
-  /*
-      var activeObjects = ev.target.getObjects();
-      if (activeObjects ){
-      for (let i in activeObjects) {
-          if(activeObjects[i].cacheWidth > 0) {
-            ev.target.removeWithUpdate(activeObjects[i]);
+    canvas.renderAll();
+    
+    */
+      
+  var activeObjects = canvas.getActiveObject();    
+    if (activeObjects._objects !== undefined)
+      for (i = 0 ; i < activeObjects._objects.length; i++) {        
+          if(activeObjects._objects[i].id = "fog") {
+            console.log("captured fog")
+            ev.target.removeWithUpdate(activeObjects._objects[i]);
             canvas.renderAll();
           }
-      }
-    }
-    */
+      }      
+
 });
 
 //function for recreating tokens

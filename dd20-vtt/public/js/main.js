@@ -815,7 +815,7 @@ function createNewBg(imgurl) {
   
 }
 
-function createBg(imgurl) {
+function createBg(imgurl, callback) {
   
   imgurl = checkurl(imgurl);
 
@@ -870,7 +870,6 @@ function createBg(imgurl) {
       }      
   }, 3*waittime);
 
- 
 }
 
 function setmaxHzoom() {  
@@ -2506,7 +2505,7 @@ else {*/
     canvas.renderAll();
     
     */
-      
+  /*    
   var activeObjects = canvas.getActiveObject();    
     if (activeObjects._objects !== undefined)
       for (i = 0 ; i < activeObjects._objects.length; i++) {        
@@ -2516,7 +2515,8 @@ else {*/
             canvas.renderAll();
           }
       }      
-
+  */
+ 
 });
 
 //function for recreating tokens
@@ -3734,6 +3734,7 @@ function deleteItem(event) {
     if (event.target.id == "background-list") {
       hide_menus();
     } else {
+
       if (document.getElementById("plotmode").checked) {
           plottileSize =  checkminTile(event.target.getAttribute("tile"));
       } else {

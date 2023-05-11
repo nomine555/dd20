@@ -243,17 +243,17 @@
     </div>
     <!-- Music-->
     <div id = "MusicBar" class="supercol noselect"  style="display: none;">
-        <p class="url-text menu-text only-admin">Paste URL to your music file (dropbox included)</p>
+        <p class="url-text menu-text only-admin only-admin-music">Paste URL to your music file (dropbox included)</p>
         <div >
-        <input class="urlinput" type="text" id="music-url" placeholder="... url to your mp3 file ..."> 
-        <button id="into-music" onclick='add_music()' class="button" style="font-size: 75%;">Add Song</button> 
+        <input class="urlinput only-admin only-admin-music" type="text" id="music-url" placeholder="... url to your mp3 file ..." > 
+        <button id="into-music" onclick='add_music()' class="button only-admin only-admin-music" style="font-size: 75%;" >Add Song</button> 
     </div>                                
                 <div class="over-audio ">
                     <audio controls style="z-index: 50;" id="audiocontrol" onpause="bpausemusic();" onplay="bplaymusic();">      
                         <source id="audiosrc" src="" type="audio/mpeg">                 
                       Your browser does not support the audio element.
                       </audio>  
-                    <img src="https://digitald20.com/vtt/img/hamburguesa.png"  onclick="show_all_audios(event);" style="width: 3rem;padding: .25rem;" >                     
+                    <img src="https://digitald20.com/vtt/img/hamburguesa.png"  onclick="show_all_audios(event);" style="width: 3rem;padding: .25rem;" class="only-admin only-admin-music">                     
                 </div>                                                                                                     
         <div id="music-list" class="music-bar noselect" style="display:none" onclick="choosemusic(event)"></div>     
     </div>
@@ -431,6 +431,11 @@
                 <label for="view-name" >Tow finger to pan</label>
                 <input type="checkbox" id="left-click-pan">
                 <label for="view-back" >left click to pan</label>
+            </div>
+            <hr>
+            <div class="combine-dice">
+                <input type="checkbox" id="player-audio" onclick="set_musicmode();">
+                <label for="view-name" >Allow all players to put music</label>                
             </div>
             <hr>
             <div class="combine-dice">

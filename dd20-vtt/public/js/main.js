@@ -127,13 +127,11 @@ function setViewPlayer() {
   var slides = document.getElementsByClassName("only-admin");
   for(var i = 0; i < slides.length; i++)  
     slides[i].style.display = "none";
-
+    
 }
 
 //checking if user is an admin
 const checkAdmin = () => {
-  console.log(room)
-  console.log(window.location.pathname)
   if ((user === "dm") & (room === window.location.pathname.replaceAll('new',''))) {
     return true;
   } else {
@@ -197,6 +195,10 @@ const checkAdmin = () => {
     if (namedmode == "true")   
       set_namemode(true);
     
+    musicmode  =  localStorage.getItem("music_mode");   
+    if (musicmode == "true")   
+      set_musicmode(true);
+    
       if (checkAdmin()) {
         connected = true;
     
@@ -256,7 +258,10 @@ const checkAdmin = () => {
                 document.getElementById('track'+i).style.backgroundImage = localStorage.getItem("tracksrc" + i);
               if(document.getElementById('track'+i).style.backgroundImage !== "") {
                 document.getElementById('track'+i).style.order = localStorage.getItem("trackorder" + i);
-                document.getElementById('track'+i).firstElementChild.value = parseInt(localStorage.getItem("trackhp" + i));
+                if (namedmode)
+                  document.getElementById('track'+i).firstElementChild.value = localStorage.getItem("trackhp" + i);
+                else
+                  document.getElementById('track'+i).firstElementChild.value = parseInt(localStorage.getItem("trackhp" + i));
                 document.getElementById('track'+i).firstElementChild.style.display = "";
               }
               } catch (e) {
@@ -378,6 +383,9 @@ const checkAdmin = () => {
           }, 2*waittime);
          
         }
+
+        keepAliveBoard.startTimer(10000);          
+          
       }
       // ------------------------------------------------------------------
       // No somos dungeon masters
@@ -1979,8 +1987,12 @@ function checkBorders()
     }
 
 canvas.forEachObject(function(o) {
-  o.selectable = true;
-  o.setCoords();
+
+  if (o.id !== "fog") {
+    o.selectable = true;
+    o.setCoords();
+  }
+  
 });
 
 }
@@ -2152,7 +2164,7 @@ canvas.on("mouse:wheel", function (opt) {
 canvas.on("mouse:down", function (opt) {
   
   hide_menus()
-  console.log("mouse down:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
+  //console.log("mouse down:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
   this.lastPosX = opt.pointer.x;
   this.lastPosY = opt.pointer.y;
   var hoverTarget = canvas.findTarget(event, false);       
@@ -2361,8 +2373,13 @@ canvas.on("mouse:up", function (opt) {
   }
 }
 
-  console.log("mouse up:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
-  this.isDragging = false;
+  //console.log("mouse up:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
+  if (this.isDragging) {
+    checkBorders();
+    console.log(" fin del dragging!")
+    this.isDragging = false;
+  }
+
   if(!this.touchenable)
     this.selection = true;
           
@@ -2415,9 +2432,7 @@ canvas.on('object:modified', function(options) {
     if ((doomedObj.left < (-tileSize/2)) || (doomedObj.top < (-tileSize/2)) )  
       deleteObj();
     else {
-      updateBoardQuick();
-      console.log(canvas.fogEnabled);
-      console.log(!fogrunning)
+      updateBoardQuick();     
       if (canvas.fogEnabled)
         if (!fogrunning) {
           fogrunning = true;
@@ -2781,6 +2796,7 @@ function getboard() {
       obj.inmersive_assets = document.getElementById("inmersive-assets").checked;
       obj.inmersive_plot = document.getElementById("inmersive-plot").checked;
       obj.inmersive_background = document.getElementById("inmersive-background").checked;   
+      obj.player_audio      = document.getElementById("player-audio").checked;
     
   }
 
@@ -2879,7 +2895,7 @@ async function sendMessage(token, redraw) {
   var messageToSend = { item: token};
   await app.service(channel).create(messageToSend);
   messageToSend = {};
-
+  
 }
 
 function sendChat() {
@@ -2984,6 +3000,10 @@ function printchat(item) {
 // Receive data from server from async function
 function addMessage(item) {
 
+  if (checkAdmin()) {
+    keepAliveBoard.resetTimer(5000);
+  }
+
   if(item.item.roll) 
     printdice(item.item)
 
@@ -2999,14 +3019,12 @@ function addMessage(item) {
     playmusic(item.item)
   }
     
-  
-    console.log(user)
-    console.log(item.item.playerid)
 
 // If it is our message we do nothing
 if (user !== item.item.playerid) {
 
   set_inmersivemode(item.item.inmersive, item.item.inmersive_track, item.item.inmersive_dice, item.item.inmersive_chat, item.item.inmersive_assets,item.item.inmersive_plot,item.item.inmersive_background);
+  set_musicmode(item.item.player_audio);
 
   if(item.item.track) {
     print_track(item.item.tracks)
@@ -3027,6 +3045,7 @@ if (user !== item.item.playerid) {
         }
     }
   }
+  // Acaba de entrar un jugador nuevo
   else if (checkAdmin()) {
       
       sendMessage(getboard());
@@ -3035,9 +3054,11 @@ if (user !== item.item.playerid) {
       }, 2*waittime);
       setTimeout(() => {
         sendMessage(getLink());        
-      }, 4*waittime);      
+      }, 4*waittime);   
+       
     }
   }
+
 }
  
 const main = async () => {
@@ -3806,8 +3827,6 @@ function deleteItem(event) {
 
   function hide_menus(event) {
 
-    console.log("esconde")
-
     if(checkAdmin() && (document.getElementById("ontop").style.display == "")) {
 
       document.getElementById("barra-derecha").style.width = "";
@@ -4328,8 +4347,6 @@ function savetoplugin() {
 
 function dd20Receive() {
   let scenes = document.getElementById("scenes-receive").value		
-  //console.log(JSON.parse(scenes));  
-  console.log(scenes);  
   load_all_data(JSON.parse(scenes).data)
 }
 
@@ -5089,9 +5106,61 @@ function set_inmersivemode(mode, track, dice, chat, assets, plot, background) {
     
 }
 
+function set_musicmode(mode) {
+
+  if(mode == undefined){
+    mode = document.getElementById("player-audio").checked;
+  }
+
+    if(mode) {
+      document.getElementById("player-audio").checked = true;
+      localStorage.setItem("music_mode","true");
+      if(!checkAdmin()) {
+        var slides = document.getElementsByClassName("only-admin-music");
+        for(var i = 0; i < slides.length; i++)  
+          slides[i].style.display = "";
+      }
+
+    }
+    else {
+      document.getElementById("player-audio").checked = false;
+      localStorage.setItem("music_mode","false");
+      if(!checkAdmin()) {
+        var slides = document.getElementsByClassName("only-admin-music");
+        for(var i = 0; i < slides.length; i++)  
+          slides[i].style.display = "none";
+      }
+    }
+}  
+
 
 function set_namemode(mode) {
+  
+  if (mode == undefined) {
+    mode = document.getElementById("view-names").checked;
+  }
 
+    if (mode) {
+      document.getElementById("view-names").checked = true;
+      localStorage.setItem("named_mode","true");
+      lista = document.getElementsByClassName("track_hp");
+      for(var i = 0; i < lista.length; i++)
+      {
+        lista[i].type = "";
+        lista[i].classList.add("track_name");
+      }
+    } else {
+      document.getElementById("view-names").checked = false;
+      localStorage.setItem("named_mode","false");
+      lista = document.getElementsByClassName("track_hp");
+      for(var i = 0; i < lista.length; i++)
+      {
+        lista[i].type = "number";
+        lista[i].classList.remove("track_name");
+      }
+    }
+
+  /*
   if (mode !== undefined) {
     if(mode && !document.getElementById("view-names").checked) {
       document.getElementById("view-names").checked = true;
@@ -5132,6 +5201,7 @@ if(document.getElementById("view-names").checked) {
   }
 }
 }
+*/
 }
 
 function show_all_audios(event) {  
@@ -5195,12 +5265,10 @@ function choosemusic() {
     if (event.target.id == "music-list") {
       hide_menus();
     } else {
-    console.log(event.target)     
-    console.log(event.target.getAttribute("src"))
     document.getElementById("audiosrc").src = event.target.getAttribute("src");
     document.getElementById("audiocontrol").load();
     setTimeout(() => {
-    document.getElementById("audiocontrol").play();  
+      document.getElementById("audiocontrol").play();  
     }, waittime);
     
     sendMusic(event.target.getAttribute("src"));
@@ -5211,21 +5279,21 @@ function choosemusic() {
 function sendMusic(text) {
 
   var obj = new Object();
-  obj.playerid          = user;
+  //obj.playerid          = user;
+  obj.playerid          = "dm";
   obj.request           = false;
   obj.roll  = false;
   obj.chat  = false;
   obj.music = true;
   obj.musictime = document.getElementById("audiocontrol").currentTime;
   obj.text  = text;
-  console.log(obj)
   sendMessage(obj);
 
 }
 
 function playmusic(item) {
 
-  //if(!checkAdmin()) {
+  
     if (item.text == "pause")
       document.getElementById("audiocontrol").pause();
     else if (item.text == "play") {
@@ -5237,9 +5305,10 @@ function playmusic(item) {
       document.getElementById("audiosrc").src = item.text;
       document.getElementById("audiocontrol").load();
       document.getElementById("audiocontrol").play();
+      if(checkAdmin())      
+        add_music(item.text)          
     }
-    
-  //}
+
 }
 
 function bpausemusic() {
@@ -5354,3 +5423,30 @@ function SwitchInterface() {
     url = url.replaceAll("room","newroom")
   window.location.href = url;
   }
+
+  
+  const keepAliveBoard = {
+  // The function that will be fired every 5000 milliseconds
+  myFunction: function() {
+    updateBoardQuick();
+    console.log("keepalive");
+  },
+
+  // A method to start the timer
+  startTimer: function(time) {
+    this.timer = setInterval(() => {
+      this.myFunction();
+    }, time);
+  },
+
+  // A method to stop the timer
+  stopTimer: function() {
+    clearInterval(this.timer);
+  },
+
+  // A method to reset the timer
+  resetTimer: function(time) {
+    this.stopTimer();
+    this.startTimer(time);
+  }
+};

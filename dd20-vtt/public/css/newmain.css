@@ -483,10 +483,11 @@ text-align: right;
 
 .background-bar {
 position: absolute;
-top: 35vh;
-left: 5vw;
+top: 24rem;
+left: 4rem;
 width: 90vw;
-height: 60vh;
+/* height: 60vh; */
+min-height: 10rem;
 z-index: 1000;
 background: #c1c1c1;
 border: 1px solid #DFDCDC;
@@ -500,10 +501,12 @@ text-align: right;
 
 .asset-bar {
     position: absolute;
-    top: 28vh;
-    left: 5vw;
+    top: 19rem;
+    /* left: 1rem; */
+    right: 4.5rem;
     width: 89.5vw;
-    height: 68vh;
+    /* height: 68vh; */
+    min-height: 10rem;
     z-index: 1000;
     background: #c1c1c1;
     border: 1px solid #DFDCDC;
@@ -667,7 +670,7 @@ margin-top: .3rem;
     left: 5vw;
     width: 90vw;
     height: 90vh;
-    z-index: 1000;
+    z-index: 1010;
     background: #c1c1c1;
     border: 1px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
@@ -1068,15 +1071,13 @@ padding: 0.5rem;
     top: Calc(25vh - 5rem);
     padding: 0.5em;
     line-height: 1.38;
-    
     font-family: "Bookman", serif;
     text-align: center;
-    
     background: #FFFFFF;
     border: 1px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
     border-radius: 6px;
-
+    z-index: 1001;
 }
 
 .upload_text {

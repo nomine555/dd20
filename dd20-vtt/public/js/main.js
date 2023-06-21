@@ -1045,6 +1045,11 @@ const addToken = (x,y,n) => {
 
   var tokenimg = checkurl(document.getElementById("token-map").value);
 
+  if (tokenimg == "https://digitald20.com/vtt/img/text.jpg") {
+    addText();  
+    return;
+  }
+
 if (tokenimg !== "") {
   addtoAllAssets(tokenimg)
   canvas.justCreated = true;
@@ -1923,7 +1928,13 @@ if(checkAdmin() && broadcast) {
 
 
 function setTile() {
+
   document.getElementById('message').style.display = "block";
+  document.getElementById('background-list').style.display = "none";
+  document.getElementById('MapsBar').style.display = "none";
+  tileSize = 20
+  plottileSize = 20
+
   canvas.isDrawing = true;
   canvas.selection = false;
 }
@@ -2833,7 +2844,6 @@ function getboard() {
       token.dd20size = o.dd20size;
       token.plot = o.plot;
       token.scaleX = o.scaleX;
-      console.log(o);
       token.scaleY = o.scaleY;
       token.angle = o.angle;
       if (o.group !== undefined) {
@@ -4971,7 +4981,7 @@ function show_upload() {
 }
 }
 
-document.onpaste = function(event){
+document.onpaste = function(event) {
   var items = (event.clipboardData || event.originalEvent.clipboardData).items;
   for (index in items) {
     var item = items[index];
@@ -4990,11 +5000,24 @@ document.onpaste = function(event){
             hide_menus();
         } else {
           document.getElementById("token-map").value = result.url;
+          document.getElementById("asset-url").value = result.url;
+          document.getElementById("map-url").value = result.url;
           document.getElementById("free").checked = true;
+
+          console.log(document.getElementById("AssetBar").style.display)
+
+          if (document.getElementById("AssetBar").style.display == "")           
+            sendLink()                      
+          if (document.getElementById("TokenBar").style.display == "")
+            addToken();
+          if (document.getElementById("MapsBar").style.display == "")
+            setBg();          
+          
           if (document.getElementById("asset-by-default").checked)
             sendLink()
           else
             addToken();
+            
           hide_menus();
           console.log(result);
         }
@@ -5389,7 +5412,9 @@ function showTokenMenu(menu)
   document.getElementById("OptionsBar").style.display = "none";  
   document.getElementById("asset-list").style.display = "none";  
   document.getElementById("background-list").style.display = "none";  
-  
+  document.getElementById("allscenes").style.display = "none";  
+  document.getElementById("allassets").style.display = "none";  
+
   /*desactivamos Fog*/
   document.getElementById("add-fog").innerHTML = "Reveal Area";
   document.getElementById("add-fog").className = "button";

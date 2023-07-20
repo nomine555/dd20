@@ -6,6 +6,10 @@ const socket = io(window.location.origin);
 const app = feathers();
 const channel = window.location.pathname;
 
+// Language
+var browserLanguage = navigator.language || navigator.userLanguage;
+console.log("Browser Language: " + browserLanguage);
+
 // Register socket.io to talk to our server
 app.configure(feathers.socketio(socket));
 
@@ -645,6 +649,7 @@ function reDrawAll(board, callback) {
     canvas.remove(o);
   });
 
+  
   mainBackground = board.backgroundImage;
   plotBackground = board.plotBackground;
 
@@ -825,7 +830,14 @@ function createNewBg(imgurl) {
 
 function createBg(imgurl, callback) {
   
+  var srcbackground = null;
+  try {
+    srcbackground = canvas.backgroundImage._element.src;
+  } catch (error) {}
+  
   imgurl = checkurl(imgurl);
+
+  if (imgurl !== srcbackground) {
 
   if ((imgurl.indexOf(".webm") > 0) || (imgurl.indexOf(".m4v") > 0 || (imgurl.indexOf(".mp4") > 0))) {
     
@@ -878,6 +890,7 @@ function createBg(imgurl, callback) {
       }      
   }, 3*waittime);
 
+}
 }
 
 function setmaxHzoom() {  
@@ -1973,24 +1986,36 @@ function checkBorders()
 
     let borde = 100;
     var vpt = canvas.viewportTransform;
+    let desplazamientoX = vpt[4]
+    let desplazamientoY = vpt[5]
+
     var zoom = canvas.getZoom();
-    console.log(zoom)
-    console.log(vpt[5])
-    console.log(" " + (canvas.backgroundImage._element.height*zoom + vpt[5]) + " " + canvas.backgroundImage._element.height*zoom + " " + canvas.getHeight() )
+    console.log("Zoom:" + zoom)
+    console.log("DesplazmientoX: " + desplazamientoX)
+    console.log("DesplazmientoY: " + desplazamientoY)
+    console.log("Altura  Background: " + (canvas.backgroundImage._element.height*zoom))
+    console.log("Anchura Background: " + (canvas.backgroundImage._element.width*zoom))
+    console.log("Altura  Canvas: " + canvas.getHeight() )
+    console.log("Anchura Canvas: " + canvas.getWidth() )
     
-    if (vpt[4] > borde || isNaN(vpt[4])) {
+    if (desplazamientoX > borde || isNaN(desplazamientoX)) {
+      console.log("1ok. el desplazamientoX es mauyor que el borde")
       canvas.viewportTransform[4] = borde;
       canvas.requestRenderAll();
-    } else if ((canvas.getWidth()-vpt[4]) > (canvas.backgroundImage._element.width*zoom + borde)  ) {
+    } else if ((canvas.getWidth()-desplazamientoX) > (canvas.backgroundImage._element.width*zoom + borde)  ) {
+      console.log("2. la anchura de la pantalla menos el desplazamientoX es mayor que la anchura del imagen")
       canvas.viewportTransform[4] = canvas.getWidth() - (canvas.backgroundImage._element.width*zoom) - borde;
       canvas.requestRenderAll();
     }
 
-    if (vpt[5] > borde  || isNaN(vpt[4]) ) {
+    if (desplazamientoY > borde || isNaN(desplazamientoY) ) {
+      console.log("3ok. El desplazamiento es mayor que el borde")
       canvas.viewportTransform[5] = borde;
       canvas.requestRenderAll();
-    }     
-    else if (( canvas.getHeight() > (canvas.backgroundImage._element.height*zoom + vpt[5]) ) && (canvas.backgroundImage._element.height*zoom > canvas.getHeight()) ) {     
+    }         
+    else if (( canvas.getHeight() > (canvas.backgroundImage._element.height*zoom + vpt[5]) ) && (canvas.backgroundImage._element.height*zoom > canvas.getHeight()) ) {         
+      console.log("4. La altura de la pantalla es mayor que la altura de la imagen mas el desplazamiento y ademas la imagen es mas alta que la pantalla")
+      // Si la altura de la pantalla es mayor que la altura de la imagen más el desplazamiento. 
       canvas.viewportTransform[5] = canvas.getHeight() - canvas.backgroundImage._element.height*zoom - borde;
       //canvas.viewportTransform[5] = canvas.backgroundImage._element.height*zoom - canvas.getHeight();
       //canvas.viewportTransform[5] = borde;
@@ -3011,7 +3036,7 @@ function printchat(item) {
 function addMessage(item) {
 
   if (checkAdmin()) {
-    keepAliveBoard.resetTimer(5000);
+   keepAliveBoard.resetTimer(5000);
   }
 
   if(item.item.roll) 

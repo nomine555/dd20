@@ -5070,6 +5070,7 @@ document.onpaste = function(event) {
 
 function set_inmersivemode(mode, track, dice, chat, assets, plot, background) {  
 
+  /*
   console.log(mode)
   console.log(track)
   console.log(dice)
@@ -5077,8 +5078,7 @@ function set_inmersivemode(mode, track, dice, chat, assets, plot, background) {
   console.log(assets)
   console.log(plot)
   console.log(background)
-
-  
+*/
 
   if (mode !== undefined) {
     if(mode) {

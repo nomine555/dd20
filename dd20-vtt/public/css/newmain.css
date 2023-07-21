@@ -482,21 +482,36 @@ text-align: right;
 
 
 .background-bar {
-position: absolute;
-top: 24rem;
-left: 4rem;
-width: 90vw;
-/* height: 60vh; */
-min-height: 10rem;
-z-index: 1000;
-background: #c1c1c1;
-border: 1px solid #DFDCDC;
-box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
-border-radius: 6px;
-display: flex;
-flex-wrap: wrap;
-place-content: flex-start;
-overflow-y: auto;
+
+position: absolute;
+
+top: 24rem;
+
+left: 4rem;
+
+width: 90vw;
+
+/* height: 60vh; */
+
+min-height: 10rem;
+
+z-index: 1000;
+
+background: #c1c1c1;
+
+border: 1px solid #DFDCDC;
+
+box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
+
+border-radius: 6px;
+
+display: flex;
+
+flex-wrap: wrap;
+
+place-content: flex-start;
+
+overflow-y: auto;
 }
 
 .asset-bar {
@@ -936,7 +951,7 @@ left: Calc(50vw - 20rem);
 
 width: 20em;
 
-top: Calc(20vh - 5rem);
+top: 5rem;
 
 padding: 0.5em;
 

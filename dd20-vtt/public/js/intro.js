@@ -25,6 +25,12 @@ function getRoomid(text) {
 
   function init() {
 
+        // Language
+        var browserLanguage = navigator.language || navigator.userLanguage;
+        console.log("Browser Language: " + browserLanguage);
+
+    translateweb_index(browserLanguage);
+
     if(location.href.indexOf('?')> 0)
     {
       var resturl = location.href.substring(location.href.indexOf('?'));
@@ -45,6 +51,8 @@ function getRoomid(text) {
 
     }
   }
+
+
     /*
     var board = new URL(location.href).searchParams.get('b');
     if (board !== null) {

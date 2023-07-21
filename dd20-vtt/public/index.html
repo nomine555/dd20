@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/main.css">
     <script src="/js/intro.js?n=1"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.1.0/fabric.min.js"></script>
+    <script src="../js/language.js"></script>  
   
     <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162806672-1"></script>
@@ -27,11 +28,11 @@
             <h1 class="title">
                 Digital D20 Virtual Tabletop
             </h1>
-            <p class="subtitle">
+            <p class="subtitle" id="peasiest">
                 Simplest, easiest and fastest Virtual Tabletop
             </p>
             <div class="subbar">
-                <a href="mailto:gamemaster@digitald20.com" target="_blank">Feedback Here</a>
+                <a href="mailto:gamemaster@digitald20.com" target="_blank" id="feedback">Feedback Here</a>
             </div>
             
     </div>
@@ -39,12 +40,13 @@
         <div class="container center">
             <div class="start-box box">
                 
-                <div onclick="getRoomid('new')" class="button is-primary" >New Room</div>
-                <div onclick="ContinueRoom('new')" class="button is-primary">Continue last game</div>
-                <div onclick="window.location='examples.html'" class="button is-primary">Board Examples</div>
-                <div onclick="getRoomid('')" class="button-gray is-primary" >New Room (Old interface)</div>
-                <div onclick="ContinueRoom('')" class="button-gray is-primary">Continue last game (Old interface)</div>
-                           
+                <div onclick="getRoomid('new')" class="button is-primary" id ="bnewroom">New Room</div>
+                <div onclick="ContinueRoom('new')" class="button is-primary" id ="bcontinue">Continue last game</div>
+                <div onclick="window.location='examples.html'" class="button is-primary" id="bexample">Board Examples</div>
+                <div onclick="getRoomid('')" class="button-gray is-primary" id="bnewold">New Room (Old interface)</div>
+                <div onclick="ContinueRoom('')" class="button-gray is-primary" id="bcontinueold">Continue last game (Old interface)</div>
+                  
+                <div id="alltext">
                 <p>
                     <ul>
                     <li>To enter as player, open the link the master will share with you
@@ -80,6 +82,7 @@
                     <li>Beautiful dices thanks to <a href="http://www.teall.info/2014/01/online-3d-dice-roller.html">Anton Natarov</a></li>
                 </ul>
                 </p>
+                </div>
                 
             </div>
                 

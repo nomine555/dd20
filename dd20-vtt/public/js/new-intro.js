@@ -1,6 +1,8 @@
 // ------------------------------------------------------------------- // 
 // This function is call form login page
 
+
+
 function ContinueRoom(){
   if (localStorage.getItem('lastdd20room') !== null) {
     var id = localStorage.getItem('lastdd20room');
@@ -24,6 +26,11 @@ function getRoomid() {
   }
 
   function init() {
+
+    // Language
+    var browserLanguage = navigator.language || navigator.userLanguage;
+    console.log("Browser Language: " + browserLanguage);
+
 
     if(location.href.indexOf('?')> 0)
     {

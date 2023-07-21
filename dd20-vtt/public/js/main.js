@@ -9,6 +9,7 @@ const channel = window.location.pathname;
 // Language
 var browserLanguage = navigator.language || navigator.userLanguage;
 console.log("Browser Language: " + browserLanguage);
+translateweb(browserLanguage)
 
 // Register socket.io to talk to our server
 app.configure(feathers.socketio(socket));
@@ -1990,6 +1991,7 @@ function checkBorders()
     let desplazamientoY = vpt[5]
 
     var zoom = canvas.getZoom();
+/*
     console.log("Zoom:" + zoom)
     console.log("DesplazmientoX: " + desplazamientoX)
     console.log("DesplazmientoY: " + desplazamientoY)
@@ -1997,7 +1999,7 @@ function checkBorders()
     console.log("Anchura Background: " + (canvas.backgroundImage._element.width*zoom))
     console.log("Altura  Canvas: " + canvas.getHeight() )
     console.log("Anchura Canvas: " + canvas.getWidth() )
-    
+*/   
     if (desplazamientoX > borde || isNaN(desplazamientoX)) {
       console.log("1ok. el desplazamientoX es mauyor que el borde")
       canvas.viewportTransform[4] = borde;
@@ -5305,6 +5307,10 @@ function add_music(url) {
     localStorage.setItem("music" + (n-1), link)
     savetoplugin();    
 }
+else if((link !== "") && (link.indexOf("dropbox") > 0)){
+  console.log("es una carpeta dropbox")
+}
+
 
 }
 

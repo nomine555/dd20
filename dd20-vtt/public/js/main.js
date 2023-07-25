@@ -3340,7 +3340,7 @@ function delay(wait) {
     else if (destiny.nodeName == "IMG")
       destiny.parentNode.removeChild(destiny);
 
-    if ((destiny.className.indexOf("centered-text") > -1)) {
+    if ((destiny.className.indexOf("bglisscene") > -1)) {
      
       var lista = [];
       var lista_names = [];
@@ -3348,19 +3348,19 @@ function delay(wait) {
       var lista_music = [];
       lista        = JSON.parse(localStorage.getItem('allscenes')) || [];
       lista_names  = JSON.parse(localStorage.getItem('allscenesnames')) || [];
-      lista_assets = JSON.parse(localStorage.getItem('allscnassets')) || [];
-      lista_music  = JSON.parse(localStorage.getItem('allmusic')) || [];
+      //lista_assets = JSON.parse(localStorage.getItem('allscnassets')) || [];
+      //lista_music  = JSON.parse(localStorage.getItem('allmusic')) || [];
       
       var pos = parseInt(data.replace("sdiv","").replace("slink",""));
       lista.splice(pos, 1);  
       lista_names.splice(pos, 1);
-      lista_assets.splice(pos, 1);
-      lista_music.splice(pos, 1);
+      //lista_assets.splice(pos, 1);
+      //lista_music.splice(pos, 1);
 
       localStorage.setItem('allscenes', JSON.stringify(lista));
       localStorage.setItem('allscenesnames', JSON.stringify(lista_names));
-      localStorage.setItem('allscnassets', JSON.stringify(lista_assets));
-      localStorage.setItem('allmusic', JSON.stringify(lista_music));
+      //localStorage.setItem('allscnassets', JSON.stringify(lista_assets));
+      //localStorage.setItem('allmusic', JSON.stringify(lista_music));
     }
     else if (destiny.classList.contains("bglist")) {
       
@@ -4248,7 +4248,7 @@ function load_scene() {
      var a = document.createElement("p");
     
      a.className = "centered-text";
-     div.className = "bglistscene";
+     div.className = "bglisscene";
      a.innerHTML = lista_names[i];    
      //a.href = "#";
      a.id = "slink" + i;

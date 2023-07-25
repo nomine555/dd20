@@ -82,6 +82,11 @@ app.get("/new", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/new-index.html"));
 });
 
+//express route
+app.get("/load", function (req, res) {
+  res.sendFile(path.join(__dirname + "/public/load.html"));
+});
+
 app.use('/img', serveIndex('public/img',  {icons: true, view: 'details'}) );
 
 /*

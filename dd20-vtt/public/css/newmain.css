@@ -66,6 +66,8 @@ body,
 html {
     margin: 0;
     padding: 0;
+    border: 0;
+    overflow: hidden;
 }
 
 
@@ -483,27 +485,27 @@ text-align: right;
 
 .background-bar {
 
-position: absolute;
+/* position: absolute; */
 
-top: 24rem;
+/* top: 24rem; */
 
-left: 4rem;
+/* left: 4rem; */
 
-width: 90vw;
+/* width: 90vw; */
 
 /* height: 60vh; */
 
-min-height: 10rem;
+/* min-height: 10rem; */
 
-z-index: 1000;
+/* z-index: 1000; */
 
-background: #c1c1c1;
+/* background: #c1c1c1; */
 
-border: 1px solid #DFDCDC;
+/* border: 1px solid #DFDCDC; */
 
-box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
+/* box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19); */
 
-border-radius: 6px;
+/* border-radius: 6px; */
 
 display: flex;
 
@@ -602,24 +604,39 @@ margin-top: .3rem;
 }
 
 .bglist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 10rem;
-    padding: 0.25rem;
-    margin: 0.25rem;
-
+    width: Calc( 20vw - 5rem );
     background: #FFFFFF;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-
-    border: 1px solid #DFDCDC;
+    border: 2px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
     border-radius: 6px;
-    
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-
+    /* padding: 0.5rem; */
+    margin: 0.5rem;
 }
+
+.bglistscene {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10rem;
+    width: Calc( 20vw - 5rem );
+    background: #FFFFFF;
+    border: 2px solid #DFDCDC;
+    box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 6px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    /* padding: 0.5rem; */
+    margin: 0.5rem;
+}
+
 
 .musiclist {
     height: 1.5rem;
@@ -680,11 +697,27 @@ margin-top: .3rem;
 }
 
 .allscenes{
+    /* position: absolute; */
+    /* top: 24rem; */
+    /* left: 4rem; */
+    /* width: 90vw; */
+    /* z-index: 1010; */
+    background: #636363;
+    /* border: 1px solid #DFDCDC; */
+    /* box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19); */
+    /* border-radius: 6px; */
+    display: flex;
+    flex-wrap: wrap;
+    place-content: flex-start;
+    overflow-y: auto;
+}
+
+.metabackgrounds{
     position: absolute;
-    top: 5vh;
-    left: 5vw;
-    width: 90vw;
-    height: 90vh;
+    top: 24rem;
+    left: 4rem;
+    min-height: 10rem;
+    width: 88vw;
     z-index: 1010;
     background: #c1c1c1;
     border: 1px solid #DFDCDC;
@@ -1212,6 +1245,7 @@ padding: 0.5rem;
     text-align: center;
     cursor: context-menu;
     overflow:hidden;
+    border-radius: 5px 0px 0px 5px;
     /* border: 1px solid #000000; */
 }
 

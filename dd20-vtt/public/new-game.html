@@ -65,6 +65,7 @@
     <img id="t3" src="https://digitald20.com/vtt/img/ranger.jpg" style="display: none;">
     <img id="t4" src="https://digitald20.com/vtt/img/thief.jpg" style="display: none;">
     <img id="t5" src="https://digitald20.com/vtt/img/spectre.jpg" style="display: none;"> 
+    <img id="t6" src="https://digitald20.com/vtt/img/halfling.jpg" style="display: none;"> 
     <img id="superbar"  style="display: none;"> 
     <!-- -->
 
@@ -80,7 +81,10 @@
     </video>
     </div>
     <div id = "allassets" class="onassets" style="display: none;" onclick="choose_all_asset(event)"></div>
+    <div id="metabackgrounds" class="metabackgrounds" style="display: none;">
     <div id = "allscenes" class="allscenes" style="display: none;" onclick="hide_menus();"></div>
+    <div id="background-list" class="background-bar noselect" style="display:none" onclick="choosebackground(event)"></div>
+    </div>
     <div id = "trash" class="trash" style="display: none;" ondrop="drop_trash(event)" ondragenter="trash_enter(event)" ondragleave="trash_leave(event)" ondragover="trash_over(event)"></div>
     <div id ="distance-bar" class="distance-bar" style="pointer-events: none;"></div>
     <div id="hp" class="hp" style="top: 0; left:0;display: none;">
@@ -284,7 +288,7 @@
     
     <!-- Barra lateral -->
 
-    <div id="background-list" class="background-bar noselect" style="display:none" onclick="choosebackground(event)"></div>
+    
     <div id="asset-list" class="asset-bar noselect" style="display:none" onclick="chooseasset(event)" ondblclick="dblchooseasset(event)"></div>    
     <div id="dice-select" class="super-dice-select" style="display: none;" onclick="hide_menus()">
     <div  class="dice-select" >

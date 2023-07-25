@@ -287,6 +287,7 @@ const checkAdmin = () => {
             for (i = 0; i< backgroundN; i++) {
               var img = document.createElement("img");
               img.src = localStorage.getItem("background" + i).replaceAll(" ","%20");
+              img.tile = localStorage.getItem("backgroundTileSize" + i);
               img.className="bglist";
               img.id = "bckimg" + i;
               img.loading = "lazy";
@@ -369,7 +370,7 @@ const checkAdmin = () => {
 
           // Cargamos el Track de iniciativa por defecto. 
           // new-game
-          /*
+          
           if (ex == null ) {
             var j = 0;
               for (var i = 1 ; i < 6; i++) {
@@ -378,7 +379,7 @@ const checkAdmin = () => {
                 document.getElementById('track'+j).firstElementChild.style.display = "";
             }
           }
-          */
+          
 
           // Dibujamos el tablero
           window.setTimeout(function() {
@@ -650,7 +651,6 @@ function reDrawAll(board, callback) {
     canvas.remove(o);
   });
 
-  
   mainBackground = board.backgroundImage;
   plotBackground = board.plotBackground;
 
@@ -1190,7 +1190,7 @@ const createToken = (item) => {
   if (document.getElementById("plotmode").checked) 
     tileS = plottileSize;
   
-    addtokentolist(item.src);
+  addtokentolist(item.src);
   addtoAllAssets(item.src);
   
   fabric.Image.fromURL(item.src, function (oImg) {
@@ -3815,7 +3815,7 @@ function deleteItem(event) {
       }, 3*waittime);
     }, waittime);
 
-    document.getElementById("background-list").style.display = "none";
+    document.getElementById("metabackgrounds").style.display = "none";
     document.getElementById("trash").style.display = "none";
   }
   }
@@ -3829,6 +3829,7 @@ function deleteItem(event) {
       if(blist[i].src == canvas.backgroundImage._element.src)
         blist[i].setAttribute("tile",tileSize);
         localStorage.setItem("background" + i, blist[i].src)
+        localStorage.setItem("backgroundTileSize" + i, tileSize)
     }
     localStorage.setItem("backgroundN", blist.length)
      
@@ -3839,15 +3840,22 @@ function deleteItem(event) {
 
     document.getElementById("asset-list").style.display = "none";
 
-    if (document.getElementById("background-list").style.display == "flex") {
+    if (document.getElementById("metabackgrounds").style.display == "flex") {
       document.getElementById("background-list").style.display = "none";
       document.getElementById("trash").style.display = "none";
+      document.getElementById("metabackgrounds").style.display = "none";
+      document.getElementById("allscenes").style.display = "none";
     }
     else {
       document.getElementById("background-list").style.display = "flex";
       document.getElementById("trash").style.display = "";
+      document.getElementById("metabackgrounds").style.display = "flex";
+      document.getElementById("allscenes").style.display = "flex";
+      load_scene();
     }
   }
+
+
   function show_asset() {
     event.stopPropagation();
     document.getElementById("background-list").style.display = "none";
@@ -3884,7 +3892,7 @@ function deleteItem(event) {
       
       document.getElementById("hello").style.display = "none";  
       document.getElementById("uploadfile").style.display = "none";  
-      document.getElementById("background-list").style.display = "none";
+      document.getElementById("metabackgrounds").style.display = "none";
       document.getElementById("music-list").style.display = "none";
       document.getElementById("asset-list").style.display = "none";      
       document.getElementById("dice-select").style.display = "none";
@@ -3919,7 +3927,7 @@ function deleteItem(event) {
 
       document.getElementById("hello").style.display = "none";  
       document.getElementById("uploadfile").style.display = "none";        
-      document.getElementById("background-list").style.display = "none";
+      document.getElementById("metabackgrounds").style.display = "none";
       document.getElementById("music-list").style.display = "none";
       document.getElementById("asset-list").style.display = "none";
       document.getElementById("ontop").style.display = "none";
@@ -4240,7 +4248,7 @@ function load_scene() {
      var a = document.createElement("p");
     
      a.className = "centered-text";
-     div.className = "div-centered-text";
+     div.className = "bglistscene";
      a.innerHTML = lista_names[i];    
      //a.href = "#";
      a.id = "slink" + i;
@@ -4267,8 +4275,10 @@ function load_scene() {
   lista_music  = JSON.parse(localStorage.getItem('allmusic'))     || [];
 
   board      = lista[id]
+  
   mainBackground = board.backgroundImage;
   plotBackground = board.plotBackground;
+  tileSize = checkminTile(board.tileSize);
   
   if (checkAdmin()) {
 
@@ -4281,8 +4291,43 @@ function load_scene() {
     clearFogbutton();
 
     var tokens = board.tokens;
+    var indice_token = 0;
+    var clasictoken = "";
     tokens.forEach((item) => {
-      createToken(item);
+
+      // Sustituimos el token si es uno de los básicos por el primero que no este vacio de la barra lateral. 
+      var es_basico = false;
+      for (var i = 1 ; i < 7; i++) {
+        if(item.src == document.getElementById('t' + i).src)
+          es_basico = true;       
+      }
+      if (es_basico) {
+        console.log("es uno de los basicos!!!!")
+        indice_token = indice_token + 1;
+        if (document.getElementById('track' + indice_token) !== null)
+          clasictoken = document.getElementById('track' + indice_token).style.backgroundImage.replace('url("','').replace('")','');
+        
+        while (clasictoken == "") {          
+          indice_token = indice_token + 1;
+          if (document.getElementById('track' + indice_token) !== null)
+            clasictoken = document.getElementById('track' + indice_token).style.backgroundImage.replace('url("','').replace('")','');
+          if (indice_token > 6)
+            break;
+        }
+        
+        if (clasictoken !== "")
+        {          
+          console.log(indice_token + " " + clasictoken)
+          item.src = clasictoken;                        
+          createToken(item);   
+        }
+          
+      } else {
+        console.log("NO es uno de los basicos!!!!")
+        console.log(item.src)
+        createToken(item);      
+      }     
+
     });
     
     try {
@@ -5442,7 +5487,7 @@ function showTokenMenu(menu)
   document.getElementById("MusicBar").style.display = "none";  
   document.getElementById("OptionsBar").style.display = "none";  
   document.getElementById("asset-list").style.display = "none";  
-  document.getElementById("background-list").style.display = "none";  
+  document.getElementById("metabackgrounds").style.display = "none";  
   document.getElementById("allscenes").style.display = "none";  
   document.getElementById("allassets").style.display = "none";  
 

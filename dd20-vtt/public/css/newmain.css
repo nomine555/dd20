@@ -145,7 +145,9 @@ margin-top: 0.5em;
 
 }
 .urlinput {
-    min-width: 25em;
+    min-width: 23em;
+    /* max-width: 25rem; */
+    flex-grow: 2;
 }
 
 .inputgroup {
@@ -243,7 +245,7 @@ margin-top: 0.5em;
 
 .superbar {
     position: absolute;
-    right: 4rem;
+    right: 5rem;
     top: 8rem;
     /* width: 22rem; */
     /* height: 16rem; */
@@ -264,7 +266,7 @@ margin-top: 0.5em;
 
 .supercol {
     position: absolute;
-    right: 4rem;
+    right: 5rem;
     top: 8rem;
     width: 27rem;
     /* height: 16rem; */
@@ -1257,6 +1259,8 @@ padding: 0.5rem;
 .texto-menu-derecha {
     text-align: center;
     font-family: dd20, Verdana, Geneva, Tahoma, sans-serif;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .texto-menu-derecha:hover {
@@ -1281,7 +1285,7 @@ padding: 0.5rem;
 
 #TokenBar {
     position: absolute;
-    right: 4rem;
+    right: 5rem;
     top: 8rem;
     width: 40rem;
     height: 16rem;
@@ -1291,7 +1295,7 @@ padding: 0.5rem;
 
 #chat-area {
     position: absolute;
-    right: 4rem;
+    right: 5rem;
     top: 8rem;
     width: 20rem;
     height: 46rem;

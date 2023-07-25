@@ -522,8 +522,8 @@ overflow-y: auto;
     position: absolute;
     top: 19rem;
     /* left: 1rem; */
-    right: 4.5rem;
-    width: 89.5vw;
+    right: 6rem;
+    min-width: 70vw;
     /* height: 68vh; */
     min-height: 10rem;
     z-index: 1000;
@@ -717,9 +717,10 @@ margin-top: .3rem;
 .metabackgrounds{
     position: absolute;
     top: 24rem;
-    left: 4rem;
+    /* left: 3rem; */
+    right: 6rem;
     min-height: 10rem;
-    width: 88vw;
+    min-width: 60vw;
     z-index: 1010;
     background: #c1c1c1;
     border: 1px solid #DFDCDC;

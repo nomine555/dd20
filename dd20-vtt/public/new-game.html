@@ -34,7 +34,7 @@
 
 </head>
 
-<body onload="starting();" onresize="viewportResize()">
+<body onload="starting();">
 
     
     <div id ="url-iframe" class="iframe" style="display: none;">
@@ -86,6 +86,7 @@
     <div id="background-list" class="background-bar noselect" style="display:none" onclick="choosebackground(event)"></div>
     </div>
     <div id = "trash" class="trash" style="display: none;" ondrop="drop_trash(event)" ondragenter="trash_enter(event)" ondragleave="trash_leave(event)" ondragover="trash_over(event)"></div>
+    <div id = "left-trash" class="left-trash" style="display: none;" ondrop="drop_left_trash(event)" ondragenter="trash_enter(event)" ondragleave="trash_leave(event)" ondragover="trash_over(event)"></div>
     <div id ="distance-bar" class="distance-bar" style="pointer-events: none;"></div>
     <div id="hp" class="hp" style="top: 0; left:0;display: none;">
         <input class="spinner" type="number" id="text-hp"><div class="supizq" style="display:none"></div><div class="infder" style="display:none" ></div>
@@ -100,7 +101,7 @@
         <p id="mChat" class="texto-menu-derecha"            onclick="show_hide_chat()">Chat</p>
         <p id="mDice" class="texto-menu-derecha"            onclick="showTokenMenu('DiceBar')">Dice</p>
         <p id="mMusic" class="texto-menu-derecha"            onclick="showTokenMenu('MusicBar')">Music</p>
-        <p id="mOptions" class="texto-menu-derecha"            onclick="showTokenMenu('OptionsBar')">Options</p>
+        <p id="mOptions" class="texto-menu-derecha only-admin"            onclick="showTokenMenu('OptionsBar')">Options</p>
     </div>
 
     <!-- Old plot mode-->
@@ -111,12 +112,12 @@
         <p id="pdefaultokens" class="quick-text menu-text">Default Tokens</p>   
         <div class="token-bar">
             <img  id="tA" src="https://digitald20.com/vtt/img/text.jpg" class="tokenA" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)">              
-            <img  id="t6" src="https://digitald20.com/vtt/img/arrow.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
-            <img  id="t7" src="https://digitald20.com/vtt/img/cross.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
-            <img  id="t8" src="https://digitald20.com/vtt/img/fire-ball.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
-            <img  id="t9" src="https://digitald20.com/vtt/img/cone-cold.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
-            <img  id="t10" src="https://digitald20.com/vtt/img/ray.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" style="object-fit: cover;width:3em;"> 
-            <img  id="t11" src="https://digitald20.com/vtt/img/luz.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" >             
+            <img  id="t7" src="https://digitald20.com/vtt/img/arrow.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
+            <img  id="t8" src="https://digitald20.com/vtt/img/cross.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)"> 
+            <img  id="t9" src="https://digitald20.com/vtt/img/fire-ball.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
+            <img  id="t10" src="https://digitald20.com/vtt/img/cone-cold.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" > 
+            <img  id="t11" src="https://digitald20.com/vtt/img/ray.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" style="object-fit: cover;width:3em;"> 
+            <img  id="t12" src="https://digitald20.com/vtt/img/luz.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" >             
         </div>     
         <img class="ham" src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">                    
         <p id="psizeoftoken" class="size-text menu-text">Select size of token</p>        
@@ -145,6 +146,12 @@
         <input id="token-map" class="urlinput" type="text"  placeholder="... url to your image file ... token or backgroound ...">        
         <button id="circle" class="add button" onclick='addToken()' >Add Token</button>        		
         <button id="into-track" class="totrack button"  onclick='toTrack();'>Into  Track</button>	                  
+        
+        <label class="chlabel1 menu-text for-player" style="display: none;">Character name: </label>        
+        <input id="token-map-chk" class="chset for-player"  type="checkbox" style="display: none;"><label class="chlabel2 menu-text for-player" style="display: none;">It's my character Token</label>        
+        <input type="text" id="player-name" placeholder="Player Name" onchange="nameChange();" class="player-name center chname for-player" style="width: 97%;" style="display: none;">
+        
+
     </div>   
     <!-- Barra para Assets -->
     <div id = "AssetBar" class="superbar noselect" style="display: none;">
@@ -226,7 +233,7 @@
     <!-- Opciones-->
     <div id = "OptionsBar" class="superbar noselect"  style="display: none;">
             <p id="pcharactersname" class="url-text menu-text">Character's Name</p>
-			<input type="text" id="player-name" placeholder="Player Name" onchange="nameChange();" class="player-name center" style="width: 97%;">
+			
             <br>
             <a id="pswitchtoold" class="menu-text" style="color: #fff46d;" onclick="SwitchInterface();">Switch to old interface</a>
 			<div class="buttons-line" id="bplayername">
@@ -417,7 +424,7 @@
             <label id="linitracker2" >Initiative track</label>            
             <input  type="checkbox" id="inmersive-background" onclick='checkboxBackground2(this);'>
             <label id="lblackback">Black Background</label>  
-            <input  type="checkbox" id="view-names" onclick='set_namemode();' name="bedit-name">
+            <input  type="checkbox" id="view-names" onclick='set_namemode();' name="bedit-name" checked>
             <label  id="lnamesoninittrack" for="view-names" >Write names on Initiative Tracker</label>
         </div>                       
             <hr>
@@ -439,7 +446,7 @@
             </div>
             <hr>
             <div class="combine-dice">
-                <input type="checkbox" id="player-audio" onclick="set_musicmode();">
+                <input type="checkbox" id="player-audio" onclick="set_musicmode();" checked>
                 <label id="lallowplayermusic" for="view-name" >Allow all players to put music</label>                
             </div>
             <hr>

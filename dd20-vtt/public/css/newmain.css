@@ -145,9 +145,9 @@ margin-top: 0.5em;
 
 }
 .urlinput {
-    min-width: 23em;
-    /* max-width: 25rem; */
-    flex-grow: 2;
+    min-width: 25em;
+    max-width: -5rem;
+    /* flex-grow: 2; */
 }
 
 .inputgroup {
@@ -610,7 +610,8 @@ margin-top: .3rem;
     justify-content: center;
     align-items: center;
     height: 10rem;
-    width: Calc( 20vw - 5rem );
+    /* width: 10rem; */
+    width: 10rem;
     background: #FFFFFF;
     border: 2px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
@@ -687,7 +688,7 @@ margin-top: .3rem;
     left: 5vw;
     width: 90vw;
     height: 90vh;
-    z-index: 1001;
+    z-index: 1012;
     background: #c1c1c1;
     border: 1px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
@@ -1021,6 +1022,7 @@ border-radius: 6px;
 
 .lista-botones {
     display: flex;
+    height: 3rem;
 }
 .inside-top-class {
 	position: relative;
@@ -1079,6 +1081,19 @@ padding: 0.5rem;
     bottom: 5.5%;
     right: 5.5%;
     width: 5%;
+    height: 5%;
+    z-index: 1101;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url("../img/trash_icon.png");
+  }
+
+  .left-trash {
+    position: absolute;
+    bottom: 10rem;
+    left: 5rem;
+    width: 5rem;
     height: 5%;
     z-index: 1001;
     background-repeat: no-repeat;
@@ -1270,26 +1285,28 @@ padding: 0.5rem;
 
 .token-bar-grid {
     justify-items: end;
-    /* background: white; */
+    /* align-self: center; */
+    background: white;
     align-content: start;
     display: grid;
     grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 4em 4em 4em 4em;
+    grid-template-rows: 4rem 4rem 4rem 4rem 2rem;
     gap: 0px 0px;
     grid-auto-flow: row;
     grid-template-areas:
-      "url-text upload urlinput urlinput urlinput urlinput urlinput ham "
-      "size-text . size-area size-area size-area size-area size-area . "
-      "quick-text token-bar token-bar token-bar token-bar token-bar token-bar token-bar "
-      ". . . . add add totrack totrack ";
-  }
+        "url-text upload urlinput urlinput urlinput urlinput urlinput ham "
+        "size-text . size-area size-area size-area size-area size-area . "
+        "quick-text token-bar token-bar token-bar token-bar token-bar token-bar token-bar "
+        ". . . . add add totrack totrack "
+        "chlabel1 chname chname chname chset chlabel2 chlabel2 chlabel2";
+}
 
 #TokenBar {
     position: absolute;
     right: 5rem;
     top: 8rem;
     width: 40rem;
-    height: 16rem;
+    min-height: 20 rem;
     background: steelblue;
     padding: 0.5rem;
 }
@@ -1305,7 +1322,7 @@ padding: 0.5rem;
 
 #PlayerAssetBar {
     position: absolute;
-    right: 4rem;
+    right: 5rem;
     top: 8rem;
     width: 11rem;
     height: 46rem;
@@ -1313,7 +1330,7 @@ padding: 0.5rem;
     background-color: #ffffff21;
     overflow-y: scroll;
     -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none; 
+    scrollbar-width: none;
 }
 
 #PlayerAssetBar::-webkit-scrollbar {
@@ -1329,8 +1346,7 @@ padding: 0.5rem;
     /* margin-top: 2rem; */
 }
 
-.quick-text { grid-area: quick-text; 
-}
+.quick-text {grid-area: quick-text;}
 
 .url-text {
     grid-area: url-text;
@@ -1343,20 +1359,23 @@ padding: 0.5rem;
 .ham { grid-area: ham; 
     place-self: center stretch;
 }  
-  .upload { grid-area: upload; 
+  .upload {
+    grid-area: upload;
     place-self: center stretch;
+    /* justify-content: flex-end; */
 }
   
   .size-area {
     grid-area: size-area;
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
-    height: 5rem;
+    align-items: baseline;
+    height: 3rem;
     align-items: flex-start;
   }
   
-  .urlinput { grid-area: urlinput; 
+  .urlinput {
+    grid-area: urlinput;
     place-self: center stretch;
 }
   
@@ -1367,7 +1386,23 @@ padding: 0.5rem;
   .totrack { grid-area: totrack; 
     place-self: center stretch;
 }
-  
+.chname {
+    grid-area: chname; 
+    place-self: center stretch;
+}
+.chset {
+    grid-area: chset; 
+    place-self: center stretch;
+}
+.chlabel1 {
+    grid-area: chlabel1; 
+    place-self: center stretch;
+}
+.chlabel2 {
+    grid-area: chlabel2; 
+    place-self: center stretch;
+}
+
   .token-bar {
     grid-area: token-bar;
     display: flex;

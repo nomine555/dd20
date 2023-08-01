@@ -120,6 +120,7 @@ function setViewDM() {
 
     document.getElementById("player-name").value = "Dungeon Master";
     document.getElementById("player-name").disabled = true;
+    document.getElementById("player-name").style.display = "none";
 }
 
 function setViewPlayer() {
@@ -168,8 +169,8 @@ const checkAdmin = () => {
     
       if((user === "dm") & !checkAdmin()) {
           user = "u" + getRandomInt(9999);
-      }
-    
+      }    
+
     // Para poder ocultar las ayudas
       document.getElementById("ontop").addEventListener('click', hide_menus);
     
@@ -197,11 +198,15 @@ const checkAdmin = () => {
     }
 
     namedmode  =  localStorage.getItem("named_mode");   
-    if (namedmode == "true")   
+    if (namedmode == "false")   
+      set_namemode(false);
+    else
       set_namemode(true);
     
     musicmode  =  localStorage.getItem("music_mode");   
-    if (musicmode == "true")   
+    if (musicmode == "false")   
+      set_musicmode(false);
+    else
       set_musicmode(true);
     
       if (checkAdmin()) {
@@ -211,11 +216,15 @@ const checkAdmin = () => {
         var pboard = new URL(location.href).searchParams.get('b');
         var ptile = new URL(location.href).searchParams.get('t');
         var ex = new URL(location.href).searchParams.get('e');
+        // Estamos cargando algo?
+        var scene = new URL(location.href).searchParams.get('scene');      
+        if (scene == 1)
+          console.log("Estamos cargando una Aventura")
         
         // ----------------------------------------------------
-        // Comprobamos que tenemos guardado algo room + data y que no nos pasan "ex"
+        // Comprobamos que tenemos guardado algo room + data y que no nos pasan "ex" ni scene
         // -----------------------------------------------------
-        if (localStorage.getItem(room + 'data') !== null && ex == null) {
+        if (localStorage.getItem(room + 'data') !== null && ex == null && scene == null) {
     
           var myboard = JSON.parse(localStorage.getItem(room + 'data'));
         
@@ -349,7 +358,7 @@ const checkAdmin = () => {
         // ---------------------------------------------------------
         // No hay nada guardado es una sala nueva
         // ----------------------------------------------------------
-        else {
+        else if (scene == null) {
     
           
           if (ex == null)
@@ -370,15 +379,37 @@ const checkAdmin = () => {
 
           // Cargamos el Track de iniciativa por defecto. 
           // new-game
-          
+          /*
           if (ex == null ) {
             var j = 0;
-              for (var i = 1 ; i < 6; i++) {
+              for (var i = 1 ; i < 7; i++) {
                 j = i + 1;
                 document.getElementById('track'+j).style.backgroundImage = "url('"+ document.getElementById('t'+i).src + "')";
                 document.getElementById('track'+j).firstElementChild.style.display = "";
             }
           }
+          */
+
+          // Añadimos los nombres
+          document.getElementById('track6').firstElementChild.value = "Yonsee";
+          document.getElementById('track6').firstElementChild.style.display = "";
+          document.getElementById('track6').style.backgroundImage = "url('https://digitald20.com/vtt/img/mage.jpg')";
+
+          document.getElementById('track2').firstElementChild.value = "Monak";
+          document.getElementById('track2').firstElementChild.style.display = "";
+          document.getElementById('track2').style.backgroundImage = "url('https://digitald20.com/vtt/img/fighter.jpg')";
+
+          document.getElementById('track3').firstElementChild.value = "Raghar";
+          document.getElementById('track3').firstElementChild.style.display = "";
+          document.getElementById('track3').style.backgroundImage = "url('https://digitald20.com/vtt/img/ranger.jpg')";
+
+          document.getElementById('track4').firstElementChild.value = "Mr. Pirs";
+          document.getElementById('track4').firstElementChild.style.display = "";
+          document.getElementById('track4').style.backgroundImage = "url('https://digitald20.com/vtt/img/halfling.jpg')";
+
+          document.getElementById('track5').firstElementChild.value = "Wilbur";
+          document.getElementById('track5').firstElementChild.style.display = "";
+          document.getElementById('track5').style.backgroundImage = "url('https://digitald20.com/vtt/img/thief.jpg')";
           
 
           // Dibujamos el tablero
@@ -388,6 +419,26 @@ const checkAdmin = () => {
             add_music("https://digitald20.com/core/music/just-adventuring.mp3")
           }, 2*waittime);
          
+        } 
+        else {          
+          console.log("cargamos una escena")
+
+          for (var i = 1 ; i < 9; i++) {
+            try {              
+                document.getElementById('track'+i).style.backgroundImage = localStorage.getItem("tracksrc" + i);
+                if(document.getElementById('track'+i).style.backgroundImage !== "") {
+                  document.getElementById('track'+i).style.order = localStorage.getItem("trackorder" + i);
+                  if (namedmode)
+                    document.getElementById('track'+i).firstElementChild.value = localStorage.getItem("trackhp" + i);
+                  else
+                    document.getElementById('track'+i).firstElementChild.value = parseInt(localStorage.getItem("trackhp" + i));
+                document.getElementById('track'+i).firstElementChild.style.display = "";
+            }
+            } catch (e) {
+            }
+         }  
+
+          load_scene_start()
         }
 
         keepAliveBoard.startTimer(10000);          
@@ -417,6 +468,8 @@ const checkAdmin = () => {
       box = new DiceBox(canvasContainer);
     
       document.addEventListener("keydown", onKey, false);
+      window.addEventListener('resize', viewportResize, false);
+
       viewportResize(); 
     
       window.setTimeout(function() {
@@ -437,8 +490,8 @@ function CleanURL() {
 
 function AddURLTokens() {
 
-  console.log(location.href)
-
+  //console.log(location.href)
+  
   var Ntokens = new URL(location.href).searchParams.get('nt');
   var Nassets = new URL(location.href).searchParams.get('na');
   var bck     = new URL(location.href).searchParams.get('b');
@@ -3103,10 +3156,15 @@ const main = async () => {
   const messages = await app.service(channel).find();
 
   // Add existing messages to the list
-  messages.forEach(addMessage);
+  try {
+    messages.forEach(addMessage);
+  } catch {}  
 
   // Add any newly created message to the list in real-time
+  try {
   app.service(channel).on("created", addMessage);
+  } catch {}  
+
 };
 
 // ------------------------------------------------------------------- // 
@@ -3123,8 +3181,9 @@ return Math.floor(Math.random() * Math.floor(max));
 function addtrackwhentoken(src, n) {  
 
 if (n == null) {
+
   // Comprobamos que no sea una bola de fuego
-  for (var i = 6 ; i < 11; i++) {
+  for (var i = 7 ; i < 12; i++) {
     var tr = document.getElementById("t" + i).src;
     if(tr == src) {     
       return;
@@ -3133,10 +3192,16 @@ if (n == null) {
   
     for (var i = 2 ; i < 10; i++) {
       var tr = document.getElementById("track" + i).style.backgroundImage;
-      console.log(tr)
+      
       if (tr == "") {        
         document.getElementById("track" + i).style.backgroundImage = "url('" + src + "')";
         document.getElementById("track" + i).firstElementChild.style.display = "";
+        
+        if (document.getElementById("token-map-chk").checked)          
+            document.getElementById("track" + i).firstElementChild.value = document.getElementById("player-name").value;          
+        else 
+          document.getElementById("track" + i).firstElementChild.value = "";
+
         update_track();
         break;
       }
@@ -3163,6 +3228,7 @@ function delay(wait) {
   function drag_track(event) {
     event.dataTransfer.setData("text", event.target.id);
     event.target.style.opacity = "0.4";
+    document.getElementById("left-trash").style.display = "";
   }
 
   function create_roll_divs() {
@@ -3210,6 +3276,7 @@ function delay(wait) {
     console.log("drop" + destiny.className)
     var oorigin  = event.target;
     //console.log(oorigin.className)
+
     if (destiny.className == "bglist") {
       document.getElementById("token-map").value = destiny.src;
       document.getElementById("free").checked = true;
@@ -3224,12 +3291,7 @@ function delay(wait) {
     } 
     else if (destiny.className == "tokentA") {
       addText();
-    } 
-    else if (destiny.className == "track_item") {
-      destiny.style.backgroundImage = "";
-      destiny.firstElementChild.style.display = "none";
-      update_track();    
-    }
+    }    
     else if (destiny.className == "dice_result") {    
       var hoverTarget = canvas.findTarget(event, false);
       if (hoverTarget !== undefined) {        
@@ -3325,7 +3387,18 @@ function delay(wait) {
   function drag_roll_end(event) {
     document.querySelectorAll('.thp').forEach(e => e.remove());
   } 
-          
+  
+  function drop_left_trash(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    var destiny = document.getElementById(data);
+
+    destiny.style.backgroundImage = "";
+    destiny.firstElementChild.style.display = "none";
+    update_track();
+    event.target.style.filter = "";
+  }
+
   function drop_trash(event) {
 
     event.preventDefault();
@@ -3417,10 +3490,12 @@ function delay(wait) {
      oorigin.firstElementChild.style.display = "";
      update_track();
    }
+   
   }
           
   function drag_end_track(event) {
     event.target.style.opacity = "1";
+    document.getElementById("left-trash").style.display = "none"
   }
   function drag_enter_track(event) {
        if ( event.target.className == "track_item" ) {
@@ -4269,7 +4344,13 @@ function load_scene() {
  // Cargamos una escena
  function load_scene_start(ev) {
 
-  var id = ("" + ev.srcElement.id).replace("sdiv","").replace("slink","");
+  if (typeof (ev) !== 'undefined')
+    var id = ("" + ev.srcElement.id).replace("sdiv","").replace("slink","");
+  else {
+    lista        = JSON.parse(localStorage.getItem('allscenes')) || [];
+    id = lista.length -1
+  }
+  
   lista        = JSON.parse(localStorage.getItem('allscenes'))    || [];
   lista_assets = JSON.parse(localStorage.getItem('allscnassets')) || [];
   lista_music  = JSON.parse(localStorage.getItem('allmusic'))     || [];

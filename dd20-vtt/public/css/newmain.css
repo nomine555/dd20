@@ -198,15 +198,14 @@ margin-top: 0.5em;
     top: Calc(50vh - 5rem);
     padding: 1em;
     line-height: 1.38;
-    
     font-family: "Bookman", serif;
     font-size: 200%;
     text-align: center;
-    
     background: #FFFFFF;
     border: 1px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
     border-radius: 6px;
+    z-index: 1200;
 }
 
 .fogbar {
@@ -610,8 +609,7 @@ margin-top: .3rem;
     justify-content: center;
     align-items: center;
     height: 10rem;
-    /* width: 10rem; */
-    width: 10rem;
+    /* width: 10rem; */    
     background: #FFFFFF;
     border: 2px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
@@ -717,7 +715,7 @@ margin-top: .3rem;
 
 .metabackgrounds{
     position: absolute;
-    top: 24rem;
+    top: 24.5rem;
     /* left: 3rem; */
     right: 6rem;
     min-height: 10rem;
@@ -1377,6 +1375,7 @@ padding: 0.5rem;
   .urlinput {
     grid-area: urlinput;
     place-self: center stretch;
+    height: 1.5rem;
 }
   
   .add { grid-area: add; 

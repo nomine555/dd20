@@ -1058,7 +1058,8 @@ function toTrack() {
   if (tokenimg !== "") {
     addtrackwhentoken(tokenimg);
   }
-  hide_menus();
+  if (!checkAdmin())
+    hide_menus();
 }
 
 function addText() {
@@ -1097,6 +1098,8 @@ function addText() {
 
 // Functions to add token
 const addToken = (x,y,n) => {
+
+  //event.stopPropagation();
 
   var tileS = tileSize;
   if (document.getElementById("plotmode").checked) 
@@ -1197,7 +1200,9 @@ else
     updateBoardQuick();
   }, waittime);
 }
-hide_menus();
+
+  if (!checkAdmin())
+    hide_menus();
 };
 
 function plotvisible(item) {
@@ -1997,7 +2002,7 @@ if(checkAdmin() && broadcast) {
 function setTile() {
 
   document.getElementById('message').style.display = "block";
-  document.getElementById('background-list').style.display = "none";
+  document.getElementById('metabackgrounds').style.display = "none";
   document.getElementById('MapsBar').style.display = "none";
   tileSize = 20
   plottileSize = 20
@@ -3468,6 +3473,7 @@ function delay(wait) {
     }
     event.target.style.filter = "";
 
+    savetoplugin();
   }
 
   function drop_track(event) {
@@ -3946,7 +3952,7 @@ function deleteItem(event) {
   }
 
   function hide_menus(event) {
-
+    
     if(checkAdmin() && (document.getElementById("ontop").style.display == "")) {
 
       document.getElementById("barra-derecha").style.width = "";

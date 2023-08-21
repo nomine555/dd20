@@ -978,38 +978,29 @@ margin-top: .3rem;
     line-height: 1.15;
 
 }
+
 .hello {
-
-position: absolute;
-
-left: Calc(50vw - 20rem);
-
-width: 20em;
-
-top: 5rem;
-
-padding: 0.5em;
-
-line-height: 1.38;
-
-font-family: "Bookman", serif;
-
-font-size: 194%;
-
-text-align: center;
-
-background: #FFFFFF;
-
-border: 1px solid #DFDCDC;
-
-box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
-
-border-radius: 6px;
+        position: absolute;
+        left: Calc(50vw - 20rem);
+        width: 50vw;
+        top: 4rem;
+        /* height: 90vh; */
+        padding: 0.5em;
+        line-height: 1.38;
+        font-family: "Bookman", serif;
+        font-size: 130%;
+        text-align: center;
+        background: #FFFFFF;
+        border: 1px solid #DFDCDC;
+        box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
 }
 
 .help-entry {
-    margin-top: 1rem;
-    margin-bottom: 3rem;
+    /*margin-top: 1rem;*/
+    /*margin-bottom: 3rem;*/
 }
 
 .image-rigth {
@@ -1416,4 +1407,10 @@ padding: 0.5rem;
 
   .token-bar > img {
     height: 4rem;
+  }
+
+.columna {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
   }

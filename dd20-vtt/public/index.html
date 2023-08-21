@@ -40,11 +40,17 @@
         <div class="container center">
             <div class="start-box box">
                 
+                <div >
                 <div onclick="getRoomid('new')" class="button is-primary" id ="bnewroom">New Room</div>
-                <div onclick="ContinueRoom('new')" class="button is-primary" id ="bcontinue">Continue last game</div>
-                <div onclick="window.location='examples.html'" class="button is-primary" id="bexample">Board Examples</div>
                 <div onclick="getRoomid('')" class="button-gray is-primary" id="bnewold">New Room (Old interface)</div>
+                </div>
+                <div >
+                <div onclick="ContinueRoom('new')" class="button is-primary" id ="bcontinue">Continue last game</div>
                 <div onclick="ContinueRoom('')" class="button-gray is-primary" id="bcontinueold">Continue last game (Old interface)</div>
+                </div>
+                <div onclick="window.location='examples.html'" class="button is-primary" id="bexample" style="flex-grow: 0;height: 1.5rem;">Board Examples</div>
+                
+                
                   
                 <div id="alltext">
                 <p>

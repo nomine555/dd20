@@ -1813,6 +1813,7 @@ function clearRoll() {
       box.simulationRunning = false;
   });
 
+  /*
   var myboard = getboard();
   canvas.forEachObject(function(o) {
     if(o.fill !== '#c710875')
@@ -1823,6 +1824,7 @@ function clearRoll() {
   tokens.forEach((item) => {
     createToken(item);
   }); 
+*/
 
 }
 
@@ -2133,6 +2135,7 @@ if (canvas.fogEnabled)
 
 function updateBoardQuick(redraw) {
 
+  canvas.discardActiveObject().renderAll();
   console.log("update board quick!")
   var redraw = redraw || false;
 
@@ -2146,8 +2149,6 @@ function updateBoardQuick(redraw) {
   }
 
 }
-
-
 
 // Functions for touch screens
 // Touch-enabled
@@ -2473,7 +2474,7 @@ canvas.on("mouse:up", function (opt) {
   if (this.isDragging) {
     checkBorders();
     console.log(" fin del dragging!")
-    this.isDragging = false;
+    this.isDragging = false;    
   }
 
   if(!this.touchenable)
@@ -2566,10 +2567,13 @@ if(ev.deselected !== undefined)
 
 canvas.on('selection:created',function(ev) {
 
+  /*
 if (ev.target.get("type") !== "textbox")
 setTimeout(() => {
   canvas.discardActiveObject().renderAll();
-}, 5000);
+}, 1500);
+*/
+
 
 /*
 if ("#<fabric.Rect>" == ev.target + "") {
@@ -4516,6 +4520,7 @@ function savetoplugin() {
 
 function dd20Receive() {
   let scenes = document.getElementById("scenes-receive").value		
+  console.log(scenes)
   load_all_data(JSON.parse(scenes).data)
 }
 
@@ -4658,32 +4663,42 @@ function dice_color_load() {
 }
 }
 
+const findInMap = (map, val) => {
+  for (let [k, v] of map) {
+    if (k === val) { 
+      return true; 
+    }
+  }  
+  return false;
+}
+
 function monsterReceived() {
   let monster = outsidelinks(document.getElementById("monster-receive").value);
   let monster_name = document.getElementById("monster-name").value.trim();
   
   let monster_token = document.getElementById("monster-token").value;
-  console.log(monster_token);
   
   addtokentolist(monster_token);  
+  addtoAllAssets(monster_token)
 
   if(typeof monsters_list == 'undefined') {
     monsters_list = new Map();
     document.getElementById("monsterframe").innerHTML = monster;
   }
-
-  monsters_list.set(monster_name, monster);  
   
-  var option = document.createElement("option");
-  option.text = monster_name;
-  document.getElementById("monster-list").add(option);
-  
-  
-  var elements = document.getElementsByClassName("roller");
-       
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener('click', tools5edblclick, false);
-  }  
+  if (!findInMap(monsters_list,monster_name)) {
+    monsters_list.set(monster_name, monster);    
+    var option = document.createElement("option");
+    option.text = monster_name;
+    document.getElementById("monster-list").add(option);
+    
+    var elements = document.getElementsByClassName("roller");
+         
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener('click', tools5edblclick, false);
+    }
+  }      
+  else console.log("es viejo!")
 
 }
 function assetReceiveddnd() {
@@ -4696,6 +4711,7 @@ function monsterReceiveddnd() {
   let monster_token = document.getElementById("monster-token").value;
 
   addtokentolist(monster_token);  
+  addtoAllAssets(monster_token)
 
   if(typeof monsters_list == 'undefined') {
     monsters_list = new Map();
@@ -4709,11 +4725,14 @@ function monsterReceiveddnd() {
       
     }, 2*waittime);
   }
-
-  monsters_list.set(monster_name, monster);  
-  var option = document.createElement("option");
-  option.text = monster_name;
-  document.getElementById("monster-list").add(option);
+  
+  if (!findInMap(monsters_list,monster_name)) {
+    monsters_list.set(monster_name, monster);  
+    var option = document.createElement("option");
+    option.text = monster_name;
+    document.getElementById("monster-list").add(option);
+  
+  }
   
 }
 

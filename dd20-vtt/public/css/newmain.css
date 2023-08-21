@@ -981,7 +981,7 @@ margin-top: .3rem;
 
 .hello {
         position: absolute;
-        left: Calc(50vw - 20rem);
+        left: 25vw;
         width: 50vw;
         top: 4rem;
         /* height: 90vh; */
@@ -996,6 +996,7 @@ margin-top: .3rem;
         border-radius: 6px;
         display: flex;
         flex-direction: column;
+        /* align-self: center; */
 }
 
 .help-entry {

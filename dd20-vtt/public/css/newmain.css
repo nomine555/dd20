@@ -4,14 +4,14 @@
 }
 
 .start-box {
-    width: 14em;
+    width: 40rem;
     padding: 2em;
     padding: 0.7rem;
     background: #FFFFFF;
     border: 1px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
     border-radius: 6px;
-    width: 25em;
+    /* width: 25em; */
     margin-top: 2em;
     display: flex;
     flex-wrap: wrap;
@@ -133,7 +133,7 @@ display: flex;
     background: url(../img/background.jpg);
     background-color: black;
   font-family: "Bookman", serif; 
-        font-size: 150%;
+        font-size: 125%;
     background-color: #b167b066;
     background-blend-mode: saturation;
 }
@@ -988,7 +988,7 @@ margin-top: .3rem;
         padding: 0.5em;
         line-height: 1.38;
         font-family: "Bookman", serif;
-        font-size: 130%;
+        font-size: 150%;
         text-align: center;
         background: #FFFFFF;
         border: 1px solid #DFDCDC;
@@ -1414,3 +1414,28 @@ padding: 0.5rem;
     flex-direction: column;
     flex-grow: 2;
   }
+
+  .start-box .button {
+    margin-left: 1rem; ;
+}
+.start-box .button-gray {
+    margin-left: 1rem;
+}
+
+.button-gray {
+    /* width: 25%; */
+    font-size: 50%;
+    border: 1px solid #000000;
+    box-shadow: -1px 1px 2px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 6px;
+    /* margin-bottom: 0.2em; */
+    /* margin-top: 0.2em; */
+    /* background-color: #d1d2ff; */
+    background-color: #ededed;
+    /* text-align: center; */
+    padding: 0.25em;
+    margin: 0.2em;
+    /* flex-grow: 1.1; */
+    height: 1rem;
+    /* margin-left: 2em; */
+}

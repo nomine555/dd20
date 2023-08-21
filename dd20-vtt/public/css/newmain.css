@@ -520,7 +520,7 @@ overflow-y: auto;
 .asset-bar {
     position: absolute;
     top: 19rem;
-    /* left: 1rem; */
+    left: 8rem;
     right: 6rem;
     min-width: 70vw;
     /* height: 68vh; */

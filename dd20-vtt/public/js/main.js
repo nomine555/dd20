@@ -2136,7 +2136,7 @@ if (canvas.fogEnabled)
 function updateBoardQuick(redraw) {
 
   canvas.discardActiveObject().renderAll();
-  console.log("update board quick!")
+  
   var redraw = redraw || false;
 
   if (connected) {
@@ -3100,7 +3100,7 @@ function printchat(item) {
 function addMessage(item) {
 
   if (checkAdmin()) {
-   keepAliveBoard.resetTimer(5000);
+   keepAliveBoard.resetTimer(10000);
   }
 
   if(item.item.roll) 
@@ -5636,7 +5636,7 @@ function SwitchInterface() {
   // The function that will be fired every 5000 milliseconds
   myFunction: function() {
     updateBoardQuick();
-    console.log("keepalive");
+    //console.log("keepalive");
   },
 
   // A method to start the timer

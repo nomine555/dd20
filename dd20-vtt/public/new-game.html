@@ -14,8 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
     <script src="../js/dice.js"></script>
     <script src="../js/diceBox.js"></script>  
-    <script src="../js/language.js"></script>  
-    <script type="text/javascript" src="https://unpkg.com/imagekit-javascript/dist/imagekit.min.js"></script>
+    <script src="../js/language.js"></script>      
+    <script type="text/javascript" src="https://unpkg.com/imagekit-javascript@1.3.0/dist/imagekit.min.js"></script>
     <!--<script src="https://cdn.jsdelivr.net/npm/zipson@latest/dist/zipson.min.js"></script>--> 
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.js"></script>--> 
     
@@ -85,7 +85,7 @@
     <div id = "allscenes" class="allscenes" style="display: none;" onclick="hide_menus();"></div>
     <div id="background-list" class="background-bar noselect" style="display:none" onclick="choosebackground(event)"></div>
     </div>
-    <div id = "trash" class="trash" style="display: none;" ondrop="drop_trash(event)" ondragenter="trash_enter(event)" ondragleave="trash_leave(event)" ondragover="trash_over(event)"></div>
+    <div id = "trash" class="trash" style="display: none;" ondrop="drop_trash(event)" ondragenter="trash_enter(event)" ondragleave="trash_leave(event)" ondragover="trash_over(event)" ondblclick="trash_dblclick(event)"></div>
     <div id = "left-trash" class="left-trash" style="display: none;" ondrop="drop_left_trash(event)" ondragenter="trash_enter(event)" ondragleave="trash_leave(event)" ondragover="trash_over(event)"></div>
     <div id ="distance-bar" class="distance-bar" style="pointer-events: none;"></div>
     <div id="hp" class="hp" style="top: 0; left:0;display: none;">
@@ -119,7 +119,8 @@
             <img  id="t11" src="https://digitald20.com/vtt/img/ray.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" style="object-fit: cover;width:3em;"> 
             <img  id="t12" src="https://digitald20.com/vtt/img/luz.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" >             
         </div>     
-        <img class="ham" src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">                    
+        <img class="ham" src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">   
+        <img id="img-show-tokens" class="img-show">                  
         <p id="psizeoftoken" class="size-text menu-text">Select size of token</p>        
         <div class="size-area">
             
@@ -143,9 +144,10 @@
         </div>
         <p id="puloadcopyorbrowse" class="url-text menu-text">Upload, copy URL or browse used images</p>
         <img   class="upload" src="https://digitald20.com/vtt/img/upload.png" style="width:1.8rem;float: left;margin-right: 0.2rem;" onclick="show_upload();">
-        <input id="token-map" class="urlinput" type="text"  placeholder="... url to your image file ... token or backgroound ...">        
+        <input id="token-map" class="urlinput" type="text"  placeholder="... url to your image file ... token or backgroound ..." >        
         <button id="circle" class="add button" onclick='addToken()' >Add Token</button>        		
-        <button id="into-track" class="totrack button"  onclick='toTrack();'>Into  Track</button>	                  
+        <button id="into-track" class="totrack button"  onclick='toTrack();'>Into  Track</button>	
+        <img id="fderecha" class="flechad" src="https://digitald20.com/vtt/img/filigrana.png" onclick="update_token_bar();">                  
         
         <label class="chlabel1 menu-text for-player" style="display: none;">Character name: </label>        
         <input id="token-map-chk" class="chset for-player"  type="checkbox" style="display: none;"><label class="chlabel2 menu-text for-player" style="display: none;">It's my character Token</label>        
@@ -160,8 +162,12 @@
         <img   class="upload" src="https://digitald20.com/vtt/img/upload.png" style="width:1.8rem;float: left;margin-right: 0.2rem;" onclick="show_upload();">
         <input class="urlinput" type="text" id="asset-url" placeholder="... url to your image file ... token or backgroound ..."> 
         <img class="ham" src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">   
-    </div>
-        <div class="buttons-line">
+        </div>
+    
+        <div class="columnas">
+        <img id="img-show-assets" class="img-show-asset">
+            <div>
+        <div class="buttons-line">            
             <p id="pdefaultvisibility" class="url-text menu-text">Default Visibility</p>
             <label class="switch">
             <input type="checkbox" id="assetvisible" checked>           
@@ -172,6 +178,10 @@
             <button id="bshowasset" onclick="show_asset();" class="button" style="display: none;">Show Player's Assets</button>                                
             <button id="baddasset" onclick='sendLink()' class="button" >Add asset</button>                    
         </div>
+        </div>
+
+        </div>
+
     </div>
     <div id="PlayerAssetBar" class="lateral for-player" style="display: none;">                         
         <div id ="player-asset-list" class="player-asset-bar noselect" onclick="chooseplayerasset(event)" style="display: none;"></div>
@@ -182,8 +192,11 @@
         <div>
         <img   class="upload" src="https://digitald20.com/vtt/img/upload.png" style="width:1.8rem;float: left;margin-right: 0.2rem;" onclick="show_upload();">
         <input class="urlinput" type="text" id="map-url" placeholder="... url to your image file ... token or backgroound ..."> 
-        <img class="ham" src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">                                                    
+        <img class="ham" src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">                                                           
     </div>
+    <div class="columnas">
+
+        <img id="img-show-map" class="img-show-map">  
         <div class="buttons-line">
             <button id="change" onclick='setBg()' class="button">Set Background Image</button>             
             <button id="bchangetilesize" onclick='setTile()' class="button">Set Tile Size</button>        
@@ -196,6 +209,7 @@
             <button onclick="show_backgrounds()" class="button">Select used background</button>            
         </div>        
         -->
+    </div>
         <br>
         <hr width="100%">
         <p id="pscenescontains" class="url-text menu-text">Scenes contain background and also all the tokens</p>

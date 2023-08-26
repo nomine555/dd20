@@ -62,6 +62,12 @@
     flex-direction: column;
 }
 
+.columnas {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
 body,
 html {
     margin: 0;
@@ -286,6 +292,7 @@ margin-top: 0.5em;
     flex-wrap: wrap;
     /* align-content: flex-start; */
     justify-content: flex-end;
+    /* width: 40%; */
 }
 
 .superbox {
@@ -519,7 +526,7 @@ overflow-y: auto;
 
 .asset-bar {
     position: absolute;
-    top: 19rem;
+    top: 23rem;
     left: 8rem;
     right: 6rem;
     min-width: 70vw;
@@ -715,7 +722,7 @@ margin-top: .3rem;
 
 .metabackgrounds{
     position: absolute;
-    top: 24.5rem;
+    top: 26rem;
     left: 7rem;
     right: 6rem;
     min-height: 10rem;
@@ -1288,7 +1295,7 @@ padding: 0.5rem;
         "url-text upload urlinput urlinput urlinput urlinput urlinput ham "
         "size-text . size-area size-area size-area size-area size-area . "
         "quick-text token-bar token-bar token-bar token-bar token-bar token-bar token-bar "
-        ". . . . add add totrack totrack "
+        "img-show . . add add totrack totrack flecha"
         "chlabel1 chname chname chname chset chlabel2 chlabel2 chlabel2";
 }
 
@@ -1296,7 +1303,7 @@ padding: 0.5rem;
     position: absolute;
     right: 5rem;
     top: 8rem;
-    width: 40rem;
+    width: 44rem;
     min-height: 20 rem;
     background: steelblue;
     padding: 0.5rem;
@@ -1342,7 +1349,38 @@ padding: 0.5rem;
 .url-text {
     grid-area: url-text;
 }
-       
+
+.img-show {
+    grid-area: img-show;
+    max-width: 10rem;
+    /* max-width: 5rem; */
+    max-height: 6rem;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    margin-right: auto;
+    margin-left: 1.5rem;
+    margin-top: -0.6rem;
+    clip-path: circle(48px at center);
+}
+
+.img-show-asset {
+    max-width: 10rem;
+    max-height: 8rem;
+    margin-right: auto;
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+    /* width: 26%; */
+}
+
+.img-show-map {
+    max-width: 10rem;
+    max-height: 4rem;
+    margin-right: auto;
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
 .size-text {
     grid-area: size-text;
 }
@@ -1382,6 +1420,12 @@ padding: 0.5rem;
     grid-area: chname; 
     place-self: center stretch;
 }
+.flechad {
+    grid-area: flecha;
+    place-self: center stretch;
+    height: 2rem;
+    margin-top: -2rem;
+}
 .chset {
     grid-area: chset; 
     place-self: center stretch;
@@ -1409,6 +1453,7 @@ padding: 0.5rem;
 
   .token-bar > img {
     height: 4rem;
+    margin: 0.1rem;
   }
 
 .columna {

@@ -89,6 +89,7 @@ let shadowopacity = 1;
 
 // ImageKit
 var imagekit = new ImageKit({
+  
   publicKey: "public_DYilnmhVRFXigmTUrGtuCcGZpok=",
   urlEndpoint: "https://ik.imagekit.io/fiade", 
   authenticationEndpoint: "https://board.digitald20.com/signature"
@@ -1018,6 +1019,7 @@ function setUrl(free) {
   }
  var texto = document.getElementById(event.srcElement.id).src;
  document.getElementById("token-map").value = texto;
+ url_token_input_change();
 }
 
 
@@ -3738,11 +3740,36 @@ function delay(wait) {
   }
 
   function choose_all_asset(event) {
-    console.log(event);
-    document.getElementById("token-map").value = event.target.src;
-    document.getElementById("asset-url").value = event.target.src;
-    document.getElementById("map-url").value = event.target.src;
-    selfclose('allassets')
+
+    if (typeof trash_delete_mode == 'undefined')                
+      trash_delete_mode = false;
+
+    if (trash_delete_mode) {
+      console.log("delete mode on and event")
+      
+      var destiny = event.srcElement;
+      if (destiny.nodeName == "IMG") {
+        destiny.parentNode.removeChild(destiny);
+        var lista = [];
+        lista = JSON.parse(localStorage.getItem('allassets')) || [];
+        var pos = parseInt(event.srcElement.id.replace("all",""));
+        lista.splice(pos, 1);  
+        localStorage.setItem('allassets', JSON.stringify(lista));      
+        savetoplugin();  
+      }
+      
+    } else {
+        document.getElementById("token-map").value = event.target.src;
+        document.getElementById("asset-url").value = event.target.src;
+        document.getElementById("map-url").value = event.target.src;
+        selfclose('allassets')
+        document.getElementById("trash").style.display = "none";
+    }
+    
+    url_token_input_change();    
+    url_asset_input_change();
+    url_map_input_change();
+
   }
 
   function chooseplayerasset(event) {
@@ -3956,6 +3983,9 @@ function deleteItem(event) {
   }
 
   function hide_menus(event) {
+
+    trash_delete_mode = false;
+    document.getElementById("trash").style.filter = ""
     
     if(checkAdmin() && (document.getElementById("ontop").style.display == "")) {
 
@@ -4942,18 +4972,30 @@ function uploadfile(e) {
       file: file.files[0],
       fileName: file.files[0].name,
       tags: ["d20"], // Comma seperated value of tags
-      responseFields: "tags" // Comma seperated values of fields you want in response e.g. tags, isPrivateFile etc
+      //responseFields: "tags" // Comma seperated values of fields you want in response e.g. tags, isPrivateFile etc
   }, function (err, result) {
       if (err) {         
           console.log(err);
           hide_menus()
       } else {
-        document.getElementById("token-map").value = result.url;
-        document.getElementById("asset-url").value = result.url;
-        document.getElementById("map-url").value = result.url;
+
+        if (document.getElementById("AssetBar").style.display == "") {
+          document.getElementById("asset-url").value = result.url;
+          url_asset_input_change();
+        }          
+          
+        if (document.getElementById("TokenBar").style.display == ""){
+          document.getElementById("token-map").value = result.url;
+          url_token_input_change();
+        }
+          
+        if (document.getElementById("MapsBar").style.display == "") {
+          document.getElementById("map-url").value = result.url;
+          url_map_input_change();
+        }
         
-        addtoAllAssets(result.url)
-        hide_menus();
+        document.getElementById("message2").style.display = "none";
+        addtoAllAssets(result.url)        
         console.log(result);
       }
   })
@@ -5160,6 +5202,7 @@ function show_upload() {
 }
 
 document.onpaste = function(event) {
+
   var items = (event.clipboardData || event.originalEvent.clipboardData).items;
   for (index in items) {
     var item = items[index];
@@ -5210,9 +5253,23 @@ document.onpaste = function(event) {
       */
 
     } else if(item.kind == "string") {
-      console.log(item);
-      item.getAsString(function (s){
-        document.getElementById("token-map").value = s;
+      item.getAsString(function (s) {
+
+        if (document.getElementById("AssetBar").style.display == "") {
+          document.getElementById("asset-url").value = s;
+          url_asset_input_change();
+        }           
+          
+        if (document.getElementById("TokenBar").style.display == "") {
+          document.getElementById("token-map").value = s;
+          url_token_input_change();
+        }
+          
+        if (document.getElementById("MapsBar").style.display == "") {
+          document.getElementById("map-url").value = s;
+          url_map_input_change();
+        }
+          
       });      
     } 
   }
@@ -5583,6 +5640,8 @@ function reset_app() {
 
 function showTokenMenu(menu)
 {
+  trash_delete_mode = false;
+  document.getElementById("trash").style.filter = "";    
   document.getElementById("TokenBar").style.display = "none";  
   document.getElementById("AssetBar").style.display = "none";        
   document.getElementById("MapsBar").style.display = "none";  
@@ -5657,3 +5716,64 @@ function SwitchInterface() {
     this.startTimer(time);
   }
 };
+
+function trash_dblclick(event) {
+    
+  if (document.getElementById("allassets").style.display == "") {
+
+    if (typeof trash_delete_mode == 'undefined')                
+    trash_delete_mode = false;
+
+    if(!trash_delete_mode) {
+      trash_delete_mode = true;
+      event.target.style.filter = "hue-rotate(120deg) saturate(500%)";    
+    }
+    else {
+      trash_delete_mode = false;
+      event.target.style.filter = "";    
+    }
+    
+  }
+  
+}
+
+function url_token_input_change(event) {
+  setTimeout(() => {
+    document.getElementById("img-show-tokens").src = document.getElementById("token-map").value;          
+  }, 1000); 
+}
+
+function url_asset_input_change(event) {
+  setTimeout(() => {    
+    document.getElementById("img-show-assets").src = document.getElementById("asset-url").value;      
+  }, 1000);
+}
+
+function url_map_input_change(event) {
+  setTimeout(() => {    
+    document.getElementById("img-show-map").src = document.getElementById("map-url").value;      
+  }, 1000);
+}
+
+function update_token_bar() {
+  console.log("update token bar")
+
+  if(document.getElementById("t9").src == "https://digitald20.com/vtt/img/fire-ball.png") {
+
+    document.getElementById("t12").src = "https://digitald20.com/vtt/img/cuadrado.png"
+    document.getElementById("t10").src = "https://digitald20.com/vtt/img/pin-verde.png"
+    document.getElementById("t11").src = "https://digitald20.com/vtt/img/pin-red.png"
+    document.getElementById("t9").src = "https://digitald20.com/vtt/img/pin-morado.png"
+
+  }
+
+  else {
+
+    document.getElementById("t9").src = "https://digitald20.com/vtt/img/fire-ball.png"
+    document.getElementById("t10").src = "https://digitald20.com/vtt/img/cone-cold.png"
+    document.getElementById("t11").src = "https://digitald20.com/vtt/img/ray.png"
+    document.getElementById("t12").src = "https://digitald20.com/vtt/img/luz.png"
+
+  }
+
+}

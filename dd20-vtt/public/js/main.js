@@ -38,6 +38,11 @@ fabric.fastCanvas = function(_super){
 
 var fastCanvas = fabric.fastCanvas(fabric.CanvasWithViewport)
 
+var startingapp = true
+setTimeout(() => {
+  startingapp = false
+}, 10000);
+
 // Canvas
 //var canvas =  new fabric.Canvas("c", {
 var canvas =  new fastCanvas("c", {
@@ -96,7 +101,7 @@ var imagekit = new ImageKit({
   //authenticationEndpoint: "http://localhost/signature"
 });
 
-// Chrome
+// Chrome                
 let chromeid = "jodofclnfifmpeopfjppbicljjnjjnmo" // PUBLICO
 //let chromeid = "fhmfkllihjefkdbppineegdmgknjahif" // DESARROLLO
 
@@ -4549,6 +4554,7 @@ function savetoplugin() {
     
 */
 console.log("saving pluging...")
+if (!startingapp)
 setTimeout(() => {
   try {
     chrome.runtime.sendMessage(chromeid, {data: geteverything()}, function(response) {

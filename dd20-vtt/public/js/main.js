@@ -4538,6 +4538,9 @@ function savetoplugin() {
   //console.log(new Blob([every]).size)
   //let every = geteverything();
 
+  console.log(chromeid)
+  console.log(geteverything())
+  
   try {
     chrome.runtime.sendMessage(chromeid, {data: geteverything()}, function(response) {
       console.log(response)      

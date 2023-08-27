@@ -97,8 +97,8 @@ var imagekit = new ImageKit({
 });
 
 // Chrome
-//let chromeid = "jodofclnfifmpeopfjppbicljjnjjnmo"
-let chromeid = "fhmfkllihjefkdbppineegdmgknjahif"
+let chromeid = "jodofclnfifmpeopfjppbicljjnjjnmo" // PUBLICO
+//let chromeid = "fhmfkllihjefkdbppineegdmgknjahif" // DESARROLLO
 
 // PDF
 var pdfDoc = null,
@@ -4540,11 +4540,10 @@ function savetoplugin() {
 
   try {
     chrome.runtime.sendMessage(chromeid, {data: geteverything()}, function(response) {
-      if (!response.success)
-        console.log("Error con los mensajes con plugin");
+      console.log(response)      
     });
-    } catch(error) {
-      console.log("No plugin loaded");
+    } catch(error) {      
+      console.log(error)
     }
   }
 

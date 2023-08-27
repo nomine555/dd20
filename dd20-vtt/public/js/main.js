@@ -4553,10 +4553,11 @@ function savetoplugin() {
   chrome.runtime.sendMessage(chromeid, request);
     
 */
-console.log("saving pluging...")
+
 if (!startingapp)
 setTimeout(() => {
   try {
+    console.log("saving pluging...")
     chrome.runtime.sendMessage(chromeid, {data: geteverything()}, function(response) {
       console.log(response)      
     });

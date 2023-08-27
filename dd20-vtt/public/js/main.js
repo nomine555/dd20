@@ -97,8 +97,8 @@ var imagekit = new ImageKit({
 });
 
 // Chrome
-let chromeid = "jodofclnfifmpeopfjppbicljjnjjnmo"
-//let chromeid = "fhmfkllihjefkdbppineegdmgknjahif"
+//let chromeid = "jodofclnfifmpeopfjppbicljjnjjnmo"
+let chromeid = "fhmfkllihjefkdbppineegdmgknjahif"
 
 // PDF
 var pdfDoc = null,
@@ -5756,7 +5756,6 @@ function url_map_input_change(event) {
 }
 
 function update_token_bar() {
-  console.log("update token bar")
 
   if(document.getElementById("t9").src == "https://digitald20.com/vtt/img/fire-ball.png") {
 

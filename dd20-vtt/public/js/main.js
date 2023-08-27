@@ -269,7 +269,7 @@ const checkAdmin = () => {
             
             for (var i = 1 ; i < 9; i++) {
               try {
-                console.log(localStorage.getItem("tracksrc" + i))
+                //console.log(localStorage.getItem("tracksrc" + i))
                 document.getElementById('track'+i).style.backgroundImage = localStorage.getItem("tracksrc" + i);
               if(document.getElementById('track'+i).style.backgroundImage !== "") {
                 document.getElementById('track'+i).style.order = localStorage.getItem("trackorder" + i);
@@ -336,11 +336,11 @@ const checkAdmin = () => {
             
             var musicN = parseInt(localStorage.getItem("musicN"));
             var list = document.getElementById("music-list");
-            console.log(musicN)
+            //console.log(musicN)
             for (i = 0; i < musicN; i++) {          
               var item = localStorage.getItem("music" + i).replaceAll(" ","%20");
-              console.log("music" + i)
-              console.log(item)          
+              //console.log("music" + i)
+              //console.log(item)          
               if (item !== "undefined") {
                 var div = document.createElement("div");             
                 div.setAttribute("src", item);  
@@ -497,7 +497,7 @@ function AddURLTokens() {
   var Nassets = new URL(location.href).searchParams.get('na');
   var bck     = new URL(location.href).searchParams.get('b');
 
-  console.log(Ntokens +" "+ Nassets + " " + bck)
+  //console.log(Ntokens +" "+ Nassets + " " + bck)
 
   if (bck !== null) {
     if (Ntokens == null)
@@ -3373,7 +3373,7 @@ function delay(wait) {
   }  
   
   function drag_scene_start(event) {       
-    console.log(event.target)
+    //console.log(event.target)
     event.dataTransfer.setData("text", event.target.id);
   }  
 
@@ -3468,7 +3468,7 @@ function delay(wait) {
         var list = document.getElementById("music-list");
         var musicN = list.childElementCount;
         list = list.children;
-        console.log(musicN)
+        //console.log(musicN)
         for (i = 0; i < musicN; i++) {
           console.log(list[i].getAttribute("src"))
           localStorage.setItem("music" + i, list[i].getAttribute("src"))
@@ -4533,14 +4533,23 @@ function getbackgroundfromurl(url) {
 // ------------------------------------
 function savetoplugin() {
 
-  //var every = LZString.compress(JSON.stringify(geteverything()));
-  //console.log(every)
-  //console.log(new Blob([every]).size)
-  //let every = geteverything();
+/*
+  var every = LZString.compress(JSON.stringify(geteverything()));
+  console.log(every)
+  console.log(new Blob([every]).size)
+  let every = geteverything();
 
   console.log(chromeid)
   console.log(geteverything())
   
+  let request = new Object();
+    request.action = 'savedata';
+    request.message = geteverything();	
+  chrome.runtime.sendMessage(chromeid, request);
+    
+*/
+console.log("saving pluging...")
+setTimeout(() => {
   try {
     chrome.runtime.sendMessage(chromeid, {data: geteverything()}, function(response) {
       console.log(response)      
@@ -4548,11 +4557,14 @@ function savetoplugin() {
     } catch(error) {      
       console.log(error)
     }
+
+}, 3000);
+  
   }
 
 function dd20Receive() {
   let scenes = document.getElementById("scenes-receive").value		
-  console.log(scenes)
+  //console.log(scenes)
   load_all_data(JSON.parse(scenes).data)
 }
 
@@ -4580,7 +4592,7 @@ function geteverything() {
   obj.music   = lista_music;  
   obj.all     = lista_all;    
 
-  console.log(obj)
+  //console.log(obj)
   return obj;
 }
 
@@ -4608,7 +4620,7 @@ function load_scene_file(event) {
 
 function load_all_data(obj) {
 
-  console.log(obj)
+  //console.log(obj)
 
   var scenes = obj.scenes;
   var names = obj.names;

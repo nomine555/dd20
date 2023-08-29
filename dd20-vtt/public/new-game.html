@@ -120,7 +120,7 @@
             <img  id="t12" src="https://digitald20.com/vtt/img/luz.png" class="token" onmousedown="setUrl('free')" draggable="true" ondragstart="drag(event)" >             
         </div>     
         <img class="ham" src="https://digitald20.com/vtt/img/hamburguesa.png" style="width:2rem;float: right;" onclick="show_all_assets(event);">   
-        <img id="img-show-tokens" class="img-show">                  
+        <img id="img-show-tokens" class="img-show" draggable="true" ondragstart="drag(event)">                  
         <p id="psizeoftoken" class="size-text menu-text">Select size of token</p>        
         <div class="size-area">
             
@@ -246,15 +246,28 @@
     </div>
     <!-- Opciones-->
     <div id = "OptionsBar" class="superbar noselect"  style="display: none;">
-            <p id="pcharactersname" class="url-text menu-text">Character's Name</p>
-			
-            <br>
-            <a id="pswitchtoold" class="menu-text" style="color: #fff46d;" onclick="SwitchInterface();">Switch to old interface</a>
+              
+        <p id="ploadscenesetc" class="menu-text">Load scenes, assets and music from file</p>            
+        <input type="file" id="file-selector" onchange="load_scene_file(event);" accept=".txt" style="margin-bottom: 1rem;">
+        
+        <p id="psavescenesetc" class="menu-text">Save scenes, assets and music to file</p>   
+        <div class="buttons-line">
+            
+            <button id="bexporscene" class="button" onclick="export_scene_file();">Export File...</button>
+        </div>   
+        <p id="lmayfix" class="menu-text">Delete all (may fix problems)</p>
+        <div class="buttons-line">            
+            <button id="bfixproblems" class="button" onclick="reset_app();">Delete all Data</button>
+            
+        </div>                              
+
+            <p id="pcharactersname" class="url-text menu-text" style="display: none;">Character's Name</p>			            
+            <a id="pswitchtoold" class="menu-text" style="color: #fff46d;display: none;" onclick="SwitchInterface();">Switch to old interface</a>
 			<div class="buttons-line" id="bplayername">
                 <br>
                 <hr style="width: 100%;">
-            <button id="bshare"   class="button" onclick="prompt('Press Ctrl + C, copy to clipboard and send this link to your friends so they can join this virtual tabletop board session',window.location)">Share</button>
-            <button id="boptions" class="button" onclick="show_config_view();">Options</button>
+            <button id="bshare"   class="button" onclick="prompt('Press Ctrl + C, copy to clipboard and send this link to your friends so they can join this virtual tabletop board session',window.location)">Share VTT</button>
+            <button id="boptions" class="button" onclick="show_config_view();">More Options</button>
 			</div>
       
     </div>
@@ -429,7 +442,7 @@
             </div>
 
         <div class="only-admin">            
-            <label id="lhidetools" class="triple">Hide tools</label>
+            <p id="lhidetools" class="triple">Hide tools</p>
             <br>
             <div class="grid">
             <input type="checkbox" id="inmersive-on"  onclick='checkboxClick2(this);' name="distance-bar">
@@ -441,48 +454,40 @@
             <input  type="checkbox" id="view-names" onclick='set_namemode();' name="bedit-name" checked>
             <label  id="lnamesoninittrack" for="view-names" >Write names on Initiative Tracker</label>
         </div>                       
-            <hr>
-            <label  id="lassetsoptions" style="display: none;" class="for-admin triple">Assets's options</label>
+            <hr class="hrmargin">
+            <p  id="lassetsoptions" style="display: none;" class="for-admin triple">Assets's options</p>
                 <div class="grid">                    
                     <input  style="display: none;" class="for-admin" type="checkbox" id="asset-by-default"  >
                     <label  id="lpasteasasset" style="display: none;" class="for-admin" >Paste Asset by default</label>  
                     <input  style="display: none;" class="for-admin" type="checkbox" id="see-player-asset" onclick='see_player_asset(this);'>
-                    <label  id="lseeplayerasset" style="display: none;" class="for-admin" >See player's Assets</label>                      
-                </div>
-            <hr>
+                    <label  id="lseeplayerasset" style="display: none;" class="for-admin" >See player's Assets</label>    
+                    <input type="checkbox" id="player-audio" onclick="set_musicmode();" checked>
+                    <label id="lallowplayermusic" for="view-name" >Allow all players to put music</label>                      
+                </div>                
         </div>
                 
-            <div class="combine-dice">
+            <div class="grid">
                 <input type="checkbox" id="two-finger-pan" checked>
                 <label id="lpantwofingers" for="view-name" >Tow finger to pan</label>
                 <input type="checkbox" id="left-click-pan">
                 <label id="lleftckclickpan" for="view-back" >left click to pan</label>
             </div>
-            <hr>
-            <div class="combine-dice">
-                <input type="checkbox" id="player-audio" onclick="set_musicmode();" checked>
-                <label id="lallowplayermusic" for="view-name" >Allow all players to put music</label>                
-            </div>
-            <hr>
+
+            <hr class="hrmargin">
             <div class="combine-dice">
                 <!--<label style="font-size: 75%;background-color:white;">Dice Render Quality</label>-->
                 <button id="bcombine" onclick='event.stopPropagation()' class="button" >Dice Render Quality</button>   
                 <input type="range" min="40" max="200" value="100" class="slider" id="diceRange" onchange="renderChange();" style="width: 100%;">
             </div>
-            <hr>
+            <hr class="hrmargin">
             <div>
                 <em class="center">Scene URL</em>
                 <textarea id="urltext" rows="4" style="width: 100%;"></textarea>
-                <button id="bcopysceneurl" class="button" onclick="prompt('Press Ctrl + C, copy to clipboard and share it on your blog or whatever!',document.getElementById('urltext').value)">Copy Scene</button>
-            </div><div>               
-                <button id="bexporscene" class="button" onclick="export_scene_file();">Export File...</button>
-                <input type="file" id="file-selector" onchange="load_scene_file(event);" accept=".txt">  
+                <button style="display: none;" id="bcopysceneurl" class="button" onclick="prompt('Press Ctrl + C, copy to clipboard and share it on your blog or whatever!',document.getElementById('urltext').value)">Copy Scene</button>
             </div>
-            <hr>
-            <div>
-                <button id="bfixproblems" class="button" onclick="reset_app();">Delete all Data</button><label id="lmayfix" style="font-size: 75%;">(may fix problems)</label>
-            </div>
+            <div class="buttons-line">
             <button id="bcloseconfig" class="button" onclick="show_config_view();">Close</button>
+        </div>
         </div>
     </div>
     

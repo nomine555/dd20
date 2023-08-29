@@ -2530,7 +2530,7 @@ canvas.on("mouse:up", function (opt) {
 canvas.on('object:modified', function(options) {
   
   var doomedObj = canvas.getActiveObject();
-  console.log("modfied!!!")
+  //console.log("modfied!!!")
   if (doomedObj !== null)
     if ( doomedObj.get('type') !== "textbox") {
     if ((doomedObj.left < (-tileSize/2)) || (doomedObj.top < (-tileSize/2)) )  
@@ -2563,7 +2563,7 @@ canvas.on('object:removed', function(options) {
 
 canvas.on('selection:cleared',function(ev) {
 
-  console.log(ev)
+  //console.log(ev)
 if(ev.deselected !== undefined)
   if(ev.deselected[0].get("type") == "textbox") {
     updateBoardQuick(true);
@@ -3289,7 +3289,7 @@ function delay(wait) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     var destiny = document.getElementById(data);
-    console.log("drop" + destiny.className)
+    console.log("drop: " + destiny.className)
     var oorigin  = event.target;
     //console.log(oorigin.className)
 
@@ -3300,6 +3300,10 @@ function delay(wait) {
     }
     else if (destiny.className == "token") {
       document.getElementById("token-map").value = destiny.src;
+      addToken();
+    } 
+    else if (destiny.className == "img-show") {
+      //document.getElementById("token-map").value = destiny.src;
       addToken();
     } 
     else if (destiny.className == "tokenA") {
@@ -4603,6 +4607,34 @@ function geteverything() {
   return obj;
 }
 
+function get_empty_everything() {
+
+  var lista = [];
+  var lista_names = [];
+  var lista_assets = [];
+  var lista_music = [];
+  var lista_all = [];
+
+  var assetsobj = new Object();
+  assetsobj.assets = []
+  var musicobj = new Object();
+  musicobj.music = []
+
+  lista_assets =  [];
+  lista_music  =  [];
+  lista_assets.push(assetsobj)
+  lista_music.push(musicobj)
+  
+  var obj = new Object();
+    obj.scenes  = lista; 
+    obj.names   = lista_names; 
+    obj.assets  = lista_assets;
+    obj.music   = lista_music;  
+    obj.all     = lista_all;    
+
+  return obj;
+}
+
 function export_scene_file() {  
 
   var content = JSON.stringify(geteverything());
@@ -5655,8 +5687,18 @@ function plotView() {
 }
 
 function reset_app() {
+ 
+  try {
+    console.log("saving pluging...")
+    chrome.runtime.sendMessage(chromeid, {data: get_empty_everything()}, function(response) {
+      console.log(response)      
+    });
+    } catch(error) {      
+      console.log(error)
+    }
+
   localStorage.clear();
-  window.location = "http://board.digitald20.com"  
+  
 }
 
 function showTokenMenu(menu)

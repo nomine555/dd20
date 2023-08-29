@@ -12,8 +12,8 @@ function translateweb(lang) {
         document.getElementById("bsavescene").innerText = "Salvar escena"   //Save Scene
         document.getElementById("bloadscene").innerText = "Cargar Escena"   //Load Scene
         document.getElementById("chat-button").innerText = "Enviar"   //Send            
-        document.getElementById("bshare").innerText = "Compartir"   //Share
-        document.getElementById("boptions").innerText = "Opciones"   //Options
+        document.getElementById("bshare").innerText = "Compartir tablero"   //Share
+        document.getElementById("boptions").innerText = "Mas opciones"   //Options
         document.getElementById("enable-fog").innerText = "Activar Niebla"   //Enable Fog
         document.getElementById("add-fog").innerText = "Revelar Zona"   //Reveal Area
         document.getElementById("clear-fog").innerText = "Resetear Niebla"   //Reset Fog
@@ -36,6 +36,9 @@ function translateweb(lang) {
         document.getElementById("bloadallimagespdf").innerText = "Cargar Todas las imagenes"   //Load All Images
         document.getElementById("bclose2").innerText = "Cerrar"   //Close
         document.getElementById("bdonotshow").innerText = "No mostrar más"   //Don't show it again 
+
+        document.getElementById("ploadscenesetc").innerText = "Cargar escenas, ayudas y múscia desde archivo"   //Load scenes, assets and music from file
+        document.getElementById("psavescenesetc").innerText = "Salvar escenas, ayudas y múscia en archivo"   //Save scenes, assets and music to file
     
         document.getElementById("mTokens").innerText = "Tokens"   //Tokens
         document.getElementById("mAssets").innerText = "Ayudas"   //Assets
@@ -104,7 +107,7 @@ function translateweb(lang) {
         document.getElementById("lpantwofingers").innerText = "Usar dos dedos para arrastrar"   //Tow finger to pan
         document.getElementById("lleftckclickpan").innerText = "Usar un dedo para arrastrar"   //left click to pan
         document.getElementById("lallowplayermusic").innerText = "Permitir que los jugadores pongan musica"   //Allow all players to put music
-        document.getElementById("lmayfix").innerText = "puede arreglar problemas"   //(may fix problems)
+        document.getElementById("lmayfix").innerText = "Borrar todo (puede arreglar problemas)"   //(may fix problems)
     
         document.getElementById("token-map").placeholder = "... url a tu archivo de imagen ..." // ... url to your image file ... token or backgroound ...
         document.getElementById("asset-url").placeholder = "... url a tu archivo de imagen ..." // ... url to your image file ... token or backgroound ...

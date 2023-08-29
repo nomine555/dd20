@@ -5698,6 +5698,10 @@ function reset_app() {
     }
 
   localStorage.clear();
+
+  setTimeout(() => {
+    location.href("/")
+  }, 3000);
   
 }
 

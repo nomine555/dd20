@@ -5700,7 +5700,7 @@ function reset_app() {
   localStorage.clear();
 
   setTimeout(() => {
-    location.href = window.location.hostname;
+    window.location.href = '/'
   }, 3000);
   
 }

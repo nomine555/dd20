@@ -4289,9 +4289,12 @@ function hiddenRoll() {
 }
 
 function checkurl(url) {
+  console.log("checkurl:" + url)
   url = url.replaceAll(" ","%20");
   if (url.indexOf("www.dropbox.com") > 0) {
-    return url.replace("?dl=0", "?raw=1");
+    console.log("checkurl:" + url.replace("?dl=0", "?raw=1").replace("&dl=0", "&dl=1"))
+    
+    return url.replace("?dl=0", "?raw=1").replace("&dl=0", "&dl=1");
   }
   else return url;
 }

@@ -2,3 +2,6 @@
 .obsidian/
 
 dd20-vtt/app.js
+dd20-vtt/package-lock.json
+
+dd20-vtt/package.json

@@ -64,7 +64,6 @@ var NRolls = 0;
 var dice_enabled = true;
 var mc = new Hammer.Manager(document.getElementById("cw"));
 var pinch = new Hammer.Pinch();
-var tirada = ""
 
 mc.add(pinch);
 // Dice box
@@ -2028,92 +2027,12 @@ function onKey(e) {
     deleteObj();
     // 46 is Delete key
     // do stuff to delete selected elements
-  }
-
-  if (8 === e.keyCode) {
+}
+if (8 === e.keyCode) {
   deleteObj();
-    // 46 is Delete key
-    // do stuff to delete selected elements
-  }
-
-  if (50 === e.keyCode) {
-    
-    if (tirada == "") {
-      tirada = "1d20";
-      setTimeout(() => {
-        sendDices(tirada, "");
-        tirada = "";
-      }, 300);
-    } else {
-      tirada = tirada +"+1d20";
-    }
-            
-  }
-
-  if (52 === e.keyCode) {
-    
-    if (tirada == "") {
-      tirada = "1d4";
-      setTimeout(() => {
-        sendDices(tirada, "");
-        tirada = "";
-      }, 600);
-    } else {
-      tirada = tirada +"+1d4";
-    }
-  }
-
-  if (54 === e.keyCode) {
-    if (tirada == "") {
-      tirada = "1d6";
-      setTimeout(() => {
-        sendDices(tirada, "");
-        tirada = "";
-      }, 900);
-    } else {
-      tirada = tirada +"+1d6";
-    }
-  }
-
-  if (56 === e.keyCode) {
-    if (tirada == "") {
-      tirada = "1d8";
-      setTimeout(() => {
-        sendDices(tirada, "");
-        tirada = "";
-      }, 900);
-    } else {
-      tirada = tirada +"+1d8";
-    }
-  }
-
-  if (57 === e.keyCode) {
-    if (tirada == "") {
-      tirada = "1d12";
-      setTimeout(() => {
-        sendDices(tirada, "");
-        tirada = "";
-      }, 300);
-    } else {
-      tirada = tirada +"+1d12";
-    }
-  }
-
-  if (48 === e.keyCode) {
-    if (tirada == "") {
-      tirada = "1d0";
-      setTimeout(() => {
-        sendDices(tirada, "");
-        tirada = "";
-      }, 300);
-    } else {
-      tirada = tirada +"+1d0";
-    }
-  }
-
-  if (49 === e.keyCode) {
-    sendDices("1d100 + 1d10", "");
-  }
+  // 46 is Delete key
+  // do stuff to delete selected elements
+}
 
 }
 

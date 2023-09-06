@@ -1,0 +1,4 @@
+8443
+
+C:\Certbot\live\tablero.digitald20.com\fullchain.pem
+C:\Certbot\live\tablero.digitald20.com\privkey.pem

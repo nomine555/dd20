@@ -1093,15 +1093,10 @@ padding: 0.5rem;
     background-image: url("../img/trash_icon.png");
   }
 
-  .selected::after {
-    right: 1rem;
-    top: 1rem;
-    height: 0.5rem;
-    width: 2rem;
-    content: "   ";
-    background-color: #eed705;
-    border-color: black;   
-    border-radius: 2rem;
+  .selected {
+    width: 8rem;
+    height: 8rem;
+    clip-path: circle(63px at center);
   }
 
 .iframe {

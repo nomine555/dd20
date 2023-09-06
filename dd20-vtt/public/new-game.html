@@ -493,9 +493,8 @@
     
     
     <div id="track_bar" class="track_bar" onclick="hide_menus();" id="track-bar"> 
-        <div id = "track1" class="track_item" draggable="true" style="order:1;display:none"
-             ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
-             ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)"> 
+        <div id = "track1" class="track_item" draggable="true" style="order:1;display: none;"
+             > 
            <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
         </div>
         <div id = "track2" class="track_item" draggable="true" style="order:2"

@@ -64,6 +64,7 @@ var NRolls = 0;
 var dice_enabled = true;
 var mc = new Hammer.Manager(document.getElementById("cw"));
 var pinch = new Hammer.Pinch();
+var tirada = "";
 
 mc.add(pinch);
 // Dice box
@@ -2034,7 +2035,119 @@ if (8 === e.keyCode) {
   // do stuff to delete selected elements
 }
 
+if (50 === e.keyCode) {
+    
+  if (tirada == "") {
+    tirada = "1d20";
+    setTimeout(() => {
+      sendDices(tirada, "");
+      tirada = "";
+    }, 300);
+  } else {
+    tirada = tirada +"+1d20";
+  }
+          
 }
+
+if (52 === e.keyCode) {
+  
+  if (tirada == "") {
+    tirada = "1d4";
+    setTimeout(() => {
+      sendDices(tirada, "");
+      tirada = "";
+    }, 600);
+  } else {
+    tirada = tirada +"+1d4";
+  }
+}
+
+if (54 === e.keyCode) {
+  if (tirada == "") {
+    tirada = "1d6";
+    setTimeout(() => {
+      sendDices(tirada, "");
+      tirada = "";
+    }, 900);
+  } else {
+    tirada = tirada +"+1d6";
+  }
+}
+
+if (56 === e.keyCode) {
+  if (tirada == "") {
+    tirada = "1d8";
+    setTimeout(() => {
+      sendDices(tirada, "");
+      tirada = "";
+    }, 900);
+  } else {
+    tirada = tirada +"+1d8";
+  }
+}
+
+if (57 === e.keyCode) {
+  if (tirada == "") {
+    tirada = "1d12";
+    setTimeout(() => {
+      sendDices(tirada, "");
+      tirada = "";
+    }, 300);
+  } else {
+    tirada = tirada +"+1d12";
+  }
+}
+
+if (48 === e.keyCode) {
+  if (tirada == "") {
+    tirada = "1d10";
+    setTimeout(() => {
+      sendDices(tirada, "");
+      tirada = "";
+    }, 300);
+  } else {
+    tirada = tirada +"+1d0";
+  }
+}
+
+if (49 === e.keyCode) {
+  sendDices("1d100 + 1d10", "");
+}
+
+if (34 === e.keyCode) {
+  
+  var elements = document.getElementsByClassName("track_item");
+         
+    var torder = 0
+    var lista = []
+    for (var i = 0; i < elements.length; i++) {     
+      lista.push(parseInt(elements[i].style.order))
+      if (elements[i].classList.contains("selected"))
+        torder = elements[i].style.order
+        elements[i].classList.remove("selected")
+    }
+
+    if (torder > 0) {    
+      torder = parseInt(torder) + 1
+      if (torder == 10)
+        torder = 1   
+
+      var first = torder;
+      while(elements[lista.indexOf(torder)].style.backgroundImage == "") {
+        torder = torder + 1;
+        if (torder == 10)
+          torder = 1
+        else if (torder == first)
+          break
+      }
+
+    elements[lista.indexOf(torder)].classList.add("selected")
+ }
+   
+}
+    
+}
+
 
 // Supporting fucntions
 function getmaxZoom() {
@@ -3498,8 +3611,9 @@ function delay(wait) {
    var destiny = document.getElementById(data);
    var oorigin  = event.target;
 
-   if (destiny.className == "track_item") {
-      if (destiny.style.order !== oorigin.style.order) {
+   if (destiny.classList.contains("track_item")) {
+
+      if ((destiny.style.order !== oorigin.style.order) && (destiny.style.order !== "") && (oorigin.style.order !== "")) {
         var old = destiny.style.order;
         destiny.style.order = oorigin.style.order
         oorigin.style.order = old;
@@ -3531,6 +3645,8 @@ function delay(wait) {
   }
   function click_track(event) {
 
+    if(event.target.classList.contains("track_item")) {
+    
     poner = true;
     if (event.target.classList.contains("selected"))
       var poner = false;
@@ -3547,6 +3663,8 @@ function delay(wait) {
     s = s.substring(5, s.length-2);
     document.getElementById('token-map').value = s;
     update_track();
+
+  }
   }
 
   function drag_over_track(event) {

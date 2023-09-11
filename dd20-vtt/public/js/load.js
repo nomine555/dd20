@@ -22,7 +22,7 @@ console.log(location.href);
         localStorage.setItem('dd20room', "/room/" + id);
         localStorage.setItem('dd20user', 'dm')
         localStorage.setItem('lastdd20room',id);
-        window.location.assign("/newroom/" + id + "?scene=1");          
+        //window.location.assign("/newroom/" + id + "?scene=1");          
 
     }
   }
@@ -68,6 +68,8 @@ console.log(location.href);
         add_music(music[0].music[i])
         }  
     
+        console.log(localStorage.getItem("assetN"))
+        
     savetoplugin() 
   }
 

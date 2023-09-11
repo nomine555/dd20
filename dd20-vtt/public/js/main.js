@@ -4455,7 +4455,7 @@ function get_assets() {
   var assetN = parseInt(localStorage.getItem("assetN"));
   obj.assets = []
 
-  for (i = 0; i< assetN; i++) {                  
+  for (i = 0; i < assetN; i++) {                  
     var item = localStorage.getItem("asset" + i).replaceAll(" ","%20");
     obj.assets.push(item+"");          
     }

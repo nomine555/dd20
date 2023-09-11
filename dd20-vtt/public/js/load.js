@@ -59,8 +59,10 @@ console.log(location.href);
   
     
       for (i = 0; i < assets[0].assets.length; i++) {    
-        addtoAllAssets(assets[0].assets[i])
+        addtoplayerAssets(assets[0].assets[i])
+        localStorage.setItem("asset" + i, assets[0].assets[i])    
         }
+        localStorage.setItem("assetN", assets[0].assets.length)
     
       for (i = 0; i < music[0].music.length; i++) {
         add_music(music[0].music[i])
@@ -90,7 +92,7 @@ console.log(location.href);
   
   }
 
-  function addtoAllAssets(asset) {
+  function addtoplayerAssets(asset) {
 
     var lista = [];  
     lista = JSON.parse(localStorage.getItem('allassets')) || [];

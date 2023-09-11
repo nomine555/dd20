@@ -445,6 +445,54 @@ const checkAdmin = () => {
             }
          }  
 
+          // Cargamos los Assets
+          try {
+            var assetN = parseInt(localStorage.getItem("assetN"));
+            console.log("assetN")
+            var list = document.getElementById("asset-list");
+            for (i = 0; i< assetN; i++) {
+              console.log("un asset")
+              var img = document.createElement("img");
+              var item = localStorage.getItem("asset" + i).replaceAll(" ","%20");
+              if (IsVideo(item)) {
+                img.src = IconVideo;
+                img.setAttribute('video', item)
+              } else {
+                img.src = item;
+              }
+              
+              img.classList.add("bglist");
+              img.classList.add("grayed");
+              img.loading = "lazy";
+              img.id = "assett" + i;
+              img.addEventListener('dragstart',  drag_scene_start, true);
+              list.appendChild(img);
+            }
+          } catch (e) {console.log(e)}
+        
+          // Cargamos la Música
+          try{
+            
+            var musicN = parseInt(localStorage.getItem("musicN"));
+            var list = document.getElementById("music-list");
+            //console.log(musicN)
+            for (i = 0; i < musicN; i++) {          
+              var item = localStorage.getItem("music" + i).replaceAll(" ","%20");
+              //console.log("music" + i)
+              //console.log(item)          
+              if (item !== "undefined") {
+                var div = document.createElement("div");             
+                div.setAttribute("src", item);  
+                div.innerHTML = crea_nombre(item);
+                div.classList.add("musiclist");            
+                div.id = "music" + i;      
+                div.draggable = true;
+                div.addEventListener('dragstart',  drag_scene_start, true);    
+                list.appendChild(div);          
+              }                              
+            }
+          } catch (e) {console.log(e)}     
+
           load_scene_start()
         }
 
@@ -4580,21 +4628,23 @@ function load_scene() {
       }     
 
     });
-    
+
+    /*
     try {
       assetslist = lista_assets[id].assets;
       for (i = 0; i < assetslist.length; i++) {
         sendLink(assetslist[i])
         }  
-      } catch (e) {}
+      } catch (e) {console.log("Error cargando asset:" +e)}
       
       try {
       musiclist  = lista_music[id].music;
       for (i = 0; i < musiclist.length; i++) {
         add_music(musiclist[i])
         }  
-      } catch (e) {}
-    
+      } catch (e) {console.log("Error cargando asset:" +e)}
+    */
+
   } else {
 
     document.getElementById("plotmode").checked = true;

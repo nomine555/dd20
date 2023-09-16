@@ -4567,15 +4567,12 @@ function load_scene() {
     id = lista.length -1
   }
   
-  console.log(id)
   lista        = JSON.parse(localStorage.getItem('allscenes'))    || [];
   lista_assets = JSON.parse(localStorage.getItem('allscnassets')) || [];
   lista_music  = JSON.parse(localStorage.getItem('allmusic'))     || [];
 
-  console.log(lista)
   board      = lista[id]
-  console.log(board)
-  
+
   mainBackground = board.backgroundImage;
   plotBackground = board.plotBackground;
   tileSize = checkminTile(board.tileSize);

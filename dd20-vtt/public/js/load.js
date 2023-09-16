@@ -22,7 +22,7 @@ console.log(location.href);
         localStorage.setItem('dd20room', "/room/" + id);
         localStorage.setItem('dd20user', 'dm')
         localStorage.setItem('lastdd20room',id);
-        window.location.assign("/newroom/" + id + "?scene=1");          
+        //window.location.assign("/newroom/" + id + "?scene=1");          
 
     }
   }
@@ -47,6 +47,7 @@ console.log(location.href);
         lista_names.push(names[i]);
       }
     }
+    console.log(lista_names)
     
     for (var i = 0; i < all.length; i++) {          
       if (!checklistvalue(all[i],lista_all))

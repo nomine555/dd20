@@ -623,8 +623,8 @@ margin-top: .3rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 10rem;
-    width: Calc( 20vw - 5rem );
+    height: 9rem;
+    width: 16rem;
     background: #FFFFFF;
     border: 2px solid #DFDCDC;
     box-shadow: -4px 2px 12px 0 rgba(0, 0, 0, 0.19);
@@ -713,7 +713,7 @@ margin-top: .3rem;
 
 .metabackgrounds{
     position: absolute;
-    top: 26rem;
+    top: 24.5rem;
     left: 7rem;
     right: 6rem;
     min-height: 10rem;
@@ -1365,8 +1365,7 @@ padding: 0.5rem;
     max-width: 10rem;
     max-height: 4rem;
     margin-right: auto;
-    margin-left: 1.5rem;
-    margin-top: 0.5rem;
+    margin-left: auto;    
 }
 
 .size-text {

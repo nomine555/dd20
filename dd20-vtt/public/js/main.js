@@ -92,6 +92,8 @@ let IconVideo = "../img/video.jpg";
 let shadowblur = 15;
 let shadowoff = 0;
 let shadowopacity = 1;
+var trash_delete_mode = false;
+var first_trash = false;
 
 // ImageKit
 var imagekit = new ImageKit({
@@ -197,12 +199,7 @@ const checkAdmin = () => {
 
     
     // Cargamos los colores de los dados
-    if (localStorage.getItem("dd20_fontcolor")  !== null) {
-      fontColor  =  localStorage.getItem("dd20_fontcolor");
-      backColor  =  localStorage.getItem("dd20_backcolor");
-      document.getElementById("fontcolor").value = fontColor;
-      document.getElementById("backcolor").value = backColor;      
-    }
+    dice_color_load();
 
     namedmode  =  localStorage.getItem("named_mode");   
     if (namedmode == "false")   
@@ -448,10 +445,10 @@ const checkAdmin = () => {
           // Cargamos los Assets
           try {
             var assetN = parseInt(localStorage.getItem("assetN"));
-            console.log("assetN")
+            
             var list = document.getElementById("asset-list");
             for (i = 0; i< assetN; i++) {
-              console.log("un asset")
+            
               var img = document.createElement("img");
               var item = localStorage.getItem("asset" + i).replaceAll(" ","%20");
               if (IsVideo(item)) {
@@ -1450,6 +1447,7 @@ function addtoAllAssets(asset) {
 }
 
 function show_all_assets(event) {
+  
   event.stopPropagation();
   var lista = [];
   lista = JSON.parse(localStorage.getItem('allassets')) || [];
@@ -3916,21 +3914,17 @@ function delay(wait) {
 
   function choose_all_asset(event) {
 
-    if (typeof trash_delete_mode == 'undefined')                
-      trash_delete_mode = false;
-
     if (trash_delete_mode) {
-      console.log("delete mode on and event")
-      
+
       var destiny = event.srcElement;
-      if (destiny.nodeName == "IMG") {
-        destiny.parentNode.removeChild(destiny);
-        var lista = [];
-        lista = JSON.parse(localStorage.getItem('allassets')) || [];
+      if (destiny.nodeName == "IMG") {        
+        if(first_trash) {
+          first_trash = false;
+          lista_trash = lista_trash = JSON.parse(localStorage.getItem('allassets')) || [];          
+        }        
         var pos = parseInt(event.srcElement.id.replace("all",""));
-        lista.splice(pos, 1);  
-        localStorage.setItem('allassets', JSON.stringify(lista));      
-        savetoplugin();  
+        lista_trash.splice(pos, 1);         
+        destiny.parentNode.removeChild(destiny); 
       }
       
     } else {
@@ -4159,8 +4153,12 @@ function deleteItem(event) {
 
   function hide_menus(event) {
 
-    trash_delete_mode = false;
-    document.getElementById("trash").style.filter = ""
+    if(trash_delete_mode) {
+      trash_delete_mode = false;
+      document.getElementById("trash").style.filter = ""
+      localStorage.setItem('allassets', JSON.stringify(lista_trash));      
+      savetoplugin();  
+    }
     
     if(checkAdmin() && (document.getElementById("ontop").style.display == "")) {
 
@@ -4907,6 +4905,16 @@ console.log(doomedObj)
   }
 
 
+  function hslToHex(h, s, l) {
+    l /= 100;
+    const a = s * Math.min(l, 1 - l) / 100;
+    const f = n => {
+      const k = (n + h / 30) % 12;
+      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color).toString(16).padStart(2, '0');   // convert to Hex and prefix "0" if needed
+    };
+    return `#${f(0)}${f(8)}${f(4)}`;
+  }
 
 function dice_color_load() {
   if (localStorage.getItem("dd20_fontcolor") !== null) {
@@ -4914,8 +4922,17 @@ function dice_color_load() {
     var backColor = localStorage.getItem("dd20_backcolor");
     document.getElementById("fontcolor").value = fontColor;
     document.getElementById("backcolor").value = backColor;
+} else {  
+  document.getElementById("backcolor").value = hslToHex(Math.random() * 360 + 1, Math.random() * 80 + 21, Math.random() * 30 + 11)
+  document.getElementById("fontcolor").value = hslToHex(0, 100, 100);
+  backColor = document.getElementById("backcolor").value;
+  fontColor = document.getElementById("fontcolor").value;
 }
+
 }
+
+
+
 
 const findInMap = (map, val) => {
   for (let [k, v] of map) {
@@ -5878,8 +5895,14 @@ function reset_app() {
 
 function showTokenMenu(menu)
 {
-  trash_delete_mode = false;
-  document.getElementById("trash").style.filter = "";    
+
+    if(trash_delete_mode) {
+      trash_delete_mode = false;
+      localStorage.setItem('allassets', JSON.stringify(lista_trash));      
+      document.getElementById("trash").style.filter = ""; 
+      savetoplugin();  
+    }
+     
   document.getElementById("TokenBar").style.display = "none";  
   document.getElementById("AssetBar").style.display = "none";        
   document.getElementById("MapsBar").style.display = "none";  
@@ -5959,16 +5982,16 @@ function trash_dblclick(event) {
     
   if (document.getElementById("allassets").style.display == "") {
 
-    if (typeof trash_delete_mode == 'undefined')                
-    trash_delete_mode = false;
-
-    if(!trash_delete_mode) {
-      trash_delete_mode = true;
-      event.target.style.filter = "hue-rotate(120deg) saturate(500%)";    
+    if(trash_delete_mode) {
+      trash_delete_mode = false;
+      event.target.style.filter = "";  
+      localStorage.setItem('allassets', JSON.stringify(lista_trash));      
+      savetoplugin();      
     }
     else {
-      trash_delete_mode = false;
-      event.target.style.filter = "";    
+      trash_delete_mode = true;
+      first_trash = true;
+      event.target.style.filter = "hue-rotate(120deg) saturate(500%)";    
     }
     
   }

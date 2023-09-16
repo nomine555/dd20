@@ -22,7 +22,7 @@ console.log(location.href);
         localStorage.setItem('dd20room', "/room/" + id);
         localStorage.setItem('dd20user', 'dm')
         localStorage.setItem('lastdd20room',id);
-        window.location.assign("/newroom/" + id + "?scene=1");          
+        //window.location.assign("/newroom/" + id + "?scene=1");          
 
     }
   }

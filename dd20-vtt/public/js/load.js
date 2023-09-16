@@ -14,15 +14,18 @@
       
       fetch(resturl)
       .then(response => response.json())      
-      .then( data => load_all_data(data) );
-                              
-        const id = Date.now() + "" + Math.floor(Math.random() * 1000000000);
-        localStorage.setItem('dd20room', "/room/" + id);
-        localStorage.setItem('dd20user', 'dm')
-        localStorage.setItem('lastdd20room',id);
-        //window.location.assign("/newroom/" + id + "?scene=1");          
+      .then( data => load_all_data(data) )
+      .then(load_page())                                        
 
     }
+  }
+
+  function load_page() {
+    const id = Date.now() + "" + Math.floor(Math.random() * 1000000000);
+    localStorage.setItem('dd20room', "/room/" + id);
+    localStorage.setItem('dd20user', 'dm')
+    localStorage.setItem('lastdd20room',id);
+    window.location.assign("/newroom/" + id + "?scene=1");       
   }
   
   function load_all_data(obj) {

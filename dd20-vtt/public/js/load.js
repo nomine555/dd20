@@ -1,8 +1,6 @@
 // ------------------------------------------------------------------- // 
 // This function is call form login page
 
-console.log(location.href);
-
   function init() {
 
     if(location.href.indexOf('?') > 0)
@@ -29,6 +27,8 @@ console.log(location.href);
   
   function load_all_data(obj) {
   
+    console.log(obj)
+
     var scenes = obj.scenes;
     var names = obj.names;
     var assets = obj.assets;
@@ -82,10 +82,13 @@ console.log(location.href);
 
 
   function add_music(link) {
+
+    console.log(link)
       
     musicN = localStorage.getItem("musicN")
     if (musicN !== null)
       n = parseInt(musicN)
+    else n = 1
 
       localStorage.setItem("musicN", n+1)
       localStorage.setItem("music" + (n-1), link)

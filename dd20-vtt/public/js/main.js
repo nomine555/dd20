@@ -493,7 +493,7 @@ const checkAdmin = () => {
           load_scene_start()
         }
 
-        keepAliveBoard.startTimer(10000);          
+        keepAliveBoard.startTimer(60000);          
           
       }
       // ------------------------------------------------------------------
@@ -3158,9 +3158,12 @@ async function sendMessage(token, redraw) {
   var redraw = redraw || false;
   token.redraw = redraw;
   var messageToSend = { item: token};
-  await app.service(channel).create(messageToSend);
-  messageToSend = {};
+  console.log(messageToSend)
   
+  //await app.service(channel).create(messageToSend);
+  app.service(channel).create(messageToSend);
+  messageToSend = {};
+    
 }
 
 function sendChat() {
@@ -3266,7 +3269,7 @@ function printchat(item) {
 function addMessage(item) {
 
   if (checkAdmin()) {
-   keepAliveBoard.resetTimer(10000);
+   keepAliveBoard.resetTimer(60000);
   }
 
   if(item.item.roll) 
@@ -3327,18 +3330,25 @@ if (user !== item.item.playerid) {
 }
  
 const main = async () => {
+  
+  /*
   // Find all existing messages
   const messages = await app.service(channel).find();
 
   // Add existing messages to the list
   try {
     messages.forEach(addMessage);
-  } catch {}  
+  } catch (e) {
+    console.log("Error adding messages!" + e)
+  }  
+  */
 
   // Add any newly created message to the list in real-time
   try {
-  app.service(channel).on("created", addMessage);
-  } catch {}  
+    app.service(channel).on("created", addMessage);
+  } catch (e) {
+    console.log("Error adding new messages!" + e)
+  }  
 
 };
 
@@ -3389,10 +3399,11 @@ if (n == null) {
 }
 }
 
+/*
 function delay(wait) {
   setTimeout(function(){ sendMessage(getboard()); }, wait);
   }
-
+*/
   
   function drag(event) {
     console.log("drag:" + event.target.id)
@@ -5953,10 +5964,10 @@ function SwitchInterface() {
 
   
   const keepAliveBoard = {
-  // The function that will be fired every 5000 milliseconds
+  // The function that will be fired every 60000 milliseconds
   myFunction: function() {
     updateBoardQuick();
-    //console.log("keepalive");
+    console.log("keepalive");
   },
 
   // A method to start the timer

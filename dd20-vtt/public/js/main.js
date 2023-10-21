@@ -2159,7 +2159,18 @@ function setTile() {
   canvas.selection = false;
 }
 
+function isInputActive() {
+  console.log("is input=?")
+  // Check if the active element is an input element
+  return (
+    document.activeElement instanceof HTMLInputElement ||
+    document.activeElement instanceof HTMLTextAreaElement
+  );
+}
+
 function onKey(e) {
+
+  if(!isInputActive()) {
    
   event.stopPropagation();
   if (46 === e.keyCode) {
@@ -2287,7 +2298,7 @@ if (34 === e.keyCode) {
  }
    
 }
-    
+}
 }
 
 

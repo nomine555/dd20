@@ -280,6 +280,9 @@ const checkAdmin = () => {
                   document.getElementById('track'+i).firstElementChild.value = localStorage.getItem("trackhp" + i);
                 else
                   document.getElementById('track'+i).firstElementChild.value = parseInt(localStorage.getItem("trackhp" + i));
+
+                document.getElementById('track'+i).children[1].value = localStorage.getItem("trackinit" + i);
+                document.getElementById('track'+i).children[2].value = localStorage.getItem("trackhp2" + i);
                 document.getElementById('track'+i).firstElementChild.style.display = "";
               }
               } catch (e) {
@@ -436,7 +439,10 @@ const checkAdmin = () => {
                     document.getElementById('track'+i).firstElementChild.value = localStorage.getItem("trackhp" + i);
                   else
                     document.getElementById('track'+i).firstElementChild.value = parseInt(localStorage.getItem("trackhp" + i));
-                document.getElementById('track'+i).firstElementChild.style.display = "";
+
+                  document.getElementById('track'+i).children[1].value = localStorage.getItem("trackinit" + i);
+                  document.getElementById('track'+i).children[2].value = localStorage.getItem("trackhp2" + i);
+                  document.getElementById('track'+i).firstElementChild.style.display = "";
             }
             } catch (e) {
             }
@@ -1522,19 +1528,19 @@ function getForcedLink(link) {
 
 } 
 
-function sendDices(dice, text) {
+function sendDices(dice, text, randomcolor) {
 
   if (text == undefined)
-   text = "";
+    text = "";
 
   var obj = new Object();
   obj.roll = true;
   obj.playerid          = user; 
   obj.request           = false;
   obj.text = text;
-  obj.dices = getdices(dice);
+  obj.dices = getdices(dice, randomcolor);
   sendMessage(obj);
-
+  return obj
 }
 
 
@@ -1603,8 +1609,8 @@ console.log(g)
 
 
 
-function getdices(dice) {
-
+function getdices(dice, randomcolor) {
+  
   var lista = [];
   var obj = new Object();
   obj.dices = [];
@@ -1616,6 +1622,10 @@ function getdices(dice) {
   var last20 = 0;
   var last10 = 0;
 
+  if (randomcolor) {
+    var fontColor = hslToHex(0, 100, 100);    
+    var backColor = hslToHex(Math.random() * 360 + 1, Math.random() * 80 + 21, Math.random() * 30 + 11)
+  }
   
   dice = dice.replaceAll("-","+ -");
   
@@ -1623,7 +1633,6 @@ function getdices(dice) {
   var g = dice.split("+");
   //var g = dice.split(re);
 
-console.log(g)
   for(i = 0; i < g.length; i++) {
     var d = g[i].trim().split("d");
       var n = parseInt(d[0])
@@ -1697,6 +1706,89 @@ function diceroll_back() {
     box.simulationRunning = false;
   }
 }
+
+function resultado_tirada(dice) {
+  
+  var dados = [];
+  for(var k = 0; k < dice.dices.length; k++) {
+    for (var h = 0; h < dice.dices[k].dices.length;h++)
+      dados.push(dice.dices[k].dices[h])
+  }
+  
+  for(var k = 0; k < dice.dices.length; k++) {
+  
+    let dados = dice.dices[k].dices;
+    let bonus = dice.dices[k].bonus;
+    //var text = dice.playerid + " rolled: ";
+    var text = "";
+    var total = 0;
+    var N;
+    var subtext;
+  
+    if(dados.length == 1) {
+      let item = dados[0];
+      if (item.sides == 100)
+        text = text + "1d" + item.sides + " (" + item.result*10 + ")    ";
+      else 
+        text = text + "1d" + item.sides + " (" + item.result + ")    ";
+      total = total + item.result;
+    } else {
+      Ndice = dados[0].sides;
+      N = 0;
+      var subtext = "(";
+      for (i = 0; i < dados.length; i++) {
+        let item = dados[i];
+        
+        if ((item.sides !== Ndice)) { //Nuevo dado
+          if (i == (dados.length - 1)) // Y último
+          {
+            text = text + N + "d" + Ndice + subtext.substring(0,subtext.length-1) + ") ";
+            N = 1;
+            Ndice = item.sides;
+            if (item.sides == 100)
+              subtext = "(" + item.result*10 + ",";
+            else
+              subtext = "(" + item.result + ",";
+          } 
+          text = text + N + "d" + Ndice + subtext.substring(0,subtext.length-1) + ") ";
+          N = 1;
+          Ndice = item.sides;
+          if (item.sides == 100)
+              subtext = "(" + item.result*10 + ",";
+            else
+              subtext = "(" + item.result + ",";
+          total = total + item.result;
+        } 
+        else if (i == (dados.length - 1)) {   // Ultimo dado
+          N++;    
+          if (item.sides == 100) {
+            total = total + item.result * 10;
+            subtext = subtext + item.result * 10 + ",";}
+          else {
+            total = total + item.result ;
+            subtext = subtext + item.result + ",";}
+          text = text + N + "d" + Ndice + subtext.substring(0,subtext.length-1) + ") ";
+        
+        } else {
+          N++;    // Otro dado igual
+          if (item.sides == 100) {
+            total = total + item.result * 10;
+            subtext = subtext + item.result * 10 + ",";}
+          else {
+            total = total + item.result ;
+            subtext = subtext + item.result + ",";}
+        }    
+    }
+  }
+    if (bonus !== undefined) 
+      total = total + bonus;      
+     else 
+      total = total;
+    return total;
+  }
+  
+  }
+  
 
 function printdice(dice) {
   
@@ -3363,6 +3455,33 @@ return Math.floor(Math.random() * Math.floor(max));
 
 // ------------------------------------------------------------------- // 
 
+function rollInitiative() {
+
+  var dict= {};
+
+  for (var i = 2 ; i < 10; i++) {
+    var tr = document.getElementById("track" + i).style.backgroundImage;    
+    if (tr == "") {              
+    } else {
+        var roll = document.getElementById("track" + i).children[1].value;        
+        r = sendDices(roll, "Iniciativa " + document.getElementById("track" + i).children[0].value, true)
+        dict[i] = parseInt(resultado_tirada(r));        
+    }
+  }
+  
+  const entries = Object.entries(dict);
+  entries.sort((a, b) => a[1] - b[1]);
+  const sortedKeys = entries.map((entry) => entry[0]).reverse();
+  
+  var order = 1;
+  for (const i of sortedKeys) {
+    document.getElementById('track'+i).style.order = order;    
+    order = order + 1;
+  }
+  
+
+}
+
 function addtrackwhentoken(src, n) {  
 
 if (n == null) {
@@ -3700,27 +3819,33 @@ function delay(wait) {
     event.target.style.border = "";
    }
   }
+
   function click_track(event) {
 
     if(event.target.classList.contains("track_item")) {
+      poner = true;
+
+      var imagen = event.target.style.backgroundImage;
+      imagen = imagen.substring(5, imagen.length-2);
+      console.log(imagen)
+      if (imagen == "")
+          var poner = false;
+      else
+        document.getElementById('token-map').value = imagen;
+        
+      if (event.target.classList.contains("selected"))
+        var poner = false;
     
-    poner = true;
-    if (event.target.classList.contains("selected"))
-      var poner = false;
-    
-    var lista = document.getElementById("track_bar").children;
-    for (var i = 0; i < lista.length; i++) {
-      lista[i].classList.remove("selected")
-    }
+      var lista = document.getElementById("track_bar").children;
+      for (var i = 0; i < lista.length; i++) {
+        lista[i].classList.remove("selected")      
+      }
 
-    if (poner)
-    event.target.classList.add("selected");
+      if (poner) {
+        event.target.classList.add("selected");
+      }      
 
-    var s = event.target.style.backgroundImage;
-    s = s.substring(5, s.length-2);
-    document.getElementById('token-map').value = s;
-    update_track();
-
+      update_track();
   }
   }
 
@@ -3745,10 +3870,14 @@ function delay(wait) {
         var t = new Object();
         t.order = document.getElementById("track" + i).style.order;
         t.hp    = document.getElementById("track" + i).firstElementChild.value;
+        t.init  = document.getElementById("track" + i).children[1].value;
+        t.hp2   = document.getElementById("track" + i).children[2].value;
         t.src   = document.getElementById("track" + i).style.backgroundImage;
         t.class = document.getElementById("track" + i).className;
         localStorage.setItem("trackorder" + i, t.order);
         localStorage.setItem("trackhp" + i, t.hp);
+        localStorage.setItem("trackinit" + i, t.init);
+        localStorage.setItem("trackhp2" + i, t.hp2);
         localStorage.setItem("tracksrc" + i, t.src);
         localStorage.setItem("trackclass" + i, t.class);
         obj.tracks.push(t);
@@ -3761,6 +3890,8 @@ function delay(wait) {
     for( i = 0 ; i < tracks.length; i++) {
       document.getElementById("track" + (i+1)).style.order = tracks[i].order;
       document.getElementById("track" + (i+1)).firstElementChild.value = tracks[i].hp;
+      document.getElementById("track" + (i+1)).children[1].value = tracks[i].init;
+      document.getElementById("track" + (i+1)).children[2].value = tracks[i].hp2;
       document.getElementById("track" + (i+1)).style.backgroundImage = tracks[i].src;
       document.getElementById("track" + (i+1)).className = tracks[i].class;
       if (tracks[i].src !== "") 

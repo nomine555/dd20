@@ -314,6 +314,7 @@
     </div>
             <button id="new-roll" onclick='clearRoll();' class="button" style="width: 100%;align-self: center;">Clear Dice</button>
             <button id="hidden-roll" onclick='hiddenRoll();' class="button" style="width: 100%;align-self: center;">Hide Dice</button>
+            <button id="initiative-roll" onclick='rollInitiative();' class="button" style="width: 100%;align-self: center;">Roll for Initiative</button>
     </div>              
     </div>    
     </div>
@@ -493,46 +494,64 @@
     <div id="track_bar" class="track_bar" onclick="hide_menus();" id="track-bar"> 
         <div id = "track1" class="track_item" draggable="true" style="order:1;display: none;"> 
            <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+           <input name="init" placeholder="1d20 + 0" class="track_init" type="text" onchange="update_track();"/>
+           <input name="hp2" placeholder="0" class="track_hp2" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" onchange="update_track();"/>
         </div>
         <div id = "track2" class="track_item" draggable="true" style="order:2"
              ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
              ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
            <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+           <input name="init" placeholder="1d20 + 0" class="track_init" type="text" onchange="update_track();"/>
+           <input name="hp2" placeholder="0" class="track_hp2" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" onchange="update_track();"/>
         </div>
         <div id = "track3" class="track_item" draggable="true" style="order:3"
              ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
              ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
-           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="init" placeholder="1d20 + 0" class="track_init" type="text" onchange="update_track();"/>
+             <input name="hp2" placeholder="0" class="track_hp2" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" onchange="update_track();"/>
         </div>
         <div id = "track4" class="track_item" draggable="true" style="order:4"
              ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
              ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
-           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="init" placeholder="1d20 + 0" class="track_init" type="text" onchange="update_track();"/>
+             <input name="hp2" placeholder="0" class="track_hp2" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" onchange="update_track();"/>
         </div>
         <div id = "track5" class="track_item" draggable="true" style="order:5"
              ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
              ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
-           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="init" placeholder="1d20 + 0" class="track_init" type="text" onchange="update_track();"/>
+             <input name="hp2" placeholder="0" class="track_hp2" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" onchange="update_track();"/>
         </div>
         <div id = "track6" class="track_item" draggable="true" style="order:6"
              ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
              ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
-           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="init" placeholder="1d20 + 0" class="track_init" type="text" onchange="update_track();"/>
+             <input name="hp2" placeholder="0" class="track_hp2" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" onchange="update_track();"/>
         </div>
         <div id = "track7" class="track_item" draggable="true" style="order:7"
              ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
              ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
-           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="init" placeholder="1d20 + 0" class="track_init" type="text" onchange="update_track();"/>
+             <input name="hp2" placeholder="0" class="track_hp2" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" onchange="update_track();"/>
         </div>
         <div id = "track8" class="track_item" draggable="true" style="order:8"
              ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
              ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
-           <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+             <input name="init" placeholder="1d20 + 0" class="track_init" type="text" onchange="update_track();"/>
+             <input name="hp2" placeholder="0" class="track_hp2" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" onchange="update_track();"/>
         </div>
         <div id = "track9" class="track_item" draggable="true" style="order:9"
         ondragstart="drag_track(event)"  ondrop="drop_track(event)"  ondragend="drag_end_track(event)" ondragenter="drag_enter_track(event)"  
         ondragleave="drag_leave_track(event)" ondragover="drag_over_track(event)" onclick="click_track(event)">
-      <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        <input name="hp" placeholder="0" class="track_hp" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" style="display:none" onchange="update_track();"/>
+        <input name="init" placeholder="1d20 + 0" class="track_init" type="text" onchange="update_track();"/>
+        <input name="hp2" placeholder="0" class="track_hp2" type="number" inputmode="numeric" pattern="[0-9]*" min="-10" max="100" step="1" size="2" onchange="update_track();"/>
    </div>
         
         </div>

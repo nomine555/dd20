@@ -462,7 +462,7 @@ text-align: right;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    justify-content: space-between;
+    justify-content:flex-start;
     background-repeat: no-repeat;
     background-size: contain;
     clip-path: circle(48px at center);
@@ -474,13 +474,41 @@ text-align: right;
 }
 
 .track_name {
+    margin:0;
     font-size: 60%;
-    width: 8.5em;
+    width: 100%;
     margin-bottom: 1.2rem;
     text-align: center;
 }
 
+.track_init {
+    display: none;
+    margin:0;        
+    margin-bottom: 0.2rem;
+    text-align: center;
+    width: 55%;
+}
 
+.track_hp2 {
+    display: none;
+    margin:0;        
+    margin-bottom: 0.2rem;    
+    width: 2em;
+    font-size: 125%;
+    border-radius: 15px;
+}
+
+.selected .track_name {
+    margin-bottom: 0.2rem;
+}
+
+.selected .track_init {
+    display: block;
+}
+
+.selected .track_hp2 {
+    display: block;
+}
 
 .background-bar {
 
@@ -1094,9 +1122,9 @@ padding: 0.5rem;
   }
 
   .selected {
-    width: 8rem;
-    height: 8rem;
-    clip-path: circle(63px at center);
+    width: 12rem;
+    height: 12rem;
+    clip-path: circle(95px at center);
   }
 
 .iframe {

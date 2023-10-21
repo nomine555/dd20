@@ -3464,8 +3464,13 @@ function rollInitiative() {
     if (tr == "") {              
     } else {
         var roll = document.getElementById("track" + i).children[1].value;        
-        r = sendDices(roll, "Iniciativa " + document.getElementById("track" + i).children[0].value, true)
-        dict[i] = parseInt(resultado_tirada(r));        
+        if (roll !== "") {
+          r = sendDices(roll, "Iniciativa " + document.getElementById("track" + i).children[0].value, true)
+          dict[i] = parseInt(resultado_tirada(r));        
+        }
+        else 
+          dict[i] = 0;        
+        
     }
   }
   

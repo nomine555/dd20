@@ -2262,21 +2262,25 @@ if (34 === e.keyCode) {
       lista.push(parseInt(elements[i].style.order))
       if (elements[i].classList.contains("selected"))
         torder = elements[i].style.order
-        elements[i].classList.remove("selected")
+      elements[i].classList.remove("selected")
     }
+
+    console.log(elements)
+    console.log(lista)
+    console
 
     if (torder > 0) {    
       torder = parseInt(torder) + 1
       if (torder == 10)
         torder = 1   
 
-      var first = torder;
+      var first = torder;      
       while(elements[lista.indexOf(torder)].style.backgroundImage == "") {
         torder = torder + 1;
         if (torder == 10)
           torder = 1
         else if (torder == first)
-          break
+          break       
       }
 
     elements[lista.indexOf(torder)].classList.add("selected")
@@ -3469,8 +3473,7 @@ function rollInitiative() {
           dict[i] = parseInt(resultado_tirada(r));        
         }
         else 
-          dict[i] = 0;        
-        
+          dict[i] = 0;                
     }
   }
   
@@ -3478,7 +3481,8 @@ function rollInitiative() {
   entries.sort((a, b) => a[1] - b[1]);
   const sortedKeys = entries.map((entry) => entry[0]).reverse();
   
-  var order = 1;
+  var order = 2;
+  console.log(sortedKeys)
   for (const i of sortedKeys) {
     document.getElementById('track'+i).style.order = order;    
     order = order + 1;

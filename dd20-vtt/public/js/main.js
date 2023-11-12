@@ -94,6 +94,7 @@ let shadowoff = 0;
 let shadowopacity = 1;
 var trash_delete_mode = false;
 var first_trash = false;
+let dice_clear_timeout = 4000
 
 // ImageKit
 var imagekit = new ImageKit({
@@ -1691,7 +1692,8 @@ function diceroll(dices) {
   }
 }
 
-function diceroll_back() {
+function diceroll_back() { 
+  
   if (tiradas.length > 0) {
     var nuevosdados = [];
     while(tiradas.length > 0)
@@ -1700,10 +1702,16 @@ function diceroll_back() {
         for (i = 0; i < dados.length;i++)
           nuevosdados.push(dados[i]);
       }    
-      box.throwDice(nuevosdados,diceroll_back)
+      box.throwDice(nuevosdados,diceroll_back)      
   }
   else {
     box.simulationRunning = false;
+
+    setTimeout(() => {
+      console.log("clear dice!")
+      box.check_old_dice();      
+    }, dice_clear_timeout);    
+    
   }
 }
 
@@ -2840,12 +2848,11 @@ if(ev.deselected !== undefined)
 
 canvas.on('selection:created',function(ev) {
 
-  /*
+
 if (ev.target.get("type") !== "textbox")
-setTimeout(() => {
-  canvas.discardActiveObject().renderAll();
-}, 1500);
-*/
+  setTimeout(() => {
+    canvas.discardActiveObject().renderAll();
+  }, 4000);
 
 
 /*
@@ -4411,8 +4418,8 @@ function deleteItem(event) {
       //console.log("muestro!!!!!!!!!!!!!!!!!!!!")
       document.getElementById("chat-area").style.display = "";
       document.getElementById("hide-chat").innerHTML = "Hide Chat";
-      //var elements = document.getElementById("chat-log").getElementsByClassName('dice_result')          
-      //  document.getElementById("chat-log").scrollTop = elements[elements.length - 1].offsetTop;  
+      var elements = document.getElementById("chat-log").getElementsByClassName('dice_result')          
+        document.getElementById("chat-log").scrollTop = elements[elements.length - 1].offsetTop;  
       //document.getElementById("log").style.display = "none";
 
     } else {

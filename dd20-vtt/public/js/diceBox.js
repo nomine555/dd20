@@ -232,7 +232,7 @@ DiceBox.prototype.throwDice = function (dice, callback) {
         
     }
 
-    for (var i = this.diceArr.length -1 ; i >= 0 ; i--) {
+    for (var i = this.diceArr.length -1 ; i >= 0 ; i--) {        
             if((this.diceArr[i].time + 3) < Math.floor(Date.now() / 1000)) {
                 var die = this.diceArr[i].die;
                 this.scene.remove(die.object);
@@ -301,6 +301,21 @@ DiceBox.prototype.throwDice = function (dice, callback) {
 
         DiceManager.world.addEventListener('postStep', check);
     });
+}
+
+DiceBox.prototype.check_old_dice = function () {
+   
+    for (var i = this.diceArr.length -1 ; i >= 0 ; i--) {
+            if((this.diceArr[i].time + 3) < Math.floor(Date.now() / 1000)) {
+                var die = this.diceArr[i].die;
+                this.scene.remove(die.object);
+                if (die.object.body) {
+                    this.world.remove(die.object.body);
+                }
+                this.diceArr.splice(i,1);
+            }
+        }  
+    this.renderer.render(this.scene, this.camera);
 }
 
 DiceBox.prototype.clear = function (callback) {

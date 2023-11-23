@@ -1,14 +1,14 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
+  "name": "dd20-vtt",
+  "version": "2.0.0",
+  "description": "Tablero Virtual Digitald20",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Fernando Setien Dodero",
+  "license": "GNU GPLv3",
   "dependencies": {
     "@feathersjs/express": "^4.5.2",
     "@feathersjs/feathers": "^4.5.2",

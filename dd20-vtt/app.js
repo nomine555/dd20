@@ -148,5 +148,5 @@ app.post("/save", function (req, res) {
 app
   .listen(process.env.PORT || 80)
   .on("listening", () =>
-    console.log("Feathers server listening on localhost:3000")
+    console.log("Feathers server listening on localhost:80")
   );

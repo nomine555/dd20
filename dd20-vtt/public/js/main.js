@@ -3272,6 +3272,8 @@ async function sendMessage(token, redraw) {
   var redraw = redraw || false;
   token.redraw = redraw;
   var messageToSend = { item: token};
+  
+  console.log(Date.now())
   console.log(messageToSend)
   
   //await app.service(channel).create(messageToSend);
@@ -3381,6 +3383,9 @@ function printchat(item) {
 
 // Receive data from server from async function
 function addMessage(item) {
+
+  console.log(Date.now())
+  console.log(item)
 
   if (checkAdmin()) {
    keepAliveBoard.resetTimer(60000);

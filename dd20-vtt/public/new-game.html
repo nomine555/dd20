@@ -96,7 +96,7 @@
     <div id ="barra-derecha" class="barra-derecha texto-menu-derecha ">
         <p id="mTokens" class="texto-menu-derecha"            onclick="showTokenMenu('TokenBar')">Tokens</p>         
         <p id="mAssets" class="texto-menu-derecha"  onclick="showTokenMenu('AssetBar')">Assets</p>    
-        <p id="mMaps" class="texto-menu-derecha only-admin"  onclick="showTokenMenu('MapsBar')">Maps</p>
+        <p id="mMaps" class="texto-menu-derecha only-admin only-admin-maps"  onclick="showTokenMenu('MapsBar')">Maps</p>
         <p id="mFog" class="texto-menu-derecha only-admin"  onclick="showTokenMenu('FogBar')">Fog</p>        
         <p id="mChat" class="texto-menu-derecha"            onclick="show_hide_chat()">Chat</p>
         <p id="mDice" class="texto-menu-derecha"            onclick="showTokenMenu('DiceBar')">Dice</p>
@@ -462,6 +462,8 @@
                     <label  id="lseeplayerasset" style="display: none;" class="for-admin" >See player's Assets</label>    
                     <input type="checkbox" id="player-audio" onclick="set_musicmode();" checked>
                     <label id="lallowplayermusic" for="view-name" >Allow all players to put music</label>                      
+                    <input type="checkbox" id="player-maps" onclick="set_mapmode();">
+                    <label id="lallowplayermusic" for="view-name" >Allow all players to change map</label>                      
                 </div>                
         </div>
                 

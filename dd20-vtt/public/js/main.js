@@ -213,6 +213,12 @@ const checkAdmin = () => {
       set_musicmode(false);
     else
       set_musicmode(true);
+
+    mapmode  =  localStorage.getItem("map_mode");   
+    if (mapmode == "true")   
+      set_mapmode(true);
+    else
+      set_mapmode(false);
     
       if (checkAdmin()) {
         connected = true;
@@ -2416,6 +2422,8 @@ if (canvas.fogEnabled)
 
 function updateBoardQuick(redraw) {
 
+  console.log("update board quick!!")
+
   canvas.discardActiveObject().renderAll();
   
   var redraw = redraw || false;
@@ -2733,7 +2741,7 @@ canvas.on("mouse:move", function (opt) {
 
 });
 
-canvas.on("mouse:up", function (opt) {
+canvas.on("mouse:up", function (opt) { 
 
   if (opt.e.altKey) {
     
@@ -2751,7 +2759,7 @@ canvas.on("mouse:up", function (opt) {
   }
 }
 
-  //console.log("mouse up:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
+  console.log("mouse up:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection + " " + opt.e.altKey );
   if (this.isDragging) {
     checkBorders();
     console.log(" fin del dragging!")
@@ -2804,20 +2812,26 @@ canvas.on("mouse:up", function (opt) {
 canvas.on('object:modified', function(options) {
   
   var doomedObj = canvas.getActiveObject();
-  //console.log("modfied!!!")
-  if (doomedObj !== null)
-    if ( doomedObj.get('type') !== "textbox") {
+  var update = true;
+
+  console.log("modified!!!" + doomedObj)
+  
+  if (doomedObj !== null) {
+    if ( doomedObj.get('type') == "textbox") 
+      update = false;
+
     if ((doomedObj.left < (-tileSize/2)) || (doomedObj.top < (-tileSize/2)) )  
-      deleteObj();
-    else {
-      updateBoardQuick();     
-      if (canvas.fogEnabled)
-        if (!fogrunning) {
-          fogrunning = true;
-          window.setTimeout(function() {  addFog('update'); }, 2*waittime);
-        }
-      }        
-}
+      deleteObj();    
+  }
+
+  if (update) {
+    updateBoardQuick();     
+    if (canvas.fogEnabled)
+      if (!fogrunning) {
+        fogrunning = true;
+        window.setTimeout(function() {  addFog('update'); }, 2*waittime);
+      }
+  }
 
 });
 
@@ -3177,6 +3191,7 @@ function getboard() {
       obj.inmersive_plot = document.getElementById("inmersive-plot").checked;
       obj.inmersive_background = document.getElementById("inmersive-background").checked;   
       obj.player_audio      = document.getElementById("player-audio").checked;
+      obj.player_map        = document.getElementById("player-maps").checked;
     
   }
 
@@ -3273,7 +3288,7 @@ async function sendMessage(token, redraw) {
   token.redraw = redraw;
   var messageToSend = { item: token};
   
-  console.log(Date.now())
+  console.log("-->" + Date.now())
   console.log(messageToSend)
   
   //await app.service(channel).create(messageToSend);
@@ -3384,8 +3399,9 @@ function printchat(item) {
 // Receive data from server from async function
 function addMessage(item) {
 
-  console.log(Date.now())
+  console.log("<--" + Date.now())
   console.log(item)
+  console.log("-----------------------")
 
   if (checkAdmin()) {
    keepAliveBoard.resetTimer(60000);
@@ -3412,6 +3428,7 @@ if (user !== item.item.playerid) {
 
   set_inmersivemode(item.item.inmersive, item.item.inmersive_track, item.item.inmersive_dice, item.item.inmersive_chat, item.item.inmersive_assets,item.item.inmersive_plot,item.item.inmersive_background);
   set_musicmode(item.item.player_audio);
+  set_mapmode(item.item.player_map);
 
   if(item.item.track) {
     print_track(item.item.tracks)
@@ -5800,6 +5817,33 @@ function set_musicmode(mode) {
       localStorage.setItem("music_mode","false");
       if(!checkAdmin()) {
         var slides = document.getElementsByClassName("only-admin-music");
+        for(var i = 0; i < slides.length; i++)  
+          slides[i].style.display = "none";
+      }
+    }
+}  
+
+function set_mapmode(mode) {
+
+  if(mode == undefined){
+    mode = document.getElementById("player-maps").checked;
+  }
+
+    if(mode) {
+      document.getElementById("player-maps").checked = true;
+      localStorage.setItem("map_mode","true");
+      if(!checkAdmin()) {
+        var slides = document.getElementsByClassName("only-admin-maps");
+        for(var i = 0; i < slides.length; i++)  
+          slides[i].style.display = "";
+      }
+
+    }
+    else {
+      document.getElementById("player-maps").checked = false;
+      localStorage.setItem("map_mode","false");
+      if(!checkAdmin()) {
+        var slides = document.getElementsByClassName("only-admin-maps");
         for(var i = 0; i < slides.length; i++)  
           slides[i].style.display = "none";
       }

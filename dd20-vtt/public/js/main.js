@@ -95,6 +95,8 @@ let shadowopacity = 1;
 var trash_delete_mode = false;
 var first_trash = false;
 let dice_clear_timeout = 4000
+var checkhp;
+var spinnerchange = false;
 
 // ImageKit
 var imagekit = new ImageKit({
@@ -2654,6 +2656,9 @@ canvas.on('mouse:dblclick', function (opt) {
 
 });
 
+function inputUpdated() {
+  spinnerchange = true;  
+}
 
 canvas.on("mouse:move", function (opt) {
 
@@ -2680,8 +2685,31 @@ canvas.on("mouse:move", function (opt) {
       // Estamos encima de un token
        var hoverTarget = canvas.findTarget(event, false);       
        var hp = document.getElementById("hp");
+       // Entramos por primera vez en un Token
        if (hoverTarget !== undefined && hoverTarget !== lasthp && hoverTarget.dd20size !== -1) {         
-         lasthp = hoverTarget;         
+         lasthp = hoverTarget; 
+         lasthp_value = lasthp.hp         
+         
+        spinnerchange = false;
+        clearInterval(checkhp);       
+        checkhp = setInterval(function() {
+          if (hp.style.display == "")
+          if (lasthp_value !== hp.childNodes[1].value) {                        
+            console.log(spinnerchange)
+            console.log(lasthp.hp)
+            // Ponemos el valor que estamos viendo o el que tenía según hayamos o no interaccionado
+            if (spinnerchange) {              
+              lasthp.hp = hp.childNodes[1].value;
+              spinnerchange = false;
+            }              
+            else 
+              hp.childNodes[1].value = lasthp.hp
+
+            lasthp_value = lasthp.hp         
+            sendMessage(getboard());            
+          }            
+        }, 3000);               
+
          hp.style.display="";
          
          /*
@@ -2694,7 +2722,7 @@ canvas.on("mouse:move", function (opt) {
          if (hoverTarget.color == undefined)
           hoverTarget.color =  hoverTarget.color = "rgba(0, 0, 0, 1)";  
 
-        hp.style.backgroundColor = hoverTarget.color.replace("rgba(0, 0, 0, 1)","rgba(200, 100, 100, 0.5)").replace(", 1)",", 0.5)");
+         hp.style.backgroundColor = hoverTarget.color.replace("rgba(0, 0, 0, 1)","rgba(200, 100, 100, 0.5)").replace(", 1)",", 0.5)");
 
          hp.childNodes[1].value = hoverTarget.hp;         
          hp.style.left = (hoverTarget.left*zoom + this.viewportTransform[4])  + "px";
@@ -2713,9 +2741,11 @@ canvas.on("mouse:move", function (opt) {
           hp.childNodes[1].style.pointerEvents = "none";         
          }
          
-       } else if (hoverTarget == undefined && lasthp !== undefined) {        
+       } else if (hoverTarget == undefined && lasthp !== undefined) {  
+          clearInterval(checkhp);       
           hp.style.display = "none";
-          if (lasthp.hp !== hp.childNodes[1].value) {
+          // Salimos de un token y hemos cambiado el valor
+          if (lasthp_value !== hp.childNodes[1].value) {            
             lasthp.hp = hp.childNodes[1].value;
             sendMessage(getboard());
           }          
@@ -3041,6 +3071,7 @@ Recorremos todos los objetos mensaje:
  Creamos los nuevos
  No dejar a los jugadores selección de grupo
 */
+
   if (!ok) {
     if ((tileSize !== data.item.tileSize) || (plottileSize !== data.item.plottileSize) ) {
       plottileSize = checkminTile(data.item.plottileSize);
@@ -3100,6 +3131,12 @@ Recorremos todos los objetos mensaje:
   if(checkAdmin()) {
     localStorage.setItem(room + 'data', JSON.stringify(data.item));
   }
+
+  // Actualizamos los puntos de Vida
+  try {
+    document.getElementById("hp").hp.childNodes[1].value = lasthp.hp
+  } catch (e) {}
+   
 
 };
 

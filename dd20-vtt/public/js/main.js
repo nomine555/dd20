@@ -95,8 +95,6 @@ let shadowopacity = 1;
 var trash_delete_mode = false;
 var first_trash = false;
 let dice_clear_timeout = 4000
-var checkhp;
-var spinnerchange = false;
 
 // ImageKit
 var imagekit = new ImageKit({
@@ -215,12 +213,6 @@ const checkAdmin = () => {
       set_musicmode(false);
     else
       set_musicmode(true);
-
-    mapmode  =  localStorage.getItem("map_mode");   
-    if (mapmode == "true")   
-      set_mapmode(true);
-    else
-      set_mapmode(false);
     
       if (checkAdmin()) {
         connected = true;
@@ -2424,8 +2416,6 @@ if (canvas.fogEnabled)
 
 function updateBoardQuick(redraw) {
 
-  console.log("update board quick!!")
-
   canvas.discardActiveObject().renderAll();
   
   var redraw = redraw || false;
@@ -2656,9 +2646,6 @@ canvas.on('mouse:dblclick', function (opt) {
 
 });
 
-function inputUpdated() {
-  spinnerchange = true;  
-}
 
 canvas.on("mouse:move", function (opt) {
 
@@ -2685,31 +2672,8 @@ canvas.on("mouse:move", function (opt) {
       // Estamos encima de un token
        var hoverTarget = canvas.findTarget(event, false);       
        var hp = document.getElementById("hp");
-       // Entramos por primera vez en un Token
        if (hoverTarget !== undefined && hoverTarget !== lasthp && hoverTarget.dd20size !== -1) {         
-         lasthp = hoverTarget; 
-         lasthp_value = lasthp.hp         
-         
-        spinnerchange = false;
-        clearInterval(checkhp);       
-        checkhp = setInterval(function() {
-          if (hp.style.display == "")
-          if (lasthp_value !== hp.childNodes[1].value) {                        
-            console.log(spinnerchange)
-            console.log(lasthp.hp)
-            // Ponemos el valor que estamos viendo o el que tenía según hayamos o no interaccionado
-            if (spinnerchange) {              
-              lasthp.hp = hp.childNodes[1].value;
-              spinnerchange = false;
-            }              
-            else 
-              hp.childNodes[1].value = lasthp.hp
-
-            lasthp_value = lasthp.hp         
-            sendMessage(getboard());            
-          }            
-        }, 3000);               
-
+         lasthp = hoverTarget;         
          hp.style.display="";
          
          /*
@@ -2722,7 +2686,7 @@ canvas.on("mouse:move", function (opt) {
          if (hoverTarget.color == undefined)
           hoverTarget.color =  hoverTarget.color = "rgba(0, 0, 0, 1)";  
 
-         hp.style.backgroundColor = hoverTarget.color.replace("rgba(0, 0, 0, 1)","rgba(200, 100, 100, 0.5)").replace(", 1)",", 0.5)");
+        hp.style.backgroundColor = hoverTarget.color.replace("rgba(0, 0, 0, 1)","rgba(200, 100, 100, 0.5)").replace(", 1)",", 0.5)");
 
          hp.childNodes[1].value = hoverTarget.hp;         
          hp.style.left = (hoverTarget.left*zoom + this.viewportTransform[4])  + "px";
@@ -2741,11 +2705,9 @@ canvas.on("mouse:move", function (opt) {
           hp.childNodes[1].style.pointerEvents = "none";         
          }
          
-       } else if (hoverTarget == undefined && lasthp !== undefined) {  
-          clearInterval(checkhp);       
+       } else if (hoverTarget == undefined && lasthp !== undefined) {        
           hp.style.display = "none";
-          // Salimos de un token y hemos cambiado el valor
-          if (lasthp_value !== hp.childNodes[1].value) {            
+          if (lasthp.hp !== hp.childNodes[1].value) {
             lasthp.hp = hp.childNodes[1].value;
             sendMessage(getboard());
           }          
@@ -2771,7 +2733,7 @@ canvas.on("mouse:move", function (opt) {
 
 });
 
-canvas.on("mouse:up", function (opt) { 
+canvas.on("mouse:up", function (opt) {
 
   if (opt.e.altKey) {
     
@@ -2789,7 +2751,7 @@ canvas.on("mouse:up", function (opt) {
   }
 }
 
-  console.log("mouse up:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection + " " + opt.e.altKey );
+  //console.log("mouse up:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
   if (this.isDragging) {
     checkBorders();
     console.log(" fin del dragging!")
@@ -2842,26 +2804,20 @@ canvas.on("mouse:up", function (opt) {
 canvas.on('object:modified', function(options) {
   
   var doomedObj = canvas.getActiveObject();
-  var update = true;
-
-  console.log("modified!!!" + doomedObj)
-  
-  if (doomedObj !== null) {
-    if ( doomedObj.get('type') == "textbox") 
-      update = false;
-
+  //console.log("modfied!!!")
+  if (doomedObj !== null)
+    if ( doomedObj.get('type') !== "textbox") {
     if ((doomedObj.left < (-tileSize/2)) || (doomedObj.top < (-tileSize/2)) )  
-      deleteObj();    
-  }
-
-  if (update) {
-    updateBoardQuick();     
-    if (canvas.fogEnabled)
-      if (!fogrunning) {
-        fogrunning = true;
-        window.setTimeout(function() {  addFog('update'); }, 2*waittime);
-      }
-  }
+      deleteObj();
+    else {
+      updateBoardQuick();     
+      if (canvas.fogEnabled)
+        if (!fogrunning) {
+          fogrunning = true;
+          window.setTimeout(function() {  addFog('update'); }, 2*waittime);
+        }
+      }        
+}
 
 });
 
@@ -3071,7 +3027,6 @@ Recorremos todos los objetos mensaje:
  Creamos los nuevos
  No dejar a los jugadores selección de grupo
 */
-
   if (!ok) {
     if ((tileSize !== data.item.tileSize) || (plottileSize !== data.item.plottileSize) ) {
       plottileSize = checkminTile(data.item.plottileSize);
@@ -3131,12 +3086,6 @@ Recorremos todos los objetos mensaje:
   if(checkAdmin()) {
     localStorage.setItem(room + 'data', JSON.stringify(data.item));
   }
-
-  // Actualizamos los puntos de Vida
-  try {
-    document.getElementById("hp").hp.childNodes[1].value = lasthp.hp
-  } catch (e) {}
-   
 
 };
 
@@ -3228,7 +3177,6 @@ function getboard() {
       obj.inmersive_plot = document.getElementById("inmersive-plot").checked;
       obj.inmersive_background = document.getElementById("inmersive-background").checked;   
       obj.player_audio      = document.getElementById("player-audio").checked;
-      obj.player_map        = document.getElementById("player-maps").checked;
     
   }
 
@@ -3324,8 +3272,7 @@ async function sendMessage(token, redraw) {
   var redraw = redraw || false;
   token.redraw = redraw;
   var messageToSend = { item: token};
-  
-  console.log("-->" + Date.now())
+  console.log(Date.now())
   console.log(messageToSend)
   
   //await app.service(channel).create(messageToSend);
@@ -3436,10 +3383,9 @@ function printchat(item) {
 // Receive data from server from async function
 function addMessage(item) {
 
-  console.log("<--" + Date.now())
   console.log(item)
-  console.log("-----------------------")
-
+  console.log(Date.now())
+  
   if (checkAdmin()) {
    keepAliveBoard.resetTimer(60000);
   }
@@ -3465,7 +3411,6 @@ if (user !== item.item.playerid) {
 
   set_inmersivemode(item.item.inmersive, item.item.inmersive_track, item.item.inmersive_dice, item.item.inmersive_chat, item.item.inmersive_assets,item.item.inmersive_plot,item.item.inmersive_background);
   set_musicmode(item.item.player_audio);
-  set_mapmode(item.item.player_map);
 
   if(item.item.track) {
     print_track(item.item.tracks)
@@ -4148,11 +4093,17 @@ function delay(wait) {
       if (destiny.nodeName == "IMG") {        
         if(first_trash) {
           first_trash = false;
-          lista_trash = lista_trash = JSON.parse(localStorage.getItem('allassets')) || [];          
+          //lista_trash = JSON.parse(localStorage.getItem('allassets')) || [];          
+          lista_trash = []
         }        
         var pos = parseInt(event.srcElement.id.replace("all",""));
-        lista_trash.splice(pos, 1);         
-        destiny.parentNode.removeChild(destiny); 
+        
+        lista_trash.push(event.srcElement.src)
+        console.log(lista_trash)
+        //lista_trash.splice(pos, 1);
+        destiny.style.filter = "hue-rotate(120deg) saturate(500%)";   
+        
+        //destiny.parentNode.removeChild(destiny); 
       }
       
     } else {
@@ -4382,9 +4333,13 @@ function deleteItem(event) {
   function hide_menus(event) {
 
     if(trash_delete_mode) {
-      trash_delete_mode = false;
-      document.getElementById("trash").style.filter = ""
-      localStorage.setItem('allassets', JSON.stringify(lista_trash));      
+      trash_delete_mode = false;      
+      document.getElementById("trash").style.filter = "";
+      
+      lista = JSON.parse(localStorage.getItem('allassets')) || [];          
+      lista = lista.filter(item => !lista_trash.includes(item));
+
+      localStorage.setItem('allassets', JSON.stringify(lista));      
       savetoplugin();  
     }
     
@@ -5860,33 +5815,6 @@ function set_musicmode(mode) {
     }
 }  
 
-function set_mapmode(mode) {
-
-  if(mode == undefined){
-    mode = document.getElementById("player-maps").checked;
-  }
-
-    if(mode) {
-      document.getElementById("player-maps").checked = true;
-      localStorage.setItem("map_mode","true");
-      if(!checkAdmin()) {
-        var slides = document.getElementsByClassName("only-admin-maps");
-        for(var i = 0; i < slides.length; i++)  
-          slides[i].style.display = "";
-      }
-
-    }
-    else {
-      document.getElementById("player-maps").checked = false;
-      localStorage.setItem("map_mode","false");
-      if(!checkAdmin()) {
-        var slides = document.getElementsByClassName("only-admin-maps");
-        for(var i = 0; i < slides.length; i++)  
-          slides[i].style.display = "none";
-      }
-    }
-}  
-
 
 function set_namemode(mode) {
   
@@ -6152,7 +6080,7 @@ function showTokenMenu(menu)
 {
 
     if(trash_delete_mode) {
-      trash_delete_mode = false;
+      trash_delete_mode = false;      
       localStorage.setItem('allassets', JSON.stringify(lista_trash));      
       document.getElementById("trash").style.filter = ""; 
       savetoplugin();  

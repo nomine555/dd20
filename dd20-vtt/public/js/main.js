@@ -4096,14 +4096,14 @@ function delay(wait) {
           //lista_trash = JSON.parse(localStorage.getItem('allassets')) || [];          
           lista_trash = []
         }        
-        var pos = parseInt(event.srcElement.id.replace("all",""));
+        //var pos = parseInt(event.srcElement.id.replace("all",""));
         
         lista_trash.push(event.srcElement.src)
-        console.log(lista_trash)
+        //console.log(lista_trash)
         //lista_trash.splice(pos, 1);
-        destiny.style.filter = "hue-rotate(120deg) saturate(500%)";   
+        //destiny.style.filter = "hue-rotate(120deg) saturate(500%)";   
         
-        //destiny.parentNode.removeChild(destiny); 
+        destiny.parentNode.removeChild(destiny); 
       }
       
     } else {

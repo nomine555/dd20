@@ -20,6 +20,14 @@
     }
   }
 
+function create() {
+  var id = window.location.pathname.substring(3);
+  localStorage.setItem('dd20room', "/room/" + id);
+  localStorage.setItem('dd20user', 'dm')
+  localStorage.setItem('lastdd20room',id);
+  window.location.assign("/newroom/" + id);  
+}
+
   function load_page() {
     
     setTimeout(() => {

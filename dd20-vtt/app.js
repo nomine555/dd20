@@ -120,6 +120,11 @@ app.get("/newroom/:roomId/game", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/new-game.html"));
 });
 
+app.get("/n/:roomId", function (req, res) {
+  //sending file
+  res.sendFile(path.join(__dirname + "/public/create-room.html"));
+});
+
 // Image Kit
 app.get('/signature', (req, res) => {
   var authentcationParameters = imagekit.getAuthenticationParameters();
@@ -146,7 +151,7 @@ app.post("/save", function (req, res) {
 
 // Start the server
 app
-  .listen(process.env.PORT || 3000)
+  .listen(process.env.PORT || 81)
   .on("listening", () =>
-    console.log("Feathers server listening on localhost:3000")
+    console.log("Feathers server listening on localhost:81")
   );

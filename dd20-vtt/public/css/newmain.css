@@ -168,8 +168,6 @@ margin-top: 0.5em;
     .header {
         font-size: 125%;;
     }
-
-
 }
 
 .logo {
@@ -1280,6 +1278,14 @@ padding: 0.5rem;
     border-radius: 5px 0px 0px 5px;
     /* border: 1px solid #000000; */
 }
+
+@media (max-width: 1024px) {
+    #barra-derecha {
+        width: inherit;
+        color: white;
+    }
+}
+
 
 #barra-derecha:hover {
     width: inherit;

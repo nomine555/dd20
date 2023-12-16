@@ -2381,6 +2381,7 @@ canvas.forEachObject(function(o) {
 // Colocamos cada objeto en su sitio
 function canvas_move() 
 {
+  console.log("canvas move!")
   /*
   var doomedObj = canvas.getActiveObject();
 
@@ -2542,6 +2543,8 @@ canvas.on("mouse:wheel", function (opt) {
 
 //Mouse down, can be many things
 canvas.on("mouse:down", function (opt) {
+
+  canvas.mouseup = false;
   
   hide_menus()
   //console.log("mouse down:" + this.isDrawing +" "+ this.isDrawingfog  + " " +  this.Started + " " + this.with2clicks + " " + this.selection );
@@ -2651,8 +2654,6 @@ canvas.on('mouse:dblclick', function (opt) {
 function inputUpdated() {
   spinnerchange = true;  
 }
-
-
 
 canvas.on("mouse:move", function (opt) {
 
@@ -2766,6 +2767,8 @@ canvas.on("mouse:move", function (opt) {
 });
 
 canvas.on("mouse:up", function (opt) {
+  
+  canvas.mouseup = true;
 
   if (opt.e.altKey) {
     
@@ -2834,6 +2837,8 @@ canvas.on("mouse:up", function (opt) {
 });
 
 canvas.on('object:modified', function(options) {
+
+  console.log("object modified!")
   
   var doomedObj = canvas.getActiveObject();
   //console.log("modfied!!!")
@@ -2878,14 +2883,18 @@ if(ev.deselected !== undefined)
 });
 
 
+function sueltaeltoken() {
+  //console.log("deselecciona si no pulsas")
+  //console.log(canvas.mouseup)
+  if(canvas.mouseup)
+        canvas.discardActiveObject().renderAll();
+  else setTimeout(() => {sueltaeltoken()}, 4000);
+}
+
 canvas.on('selection:created',function(ev) {
 
-
 if (ev.target.get("type") !== "textbox")
-  setTimeout(() => {
-    canvas.discardActiveObject().renderAll();
-  }, 4000);
-
+  setTimeout(() => {sueltaeltoken()}, 4000);
 
 /*
 if ("#<fabric.Rect>" == ev.target + "") {
@@ -5627,6 +5636,7 @@ function toRGBA(rgb) {
  * Displays previous page.
  */
  function onPrevPage() {
+  event.stopPropagation()
   if (pageNum <= 1) {
     return;
   }
@@ -5639,6 +5649,9 @@ function toRGBA(rgb) {
  * Displays next page.
  */
 function onNextPage() {
+  
+  event.stopPropagation()
+
   if (pageNum >= pdfDoc.numPages) {
     return;
   }

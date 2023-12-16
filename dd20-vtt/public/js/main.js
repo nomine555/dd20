@@ -2381,7 +2381,7 @@ canvas.forEachObject(function(o) {
 // Colocamos cada objeto en su sitio
 function canvas_move() 
 {
-  console.log("canvas move!")
+  //console.log("canvas move!")
   /*
   var doomedObj = canvas.getActiveObject();
 
@@ -2886,15 +2886,21 @@ if(ev.deselected !== undefined)
 function sueltaeltoken() {
   //console.log("deselecciona si no pulsas")
   //console.log(canvas.mouseup)
-  if(canvas.mouseup)
-        canvas.discardActiveObject().renderAll();
-  else setTimeout(() => {sueltaeltoken()}, 4000);
+
+  if(canvas.mouseup) {
+    canvas.discardActiveObject().renderAll();
+    canvas.seleccionado = false;
+  }    
+  else if (canvas.seleccionado) setTimeout(() => {sueltaeltoken()}, 4000);
 }
 
 canvas.on('selection:created',function(ev) {
 
-if (ev.target.get("type") !== "textbox")
+if (ev.target.get("type") !== "textbox") {
+  canvas.seleccionado = true;
   setTimeout(() => {sueltaeltoken()}, 4000);
+}
+  
 
 /*
 if ("#<fabric.Rect>" == ev.target + "") {

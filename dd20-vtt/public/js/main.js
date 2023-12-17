@@ -502,7 +502,8 @@ const checkAdmin = () => {
           load_scene_start()
         }
 
-        keepAliveBoard.startTimer(60000);          
+        keepAliveBoard.startTimer(60000);  
+        keepAliveDeselection.startTimer(3600000);        
           
       }
       // ------------------------------------------------------------------
@@ -2882,23 +2883,43 @@ if(ev.deselected !== undefined)
 
 });
 
-
-function sueltaeltoken() {
-  //console.log("deselecciona si no pulsas")
-  //console.log(canvas.mouseup)
-
-  if(canvas.mouseup) {
+  const keepAliveDeselection = {
+  // The function that will be fired
+  myFunction: function() {
+    if(canvas.mouseup) {
     canvas.discardActiveObject().renderAll();
     canvas.seleccionado = false;
-  }    
-  else if (canvas.seleccionado) setTimeout(() => {sueltaeltoken()}, 4000);
-}
+    }    
+  },
+
+  // A method to start the timer
+  startTimer: function(time) {
+    this.timer = setInterval(() => {
+      this.myFunction();
+    }, time);
+  },
+
+  // A method to stop the timer
+  stopTimer: function() {
+    clearInterval(this.timer);
+  },
+
+  // A method to reset the timer
+  resetTimer: function(time) {
+    this.stopTimer();
+    this.startTimer(time);
+  }
+};
+
 
 canvas.on('selection:created',function(ev) {
 
-if (ev.target.get("type") !== "textbox") {
-  canvas.seleccionado = true;
-  setTimeout(() => {sueltaeltoken()}, 4000);
+if (ev.target.get("type") !== "textbox") {  
+  console.log("preparamos")  
+  if(!canvas.sueltaeltoken) {
+    keepAliveDeselection.resetTimer(4000);
+  }  
+  
 }
   
 

@@ -1393,11 +1393,17 @@ function diceSelect() {
     if (document.getElementById("hidden-roll").className == "button-pressed")
      {
       console.log("local")
-      printdice(localDices(dice.replace("1d100", "1d100 + 1d10"), text))
+      printdice(localDices(fixd100(dice), text))
     }
     else    
-    sendDices(dice.replace("1d100", "1d100 + 1d10"), text);
+    sendDices(fixd100(dice), text);
   }
+}
+
+function fixd100(dice) {
+  if (dice.indexOf('+') > 0)
+    return dice
+  else return dice.replace("1d100", "1d100 + 1d10")
 }
 
 function startCombinedice() {

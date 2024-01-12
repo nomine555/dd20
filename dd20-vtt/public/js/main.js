@@ -2274,6 +2274,11 @@ if (49 === e.keyCode) {
   sendDices("1d100 + 1d10", "");
 }
 
+if (219 === e.keyCode) {
+  sendDices("1d100 + 1d10 + 1d100", "");
+}
+
+
 if (34 === e.keyCode) {
   
   var elements = document.getElementsByClassName("track_item");

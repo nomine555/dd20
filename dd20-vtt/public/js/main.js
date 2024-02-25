@@ -204,6 +204,16 @@ const checkAdmin = () => {
     // Cargamos los colores de los dados
     dice_color_load();
 
+    // Ponemos el volumen bajo
+    document.getElementById("audiocontrol").volume  = 0.1
+    document.getElementById("audiocontrol2").volume = 0.2
+    document.getElementById("audiocontrol").addEventListener('volumechange', volumeUP)
+
+    function volumeUP() {
+      console.log('Volume changed:', document.getElementById("audiocontrol").volume);
+      document.getElementById("audiocontrol2").volume = 3*document.getElementById("audiocontrol").volume;
+    }
+
     namedmode  =  localStorage.getItem("named_mode");   
     if (namedmode == "false")   
       set_namemode(false);
@@ -6040,15 +6050,30 @@ function choosemusic() {
     if (event.target.id == "music-list") {
       hide_menus();
     } else {
-    document.getElementById("audiosrc").src = event.target.getAttribute("src");
-    document.getElementById("audiocontrol").load();
-    setTimeout(() => {
-      document.getElementById("audiocontrol").play();  
-    }, waittime);
-    
+    document.getElementById("audiosrc2").src = event.target.getAttribute("src");
+    document.getElementById("audiocontrol2").load();
+    document.getElementById("audiocontrol2").addEventListener("loadedmetadata", pressPlay);
+   
     sendMusic(event.target.getAttribute("src"));
   }
     
+}
+
+function pressPlay() {
+  console.log("Audio descargado!")
+  duration = document.getElementById("audiocontrol2").duration;
+  if (duration > 30) {
+    document.getElementById("audiosrc").src = document.getElementById("audiosrc2").src;
+    document.getElementById("audiocontrol").load();
+    document.getElementById("audiocontrol").addEventListener("loadedmetadata", pressPlay2);
+  } else {
+    document.getElementById("audiocontrol2").play();    
+  }
+ 
+}
+
+function pressPlay2() {
+  document.getElementById("audiocontrol").play();  
 }
 
 function sendMusic(text) {
@@ -6067,7 +6092,6 @@ function sendMusic(text) {
 }
 
 function playmusic(item) {
-
   
     if (item.text == "pause")
       document.getElementById("audiocontrol").pause();
@@ -6077,9 +6101,10 @@ function playmusic(item) {
     }
       
     else {
-      document.getElementById("audiosrc").src = item.text;
-      document.getElementById("audiocontrol").load();
-      document.getElementById("audiocontrol").play();
+      document.getElementById("audiosrc2").src = item.text;
+      document.getElementById("audiocontrol2").load();
+      document.getElementById("audiocontrol2").addEventListener("loadedmetadata", pressPlay);
+      
       if(checkAdmin())      
         add_music(item.text)          
     }

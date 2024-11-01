@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "Fernando Setien Dodero",
-  "license": "GNU GPLv3",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@feathersjs/express": "^4.5.2",
     "@feathersjs/feathers": "^4.5.2",
@@ -21,6 +21,6 @@
     "serve-index": "^1.9.1"
   },
   "engines": {
-    "node": "12.14.0"
+    "node": "22.11.0"
   }
 }

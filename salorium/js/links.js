@@ -2,6 +2,7 @@ var MaxNpcs = 8;
 var aventura = "salorium"
 var mainmap = "salorium";
 var debug = "on";
+var soloen = 0
 //var debug_content_file = "..\\twine\\dd20-5-es.html";
 var debug_content_file = "..\\twine\\salorium.html";
 //var debug_content_file = "..\\twine\\dd20-3.5.html";

@@ -8,6 +8,7 @@ var debug = "on";
 var debug_content_file = "..\\twine\\fragmentos.html";
 // La versión por defecto es 5a edición
 var languages = ['es'];
+var soloen = 0
 
 function colorReplace(text) {
     text = text.replace(/background-color:rgb\(216,226,234\)/g, "background-color:rgb(255,255,255)");   

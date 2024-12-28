@@ -12,6 +12,7 @@ var salt = 34587757654943352;
 var minindex = ["@resumen","@bienvenido","@licencia","@pioneros"];
 // La versión por defecto es 5a edición
 var languages = ['es'];
+var soloen = 0
 
 function DrawLines() { 
     

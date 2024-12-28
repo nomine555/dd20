@@ -1,0 +1,56 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+        <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+    <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none">
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>                
+        </ul>
+    </div>
+    
+    <div>
+        <a id='el-rapto' href='./encounter.html?param=@el-rapto' class='image-map-flow text strong-tint button' style='left: 5%; top: 10%;'>El rapto</a>
+        <a id='el-camino-hasta-el-juez' href='./encounter.html?param=@el-camino-hasta-el-juez' class='image-map-flow text strong-tint button' style='left: 17%; top: 10%;'>El camino hasta el juez</a>
+        <a id='el-juicio' href='./encounter.html?param=@el-juicio' class='image-map-flow text strong-tint button' style='left: 29%; top: 10%;'>El juicio</a>
+        <a id='la-prision-de-bastion-ultimo' href='./encounter.html?param=@la-prision-de-bastion-ultimo' class='image-map-flow text strong-tint button' style='left: 41%; top: 10%;'>La prisión de Bastión Último</a>
+        <a id='el-extrano-mercader' href='./encounter.html?param=@el-extrano-mercader' class='image-map-flow text strong-tint button' style='left: 35%; top: 30%;'>El extraño mercader</a>
+        <a id='rescatando-a-tyrtareo-y-micohuani' href='./encounter.html?param=@rescatando-a-tyrtareo-y-micohuani' class='image-map-flow text strong-tint button' style='left: 47%; top: 30%;'>Rescatando a Tyrtareo y Micohuani</a>
+        <a id='en-busca-de-nyethorn' href='./encounter.html?param=@en-busca-de-nyethorn' class='image-map-flow text strong-tint button' style='left: 55%; top: 20%;'>En busca de Nyethorn</a>
+        <a id='nyethorn-liberado' href='./encounter.html?param=@nyethorn-liberado' class='image-map-flow text strong-tint button' style='left: 67%; top: 20%;'>Nyethorn liberado</a>
+        <a id='la-biblioteca-de-vartlas' href='./encounter.html?param=@la-biblioteca-de-vartlas' class='image-map-flow text strong-tint button' style='left: 63%; top: 40%;'>La biblioteca de Vartlas</a>
+        <a id='la-sala-del-trono-de-vartlas' href='./encounter.html?param=@la-sala-del-trono-de-vartlas' class='image-map-flow text strong-tint button' style='left: 72%; top: 40%;'>La sala del trono de Vartlas</a>
+        <a id='conclusiones' href='./index.html?param=@conclusiones' class='image-map-flow text strong-tint button' style='left: 72%; top: 60%;'>Conclusiones</a>
+    </div>
+    
+    <div class="mini-index-left" >
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

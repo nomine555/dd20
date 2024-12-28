@@ -1,0 +1,171 @@
+<html>
+
+<head>
+    <meta content="text/html" charset="utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>index</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/encounter-styles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+    <link rel="stylesheet" href="../core/css/npcs-styles.css">
+    <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+    <script src="../core/js/dice/three-min.js"></script>
+    <script src="../core/js/dice/cannon-min.js"></script>
+    <script src="../core/js/dice/detector.js"></script>
+    <script type="text/javascript" src="../core/js/dice/teal.js"></script>
+    <script type="text/javascript" src="../core/js/dice/dice.js"></script>
+    <script type="text/javascript" src="../core/js/dice/maindice.js"></script>  
+    <script type="text/javascript" src="../core/js/google_translate.js"></script>
+    <link rel="stylesheet" href="../core/css/dice.css">
+    <link rel="stylesheet" href="../core/css/main-dice.css">
+    <audio id='music' loop>
+       <!--  
+            <source src="/mnt/sdcard/dd20/music/heroicdemise.mp3" type="audio/mpeg" />
+            <source src="./music/mainmusic.mp3" type="audio/mpeg" /> 
+        -->
+    </audio>
+    
+ <!--1-->
+    <script type="text/javascript">
+        starting_encounter();
+        console.log("translating");
+        function googleTranslateElementInit() 
+        {new google.translate.TranslateElement({pageLanguage: 'es'}, 'google'); } 
+    </script> 
+ <!--1-->
+
+</head>
+
+<body class="mainbody" onload="hidetranslate()">
+    
+        <img src="../core/images/icons/hamburguesa.png" class="config-button-encounter button" onclick="hide_show_menu();">
+
+        <div id="menu" class="menu" style="display:none">
+            <ul id="opciones">
+                <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+                <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+                <li id="spanish" onclick="spanish();">Spanish</li>
+                <li id="english" onclick="english();">English</li>                
+            </ul>
+        </div>
+    
+        <div id="layer0" class="maindivclass" tabindex="1" style='opacity:0;z-index:1;'>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-7.png');left:77%" onclick="CloseImage();"></div>        
+    </div>
+    <div id='layer1' class="maindivclass" tabindex="2" style='opacity:0;z-index:1;'>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-7.png');left:77%" onclick="CloseImage();"></div>
+        <img id="image-list-left" src="../core/images/icons/icon-index-izquierda.png" class="image-control" onclick="ImageControl(event,'left')">
+        <img id="image-list-rigth" src="../core/images/icons/icon-index-derecha.png" class="image-control" style="left:50%" onclick="ImageControl(event,'rigth')">        
+    </div>
+    <div id='layer2' class="maindivclass" tabindex="3" style='opacity:0;z-index:1;'>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-7.png');left:77%" onclick="CloseImage();"></div>
+    </div>
+    <div id='layer3' class="maindivclass" tabindex="4" style='opacity:0;z-index:1;'>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-7.png');left:77%" onclick="CloseImage();"></div>
+    </div>
+    <div id='layer4' class="maindivclass" tabindex="5" style='opacity:0;z-index:1;'>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-7.png');left:77%" onclick="CloseImage();"></div>
+    </div>
+<div id="layer5" class="dice-area" style='opacity:0;z-index:1;'>
+    <div id="info_div" style="display: none">
+        <div class="center_field">
+            <span id="label" style="display:none"></span>
+        </div>
+        <div class="center_field">
+            <div class="bottom_field">
+                <span id="labelhelp" class="letter">click to continue or tap and drag again or</span>
+                <button id="exit" onclick="CloseImage();">exit</button>
+            </div>
+        </div>
+    </div>
+    <div id="nowebgl" style="display: none">
+    <div class="center_field">
+        <div id="nowebglinside" class="letter">
+                WebGL not supported, dice cannot be animated!
+        </div>
+        <button onclick="CloseImage();">exit</button>
+    </div>
+    </div>      
+    <div id="selector_div" style="display: none">
+        <div class="center_field">
+            <div id="sethelp" class="letter">
+                
+               Select one or more dice by clicking on it, or use keyboard by clicking on the dice text.<br>tap and drag on free space of screen or hit throw button to roll.
+            </div>
+        </div>    
+        <div class="center_field">
+            <input type="text" id="set" value="4d6"><br/>
+            <button id="clear">clear</button>
+            <button style="margin-left: 0.6em" id="throw">throw</button>
+            <button style="margin-left: 0.6em" id="exit2" onclick="CloseImage();">exit</button>
+        </div>
+    </div>
+    <div id="canvas"></div>
+    </div>
+    <div id='infolayer' class="infolayer" style='opacity:0;z-index:1;'>
+        <div id='infolayer-text' class="text infolayer_text"></div>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-6.png');left:77%" onclick="CloseLateralInfo(event);"></div>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-5.png');" onclick="Back(event);"></div>
+    </div>
+
+    <div id='infolayer-map' class="infolayer-map" style='opacity:0;z-index:1;'>
+        <div id='infolayer-text-map' class="text infolayer-text-map"></div>
+        <div class="index-icon-close button" style="background-image: url('../core/images/icons/icon-index-7.png');left:85%" onclick="CloseLateralMap(event);"></div>
+    </div>
+
+    <div id="layermenu" class="container" tabindex="1" style='opacity:1;z-index:10'>
+        <div id="title" class="title title-text"></div>
+        <div class="select-group">
+            <div id="select1" class="select" onclick="Select('1');" style='opacity:0;width:40%;'></div>
+            <div id="select2" class="select" onclick="Select('2');" style='opacity:100;width:30%;'></div>
+            <div id="select3" class="select" onclick="Select('3');" style='opacity:0;width:30%;'></div>
+        </div>
+        <div id="gamethroughmain" class="megamapgroup">
+            <div id="gamethrough-1" class="mapgroup text" style="z-index:5;opacity:0;"></div>
+            <div id="gamethrough-3" class="mapgroup text" style="z-index:5;opacity:0;"></div>
+            <div id="gamethroughbase" class="mapgroup" style="z-index:10;opacity:1;">
+                <div id="button0" class="map button"  onclick="Show('0');"></div>
+                <div class="monstergroup">
+                    <div id="button1" class="minimap button" onclick="Show('1');"></div>
+                    <div id="button2" class="minimap button" onclick="Show('2');"></div>
+                    <div id="button3" class="minimap button" onclick="Show('3');"></div>
+                    <div id="button4" class="minimap button" onclick="Show('4');"></div>
+                    <div id="buttonaudio" class="minimap minimap-audio button" onclick="MusicButton();" style="background-image: url('../core/images/icons/icon-audio.png');"></div>
+                </div>
+            </div>
+        </div>
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="if (!showinginfo) location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="if (!showinginfo) location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="if (!showinginfo) location.href='index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="if (!showinginfo) location.href='index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="if (!showinginfo) window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="if (!showinginfo) window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+
+    </div>
+    <div id="layertext" class="text text-main" tabindex="2" style='opacity:1;z-index:10;'></div>
+    <div class="icondice" onclick="ShowDice();">
+    </div>
+    <!--2-->
+        <div class="icontranslate" onclick="ShowTranslate();"></div>
+        <div id="google"></div>
+        <div id="google_alert" style="display: none" class="text letter">
+                1. Select language on the top left menu <br> 
+                2. Press again on the translate icon to hide the google bar. <br> 
+                3. To disable translation, close the google bar, and hide the icon again. 
+        </div>  
+    <!--2-->
+      <div id="capa-vertical" style="display:none;">
+          <img src="../core/images/icons/turn.png" class="img_turn">
+          <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+      </div>
+    
+</body>
+
+</html>

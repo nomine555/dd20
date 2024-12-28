@@ -1,0 +1,58 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+        <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+        <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+             <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+        <div id="menu" class="menu" style="display:none">
+            <ul id="opciones">
+                <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+                <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+                <li id="spanish" onclick="spanish();">Spanish</li>
+                <li id="english" onclick="english();">English</li>                
+            </ul>
+        </div>
+        <div id="index-flow-background" class="index-flow" style="left: 0px; top: 0px;">
+            <div >    
+                <a id="uno" href="./index.html?param=@resumen" class="image-map-flow text strong-tint button" style=" left: 5.5%; top: 18%;">Introducción</a>                                       
+                <a id="dos" href="./index.html?param=@-Gancho-de-la-aventura" class="image-map-flow text button" style="left: 5%;top: 38%;">Resumen y Ganchos</a>
+                <a id="tres" href="./encounter.html?param=@conociendo-vestigiohundido" class="image-map-flow text button" style="left: 16%;top: 26%;">Introducción: Conociendo Vestigiohundido</a>
+                <a id="cinco" href="./encounter.html?param=@viajando" class="image-map-flow text button" style="left: 27%;top: 26%;">Viajando por los pantanos</a>
+                <a id="seis" href="./encounter.html?param=@-Desenlace--Secretos-de-las-Profundidades" class="image-map-flow text button" style="left: 39%;top: 26%;">El templo enraizado</a>
+                <a id="siete" href="./encounter.html?param=@agarratrolls" class="image-map-flow text button" style="left: 39%;top: 8%;">Thorfrid Agarratrolls</a>
+                <a id="ocho" href="./encounter.html?param=@hall" class="image-map-flow text button" style="left: 49%;top: 39%;">El Hall</a>
+                <a id="nueve" href="./encounter.html?param=@luz" class="image-map-flow text button" style="left: 58%;top: 54%;">La cámara de la Luz</a>
+                <a id="diez" href="./encounter.html?param=@pasillo" class="image-map-flow text button" style="left: 58%;top: 29%;">El pasiilo inundado</a>
+                <a id="once" href="./encounter.html?param=@ritual" class="image-map-flow text button" style="left: 68%;top: 41%;">La cámara ritual</a>
+                <a id="doce" href="./encounter.html?param=@piedra" class="image-map-flow text button" style="left: 79%;top: 41%;">La cámara de piedra</a>
+                <a id="trece" href="./index.html?param=@conclusion" class="image-map-flow text button" style="left: 80%;top: 60%;">Conclusión</a>
+           </div>
+        </div>
+        <div class="mini-index-left" >
+            <div class="indexgroup">
+                <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+                <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+                <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+                <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+                <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+                <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+            </div>
+        </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

@@ -1,0 +1,59 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+        <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+    <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+    <div id="menu" class="menu" style="display:none">
+        <ul id="opciones">
+            <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+            <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+            <li id="spanish" onclick="spanish();">Spanish</li>
+            <li id="english" onclick="english();">English</li>                
+        </ul>
+    </div>
+    
+    <div>        
+        <a id="la-llegada" href="./encounter.html?param=@la-llegada" class="image-map-flow text strong-tint button" style="left: 20%;top: 65%;"><br>Acto I: La llegada</a>   
+        <a id="sala-capitular" href="./encounter.html?param=@sala-capitular" class="image-map-flow text strong-tint button" style="left: 1%;top: 23%;"><br>Sala capitular</a>   
+        <a id="cocina" href="./encounter.html?param=@cocina" class="image-map-flow text strong-tint button" style="left: 10%;top: 15%;"><br>La cocina</a>   
+        <a id="refectorio" href="./encounter.html?param=@refectorio" class="image-map-flow text strong-tint button" style="left: 20%;top: 10%;"><br>El refectorio</a>   
+        <a id="celdas" href="./encounter.html?param=@celdas" class="image-map-flow text strong-tint button" style="left: 30%;top: 8%;"><br>Las celdas</a>   
+        <a id="biblioteca-y-escritorio" href="./encounter.html?param=@biblioteca-y-escritorio" class="image-map-flow text strong-tint button" style="left: 40%;top: 10%;"><br>La biblioteca y escritorio</a>   
+        <a id="caballerizas" href="./encounter.html?param=@caballerizas" class="image-map-flow text strong-tint button" style="left: 50%;top: 15%;"><br>Las caballerizas</a>   
+        <a id="acceso-a-la-torre" href="./encounter.html?param=@acceso-a-la-torre" class="image-map-flow text strong-tint button" style="left: 60%;top: 45%;"><br>Acceso a la torre</a>
+        <a id="templo" href="./encounter.html?param=@templo" class="image-map-flow text strong-tint button" style="left: 68%;top: 7%;"><br>El templo</a>   
+        <a id="la-cena" href="./encounter.html?param=@la-cena" class="image-map-flow text strong-tint button" style="left: 52%;top: 62%;"><br>Acto II: La cena</a>   
+        <a id="la-lucha" href="./encounter.html?param=@la-lucha" class="image-map-flow text strong-tint button" style="left: 67%;top: 62%;"><br>Acto III: La lucha</a>   
+        <a id="la-torre" href="./encounter.html?param=@la-torre" class="image-map-flow text strong-tint button" style="left: 68%;top: 30%;"><br>Acto IV: La torre</a>   
+        <a id="el-laberinto" href="./encounter.html?param=@el-laberinto" class="image-map-flow text strong-tint button" style="left: 84%;top: 7%;"><br>Parte II: El laberinto</a>   
+        <a id="conclusiones" href="./index.html?param=@conclusiones" class="image-map-flow text button" style="left: 84%;top: 42%;"><br>Conclusiones</a>            
+    </div>
+    
+    <div class="mini-index-left" >
+        <div class="indexgroup">
+            <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+            <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+            <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+            <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+        </div>
+    </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

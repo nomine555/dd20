@@ -1,0 +1,57 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indice</title>
+    <link rel="stylesheet" href="../core/css/standardize.css">
+    <link rel="stylesheet" href="../core/css/basestyles.css">
+    <link rel="stylesheet" href="../core/css/index-styles.css">
+        <link rel="stylesheet" href="./css/local.css">
+    <script type="text/javascript" src="../core/js/main.js"></script>
+    <script type="text/javascript" src="../core/js/marked.js"></script>
+    <script type="text/javascript" src="../core/js/spells.js"></script>
+    <script type="text/javascript" src="../core/js/leader-line-min.js"></script>
+    <script type="text/javascript" src="./js/links.js"></script>
+</head>
+
+<body onpageshow="starting_index_flow();" class="index-map">
+    
+    <img src="../core/images/icons/hamburguesa.png" class="config-button button" onclick="hide_show_menu();">
+
+        <div id="menu" class="menu" style="display:none">
+            <ul id="opciones">
+                <li id="tocover" onclick="window.location='../index-gate.html'">Main menu</li>        
+                <li id="totutorial" onclick="window.location='../salorium/tutorial.html'">Go to tutorial</li>    
+                <li id="spanish" onclick="spanish();">Spanish</li>
+                <li id="english" onclick="english();">English</li>                
+            </ul>
+        </div>
+    
+        <div id="index-flow-background" class="index-flow" style="left: 0px; top: 0px;">
+            <div>
+                <a id="la-bestia-descontrolada" href="./encounter.html?param=@la-bestia-descontrolada" class="image-map-flow text strong-tint button" style=" left: 5.5%; top: 18%;">La Bestia fuera de control</a>                         
+                <a id="siguiendo-los-pasos-de-akalis-krovo" href="./encounter.html?param=@siguiendo-los-pasos-de-akalis-krovo" class="image-map-flow text button" style=" left: 16%; top: 33%;">Tras los pasos de Akalis Krovo</a>
+                <a id="el-despacho-del-mago" href="./encounter.html?param=@el-despacho-del-mago" class="image-map-flow text button" style=" left: 23%; top: 15%;">El Despacho del Mago</a>
+                <a id="hogar-de-malisa-samak" href="./encounter.html?param=@hogar-de-malisa-samak" class="image-map-flow text button" style=" left: 33%; top: 33%;">Hogar de Malisa Samak</a>
+                <a id="hogar-de-akalis-krovo" href="./encounter.html?param=@hogar-de-akalis-krovo" class="image-map-flow text button" style=" left: 23%; top: 50%;">Hogar de Akalis Krovo</a>
+                <a id="frente-a-la-extrana-oscuridad" href="./encounter.html?param=@frente-a-la-extrana-oscuridad" class="image-map-flow text button" style=" left: 44%; top: 15%;">Frente a la Extraña Oscuridad</a>
+                <a id="el-final-del-tunel" href="./encounter.html?param=@el-final-del-tunel" class="image-map-flow text button" style=" left: 55%; top: 25%;">El Final del Túnel</a>
+                <a id="la-antecamara" href="./encounter.html?param=@la-antecamara" class="image-map-flow text button" style=" left: 65%; top: 39%;">La Antecámara</a>
+                <a id="la-camara-del-portal" href="./encounter.html?param=@la-camara-del-portal" class="image-map-flow text button" style=" left: 75%; top: 54%;">La Cámara del Portal</a>
+            </div>
+        </div>
+    
+        <div class="mini-index-left" >
+            <div class="indexgroup">
+                <div class="index-icon button" onclick="location.href='index.html'" style="background-image: url('../core/images/icons/icon-index-1.png');"></div>
+                <div class="index-icon button" onclick="location.href='index-map.html'" style="background-image: url('../core/images/icons/icon-index-2.png');"></div>
+                <div class="index-icon button" onclick="location.href='./index-npcs.html'" style="background-image: url('../core/images/icons/icon-index-3.png');"></div>
+                <div class="index-icon button" onclick="location.href='./index-flow.html'" style="background-image: url('../core/images/icons/icon-index-4.png');"></div>
+                <div class="index-icon-half button" onclick="window.history.back();" style="background-image: url('../core/images/icons/icon-index-izquierda.png');"></div>
+                <div class="index-icon-half button" onclick="window.history.forward();" style="background-image: url('../core/images/icons/icon-index-derecha.png');"></div>
+            </div>
+        </div>
+    <div id="capa-vertical" style="display:none;">
+        <img src="../core/images/icons/turn.png" class="img_turn">
+        <h1 class="text_turn">This functionality requires using the screen in landscape orientation.</h1>
+    </div>
+</body>

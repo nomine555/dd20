@@ -1,0 +1,197 @@
+.text {
+  font-family: "rd";
+  line-height: 1.38;
+}
+
+.title-text {
+  font-size: 2.6vw;
+  text-align: left;
+  font-family: "rd-title";
+}
+
+.mainbody-es {
+    width: 100%;
+    height: 100vh; 
+    background-image: url('../../core/images/resurgirdragon/background-es.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+     -webkit-user-select: none;
+     -webkit-touch-callout: none;
+    }
+    
+/* TEXTO PARA LOS JUGADORES */
+blockquote p{
+  font-style: italic;
+  font-weight: bold;
+  quotes: "“" "”" "‘" "’";
+  margin-top: 1.5em;
+  margin-right: 1.5em;
+  margin-bottom: 1.5em;
+  margin-left: 1.5em;
+  padding-top: 1em;
+  padding-right: 0.75em;
+  padding-bottom: 0.25em;
+  padding-left: 0.75em;
+  background-color: rgba(225, 216, 214, 1);
+  background-image: none;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-position: 0% 0%;
+}
+
+.infolayer {
+    left: 0;
+    top:0%;
+    position: absolute;
+    background-image: url(../../core/images/resurgirdragon/SRD.png);
+    background-size: cover;
+    color: #d9d9d9;
+    background-color: none;
+    width: 42%;
+    height: 100vh;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-top: 0%;
+    padding-right: 1%;
+    padding-bottom: 0%;
+    padding-left: 1%;
+    z-index: 125;
+}
+
+.infolayer-index {
+    left: 0;
+    top:0%;
+    position: absolute;
+    background-image: url(../../core/images/resurgirdragon/SRD.png);
+    background-size: cover;
+    color: #d9d9d9;
+    background-color: none;
+    width: 42%;
+    height: 100vh;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-top: 0%;
+    padding-right: 1%;
+    padding-bottom: 0%;
+    padding-left: 1%;
+    z-index: 125;
+}
+
+.infolayer_text {
+    width: 100%;
+    height: 90vh;
+    margin-top: 7vh;
+    overflow-y: scroll;
+}
+
+.infolayer_text a {    
+     color: white;
+     font-style:italic;
+     text-decoration:underline;
+}
+
+.text-main h1 {
+    color: rgb(102,65,54);
+}
+
+.text-main h2 {
+    color: rgb(102,65,54);
+}
+
+.text-main h3 {
+    color: rgb(102,65,54);
+}
+
+.text-main h4 {
+    color: rgb(102,65,54);
+}
+
+.text-main h5 {
+    color: rgb(102,65,54);
+}
+
+
+.index-text h1 {
+    color: rgb(102,65,54);
+}
+
+.index-text h2 {
+    color: rgb(102,65,54);
+}
+
+.index-text h3 {
+    color: rgb(102,65,54);
+}
+
+.index-text h4 {
+    color: rgb(102,65,54);
+}
+
+.infolayer_text h1 {
+  color: #ffffff;
+}
+
+.infolayer_text h2 {
+  color: #ffffff;
+    border-bottom-color: #ffffff;
+}
+
+.infolayer_text h3 {
+  color: #ffffff;
+}
+
+.infolayer_text h4 {
+  color: #ffffff;
+}
+
+.infolayer_text h5 {
+  color: #ffffff;
+}
+
+.infolayer b {
+  color: white;
+}
+
+.title-text {
+    font-size: 2.2vw;
+    text-align: left;
+    font-family: "title";
+}
+
+table {
+    font-size: 85%;
+}
+td {
+      background-color: white;  
+}
+
+@media (max-width: 667px) {
+    
+    .index-npcs {
+        background: url(../../core/images/resurgirdragon/index-main-640.jpg) 50% 0% / cover no-repeat;
+    }
+    
+    .index-main {
+        background: url(../../core/images/resurgirdragon/index-main-640.jpg) 50% 0% / cover no-repeat;
+    }
+    
+    .mainbody-es {
+        background-image: url(../../core/images/resurgirdragon/background-encounter-4-3-es.jpg);    
+    }   
+
+}
+
+@media (max-device-aspect-ratio: 3/2) {
+.mainbody-es {
+    background-image: url(../../core/images/resurgirdragon/background-encounter-4-3-es.jpg);    
+    }
+}
+.infolayer_text blockquote {
+    color: black;
+    background-color: white;
+}

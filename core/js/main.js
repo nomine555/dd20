@@ -2,6 +2,7 @@
 // Indica estado, si estamos en el menu de monstruos
 
 var debug = "on";
+var soloen = 0
 var select = '2';
 var firstclick = false;
 var maps = [0, 0, 0, 0, 0];

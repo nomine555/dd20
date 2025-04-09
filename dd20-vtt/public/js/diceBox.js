@@ -169,6 +169,13 @@ DiceBox.prototype.throwDice = function (dice, callback) {
                 backColor: dice[i].backColor ? dice[i].backColor : this.diceBackColor
             });
         }
+        if (dice[i].type == 'd7') {
+            die = new DiceD7({
+                size: 1.5,
+                fontColor: dice[i].fontColor ? dice[i].fontColor : this.diceFontColor,
+                backColor: dice[i].backColor ? dice[i].backColor : this.diceBackColor
+            });
+        }
         if (dice[i].type == 'd8') {
             die = new DiceD8({
                 size: 1.5,

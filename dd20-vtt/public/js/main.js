@@ -2006,6 +2006,10 @@ function rollDie(sides)
   if(!sides) sides = 6;
   if(sides == 100)
     with(Math) return 1 + floor(random() * 10);
+  
+  if(sides == 7)
+    with(Math) return 1 + floor(random() * 6);
+  
   with(Math) return 1 + floor(random() * sides);
 }
 

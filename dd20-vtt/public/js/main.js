@@ -342,7 +342,8 @@ const checkAdmin = () => {
               }
               
               img.classList.add("bglist");
-              img.classList.add("grayed");
+              if (localStorage.getItem("asset_visibility" + i) == "grayed")
+                img.classList.add("grayed");
               img.loading = "lazy";
               img.id = "assett" + i;
               img.addEventListener('dragstart',  drag_scene_start, true);
@@ -440,6 +441,7 @@ const checkAdmin = () => {
           }, 2*waittime);
          
         } 
+        // Nos pasan  una escena
         else {          
           console.log("cargamos una escena")
 
@@ -526,8 +528,14 @@ const checkAdmin = () => {
         connected = false;
         window.setTimeout(function() {
           sendMessage(getrequest());
-        }, 2*waittime);
-    
+        }, waittime);
+
+        setplayerasset("..\img\loading.png");
+        window.setTimeout(function() {
+          hide_menus()
+        }, 5*waittime);        
+        
+
       }
     
       // Creamos el canvas
@@ -1520,11 +1528,14 @@ function getLink() {
       item = alist[i].getAttribute('src')
 
     localStorage.setItem("asset" + i, item)
+    localStorage.setItem("asset_visibility" + i, "grayed")
+
     if (!alist[i].classList.contains("grayed"))
     {
       var dobj = new Object();
       dobj.src = item;
       obj.assets.push(dobj);  
+      localStorage.setItem("asset_visibility" + i, "visible")
     }
   }
       

@@ -530,7 +530,7 @@ const checkAdmin = () => {
           sendMessage(getrequest());
         }, waittime);
 
-        setplayerasset("..\img\loading.png");
+        setplayerasset("https://digitald20.com/vtt/img/loading.png");
         window.setTimeout(function() {
           hide_menus()
         }, 5*waittime);        

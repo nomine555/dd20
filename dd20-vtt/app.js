@@ -43,8 +43,7 @@ class MessageService {
     };
 
     // Add new message to the list
-    this.messages = message;
-    // this.messages.push(message);
+    this.messages.push(message);
 
     return message;
   }
@@ -52,6 +51,16 @@ class MessageService {
 
 // Creates an ExpressJS compatible Feathers application
 const app = express(feathers());
+const serviceRegistry = new Map();
+
+function registerServiceIfNeeded(path) {
+  if (!serviceRegistry.has(path)) {
+    const service = new MessageService();
+    app.use(path, service);
+    serviceRegistry.set(path, service);
+    console.log(`Registered service for path: ${path}`);
+  }
+}
 
 // Parse HTTP JSON bodies
 app.use(express.json());
@@ -97,25 +106,29 @@ app.get("/game", function (req, res) {
 
 
 app.get("/room/:roomId", function (req, res) {
-  app.use(`/room/${req.params.roomId}`, new MessageService());
+  const servicePath = `/room/${req.params.roomId}`;
+  registerServiceIfNeeded(servicePath);
   //sending file
   res.sendFile(path.join(__dirname + "/public/game.html"));
 });
 
 app.get("/room/:roomId/game", function (req, res) {
-  app.use(`/room/${req.params.roomId}/game`, new MessageService());
+  const servicePath = `/room/${req.params.roomId}/game`;
+  registerServiceIfNeeded(servicePath);
   //sending file
   res.sendFile(path.join(__dirname + "/public/game.html"));
 });
 
 app.get("/newroom/:roomId", function (req, res) {
-  app.use(`/newroom/${req.params.roomId}`, new MessageService());
+  const servicePath = `/newroom/${req.params.roomId}`;
+  registerServiceIfNeeded(servicePath);
   //sending file
   res.sendFile(path.join(__dirname + "/public/new-game.html"));
 });
 
 app.get("/newroom/:roomId/game", function (req, res) {
-  app.use(`/newroom/${req.params.roomId}/game`, new MessageService());
+  const servicePath = `/newroom/${req.params.roomId}/game`;
+  registerServiceIfNeeded(servicePath);
   //sending file
   res.sendFile(path.join(__dirname + "/public/new-game.html"));
 });
@@ -139,12 +152,20 @@ app.post("/save", function (req, res) {
 
   //saving data to level
   db.put(room_id, { background: background }, function (err) {
-    if (err) throw err;
+    if (err) {
+      // Add error logging for debugging
+      console.error("Error saving to database:", err);
+      return res.status(500).send("Error saving data");
+    }
 
     db.get(room_id, function (err, value) {
-      if (err) throw err;
+      if (err) {
+        // Add error logging for debugging
+        console.error("Error reading from database:", err);
+        return res.status(500).send("Error reading data");
+      }
       console.log(value);
-      res.send("hello").status(200);
+      res.status(200).send("hello");
     });
   });
 });

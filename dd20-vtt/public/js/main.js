@@ -4,7 +4,7 @@ const socket = io(window.location.origin);
 
 // Initialize a Feathers app
 const app = feathers();
-const channel = window.location.pathname;
+const channel = '/messages';
 
 // Language
 var browserLanguage = navigator.language || navigator.userLanguage;
@@ -100,11 +100,10 @@ var spinnerchange = false;
 
 // ImageKit
 var imagekit = new ImageKit({
-  
+
   publicKey: "public_DYilnmhVRFXigmTUrGtuCcGZpok=",
-  urlEndpoint: "https://ik.imagekit.io/fiade", 
-  authenticationEndpoint: "https://board.digitald20.com/signature"
-  //authenticationEndpoint: "http://localhost/signature"
+  urlEndpoint: "https://ik.imagekit.io/fiade",
+  authenticationEndpoint: "/signature"
 });
 
 // Chrome                
@@ -130,6 +129,12 @@ function setViewDM() {
           slides[i].style.display = "flex";
       }
 
+    var adminSlides = document.getElementsByClassName("only-admin");
+    for(var i = 0; i < adminSlides.length; i++)
+      {
+        adminSlides[i].style.display = "inherit";
+      }
+
     document.getElementById("player-name").value = "Dungeon Master";
     document.getElementById("player-name").disabled = true;
     document.getElementById("player-name").style.display = "none";
@@ -150,7 +155,7 @@ function setViewPlayer() {
 
 //checking if user is an admin
 const checkAdmin = () => {
-  if ((user === "dm") & (room === window.location.pathname.replaceAll('new',''))) {
+  if ((user === "dm") & (room.replaceAll('new','') === window.location.pathname.replaceAll('new',''))) {
     return true;
   } else {
     return false;
@@ -193,10 +198,13 @@ const checkAdmin = () => {
         for (var i = 1; i < tokenN + 1 ; i++) {
           try {
             document.getElementById("t" + i).addEventListener('error',changeSrc);
-            document.getElementById("t" + i).src = localStorage.getItem("tokenurl" + i).replaceAll(" ","%20");
+            var tokenUrl = localStorage.getItem("tokenurl" + i);
+            if (tokenUrl) {
+              document.getElementById("t" + i).src = tokenUrl.replaceAll(" ","%20");
+            }
           } catch (error) {
             console.log(error)
-          }     
+          }
         }
       }
 
@@ -380,8 +388,8 @@ const checkAdmin = () => {
         // No hay nada guardado es una sala nueva
         // ----------------------------------------------------------
         else if (scene == null) {
-    
-          
+          setViewDM();
+
           if (ex == null)
             var myboard = JSON.parse('{"plotBackground":"https://digitald20.com/core/images/index/index-map-1920.jpg","backgroundImage":"https://digitald20.com/vtt/img/graveyard-map.jpg","background_width":1920,"background_heigth":960,"tileSize":60,"playerid":"dm","tokens":[{"src":"https://digitald20.com/vtt/img/thief.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":595,"left":537,"id":"dm50535"},{"src":"https://digitald20.com/vtt/img/mage.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":714,"left":240,"id":"dm241239"},{"src":"https://digitald20.com/vtt/img/fighter.jpg","dd20size":0.9999999999999999,"scaleX":0.10416666666666666,"scaleY":0.10416666666666666,"angle":0,"uprange":1,"zoomrange":1,"top":477.046439628483,"left":420.953560371517,"id":"dm261770"},{"src":"https://digitald20.com/vtt/img/ranger.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":475,"left":606,"id":"dm493210"},{"src":"https://digitald20.com/vtt/img/spectre.jpg","dd20size":2,"scaleX":0.20833333333333334,"scaleY":0.20833333333333334,"angle":0,"uprange":1,"zoomrange":1,"top":472,"left":483,"id":"dm281858"},{"src":"https://digitald20.com/vtt/img/halfling.jpg","dd20size":1,"scaleX":0.10416666666666667,"scaleY":0.10416666666666667,"angle":0,"uprange":1,"zoomrange":1,"top":231.6656346749225,"left":669.4148606811145,"id":"dm297252"},{"src":"https://digitald20.com/vtt/img/fire-ball.png","dd20size":-1,"scaleX":0.85,"scaleY":0.85,"angle":0,"leftrange":1,"uprange":1,"zoomrange":1,"top":420.0307406766989,"left":666.8785085506915,"id":"dm124446"}],"request":false,"squares":[],"roll":false}')
           else      
@@ -1103,7 +1111,6 @@ function setUrl(free) {
 
 
 function addtokentolist(src,n) {
- /*
   if (n == null) {
   // Es diferente
   var repetido = false;
@@ -1111,7 +1118,7 @@ function addtokentolist(src,n) {
     if (document.getElementById("t"+i).src == src)
     repetido = true;
   }
-  
+
   if (!repetido) {
   // Lo añadimos en el hueco que toca
   document.getElementById("t"+tokenN).src = src;
@@ -1127,9 +1134,8 @@ function addtokentolist(src,n) {
   if (n < 6)
     document.getElementById("t"+n).src = src;
   localStorage.setItem("tokenurl" + n, src);
-  
+
 }
-*/
 }
 
 function toTrack() {
@@ -3031,9 +3037,11 @@ const DrawItems = (data) => {
     mainBackground = data.item.backgroundImage;
     plotBackground = data.item.plotBackground;
     connected = true;
-    setTimeout(function(){ DrawItems(data) }, waittime); 
+    // Hide loading overlay when player receives board
+    document.getElementById("ontop").style.display = "none";
+    setTimeout(function(){ DrawItems(data) }, waittime);
     if(data.item.playerid == "dm")
-          setTimeout(function(){ DrawFog(data) }, waittime); 
+          setTimeout(function(){ DrawFog(data) }, waittime);
     return;
   }
 
@@ -3495,19 +3503,28 @@ function addMessage(item) {
 
   console.log(item)
   console.log(Date.now())
-  
+
+  // If DM receives a request from a player, send current board state
+  if (checkAdmin() && item.item.request == true) {
+    console.log("Player requesting board state");
+    window.setTimeout(function() {
+      sendMessage(getboard());
+    }, 500);
+    return;
+  }
+
   if (checkAdmin()) {
    keepAliveBoard.resetTimer(60000);
   }
 
-  if(item.item.roll) 
+  if(item.item.roll)
     printdice(item.item)
 
   if(item.item.link) {
     update_assets(item.item)
   }
-    
-  if(item.item.chat) 
+
+  if(item.item.chat)
     printchat(item.item)
 
   if(item.item.music) {
@@ -4240,7 +4257,7 @@ function delay(wait) {
   }
 
   function setplayerasset(src) {
-
+    if (!src) return;
     src = src.replaceAll(" ","%20")
 
     if (IsVideo(src)) {
@@ -4536,14 +4553,16 @@ function deleteItem(event) {
   }
 
   function show_hide_chat() {
-    
+
     //console.log("show hide chat")
     if (document.getElementById("chat-area").style.display == "none") {
       //console.log("muestro!!!!!!!!!!!!!!!!!!!!")
       document.getElementById("chat-area").style.display = "";
       document.getElementById("hide-chat").innerHTML = "Hide Chat";
-      var elements = document.getElementById("chat-log").getElementsByClassName('dice_result')          
-        document.getElementById("chat-log").scrollTop = elements[elements.length - 1].offsetTop;  
+      var elements = document.getElementById("chat-log").getElementsByClassName('dice_result')
+      if (elements.length > 0) {
+        document.getElementById("chat-log").scrollTop = elements[elements.length - 1].offsetTop;
+      }
       //document.getElementById("log").style.display = "none";
 
     } else {
@@ -5927,7 +5946,35 @@ function set_musicmode(mode) {
           slides[i].style.display = "none";
       }
     }
-}  
+}
+
+
+function set_mapmode(mode) {
+
+  if(mode == undefined){
+    mode = document.getElementById("player-maps").checked;
+  }
+
+    if(mode) {
+      document.getElementById("player-maps").checked = true;
+      localStorage.setItem("maps_mode","true");
+      if(!checkAdmin()) {
+        var slides = document.getElementsByClassName("only-admin-maps");
+        for(var i = 0; i < slides.length; i++)
+          slides[i].style.display = "";
+      }
+
+    }
+    else {
+      document.getElementById("player-maps").checked = false;
+      localStorage.setItem("maps_mode","false");
+      if(!checkAdmin()) {
+        var slides = document.getElementsByClassName("only-admin-maps");
+        for(var i = 0; i < slides.length; i++)
+          slides[i].style.display = "none";
+      }
+    }
+}
 
 
 function set_namemode(mode) {

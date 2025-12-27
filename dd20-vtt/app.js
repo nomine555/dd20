@@ -1,13 +1,13 @@
-const feathers = require("@feathersjs/feathers");
+const { feathers } = require("@feathersjs/feathers");
 const express = require("@feathersjs/express");
 const socketio = require("@feathersjs/socketio");
-const level = require("level");
-const db = level("./db", { valueEncoding: "json" });
+const { Level } = require("level");
+const db = new Level("./db", { valueEncoding: "json" });
 var path = require("path");
 
 var serveIndex = require('serve-index');
 
-    
+
 // Image Kit
 const ImageKit = require("imagekit");
 const fs = require('fs')
@@ -43,8 +43,7 @@ class MessageService {
     };
 
     // Add new message to the list
-    this.messages = message;
-    // this.messages.push(message);
+    this.messages.push(message);
 
     return message;
   }
@@ -109,14 +108,10 @@ app.get("/room/:roomId/game", function (req, res) {
 });
 
 app.get("/newroom/:roomId", function (req, res) {
-  app.use(`/newroom/${req.params.roomId}`, new MessageService());
-  //sending file
   res.sendFile(path.join(__dirname + "/public/new-game.html"));
 });
 
 app.get("/newroom/:roomId/game", function (req, res) {
-  app.use(`/newroom/${req.params.roomId}/game`, new MessageService());
-  //sending file
   res.sendFile(path.join(__dirname + "/public/new-game.html"));
 });
 
@@ -133,25 +128,33 @@ app.get('/signature', (req, res) => {
 // ----
 
 //saving data from room
-app.post("/save", function (req, res) {
+app.post("/save", async function (req, res) {
   var room_id = req.body.id;
   var background = req.body.background;
 
-  //saving data to level
-  db.put(room_id, { background: background }, function (err) {
-    if (err) throw err;
-
-    db.get(room_id, function (err, value) {
-      if (err) throw err;
-      console.log(value);
-      res.send("hello").status(200);
-    });
-  });
+  try {
+    await db.put(room_id, { background: background });
+    const value = await db.get(room_id);
+    console.log(value);
+    res.status(200).send("hello");
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).send("Database error");
+  }
 });
 
+// Register message services for Socket.io (after all Express routes)
+const messageService = new MessageService();
+app.use('/messages', messageService);
+
 // Start the server
-app
-  .listen(process.env.PORT || 81)
-  .on("listening", () =>
-    console.log("Feathers server listening on localhost:81")
-  );
+const start = async () => {
+  const port = process.env.PORT || 81;
+  await app.listen(port);
+  console.log(`Feathers server listening on localhost:${port}`);
+};
+
+start().catch(err => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});

@@ -11,16 +11,16 @@
   "author": "Fernando Setien Dodero",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@feathersjs/express": "^4.5.2",
-    "@feathersjs/feathers": "^4.5.2",
-    "@feathersjs/socketio": "^4.5.18",
-    "body-parser": "^1.20.2",
-    "bulma": "^0.8.1",
-    "imagekit": "^4.1.3",
-    "level": "^6.0.1",
+    "@feathersjs/express": "^5.0.37",
+    "@feathersjs/feathers": "^5.0.37",
+    "@feathersjs/socketio": "^5.0.37",
+    "body-parser": "^1.20.3",
+    "bulma": "^1.0.2",
+    "imagekit": "^5.2.0",
+    "level": "^8.0.1",
     "serve-index": "^1.9.1"
   },
   "engines": {
-    "node": "22.11.0"
+    "node": ">=18.0.0"
   }
 }

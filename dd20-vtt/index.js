@@ -1,13 +1,12 @@
-const feathers = require("@feathersjs/feathers");
+const { feathers } = require("@feathersjs/feathers");
 const express = require("@feathersjs/express");
 const socketio = require("@feathersjs/socketio");
-const level = require("level");
-const db = level("./db", { valueEncoding: "json" });
+const { Level } = require("level");
 var path = require("path");
 
 var serveIndex = require('serve-index');
 
-    
+
 // Image Kit
 const ImageKit = require("imagekit");
 const fs = require('fs')
@@ -43,8 +42,7 @@ class MessageService {
     };
 
     // Add new message to the list
-    this.messages = message;
-    // this.messages.push(message);
+    this.messages.push(message);
 
     return message;
   }
@@ -109,15 +107,16 @@ app.get("/room/:roomId/game", function (req, res) {
 });
 
 app.get("/newroom/:roomId", function (req, res) {
-  app.use(`/newroom/${req.params.roomId}`, new MessageService());
-  //sending file
   res.sendFile(path.join(__dirname + "/public/new-game.html"));
 });
 
 app.get("/newroom/:roomId/game", function (req, res) {
-  app.use(`/newroom/${req.params.roomId}/game`, new MessageService());
-  //sending file
   res.sendFile(path.join(__dirname + "/public/new-game.html"));
+});
+
+app.get("/n/:roomId", function (req, res) {
+  //sending file
+  res.sendFile(path.join(__dirname + "/public/create-room.html"));
 });
 
 // Image Kit
@@ -127,26 +126,19 @@ app.get('/signature', (req, res) => {
 })
 // ----
 
-//saving data from room
-app.post("/save", function (req, res) {
-  var room_id = req.body.id;
-  var background = req.body.background;
 
-  //saving data to level
-  db.put(room_id, { background: background }, function (err) {
-    if (err) throw err;
-
-    db.get(room_id, function (err, value) {
-      if (err) throw err;
-      console.log(value);
-      res.send("hello").status(200);
-    });
-  });
-});
+// Register message services for Socket.io (after all Express routes)
+const messageService = new MessageService();
+app.use('/messages', messageService);
 
 // Start the server
-app
-  .listen(process.env.PORT || 3000)
-  .on("listening", () =>
-    console.log("Feathers server listening on localhost:3000")
-  );
+const start = async () => {
+  const port = process.env.PORT || 81;
+  await app.listen(port);
+  console.log(`Feathers server listening on localhost:${port}`);
+};
+
+start().catch(err => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});

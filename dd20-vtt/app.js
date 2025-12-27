@@ -2,7 +2,6 @@ const { feathers } = require("@feathersjs/feathers");
 const express = require("@feathersjs/express");
 const socketio = require("@feathersjs/socketio");
 const { Level } = require("level");
-const db = new Level("./db", { valueEncoding: "json" });
 var path = require("path");
 
 var serveIndex = require('serve-index');
@@ -127,21 +126,6 @@ app.get('/signature', (req, res) => {
 })
 // ----
 
-//saving data from room
-app.post("/save", async function (req, res) {
-  var room_id = req.body.id;
-  var background = req.body.background;
-
-  try {
-    await db.put(room_id, { background: background });
-    const value = await db.get(room_id);
-    console.log(value);
-    res.status(200).send("hello");
-  } catch (err) {
-    console.error("Database error:", err);
-    res.status(500).send("Database error");
-  }
-});
 
 // Register message services for Socket.io (after all Express routes)
 const messageService = new MessageService();

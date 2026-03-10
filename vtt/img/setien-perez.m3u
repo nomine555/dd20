@@ -1,0 +1,115 @@
+#EXTM3U
+
+#-----------------------
+# Generalistas
+#-----------------------
+#EXTINF:-1 group-title="Generalistas",La 1
+https://rtvelivestream.akamaized.net/rtvesec/la1/la1_main.m3u8
+
+#EXTINF:-1 group-title="Generalistas",La 2
+https://rtvelivestream.akamaized.net/rtvesec/la2/la2_main.m3u8
+
+#EXTINF:-1 group-title="Generalistas",Antena 3
+https://live-atresplayer.atresmedia.com/antena3/master.m3u8
+
+#EXTINF:-1 group-title="Generalistas",Cuatro
+https://live.mediaset.es/stream/cuatro/cuatro.m3u8
+
+#EXTINF:-1 group-title="Generalistas",Telecinco
+https://live.mediaset.es/stream/telecinco/telecinco.m3u8
+
+#EXTINF:-1 group-title="Generalistas",laSexta
+https://live-atresplayer.atresmedia.com/lasexta/master.m3u8
+
+#-----------------------
+# Noticias Nacionales
+#-----------------------
+#EXTINF:-1 group-title="Noticias",24h
+https://rtvelivestream.akamaized.net/rtvesec/24h/24h_main.m3u8
+
+#EXTINF:-1 group-title="Noticias",Euronews ES
+https://euronews-live-esp.akamaized.net/hls/live/2031440/euronews-es/master.m3u8
+
+#-----------------------
+# Infantil
+#-----------------------
+#EXTINF:-1 group-title="Infantil",Clan
+https://rtvelivestream.akamaized.net/rtvesec/clan/clan_main.m3u8
+
+#EXTINF:-1 group-title="Infantil",Boing
+https://live.mediaset.es/stream/boing/boing.m3u8
+
+#-----------------------
+# Series y Temáticos
+#-----------------------
+#EXTINF:-1 group-title="Series",Neox
+https://live-atresplayer.atresmedia.com/neox/master.m3u8
+
+#EXTINF:-1 group-title="Series",Nova
+https://live-atresplayer.atresmedia.com/nova/master.m3u8
+
+#EXTINF:-1 group-title="Series",Atreseries
+https://live-atresplayer.atresmedia.com/atreseries/master.m3u8
+
+#EXTINF:-1 group-title="Series",Divinity
+https://live.mediaset.es/stream/divinity/divinity.m3u8
+
+#EXTINF:-1 group-title="Series",FDF
+https://live.mediaset.es/stream/fdf/fdf.m3u8
+
+#EXTINF:-1 group-title="Entretenimiento",Energy
+https://live.mediaset.es/stream/energy/energy.m3u8
+
+#EXTINF:-1 group-title="Entretenimiento",BeMad
+https://live.mediaset.es/stream/bemad/bemad.m3u8
+
+#EXTINF:-1 group-title="Entretenimiento",Mega
+https://live-atresplayer.atresmedia.com/mega/master.m3u8
+
+#EXTINF:-1 group-title="Entretenimiento",Ten
+https://tenlive.flumotion.com/playlist.m3u8
+
+#EXTINF:-1 group-title="Entretenimiento",DKiss
+https://dkisslive.akamaized.net/hls/live/2002824/dkiss/master.m3u8
+
+#-----------------------
+# Cine
+#-----------------------
+#EXTINF:-1 group-title="Cine",Paramount Network
+https://paramount-live.flumotion.com/paramount/playlist.m3u8
+
+#EXTINF:-1 group-title="Cine",Trece
+https://trece-live.flumotion.com/playlist.m3u8
+
+#-----------------------
+# Deportes
+#-----------------------
+#EXTINF:-1 group-title="Deporte",Gol Play
+https://goltelevision.akamaized.net/hls/live/2036291/gol/master.m3u8
+
+#EXTINF:-1 group-title="Deporte",Real Madrid TV
+https://rmtv.akamaized.net/hls/live/2043155/rmtv/master.m3u8
+
+#-----------------------
+# Noticias Internacionales
+#-----------------------
+#EXTINF:-1 group-title="Noticias Internacionales",CNN en Español
+https://cnn-cnninternational-1-es.samsung.wurl.tv/playlist.m3u8
+
+#EXTINF:-1 group-title="Noticias Internacionales",France 24 Español
+https://static.france24.com/live/F24_ES_HI_HLS/live_tv.m3u8
+
+#EXTINF:-1 group-title="Noticias Internacionales",DW Español
+https://dwamdstream103.akamaized.net/hls/live/2015526/dwstream103/master.m3u8
+
+#-----------------------
+# Cultura y Documentales
+#-----------------------
+#EXTINF:-1 group-title="Cultura y Documentales",ARTE Español
+https://artespanol.akamaized.net/hls/live/2031132/artespanol/master.m3u8
+
+#EXTINF:-1 group-title="Cultura y Documentales",NHK World
+https://nhkworld-tv.akamaized.net/hls/live/2003458/nhkworld/master.m3u8
+
+#EXTINF:-1 group-title="Cultura y Documentales",NASA TV
+https://ntv1.akamaized.net/hls/live/2017941/NTV1/master.m3u8
